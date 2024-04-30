@@ -1,0 +1,3 @@
+class PlatformSpecifics {
+  initialize() {}
+}
