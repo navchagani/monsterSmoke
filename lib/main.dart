@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/PlatformBuilder.dart';
+import 'package:monstersmoke/Splash.dart';
 import 'package:monstersmoke/core/platform.dart';
 import 'package:monstersmoke/core/registery.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           useMaterial3: true,
         ),
-        home: const PlatformBuilder(),
+        home: const SplashScreen(),
       ),
     );
   }

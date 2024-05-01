@@ -51,18 +51,18 @@ class Decorations {
         suffixIcon: icon,
         suffixStyle: TextStyle(color: Colors.grey.withOpacity(0.8)),
         hintText: hint,
-        border: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey.shade500),
-          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+        border: const OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey.shade500),
-          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
         contentPadding: const EdgeInsets.all(16),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey.shade700),
-          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
       );
 
