@@ -82,11 +82,13 @@ class _TabModeState extends State<TabMode> {
                     child: SizedBox(
                       width: 500,
                       child: CustomInputField(
+                        enabled: true,
+                        inputType: TextInputType.none,
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: ((context) => const SearchPage())));
                         },
-                        icon: Icon(Icons.search),
+                        icon: const Icon(Icons.search),
                         labelText: 'Search Products',
                         hintText: 'Search Products',
                       ),

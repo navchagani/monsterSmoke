@@ -27,11 +27,7 @@ class _CustomSliderState extends State<CustomSlider> {
       selectedindex == 0;
 
       Future.delayed(const Duration(seconds: 5))
-          .then((value) => pageController.animateToPage(
-                0, // Index of the first page
-                duration: const Duration(milliseconds: 600),
-                curve: Curves.easeInQuad,
-              ));
+          .then((value) => pageController.jumpToPage(0));
     } else {
       Future.delayed(const Duration(seconds: 5)).then((value) =>
           pageController.nextPage(
@@ -75,7 +71,7 @@ class _CustomSliderState extends State<CustomSlider> {
                 return Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 600),
+                    duration: const Duration(milliseconds: 300),
                     width: isSelected ? 30.0 : 20.0,
                     height: 8.0,
                     decoration: BoxDecoration(
