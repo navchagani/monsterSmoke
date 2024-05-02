@@ -11,6 +11,7 @@ class CustomInputField extends StatelessWidget {
   final int? maxLines;
   final TextInputType? inputType;
   final Function()? onTap;
+  final double? elevation;
 
   const CustomInputField({
     super.key,
@@ -25,13 +26,14 @@ class CustomInputField extends StatelessWidget {
     this.noFill,
     this.icon,
     this.onTap,
+    this.elevation,
   });
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.white,
-      elevation: 10.0,
+      elevation: elevation ?? 0.0,
       borderRadius: BorderRadiusDirectional.circular(10.0),
       child: TextFormField(
           onTap: onTap,

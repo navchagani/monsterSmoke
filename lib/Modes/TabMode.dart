@@ -2,9 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
+import 'package:monstersmoke/cartPage.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
 import 'package:monstersmoke/core/widgets/CustomProductContainer.dart';
 import 'package:monstersmoke/core/widgets/CustomSlider.dart';
+import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
+import 'package:monstersmoke/features/Auth/presentation/pages/Login.dart';
 import 'package:monstersmoke/features/Search/presentation/pages/SearchPage.dart';
 
 class TabMode extends StatefulWidget {
@@ -82,6 +85,7 @@ class _TabModeState extends State<TabMode> {
                     child: SizedBox(
                       width: 500,
                       child: CustomInputField(
+                        elevation: 10.0,
                         enabled: true,
                         inputType: TextInputType.none,
                         onTap: () {
@@ -172,6 +176,8 @@ class _TabModeState extends State<TabMode> {
       );
 
   AppBar appBar() => AppBar(
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
         centerTitle: true,
         toolbarHeight: 100,
         leading: IconButton(
@@ -190,11 +196,23 @@ class _TabModeState extends State<TabMode> {
           Wrap(
             children: [
               IconButton(
-                  onPressed: () {}, icon: const Icon(Icons.shopping_cart)),
+                  onPressed: onCart, icon: const Icon(Icons.shopping_cart)),
               IconButton(
-                  onPressed: () {}, icon: const Icon(Icons.person_3_rounded)),
+                  onPressed: onSignUp,
+                  icon: const Icon(Icons.person_3_rounded)),
             ],
           )
         ],
       );
+
+  void onSignUp() {
+    showDialog(
+        context: context,
+        builder: ((context) => const Dialog(child: AuthActionPage())));
+  }
+
+  void onCart() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: ((context) => const CartPage())));
+  }
 }

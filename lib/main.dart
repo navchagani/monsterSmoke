@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:monstersmoke/PlatformBuilder.dart';
 import 'package:monstersmoke/Splash.dart';
-import 'package:monstersmoke/core/platform.dart';
+import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/registery.dart';
 
 void main() {
+  depInjection();
   runApp(const MyApp());
 }
 

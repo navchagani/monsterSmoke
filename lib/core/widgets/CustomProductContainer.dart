@@ -37,7 +37,8 @@ class CustomProductContainer extends StatelessWidget {
           productName: 'Core 6000 Puffs',
           productPrice: '20',
           productQuantity: '0'),
-      const ProductCardWidget(
+      ProductCardWidget(
+          onTap: () {},
           productImage:
               'https://farm9.staticflickr.com/8295/8007075227_dc958c1fe6_z_d.jpg',
           productName: 'Core Puffs 10Ct',
@@ -46,7 +47,7 @@ class CustomProductContainer extends StatelessWidget {
     ];
 
     return SizedBox(
-      height: 340,
+      height: 300,
       width: double.infinity,
       child: Column(
         children: [
@@ -62,11 +63,11 @@ class CustomProductContainer extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 280,
+            height: 220,
             width: double.infinity,
             child: ListView.separated(
                 scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(15.0),
                 itemBuilder: ((context, index) {
                   return productList[index];
                 }),
