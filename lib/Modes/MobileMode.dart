@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
+import 'package:monstersmoke/core/widgets/CustomProductContainer.dart';
 import 'package:monstersmoke/core/widgets/CustomSlider.dart';
 
 class MobileViewMode extends StatelessWidget {
@@ -14,7 +15,7 @@ class MobileViewMode extends StatelessWidget {
     );
   }
 
-  Widget floatButton() => FloatingActionButton(
+  Widget floatButton() => FloatingActionButton.small(
         onPressed: onMovetoCart,
         child: const Icon(Icons.shopping_cart),
       );
@@ -39,8 +40,11 @@ class MobileViewMode extends StatelessWidget {
       "https://via.placeholder.com/1200x600.png?text=Product+3",
       "https://via.placeholder.com/1200x600.png?text=Product+4"
     ];
-    return Column(
-      children: [CustomSlider(images: images)],
+    return ListView(
+      children: [
+        CustomSlider(images: images),
+        CustomProductContainer(productList: images, text: 'Featured')
+      ],
     );
   }
 

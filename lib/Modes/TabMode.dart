@@ -1,13 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/cartPage.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
 import 'package:monstersmoke/core/widgets/CustomProductContainer.dart';
 import 'package:monstersmoke/core/widgets/CustomSlider.dart';
 import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
-import 'package:monstersmoke/features/Auth/presentation/pages/Login.dart';
 import 'package:monstersmoke/features/Search/presentation/pages/SearchPage.dart';
 
 class TabMode extends StatefulWidget {

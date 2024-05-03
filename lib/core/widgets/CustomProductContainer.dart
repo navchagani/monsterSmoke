@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
+import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
 import 'package:monstersmoke/core/widgets/ProductCard.dart';
 
 class CustomProductContainer extends StatelessWidget {
@@ -47,7 +49,7 @@ class CustomProductContainer extends StatelessWidget {
     ];
 
     return SizedBox(
-      height: 300,
+      height: 1000,
       width: double.infinity,
       child: Column(
         children: [
@@ -62,17 +64,37 @@ class CustomProductContainer extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(
-            height: 220,
-            width: double.infinity,
-            child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.all(15.0),
-                itemBuilder: ((context, index) {
-                  return productList[index];
-                }),
-                separatorBuilder: ((context, index) => Decorations.width10),
-                itemCount: productList.length),
+          BlocBuilder<IsMobile, bool>(
+            builder: (context, isMobile) {
+              if (!isMobile) {
+                return GridView.builder(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(10.0),
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 8.0,
+                      crossAxisSpacing: 8.0),
+                  itemBuilder: ((context, index) {
+                    return productList[index];
+                  }),
+                  itemCount: productList.length,
+                );
+              }
+
+              return SizedBox(
+                height: 220,
+                width: double.infinity,
+                child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.all(15.0),
+                    itemBuilder: ((context, index) {
+                      return productList[index];
+                    }),
+                    separatorBuilder: ((context, index) => Decorations.width10),
+                    itemCount: productList.length),
+              );
+            },
           )
         ],
       ),
