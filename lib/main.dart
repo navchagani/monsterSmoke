@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Splash.dart';
 import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/registery.dart';
+import 'package:monstersmoke/features/Theme/LightTheme.dart';
 
 void main() {
   depInjection();
@@ -18,9 +19,7 @@ class MyApp extends StatelessWidget {
       providers: Registery.initializeBlocs(context: context),
       child: MaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(
-          useMaterial3: true,
-        ),
+        theme: MonsterThemes.themeLight,
         home: const SplashScreen(),
       ),
     );

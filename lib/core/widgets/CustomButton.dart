@@ -35,12 +35,12 @@ class CustomButton extends StatelessWidget {
           ? Colors.transparent
           : enabled ?? true
               ? backgroundColor ?? Colors.transparent
-              : Colors.grey.shade300,
+              : Theme.of(context).colorScheme.primary.withOpacity(0.05),
       clipBehavior: Clip.hardEdge,
       child: InkWell(
         onTap: enabled ?? true ? onTap : null,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 15.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

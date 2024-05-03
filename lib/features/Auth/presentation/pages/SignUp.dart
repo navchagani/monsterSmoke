@@ -47,7 +47,9 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   AppBar appBar() => AppBar(
-        toolbarHeight: 100,
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        toolbarHeight: 80,
         title: const Text('Apply For Account'),
       );
 
@@ -82,16 +84,14 @@ class _SignUpPageState extends State<SignUpPage> {
                         controller: companyController,
                         onChanged: onCompanyChanged),
                   ),
-                  Decorations.width10,
-                  Expanded(
-                    child: CustomInputField(
-                      labelText: 'Tax',
-                      hintText: 'Tax Id',
-                      controller: taxController,
-                      onChanged: onTaxChanged,
-                    ),
-                  ),
                 ],
+              ),
+              Decorations.height10,
+              CustomInputField(
+                labelText: 'Tax',
+                hintText: 'Tax Id',
+                controller: taxController,
+                onChanged: onTaxChanged,
               ),
             ],
           ),
@@ -125,18 +125,15 @@ class _SignUpPageState extends State<SignUpPage> {
                         controller: cityController,
                         onChanged: onCityChanged),
                   ),
-                  Decorations.width10,
-                  Expanded(
-                    child: CustomInputField(
-                      labelText: 'Zip Code',
-                      hintText: 'Zip Code',
-                      controller: zipCodeController,
-                      onChanged: onzipCodeChanged,
-                    ),
-                  ),
                 ],
               ),
               Decorations.height10,
+              CustomInputField(
+                labelText: 'Zip Code',
+                hintText: 'Zip Code',
+                controller: zipCodeController,
+                onChanged: onzipCodeChanged,
+              ),
               const Row(
                 children: [],
               ),

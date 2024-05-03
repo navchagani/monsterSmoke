@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   AppBar appBar() => AppBar(
-        toolbarHeight: 100,
+        toolbarHeight: 80,
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         title: const Text('Login'),
