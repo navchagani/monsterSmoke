@@ -67,7 +67,7 @@ class MonsterThemes {
           error: Colors.deepOrange,
           onError: Colors.white,
           background: Colors.white,
-          onBackground: Colors.black45,
+          onBackground: Colors.black,
           surface: Colors.white,
           onSurface: Colors.black45),
       splashColor: Colors.purple.withOpacity(0.05),

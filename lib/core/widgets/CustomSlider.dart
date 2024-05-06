@@ -1,45 +1,55 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
+import 'package:monstersmoke/features/GETAssets/data/models/SliderModel.dart';
 
 class CustomSlider extends StatefulWidget {
-  final List<String> images;
-  const CustomSlider({super.key, required this.images});
+  final List<SliderModel> images;
+  final Axis? direction;
+  const CustomSlider({super.key, required this.images, this.direction});
 
   @override
   State<CustomSlider> createState() => _CustomSliderState();
 }
 
 class _CustomSliderState extends State<CustomSlider> {
-  final pageController = PageController();
+  late PageController pageController;
   int selectedindex = 0;
+  late Timer timer;
 
   @override
   void initState() {
+    pageController = PageController(initialPage: selectedindex);
+    // pageController.addListener(_pageListener);
+    timer = Timer.periodic(const Duration(seconds: 5), _onTimer);
     super.initState();
   }
 
   @override
+  void dispose() {
+    // pageController.removeListener(_pageListener);
+    pageController.dispose();
+    super.dispose();
+  }
+
+  void _onTimer(Timer timer) {
+    selectedindex = (selectedindex + 1) % widget.images.length;
+    pageController.animateToPage(
+      selectedindex,
+      duration: const Duration(seconds: 2) ~/ 2,
+      curve: Curves.easeIn,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (pageController.positions.isNotEmpty) {
-      if (selectedindex == widget.images.length - 1) {
-        selectedindex == 0;
-
-        Future.delayed(const Duration(seconds: 5))
-            .then((value) => pageController.jumpToPage(0));
-      } else {
-        Future.delayed(const Duration(seconds: 5)).then((value) =>
-            pageController.nextPage(
-                duration: const Duration(milliseconds: 600),
-                curve: Curves.easeInQuad));
-      }
-    }
-
     return BlocBuilder<IsMobile, bool>(
       builder: (context, isMob) {
         return SizedBox(
-          height: !isMob ? 180 : 360,
+          height: !isMob ? 140 : 360,
           width: double.infinity,
           child: Stack(
             alignment: Alignment.bottomCenter,
@@ -47,47 +57,49 @@ class _CustomSliderState extends State<CustomSlider> {
               Row(
                 children: [
                   Expanded(
-                    child: PageView(
+                    child: PageView.builder(
                       physics: const AlwaysScrollableScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
+                      scrollDirection: widget.direction ?? Axis.horizontal,
                       controller: pageController,
                       onPageChanged: onPageChanged,
-                      children: List.generate(widget.images.length, (index) {
+                      itemBuilder: (BuildContext context, int index) {
+                        final image =
+                            widget.images[index % widget.images.length];
+
                         return Image(
-                          // height: 350,
-                          fit: BoxFit.cover,
-                          image: NetworkImage(widget.images[index]),
+                          fit: BoxFit.fill,
+                          image: NetworkImage(image.imageUrl.toString()),
                         );
-                      }),
+                      },
                     ),
                   )
                 ],
               ),
-              Decorations.height10,
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: List.generate(widget.images.length, (index) {
-                      final isSelected = selectedindex == index;
+              // Decorations.height10,
+              // Padding(
+              //   padding: const EdgeInsets.all(10.0),
+              //   child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       crossAxisAlignment: CrossAxisAlignment.center,
+              //       children: List.generate(widget.images.length, (index) {
+              //         final isSelected = selectedindex == index;
 
-                      return Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 300),
-                          width: isSelected ? 30.0 : 20.0,
-                          height: 8.0,
-                          decoration: BoxDecoration(
-                              color: isSelected
-                                  ? Colors.grey.shade600
-                                  : Colors.grey.shade400,
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(10.0))),
-                        ),
-                      );
-                    })),
-              ),
+              //         return Padding(
+              //           padding: const EdgeInsets.all(4.0),
+              //           child: AnimatedContainer(
+              //             duration: const Duration(milliseconds: 300),
+              //             width: isSelected ? 30.0 : 20.0,
+              //             height: 8.0,
+              //             decoration: BoxDecoration(
+              //                 color: isSelected
+              //                     ? Colors.grey.shade600
+              //                     : Colors.grey.shade400,
+              //                 borderRadius: const BorderRadius.all(
+              //                     Radius.circular(10.0))),
+              //           ),
+              //         );
+              //       })),
+              // ),
             ],
           ),
         );

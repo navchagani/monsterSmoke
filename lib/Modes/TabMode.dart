@@ -56,14 +56,14 @@ class _TabModeState extends State<TabMode> {
                           Expanded(
                             child: ListView(
                               shrinkWrap: true,
-                              children: [
-                                CustomSlider(images: list),
-                                const SizedBox(
+                              children: const [
+                                // CustomSlider(images: list),
+                                SizedBox(
                                   height: 25.0,
                                 ),
-                                const CustomProductContainer(
+                                CustomProductContainer(
                                     productList: null, text: 'Whats New'),
-                                const CustomProductContainer(
+                                CustomProductContainer(
                                     productList: null,
                                     text: 'Featured Product'),
                               ],

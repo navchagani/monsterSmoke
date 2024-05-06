@@ -12,9 +12,21 @@ final class SliderBlocInitial extends SliderBlocState {}
 class SliderLoadingSlider extends SliderBlocState {}
 
 class SliderCompletedSlider extends SliderBlocState {
-  final List<SliderModel> lilstContries;
+  final List<SliderModel> lisImage;
 
-  const SliderCompletedSlider({required this.lilstContries});
+  const SliderCompletedSlider({required this.lisImage});
+}
+
+class SliderCompletedSlider1 extends SliderBlocState {
+  final List<SliderModel> lisImage;
+
+  const SliderCompletedSlider1({required this.lisImage});
+}
+
+class SliderCompletedSlider2 extends SliderBlocState {
+  final List<SliderModel> lisImage;
+
+  const SliderCompletedSlider2({required this.lisImage});
 }
 
 class SliderErrorSlider extends SliderBlocState {

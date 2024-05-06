@@ -15,7 +15,7 @@ class Registery {
   static List<BlocProvider> initializeBlocs({required BuildContext context}) =>
       [
         // Asset Blocs
-        BlocProvider<SliderBloc>(create: ((context) => getIt())),
+        BlocProvider<SliderBloc>.value(value: getIt<SliderBloc>()),
         BlocProvider<CountryBloc>(
             create: ((context) => getIt()..add(const GetCountryEvent()))),
         BlocProvider<StateBloc>(create: ((context) => getIt())),
@@ -26,7 +26,7 @@ class Registery {
         BlocProvider<CustomerBloc>(create: ((context) => getIt())),
 
         // CartBlocs
-        BlocProvider<CartBloc>(create: ((context) => getIt())),
+        BlocProvider<CartBloc>.value(value: getIt<CartBloc>()),
 
         // ProductBlocs
         BlocProvider<ProductsBloc>(create: ((context) => getIt())),
