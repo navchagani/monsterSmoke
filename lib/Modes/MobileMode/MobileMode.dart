@@ -37,6 +37,7 @@ class MobileViewMode extends StatelessWidget {
         ];
       },
       body: Scaffold(
+        backgroundColor: Colors.grey.shade200,
         // appBar: appBar(context: context),
         body: body(),
         floatingActionButton: floatButton(),

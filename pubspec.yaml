@@ -109,6 +109,6 @@ targets:
       retrofit_generator:
         generate_for: 
           include: 
-            - lib\features\Auth\data\datasources\no.dart
+            - lib\features\GetCat&Brand\data\datasources\cat&BrandApi.dart
         options:
           auto_cast_response: false

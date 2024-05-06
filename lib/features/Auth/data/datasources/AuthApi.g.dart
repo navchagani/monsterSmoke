@@ -9,11 +9,14 @@ part of 'AuthApi.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
 class _AuthApi implements AuthApi {
-  _AuthApi(this._dio) {
+  _AuthApi(
+    this._dio, {
+    this.baseUrl,
+  }) {
     baseUrl ??= 'https://erp.monstersmokewholesale.com';
   }
 
-  final dio.Dio _dio;
+  final Dio _dio;
 
   String? baseUrl;
 
@@ -123,14 +126,14 @@ class _AuthApi implements AuthApi {
     return httpResponse;
   }
 
-  dio.RequestOptions _setStreamType<T>(dio.RequestOptions requestOptions) {
+  RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
-        !(requestOptions.responseType == dio.ResponseType.bytes ||
-            requestOptions.responseType == dio.ResponseType.stream)) {
+        !(requestOptions.responseType == ResponseType.bytes ||
+            requestOptions.responseType == ResponseType.stream)) {
       if (T == String) {
-        requestOptions.responseType = dio.ResponseType.plain;
+        requestOptions.responseType = ResponseType.plain;
       } else {
-        requestOptions.responseType = dio.ResponseType.json;
+        requestOptions.responseType = ResponseType.json;
       }
     }
     return requestOptions;
