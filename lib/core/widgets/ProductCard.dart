@@ -34,11 +34,11 @@ class ProductCardWidget extends StatelessWidget {
                 if (!isMobile) {
                   return Column(
                     children: [
-                      SizedBox(
-                        height: 100,
-                        // width: 120,
-                        child: Material(
-                          clipBehavior: Clip.hardEdge,
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SizedBox(
+                          height: 100,
+                          // width: 120,
                           child: Image(
                             image: NetworkImage(productImage.toString()),
                             fit: BoxFit.cover,
@@ -59,6 +59,8 @@ class ProductCardWidget extends StatelessWidget {
                                       maxLines: 3,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           overflow: TextOverflow.ellipsis),
                                     ),
@@ -71,24 +73,31 @@ class ProductCardWidget extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
-                                      child: Text('price: \$$productPrice')),
-                                ],
-                              ),
-                              Decorations.height10,
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                      child:
-                                          Text('In Stock: $productQuantity')),
+                                      child: Text(
+                                    'price: \$$productPrice',
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.normal,
+                                        overflow: TextOverflow.ellipsis),
+                                  )),
                                 ],
                               ),
                               const Spacer(),
+
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
+                                  Expanded(
+                                      child: Text(
+                                    'In Stock: $productQuantity',
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.normal,
+                                        overflow: TextOverflow.ellipsis),
+                                  )),
                                   IconButton(
                                       onPressed: () {},
                                       icon: const Icon(

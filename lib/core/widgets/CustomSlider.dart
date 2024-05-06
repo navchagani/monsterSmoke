@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
@@ -23,16 +22,18 @@ class _CustomSliderState extends State<CustomSlider> {
 
   @override
   Widget build(BuildContext context) {
-    if (selectedindex == widget.images.length - 1) {
-      selectedindex == 0;
+    if (pageController.positions.isNotEmpty) {
+      if (selectedindex == widget.images.length - 1) {
+        selectedindex == 0;
 
-      Future.delayed(const Duration(seconds: 5))
-          .then((value) => pageController.jumpToPage(0));
-    } else {
-      Future.delayed(const Duration(seconds: 5)).then((value) =>
-          pageController.nextPage(
-              duration: const Duration(milliseconds: 600),
-              curve: Curves.easeInQuad));
+        Future.delayed(const Duration(seconds: 5))
+            .then((value) => pageController.jumpToPage(0));
+      } else {
+        Future.delayed(const Duration(seconds: 5)).then((value) =>
+            pageController.nextPage(
+                duration: const Duration(milliseconds: 600),
+                curve: Curves.easeInQuad));
+      }
     }
 
     return BlocBuilder<IsMobile, bool>(
@@ -40,51 +41,53 @@ class _CustomSliderState extends State<CustomSlider> {
         return SizedBox(
           height: !isMob ? 180 : 360,
           width: double.infinity,
-          child: Column(
+          child: Stack(
+            alignment: Alignment.bottomCenter,
             children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: PageView(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        controller: pageController,
-                        onPageChanged: onPageChanged,
-                        children: List.generate(widget.images.length, (index) {
-                          return Image(
-                            // height: 350,
-                            fit: BoxFit.cover,
-                            image: NetworkImage(widget.images[index]),
-                          );
-                        }),
-                      ),
-                    )
-                  ],
-                ),
+              Row(
+                children: [
+                  Expanded(
+                    child: PageView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      controller: pageController,
+                      onPageChanged: onPageChanged,
+                      children: List.generate(widget.images.length, (index) {
+                        return Image(
+                          // height: 350,
+                          fit: BoxFit.cover,
+                          image: NetworkImage(widget.images[index]),
+                        );
+                      }),
+                    ),
+                  )
+                ],
               ),
               Decorations.height10,
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: List.generate(widget.images.length, (index) {
-                    final isSelected = selectedindex == index;
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: List.generate(widget.images.length, (index) {
+                      final isSelected = selectedindex == index;
 
-                    return Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        width: isSelected ? 30.0 : 20.0,
-                        height: 8.0,
-                        decoration: BoxDecoration(
-                            color: isSelected
-                                ? Colors.grey.shade600
-                                : Colors.grey.shade400,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10.0))),
-                      ),
-                    );
-                  })),
+                      return Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          width: isSelected ? 30.0 : 20.0,
+                          height: 8.0,
+                          decoration: BoxDecoration(
+                              color: isSelected
+                                  ? Colors.grey.shade600
+                                  : Colors.grey.shade400,
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(10.0))),
+                        ),
+                      );
+                    })),
+              ),
             ],
           ),
         );

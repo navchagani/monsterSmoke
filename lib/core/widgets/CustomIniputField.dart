@@ -43,7 +43,8 @@ class CustomInputField extends StatelessWidget {
           onChanged: onChanged,
           maxLines: maxLines ?? 1,
           keyboardType: inputType ?? TextInputType.text,
-          decoration: Decorations.inputDecoration(hint: hintText, icon: icon)),
+          decoration: Decorations.inputDecoration(
+              hint: hintText, icon: icon, context: context)),
     );
   }
 }

@@ -17,32 +17,32 @@ class CustomProductContainer extends StatelessWidget {
     final productList = [
       const ProductCardWidget(
           productImage:
-              'https://farm2.staticflickr.com/1449/24800673529_64272a66ec_z_d.jpg',
+              'https://d11cxue75f9a69.cloudfront.net/product-images/foger-ct10000-1-1714432227643.jpg',
           productName: 'Core 6000 Puffs 10Ct',
           productPrice: '20',
           productQuantity: '0'),
       const ProductCardWidget(
           productImage:
-              'https://farm8.staticflickr.com/7377/9359257263_81b080a039_z_d.jpg',
+              'https://d11cxue75f9a69.cloudfront.net/product-images/airfuze-jet-20000-0-1-1714169588315.jpg',
           productName: 'Core 6000 Puffs',
           productPrice: '20',
           productQuantity: '0'),
       const ProductCardWidget(
           productImage:
-              'https://farm9.staticflickr.com/8295/8007075227_dc958c1fe6_z_d.jpg',
+              'https://d11cxue75f9a69.cloudfront.net/product-images/ebcreate-bc5000-disposable-vape-50mg-10ct-display-5179-900x900-0-1-1714170586934.png',
           productName: 'Core Puffs 10Ct',
           productPrice: '20',
           productQuantity: '0'),
       const ProductCardWidget(
           productImage:
-              'https://farm8.staticflickr.com/7377/9359257263_81b080a039_z_d.jpg',
-          productName: 'Core 6000 Puffs',
+              'https://d11cxue75f9a69.cloudfront.net/product-images/12-18-2023-Nicky-Jam-x-Fume-10000-Disposable-Vape-10-69409.1702919269-1-1713651135233.jpg',
+          productName: 'Core 6000 Puffs Puffs Puffs',
           productPrice: '20',
           productQuantity: '0'),
       ProductCardWidget(
           onTap: () {},
           productImage:
-              'https://farm9.staticflickr.com/8295/8007075227_dc958c1fe6_z_d.jpg',
+              'https://d11cxue75f9a69.cloudfront.net/product-images/Fume-Eternity-20000-Disposable-Vape-Bundle-2424d559-bc44-4e45-94d1-b3eb37023c85-1-1713299802143.png',
           productName: 'Core Puffs 10Ct',
           productPrice: '20',
           productQuantity: '0'),
@@ -72,6 +72,7 @@ class CustomProductContainer extends StatelessWidget {
                   padding: const EdgeInsets.all(10.0),
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      mainAxisExtent: 260,
                       crossAxisCount: 2,
                       mainAxisSpacing: 8.0,
                       crossAxisSpacing: 8.0),

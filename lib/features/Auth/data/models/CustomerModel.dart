@@ -29,11 +29,11 @@ class CustomerModel {
   final String? paymentTermsName;
   final String? notes;
   final String? notes2;
-  final int? storeCredit;
-  final int? loyaltyPoints;
-  final int? dueAmount;
+  final double? storeCredit;
+  final double? loyaltyPoints;
+  final double? dueAmount;
   final String? dueAmountStr;
-  final int? excessAmount;
+  final double? excessAmount;
   final bool? active;
   final bool? verified;
   final bool? viewSpecificCategory;
@@ -233,11 +233,11 @@ class CustomerModel {
       String? paymentTermsName,
       String? notes,
       String? notes2,
-      int? storeCredit,
-      int? loyaltyPoints,
-      int? dueAmount,
+      double? storeCredit,
+      double? loyaltyPoints,
+      double? dueAmount,
       String? dueAmountStr,
-      int? excessAmount,
+      double? excessAmount,
       bool? active,
       bool? verified,
       bool? viewSpecificCategory,
@@ -567,13 +567,16 @@ class CustomerModel {
         notes: json['notes'] as String?,
         notes2: json['notes2'] as String?,
         storeCredit:
-            json['storeCredit'] == null ? null : json['storeCredit'] as int,
-        loyaltyPoints:
-            json['loyaltyPoints'] == null ? null : json['loyaltyPoints'] as int,
-        dueAmount: json['dueAmount'] == null ? null : json['dueAmount'] as int,
+            json['storeCredit'] == null ? null : json['storeCredit'] as double,
+        loyaltyPoints: json['loyaltyPoints'] == null
+            ? null
+            : json['loyaltyPoints'] as double,
+        dueAmount:
+            json['dueAmount'] == null ? null : json['dueAmount'] as double,
         dueAmountStr: json['dueAmountStr'] as String?,
-        excessAmount:
-            json['excessAmount'] == null ? null : json['excessAmount'] as int,
+        excessAmount: json['excessAmount'] == null
+            ? null
+            : json['excessAmount'] as double,
         active: json['active'] == null ? null : json['active'] as bool,
         verified: json['verified'] == null ? null : json['verified'] as bool,
         viewSpecificCategory: json['viewSpecificCategory'] == null

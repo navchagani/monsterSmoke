@@ -19,6 +19,7 @@ class CustomerBloc extends Bloc<CustomerBlocEvent, CustomerBlocState> {
 
   Future<FutureOr<void>> getCustomer(
       GetCustomerEvent event, Emitter<CustomerBlocState> emit) async {
+    emit(CustomerLoadingState());
     final data = await caseGetUserData.call(token: event.token);
 
     if (data is SuccessState) {

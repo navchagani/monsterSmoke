@@ -1,9 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
+import 'package:monstersmoke/core/widgets/CustomDialog.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
+import 'package:monstersmoke/features/Auth/presentation/bloc/CustomerBloc/customer_bloc_bloc.dart';
+import 'package:monstersmoke/features/Auth/presentation/bloc/SignInBloc/sign_in_bloc_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -18,17 +23,56 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-          maxHeight: 450,
-          minHeight: 100,
-          maxWidth: MediaQuery.of(context).size.width * 0.7),
-      child: Material(
-        borderRadius: BorderRadius.circular(10.0),
-        clipBehavior: Clip.hardEdge,
-        child: Scaffold(
-          appBar: appBar(),
-          body: body(),
+    return BlocListener<SignInBloc, SignInBlocState>(
+      listener: (context, signInState) {
+        if (signInState is SignInLoadingState) {
+          CustomDialog(context: context, text: 'Signing In..')
+              .showLoadingDialog();
+        }
+
+        if (signInState is SignInCompletedState) {
+          Navigator.of(context).pop();
+          CustomerBloc bloc = BlocProvider.of(context);
+          bloc.add(GetCustomerEvent(token: signInState.token));
+        }
+
+        if (signInState is SignInErrorState) {
+          Navigator.of(context).pop();
+          CustomDialog(context: context, text: signInState.error.message)
+              .showErrorDialog();
+        }
+      },
+      child: BlocListener<CustomerBloc, CustomerBlocState>(
+        listener: (context, customerState) {
+          if (customerState is CustomerLoadingState) {
+            CustomDialog(context: context, text: 'Getting Customer')
+                .showLoadingDialog();
+          }
+
+          if (customerState is CustomerCompletedState) {
+            log('${customerState.customerModel.toJson()}');
+            Navigator.of(context).popUntil((route) => route.isFirst);
+          }
+
+          if (customerState is CustomerErrorState) {
+            Navigator.of(context).pop();
+            CustomDialog(context: context, text: customerState.error.message)
+                .showErrorDialog();
+          }
+        },
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+              maxHeight: 450,
+              minHeight: 100,
+              maxWidth: MediaQuery.of(context).size.width * 0.7),
+          child: Material(
+            borderRadius: BorderRadius.circular(10.0),
+            clipBehavior: Clip.hardEdge,
+            child: Scaffold(
+              appBar: appBar(),
+              body: body(),
+            ),
+          ),
         ),
       ),
     );
@@ -51,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
             controller: emailController,
             onChanged: onEmailChanged,
           ),
-          Decorations.height15,
+          Decorations.height10,
           CustomInputField(
               labelText: 'Password',
               hintText: 'Enter Password',
@@ -61,6 +105,7 @@ class _LoginPageState extends State<LoginPage> {
             height: 30.0,
           ),
           CustomButton(
+            onTap: onSignIn,
             text: 'Sign In',
             enabled: emailController.text.isNotEmpty &&
                 passwordController.text.isNotEmpty,
@@ -84,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
             height: 20.0,
           ),
           CustomButton(
-            onTap: onSignUp,
+            onTap: onMoveToSignUp,
             isBordered: true,
             text: 'Sign Up',
             enabled: true,
@@ -96,8 +141,14 @@ class _LoginPageState extends State<LoginPage> {
 
   onPasswordChanged(String value) => setState(() {});
 
-  onSignUp() {
+  onMoveToSignUp() {
     AuthAction bloc = BlocProvider.of<AuthAction>(context);
     bloc.add(true);
+  }
+
+  onSignIn() {
+    SignInBloc bloc = BlocProvider.of<SignInBloc>(context);
+    bloc.add(SignInEvent(
+        email: emailController.text, password: passwordController.text));
   }
 }

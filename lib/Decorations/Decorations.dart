@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Decorations {
+  static Widget get height30 => const SizedBox(height: 30);
+
   static Widget get height15 => const SizedBox(height: 15);
   static Widget get height10 => const SizedBox(height: 10);
   static Widget get height5 => const SizedBox(height: 5);
@@ -40,23 +42,26 @@ class Decorations {
       );
 
   static InputDecoration inputDecoration(
-          {required String hint, bool? noFill, Widget? icon}) =>
+          {required String hint,
+          bool? noFill,
+          Widget? icon,
+          required BuildContext context}) =>
       InputDecoration(
         isDense: true,
         floatingLabelBehavior: FloatingLabelBehavior.always,
         filled: noFill ?? true ? true : false,
-        fillColor: Colors.grey.shade200,
+        fillColor: Theme.of(context).colorScheme.background,
         focusColor: Colors.grey.shade100,
         suffixIcon: icon,
         suffixStyle: TextStyle(color: Colors.grey.withOpacity(0.8)),
         hintText: hint,
         hintStyle: const TextStyle(color: Colors.black26),
         border: const OutlineInputBorder(
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(color: Colors.black45),
           borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(color: Colors.black45),
           borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
         contentPadding: const EdgeInsets.all(16),

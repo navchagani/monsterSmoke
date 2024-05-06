@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'AuthApi.dart';
+part of 'AssetsApi.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,100 +8,33 @@ part of 'AuthApi.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _AuthApi implements AuthApi {
-  _AuthApi(
+class _AssetsApi implements AssetsApi {
+  _AssetsApi(
     this._dio, {
     this.baseUrl,
   }) {
     baseUrl ??= 'https://erp.monstersmokewholesale.com';
   }
 
-  final dio.Dio _dio;
+  final Dio _dio;
 
   String? baseUrl;
 
   @override
-  Future<HttpResponse<String?>> signIn({
-    required String email,
-    required String password,
-  }) async {
+  Future<HttpResponse<List<CountryModel>>> getCountries() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = {'username': email, 'password': password, 'type': 'customer'};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<String>>(dio.Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              Constants.options(_dio),
-              '/api/authenticate',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-
-    final value = _result.data!['result'];
-    final token = value['access'];
-    final refresh = value['refresh'];
-
-    final httpResponse = HttpResponse(token as String, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<bool?>> signUp(
-      {required CreateCustomerModel customerModel}) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = customerModel.toJson();
-    _data.addAll(customerModel.toJson());
-    final _result =
-        await _dio.fetch<bool>(_setStreamType<HttpResponse<bool>>(dio.Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              Constants.options(_dio),
-              '/api/ecommerce/customer/withDocuments',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = _result.data;
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<CustomerModel?>> getCustomerData(
-      {required String token}) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': 'Bearer $token'};
-    _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>?>(
-        _setStreamType<HttpResponse<CustomerModel>>(dio.Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<List<CountryModel>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               Constants.options(_dio),
-              '/api/ecommerce/customer',
+              '/api/country/all',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -110,23 +43,92 @@ class _AuthApi implements AuthApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-
-    final value = _result.data!['result'];
-    final customerData = value['customerDto'];
-    final model =
-        _result.data == null ? null : CustomerModel.fromJson(customerData!);
-    final httpResponse = HttpResponse(model, _result);
+    List<dynamic> data = _result.data!['result'];
+    var value = data
+        .map((dynamic i) => CountryModel.fromJson(i as Map<String, dynamic>))
+        .toList();
+    final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
-  dio.RequestOptions _setStreamType<T>(dio.RequestOptions requestOptions) {
+  @override
+  Future<HttpResponse<List<StateModel>>> getStates(
+      {required String stateId}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<List<StateModel>>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              Constants.options(_dio),
+              '/api/country/$stateId/allState',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    List<dynamic> data = _result.data!['result'];
+    var value = data
+        .map((dynamic i) => StateModel.fromJson(i as Map<String, dynamic>))
+        .toList();
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<List<SliderModel>>> getSliders({
+    required String sliderId,
+    required String buisnessId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'sliderTypeId': sliderId,
+      r'businessTypeId': buisnessId,
+    };
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<List<SliderModel>>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              Constants.options(_dio),
+              '/api/home/sliderImages',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    Map<String, dynamic> data = _result.data!['result'];
+    List<dynamic> slides = data['sliderImageList'];
+    var value = slides
+        .map((dynamic i) => SliderModel.fromJson(i as Map<String, dynamic>))
+        .toList();
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
-        !(requestOptions.responseType == dio.ResponseType.bytes ||
-            requestOptions.responseType == dio.ResponseType.stream)) {
+        !(requestOptions.responseType == ResponseType.bytes ||
+            requestOptions.responseType == ResponseType.stream)) {
       if (T == String) {
-        requestOptions.responseType = dio.ResponseType.plain;
+        requestOptions.responseType = ResponseType.plain;
       } else {
-        requestOptions.responseType = dio.ResponseType.json;
+        requestOptions.responseType = ResponseType.json;
       }
     }
     return requestOptions;

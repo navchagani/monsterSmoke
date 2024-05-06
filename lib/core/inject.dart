@@ -9,6 +9,13 @@ import 'package:monstersmoke/features/Auth/domain/usecases/AuthCases.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/CustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/SignInBloc/sign_in_bloc_bloc.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/SignUpBloc/sign_up_bloc_bloc.dart';
+import 'package:monstersmoke/features/GETAssets/data/datasources/AssetsApi.dart';
+import 'package:monstersmoke/features/GETAssets/data/repositories/AssetsRepoImp.dart';
+import 'package:monstersmoke/features/GETAssets/domain/repositories/AssetsRepo.dart';
+import 'package:monstersmoke/features/GETAssets/domain/usecases/AssetsUseCase.dart';
+import 'package:monstersmoke/features/GETAssets/presentation/bloc/CountryBloc/country_bloc_bloc.dart';
+import 'package:monstersmoke/features/GETAssets/presentation/bloc/SliderBloc/slider_bloc_bloc.dart';
+import 'package:monstersmoke/features/GETAssets/presentation/bloc/StateBloc/state_bloc_bloc.dart';
 import 'package:monstersmoke/features/Products/presentation/bloc/products_bloc.dart';
 
 final getIt = GetIt.instance;
@@ -30,6 +37,16 @@ void depInjection() {
   getIt.registerFactory(() => SignInBloc(getIt()));
   getIt.registerFactory(() => SignUpBloc(getIt()));
   getIt.registerFactory(() => CustomerBloc(getIt()));
+
+  // Assets Apis
+  getIt.registerSingleton<AssetsApi>(AssetsApi(getIt()));
+  getIt.registerSingleton<AssetsRepo>(AssetsRepoImp(assetsApi: getIt()));
+  getIt.registerSingleton<CaseGetSliders>(CaseGetSliders(repo: getIt()));
+  getIt.registerSingleton<CaseGetCountries>(CaseGetCountries(repo: getIt()));
+  getIt.registerSingleton<CaseGetStates>(CaseGetStates(repo: getIt()));
+  getIt.registerFactory(() => SliderBloc(getIt()));
+  getIt.registerFactory(() => CountryBloc(getIt()));
+  getIt.registerFactory(() => StateBloc(getIt()));
 
   // Product Apis
   getIt.registerFactory(() => ProductsBloc());
