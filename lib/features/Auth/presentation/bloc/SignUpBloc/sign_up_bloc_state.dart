@@ -12,9 +12,9 @@ final class SignUpBlocInitial extends SignUpBlocState {}
 class SignUpLoadingState extends SignUpBlocState {}
 
 class SignUpCompletedState extends SignUpBlocState {
-  final bool completed;
+  final CustomerModel customerModel;
 
-  const SignUpCompletedState({required this.completed});
+  const SignUpCompletedState({required this.customerModel});
 }
 
 class SignUpErrorState extends SignUpBlocState {

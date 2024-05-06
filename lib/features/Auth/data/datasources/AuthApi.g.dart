@@ -9,10 +9,7 @@ part of 'AuthApi.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
 class _AuthApi implements AuthApi {
-  _AuthApi(
-    this._dio, {
-    this.baseUrl,
-  }) {
+  _AuthApi(this._dio) {
     baseUrl ??= 'https://erp.monstersmokewholesale.com';
   }
 
@@ -56,15 +53,20 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<HttpResponse<bool?>> signUp(
-      {required CreateCustomerModel customerModel}) async {
+  Future<HttpResponse<customerModel.CustomerModel?>> signUp(
+      {required CreateCustomerModel createCustomerModel}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = customerModel.toJson();
-    _data.addAll(customerModel.toJson());
-    final _result =
-        await _dio.fetch<bool>(_setStreamType<HttpResponse<bool>>(dio.Options(
+    // print(jsonEncode(customerModel.toJson()));
+    final _data = dio.FormData.fromMap(
+        {'customerObj': jsonEncode(createCustomerModel.toJson())});
+
+    print('${_data}');
+
+    // _data.addAll(customerModel.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<bool>>(dio.Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -80,13 +82,14 @@ class _AuthApi implements AuthApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = _result.data;
+    final value = customerModel.CustomerModel.fromJson(_result.data!['result']);
+
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<CustomerModel?>> getCustomerData(
+  Future<HttpResponse<customerModel.CustomerModel?>> getCustomerData(
       {required String token}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -94,7 +97,7 @@ class _AuthApi implements AuthApi {
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>?>(
-        _setStreamType<HttpResponse<CustomerModel>>(dio.Options(
+        _setStreamType<HttpResponse<customerModel.CustomerModel>>(dio.Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -113,8 +116,9 @@ class _AuthApi implements AuthApi {
 
     final value = _result.data!['result'];
     final customerData = value['customerDto'];
-    final model =
-        _result.data == null ? null : CustomerModel.fromJson(customerData!);
+    final model = _result.data == null
+        ? null
+        : customerModel.CustomerModel.fromJson(customerData!);
     final httpResponse = HttpResponse(model, _result);
     return httpResponse;
   }

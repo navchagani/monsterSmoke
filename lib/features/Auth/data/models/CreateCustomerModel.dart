@@ -51,7 +51,7 @@ class CreateCustomerModel {
       'email': email,
       'phone': phone,
       'company': company,
-      'dbaName': dbaName,
+      'dbaName': "Salesgent",
       'primaryBusinessName': primaryBusinessName,
       'taxId': taxId
     };

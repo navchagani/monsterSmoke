@@ -51,12 +51,13 @@ class AuthRepoImp extends AuthRepo {
   }
 
   @override
-  Future<DataStates<bool?>> signUp(
-      {required CreateCustomerModel customerModel}) async {
+  Future<DataStates<CustomerModel?>> signUp(
+      {required CreateCustomerModel createCustomerModel}) async {
     try {
-      final data = await authApi.signUp(customerModel: customerModel);
+      final data =
+          await authApi.signUp(createCustomerModel: createCustomerModel);
 
-      if (data.response.statusCode == HttpStatus.ok) {
+      if (data.response.statusCode == HttpStatus.created) {
         return SuccessState(data: data.data);
       } else {
         return ErrorState(

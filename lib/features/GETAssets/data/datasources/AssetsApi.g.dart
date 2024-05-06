@@ -113,13 +113,11 @@ class _AssetsApi implements AssetsApi {
               baseUrl,
             ))));
     Map<String, dynamic> data = _result.data!['result'];
-    log('${data}');
     List<dynamic> slides = data['sliderImageList'];
     var value = slides
         .map((dynamic i) => SliderModel.fromJson(i as Map<String, dynamic>))
         .toList();
 
-    log('${value}');
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

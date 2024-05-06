@@ -16,16 +16,16 @@ class CaseSignIn extends CaseFuture<DataStates<String?>, void> {
   }
 }
 
-class CaseSignUp extends CaseFuture<DataStates<bool?>, void> {
+class CaseSignUp extends CaseFuture<DataStates<CustomerModel?>, void> {
   final AuthRepo repo;
 
   CaseSignUp({required this.repo});
 
   @override
-  Future<DataStates<bool?>> call(
+  Future<DataStates<CustomerModel?>> call(
       {void params, CreateCustomerModel? customerModel}) {
     return repo.signUp(
-        customerModel: customerModel ?? const CreateCustomerModel());
+        createCustomerModel: customerModel ?? const CreateCustomerModel());
   }
 }
 

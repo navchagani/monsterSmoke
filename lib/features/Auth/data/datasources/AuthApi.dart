@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart' as dio;
 import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/features/Auth/data/models/CreateCustomerModel.dart';
-import 'package:monstersmoke/features/Auth/data/models/CustomerModel.dart';
+import 'package:monstersmoke/features/Auth/data/models/CustomerModel.dart'
+    as customerModel;
+
 import 'package:retrofit/retrofit.dart';
 
 part 'AuthApi.g.dart';
@@ -16,9 +19,9 @@ abstract class AuthApi {
   Future<HttpResponse<String?>> signIn(
       {@Body() required String email, @Body() required String password});
   @POST('/api/ecommerce/customer/withDocuments')
-  Future<HttpResponse<bool?>> signUp(
-      {@Body() required CreateCustomerModel customerModel});
+  Future<HttpResponse<customerModel.CustomerModel?>> signUp(
+      {@Body() required CreateCustomerModel createCustomerModel});
   @GET('/api/ecommerce/customer')
-  Future<HttpResponse<CustomerModel?>> getCustomerData(
+  Future<HttpResponse<customerModel.CustomerModel?>> getCustomerData(
       {@Header('Authorization') required String token});
 }

@@ -25,7 +25,7 @@ class CustomerModel {
   final String? tierStr;
   final String? authUserLoginId;
   final String? adminId;
-  final String? paymentTermsId;
+  final int? paymentTermsId;
   final String? paymentTermsName;
   final String? notes;
   final String? notes2;
@@ -45,7 +45,7 @@ class CustomerModel {
   final String? instagramLink;
   final String? referBySalesRep;
   final String? referBySalesRepName;
-  final String? primarySalesRepresentativeId;
+  final int? primarySalesRepresentativeId;
   final String? secondarySalesRepresentativeId;
   final String? salesRepresentativeName;
   final String? salesRepresentativePhone;
@@ -96,7 +96,7 @@ class CustomerModel {
   final String? billingZip;
   final String? primaryBusinessName;
   final String? creditLimit;
-  final String? signUpStoreId;
+  final int? signUpStoreId;
   final bool? sendDuePaymentReminder;
   final String? customerDocumentList;
   final String? customerPaymentModePreferenceDtoList;
@@ -229,7 +229,7 @@ class CustomerModel {
       String? tierStr,
       String? authUserLoginId,
       String? adminId,
-      String? paymentTermsId,
+      int? paymentTermsId,
       String? paymentTermsName,
       String? notes,
       String? notes2,
@@ -249,7 +249,7 @@ class CustomerModel {
       String? instagramLink,
       String? referBySalesRep,
       String? referBySalesRepName,
-      String? primarySalesRepresentativeId,
+      int? primarySalesRepresentativeId,
       String? secondarySalesRepresentativeId,
       String? salesRepresentativeName,
       String? salesRepresentativePhone,
@@ -300,7 +300,7 @@ class CustomerModel {
       String? billingZip,
       String? primaryBusinessName,
       String? creditLimit,
-      String? signUpStoreId,
+      int? signUpStoreId,
       bool? sendDuePaymentReminder,
       String? customerDocumentList,
       String? customerPaymentModePreferenceDtoList}) {
@@ -562,7 +562,7 @@ class CustomerModel {
         tierStr: json['tierStr'] as String?,
         authUserLoginId: json['authUserLoginId'] as String?,
         adminId: json['adminId'] as String?,
-        paymentTermsId: json['paymentTermsId'] as String?,
+        paymentTermsId: json['paymentTermsId'] as int?,
         paymentTermsName: json['paymentTermsName'] as String?,
         notes: json['notes'] as String?,
         notes2: json['notes2'] as String?,
@@ -593,7 +593,7 @@ class CustomerModel {
         referBySalesRep: json['referBySalesRep'] as String?,
         referBySalesRepName: json['referBySalesRepName'] as String?,
         primarySalesRepresentativeId:
-            json['primarySalesRepresentativeId'] as String?,
+            json['primarySalesRepresentativeId'] as int?,
         secondarySalesRepresentativeId:
             json['secondarySalesRepresentativeId'] as String?,
         salesRepresentativeName: json['salesRepresentativeName'] as String?,
@@ -659,7 +659,7 @@ class CustomerModel {
         billingZip: json['billingZip'] as String?,
         primaryBusinessName: json['primaryBusinessName'] as String?,
         creditLimit: json['creditLimit'] as String?,
-        signUpStoreId: json['signUpStoreId'] as String?,
+        signUpStoreId: json['signUpStoreId'] as int?,
         sendDuePaymentReminder: json['sendDuePaymentReminder'] == null
             ? null
             : json['sendDuePaymentReminder'] as bool,

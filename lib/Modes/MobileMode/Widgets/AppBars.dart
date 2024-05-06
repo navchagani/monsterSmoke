@@ -28,6 +28,7 @@ class _SliverBar1State extends State<SliverBar1> {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
+      automaticallyImplyLeading: false,
       toolbarHeight: 100,
       flexibleSpace: FlexibleSpaceBar(
         background: Container(

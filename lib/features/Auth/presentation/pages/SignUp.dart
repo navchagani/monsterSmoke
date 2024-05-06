@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
@@ -46,12 +48,15 @@ class _SignUpPageState extends State<SignUpPage> {
         }
 
         if (signUpState is SignUpCompletedState) {
+          log('${signUpState.customerModel.toJson()}');
           Navigator.of(context).pop();
           CustomDialog(context: context, text: 'Signed Up Successfully..')
               .showCompletedDialog();
         }
 
         if (signUpState is SignUpErrorState) {
+          log('In Error State');
+
           Navigator.of(context).pop();
           CustomDialog(context: context, text: signUpState.error.message)
               .showErrorDialog();
@@ -175,7 +180,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 return DropdownButtonFormField<CountryModel>(
                     decoration: Decorations.inputDecoration(
                         hint: 'Country', context: context),
-                    items: [],
+                    items: const [],
                     onChanged: onAddressChanged);
               },
             ),
@@ -199,7 +204,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 return DropdownButtonFormField<CountryModel>(
                     decoration: Decorations.inputDecoration(
                         hint: 'States', context: context),
-                    items: [],
+                    items: const [],
                     onChanged: onAddressChanged);
               },
             ),
