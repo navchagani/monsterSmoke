@@ -1,15 +1,15 @@
 import 'package:monstersmoke/config/DataStates.dart';
 import 'package:monstersmoke/config/useCases.dart';
-import 'package:monstersmoke/features/GetCat&Brand/data/models/BrandModel.dart';
 import 'package:monstersmoke/features/GetCat&Brand/data/models/CategoryModel.dart';
 import 'package:monstersmoke/features/GetCat&Brand/domain/repositories/cat&BrandRepo.dart';
+import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
 
-class CaseGetBrands extends CaseFuture<DataStates<List<BrandModel>>, void> {
+class CaseGetBrands extends CaseFuture<DataStates<List<ProductModel>>, void> {
   final CatBrandRepo repo;
 
   CaseGetBrands({required this.repo});
   @override
-  Future<DataStates<List<BrandModel>>> call(
+  Future<DataStates<List<ProductModel>>> call(
       {void params, String? storeIds, String? brandIdList}) {
     return repo.getBrands(
         storeIds: storeIds.toString(), brandIdList: brandIdList.toString());

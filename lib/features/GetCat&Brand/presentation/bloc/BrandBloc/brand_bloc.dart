@@ -4,8 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:monstersmoke/config/DataStates.dart';
-import 'package:monstersmoke/features/GetCat&Brand/data/models/BrandModel.dart';
 import 'package:monstersmoke/features/GetCat&Brand/domain/usecases/cat&BrandUseCase.dart';
+import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
 
 part 'brand_event.dart';
 part 'brand_state.dart';
@@ -20,7 +20,8 @@ class BrandBloc extends Bloc<BrandEvent, BrandState> {
   Future<FutureOr<void>> getBrands(
       GetBrandEvent event, Emitter<BrandState> emit) async {
     emit(BrandLoadingBrand());
-    final data = await caseGetBrands();
+    final data = await caseGetBrands.call(
+        storeIds: event.storeIds, brandIdList: event.brandIdList);
 
     if (data is SuccessState) {
       emit(BrandCompletedBrand(lilstContries: data.data!));

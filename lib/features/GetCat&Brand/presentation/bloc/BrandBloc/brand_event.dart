@@ -10,5 +10,6 @@ sealed class BrandEvent extends Equatable {
 class BrandInitialEvent extends BrandEvent {}
 
 class GetBrandEvent extends BrandEvent {
-  const GetBrandEvent();
+  final String storeIds, brandIdList;
+  const GetBrandEvent(this.storeIds, this.brandIdList);
 }

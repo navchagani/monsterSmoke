@@ -12,7 +12,7 @@ final class BrandInitial extends BrandState {}
 class BrandLoadingBrand extends BrandState {}
 
 class BrandCompletedBrand extends BrandState {
-  final List<BrandModel> lilstContries;
+  final List<ProductModel> lilstContries;
 
   const BrandCompletedBrand({required this.lilstContries});
 }

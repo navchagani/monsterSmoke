@@ -3,16 +3,16 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:monstersmoke/config/DataStates.dart';
 import 'package:monstersmoke/features/GetCat&Brand/data/datasources/cat&BrandApi.dart';
-import 'package:monstersmoke/features/GetCat&Brand/data/models/BrandModel.dart';
 import 'package:monstersmoke/features/GetCat&Brand/data/models/CategoryModel.dart';
 import 'package:monstersmoke/features/GetCat&Brand/domain/repositories/cat&BrandRepo.dart';
+import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
 
 class CatBrandsRepoImp extends CatBrandRepo {
   final CatBrandApi catBrandApi;
   CatBrandsRepoImp(this.catBrandApi);
 
   @override
-  Future<DataStates<List<BrandModel>>> getBrands(
+  Future<DataStates<List<ProductModel>>> getBrands(
       {required String storeIds, required String brandIdList}) async {
     try {
       final data = await catBrandApi.getBrands(

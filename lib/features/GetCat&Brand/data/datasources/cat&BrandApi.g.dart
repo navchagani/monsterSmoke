@@ -47,10 +47,9 @@ class _CatBrandApi implements CatBrandApi {
               baseUrl,
             ))));
 
-    final value = _result.data!['result'];
-    List<dynamic> content = value['content'];
+    List<dynamic> value = _result.data!['result'];
 
-    var data = content!
+    var data = value
         .map((dynamic i) => CategoryModel.fromJson(i as Map<String, dynamic>))
         .toList();
     final httpResponse = HttpResponse(data, _result);
@@ -58,7 +57,7 @@ class _CatBrandApi implements CatBrandApi {
   }
 
   @override
-  Future<HttpResponse<List<BrandModel>>> getBrands({
+  Future<HttpResponse<List<ProductModel>>> getBrands({
     required String storeIds,
     required String brandIdList,
   }) async {
@@ -87,9 +86,11 @@ class _CatBrandApi implements CatBrandApi {
               baseUrl,
             ))));
 
-    List<dynamic> content = _result.data!['result'];
+    final data = _result.data!['result'];
+    List<dynamic> content = data['content'];
+
     var value = content
-        .map((dynamic i) => BrandModel.fromJson(i as Map<String, dynamic>))
+        .map((dynamic i) => ProductModel.fromJson(i as Map<String, dynamic>))
         .toList();
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;

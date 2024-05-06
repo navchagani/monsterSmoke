@@ -16,6 +16,12 @@ import 'package:monstersmoke/features/GETAssets/domain/usecases/AssetsUseCase.da
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/CountryBloc/country_bloc_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/SliderBloc/slider_bloc_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/StateBloc/state_bloc_bloc.dart';
+import 'package:monstersmoke/features/GetCat&Brand/data/datasources/cat&BrandApi.dart';
+import 'package:monstersmoke/features/GetCat&Brand/data/repositories/cat&BrandsRepoImp.dart';
+import 'package:monstersmoke/features/GetCat&Brand/domain/repositories/cat&BrandRepo.dart';
+import 'package:monstersmoke/features/GetCat&Brand/domain/usecases/cat&BrandUseCase.dart';
+import 'package:monstersmoke/features/GetCat&Brand/presentation/bloc/BrandBloc/brand_bloc.dart';
+import 'package:monstersmoke/features/GetCat&Brand/presentation/bloc/CategoryBloc/category_bloc.dart';
 import 'package:monstersmoke/features/Products/presentation/bloc/products_bloc.dart';
 
 final getIt = GetIt.instance;
@@ -47,6 +53,14 @@ void depInjection() {
   getIt.registerFactory(() => SliderBloc(getIt()));
   getIt.registerFactory(() => CountryBloc(getIt()));
   getIt.registerFactory(() => StateBloc(getIt()));
+
+  // Cateogry Brands Apis
+  getIt.registerSingleton<CatBrandApi>(CatBrandApi(getIt()));
+  getIt.registerSingleton<CatBrandRepo>(CatBrandsRepoImp(getIt()));
+  getIt.registerSingleton<CaseGetBrands>(CaseGetBrands(repo: getIt()));
+  getIt.registerSingleton<CaseGetCategories>(CaseGetCategories(repo: getIt()));
+  getIt.registerFactory(() => BrandBloc(getIt()));
+  getIt.registerFactory(() => CategoryBloc(getIt()));
 
   // Product Apis
   getIt.registerFactory(() => ProductsBloc());

@@ -20,7 +20,8 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   Future<FutureOr<void>> getCategorys(
       GetCategoryEvent event, Emitter<CategoryState> emit) async {
     emit(CategoryLoadingCategory());
-    final data = await caseGetCategories();
+    final data =
+        await caseGetCategories(buissnessTypeId: event.buissnessTypeId);
 
     if (data is SuccessState) {
       emit(CategoryCompletedCategory(lilstContries: data.data!));

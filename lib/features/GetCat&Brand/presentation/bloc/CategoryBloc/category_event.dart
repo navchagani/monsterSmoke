@@ -10,5 +10,6 @@ sealed class CategoryEvent extends Equatable {
 class CategoryInitialEvent extends CategoryEvent {}
 
 class GetCategoryEvent extends CategoryEvent {
-  const GetCategoryEvent();
+  final String buissnessTypeId;
+  const GetCategoryEvent(this.buissnessTypeId);
 }
