@@ -31,40 +31,6 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
 
   @override
   Widget build(BuildContext context) {
-    // final productList = [
-    //   const ProductCardWidget(
-    //       productImage:
-    //           'https://d11cxue75f9a69.cloudfront.net/product-images/foger-ct10000-1-1714432227643.jpg',
-    //       productName: 'Core 6000 Puffs 10Ct',
-    //       productPrice: '20',
-    //       productQuantity: '0'),
-    //   const ProductCardWidget(
-    //       productImage:
-    //           'https://d11cxue75f9a69.cloudfront.net/product-images/airfuze-jet-20000-0-1-1714169588315.jpg',
-    //       productName: 'Core 6000 Puffs',
-    //       productPrice: '20',
-    //       productQuantity: '0'),
-    //   const ProductCardWidget(
-    //       productImage:
-    //           'https://d11cxue75f9a69.cloudfront.net/product-images/ebcreate-bc5000-disposable-vape-50mg-10ct-display-5179-900x900-0-1-1714170586934.png',
-    //       productName: 'Core Puffs 10Ct',
-    //       productPrice: '20',
-    //       productQuantity: '0'),
-    //   const ProductCardWidget(
-    //       productImage:
-    //           'https://d11cxue75f9a69.cloudfront.net/product-images/12-18-2023-Nicky-Jam-x-Fume-10000-Disposable-Vape-10-69409.1702919269-1-1713651135233.jpg',
-    //       productName: 'Core 6000 Puffs Puffs Puffs',
-    //       productPrice: '20',
-    //       productQuantity: '0'),
-    //   ProductCardWidget(
-    //       onTap: () {},
-    //       productImage:
-    //           'https://d11cxue75f9a69.cloudfront.net/product-images/Fume-Eternity-20000-Disposable-Vape-Bundle-2424d559-bc44-4e45-94d1-b3eb37023c85-1-1713299802143.png',
-    //       productName: 'Core Puffs 10Ct',
-    //       productPrice: '20',
-    //       productQuantity: '0'),
-    // ];
-
     return SizedBox(
       width: double.infinity,
       child: Column(children: [

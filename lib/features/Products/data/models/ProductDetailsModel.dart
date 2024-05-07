@@ -1,7 +1,7 @@
 class ProductDetailModel {
   final MasterProductDetails? masterProductDetails;
-  final List<String>? productImageList;
-  final List<String>? header;
+  final List<dynamic>? productImageList;
+  final List<dynamic>? header;
   final Body? body;
   const ProductDetailModel(
       {this.masterProductDetails,
@@ -10,8 +10,8 @@ class ProductDetailModel {
       this.body});
   ProductDetailModel copyWith(
       {MasterProductDetails? masterProductDetails,
-      List<String>? productImageList,
-      List<String>? header,
+      List<dynamic>? productImageList,
+      List<dynamic>? header,
       Body? body}) {
     return ProductDetailModel(
         masterProductDetails: masterProductDetails ?? this.masterProductDetails,
@@ -37,8 +37,8 @@ class ProductDetailModel {
                 json['masterProductDetails'] as Map<String, Object?>),
         productImageList: json['productImageList'] == null
             ? null
-            : json['productImageList'] as List<String>,
-        header: json['header'] == null ? null : json['header'] as List<String>,
+            : json['productImageList'] as List<dynamic>,
+        header: json['header'] == null ? null : json['header'] as List<dynamic>,
         body: json['body'] == null
             ? null
             : Body.fromJson(json['body'] as Map<String, Object?>));
@@ -340,11 +340,11 @@ empty:$empty
 }
 
 class Content {
-  final dynamic masterProductId;
+  final String? masterProductId;
   final int? productId;
-  final dynamic productCategoryId;
+  final String? productCategoryId;
   final String? productName;
-  final dynamic urlAlias;
+  final String? urlAlias;
   final String? shortDescription;
   final String? fullDescription;
   final int? availableQuantity;
@@ -354,24 +354,24 @@ class Content {
   final String? imageUrl;
   final String? upc;
   final String? sku;
-  final dynamic sequenceNumber;
+  final String? sequenceNumber;
   final ProductVariantLabelValues? productVariantLabelValues;
   final bool? categorySelected;
   final int? minQuantityToSale;
   final int? maxQuantityToSale;
   final int? quantityIncrement;
-  final dynamic tagImageDtoList;
-  final dynamic attachmentUrlList;
-  final dynamic metaTitle;
-  final dynamic metaKeyword;
-  final dynamic metaDescription;
-  final dynamic modelName;
-  final int? msrp;
-  final dynamic boxQuantity;
+  final String? tagImageDtoList;
+  final String? attachmentUrlList;
+  final String? metaTitle;
+  final String? metaKeyword;
+  final String? metaDescription;
+  final String? modelName;
+  final double? msrp;
+  final int? boxQuantity;
   final int? caseQuantity;
-  final int? nicotineStrength;
-  final int? volume;
-  final dynamic ouncePerProduct;
+  final double? nicotineStrength;
+  final double? volume;
+  final String? ouncePerProduct;
   const Content(
       {this.masterProductId,
       this.productId,
@@ -406,11 +406,11 @@ class Content {
       this.volume,
       this.ouncePerProduct});
   Content copyWith(
-      {dynamic? masterProductId,
+      {String? masterProductId,
       int? productId,
-      dynamic? productCategoryId,
+      String? productCategoryId,
       String? productName,
-      dynamic? urlAlias,
+      String? urlAlias,
       String? shortDescription,
       String? fullDescription,
       int? availableQuantity,
@@ -420,24 +420,24 @@ class Content {
       String? imageUrl,
       String? upc,
       String? sku,
-      dynamic? sequenceNumber,
+      String? sequenceNumber,
       ProductVariantLabelValues? productVariantLabelValues,
       bool? categorySelected,
       int? minQuantityToSale,
       int? maxQuantityToSale,
       int? quantityIncrement,
-      dynamic? tagImageDtoList,
-      dynamic? attachmentUrlList,
-      dynamic? metaTitle,
-      dynamic? metaKeyword,
-      dynamic? metaDescription,
-      dynamic? modelName,
-      int? msrp,
-      dynamic? boxQuantity,
+      String? tagImageDtoList,
+      String? attachmentUrlList,
+      String? metaTitle,
+      String? metaKeyword,
+      String? metaDescription,
+      String? modelName,
+      double? msrp,
+      int? boxQuantity,
       int? caseQuantity,
-      int? nicotineStrength,
-      int? volume,
-      dynamic? ouncePerProduct}) {
+      double? nicotineStrength,
+      double? volume,
+      String? ouncePerProduct}) {
     return Content(
         masterProductId: masterProductId ?? this.masterProductId,
         productId: productId ?? this.productId,
@@ -514,12 +514,12 @@ class Content {
 
   static Content fromJson(Map<String, Object?> json) {
     return Content(
-        masterProductId: json['masterProductId'] as dynamic,
+        masterProductId: json['masterProductId'] as String?,
         productId: json['productId'] == null ? null : json['productId'] as int,
-        productCategoryId: json['productCategoryId'] as dynamic,
+        productCategoryId: json['productCategoryId'] as String?,
         productName:
             json['productName'] == null ? null : json['productName'] as String,
-        urlAlias: json['urlAlias'] as dynamic,
+        urlAlias: json['urlAlias'] as String?,
         shortDescription: json['shortDescription'] == null
             ? null
             : json['shortDescription'] as String,
@@ -540,7 +540,7 @@ class Content {
         imageUrl: json['imageUrl'] == null ? null : json['imageUrl'] as String,
         upc: json['upc'] == null ? null : json['upc'] as String,
         sku: json['sku'] == null ? null : json['sku'] as String,
-        sequenceNumber: json['sequenceNumber'] as dynamic,
+        sequenceNumber: json['sequenceNumber'] as String?,
         productVariantLabelValues: json['productVariantLabelValues'] == null
             ? null
             : ProductVariantLabelValues.fromJson(
@@ -557,21 +557,21 @@ class Content {
         quantityIncrement: json['quantityIncrement'] == null
             ? null
             : json['quantityIncrement'] as int,
-        tagImageDtoList: json['tagImageDtoList'] as dynamic,
-        attachmentUrlList: json['attachmentUrlList'] as dynamic,
-        metaTitle: json['metaTitle'] as dynamic,
-        metaKeyword: json['metaKeyword'] as dynamic,
-        metaDescription: json['metaDescription'] as dynamic,
-        modelName: json['modelName'] as dynamic,
-        msrp: json['msrp'] == null ? null : json['msrp'] as int,
-        boxQuantity: json['boxQuantity'] as dynamic,
+        tagImageDtoList: json['tagImageDtoList'] as String?,
+        attachmentUrlList: json['attachmentUrlList'] as String?,
+        metaTitle: json['metaTitle'] as String?,
+        metaKeyword: json['metaKeyword'] as String?,
+        metaDescription: json['metaDescription'] as String?,
+        modelName: json['modelName'] as String?,
+        msrp: json['msrp'] == null ? null : json['msrp'] as double,
+        boxQuantity: json['boxQuantity'] as int?,
         caseQuantity:
             json['caseQuantity'] == null ? null : json['caseQuantity'] as int,
         nicotineStrength: json['nicotineStrength'] == null
             ? null
-            : json['nicotineStrength'] as int,
-        volume: json['volume'] == null ? null : json['volume'] as int,
-        ouncePerProduct: json['ouncePerProduct'] as dynamic);
+            : json['nicotineStrength'] as double,
+        volume: json['volume'] == null ? null : json['volume'] as double,
+        ouncePerProduct: json['ouncePerProduct'] as String?);
   }
 
   @override
@@ -715,9 +715,9 @@ class ProductVariantLabelValues {
 class MasterProductDetails {
   final int? masterProductId;
   final int? productId;
-  final dynamic productCategoryId;
+  final String? productCategoryId;
   final String? productName;
-  final dynamic urlAlias;
+  final String? urlAlias;
   final String? shortDescription;
   final String? fullDescription;
   final int? availableQuantity;
@@ -727,24 +727,24 @@ class MasterProductDetails {
   final String? imageUrl;
   final String? upc;
   final String? sku;
-  final dynamic sequenceNumber;
-  final dynamic productVariantLabelValues;
+  final String? sequenceNumber;
+  final String? productVariantLabelValues;
   final bool? categorySelected;
   final int? minQuantityToSale;
   final int? maxQuantityToSale;
   final int? quantityIncrement;
-  final dynamic tagImageDtoList;
-  final dynamic attachmentUrlList;
-  final dynamic metaTitle;
-  final dynamic metaKeyword;
-  final dynamic metaDescription;
+  final String? tagImageDtoList;
+  final String? attachmentUrlList;
+  final String? metaTitle;
+  final String? metaKeyword;
+  final String? metaDescription;
   final String? modelName;
-  final int? msrp;
-  final dynamic boxQuantity;
+  final double? msrp;
+  final String? boxQuantity;
   final int? caseQuantity;
-  final int? nicotineStrength;
-  final int? volume;
-  final dynamic ouncePerProduct;
+  final double? nicotineStrength;
+  final double? volume;
+  final String? ouncePerProduct;
   const MasterProductDetails(
       {this.masterProductId,
       this.productId,
@@ -781,9 +781,9 @@ class MasterProductDetails {
   MasterProductDetails copyWith(
       {int? masterProductId,
       int? productId,
-      dynamic? productCategoryId,
+      String? productCategoryId,
       String? productName,
-      dynamic? urlAlias,
+      String? urlAlias,
       String? shortDescription,
       String? fullDescription,
       int? availableQuantity,
@@ -793,24 +793,24 @@ class MasterProductDetails {
       String? imageUrl,
       String? upc,
       String? sku,
-      dynamic? sequenceNumber,
-      dynamic? productVariantLabelValues,
+      String? sequenceNumber,
+      String? productVariantLabelValues,
       bool? categorySelected,
       int? minQuantityToSale,
       int? maxQuantityToSale,
       int? quantityIncrement,
-      dynamic? tagImageDtoList,
-      dynamic? attachmentUrlList,
-      dynamic? metaTitle,
-      dynamic? metaKeyword,
-      dynamic? metaDescription,
+      String? tagImageDtoList,
+      String? attachmentUrlList,
+      String? metaTitle,
+      String? metaKeyword,
+      String? metaDescription,
       String? modelName,
-      int? msrp,
-      dynamic? boxQuantity,
+      double? msrp,
+      String? boxQuantity,
       int? caseQuantity,
-      int? nicotineStrength,
-      int? volume,
-      dynamic? ouncePerProduct}) {
+      double? nicotineStrength,
+      double? volume,
+      String? ouncePerProduct}) {
     return MasterProductDetails(
         masterProductId: masterProductId ?? this.masterProductId,
         productId: productId ?? this.productId,
@@ -891,10 +891,10 @@ class MasterProductDetails {
             ? null
             : json['masterProductId'] as int,
         productId: json['productId'] == null ? null : json['productId'] as int,
-        productCategoryId: json['productCategoryId'] as dynamic,
+        productCategoryId: json['productCategoryId'] as String?,
         productName:
             json['productName'] == null ? null : json['productName'] as String,
-        urlAlias: json['urlAlias'] as dynamic,
+        urlAlias: json['urlAlias'] as String?,
         shortDescription: json['shortDescription'] == null
             ? null
             : json['shortDescription'] as String,
@@ -915,8 +915,8 @@ class MasterProductDetails {
         imageUrl: json['imageUrl'] == null ? null : json['imageUrl'] as String,
         upc: json['upc'] == null ? null : json['upc'] as String,
         sku: json['sku'] == null ? null : json['sku'] as String,
-        sequenceNumber: json['sequenceNumber'] as dynamic,
-        productVariantLabelValues: json['productVariantLabelValues'] as dynamic,
+        sequenceNumber: json['sequenceNumber'] as String?,
+        productVariantLabelValues: json['productVariantLabelValues'] as String?,
         categorySelected: json['categorySelected'] == null
             ? null
             : json['categorySelected'] as bool,
@@ -929,22 +929,22 @@ class MasterProductDetails {
         quantityIncrement: json['quantityIncrement'] == null
             ? null
             : json['quantityIncrement'] as int,
-        tagImageDtoList: json['tagImageDtoList'] as dynamic,
-        attachmentUrlList: json['attachmentUrlList'] as dynamic,
-        metaTitle: json['metaTitle'] as dynamic,
-        metaKeyword: json['metaKeyword'] as dynamic,
-        metaDescription: json['metaDescription'] as dynamic,
+        tagImageDtoList: json['tagImageDtoList'] as String?,
+        attachmentUrlList: json['attachmentUrlList'] as String?,
+        metaTitle: json['metaTitle'] as String?,
+        metaKeyword: json['metaKeyword'] as String?,
+        metaDescription: json['metaDescription'] as String?,
         modelName:
             json['modelName'] == null ? null : json['modelName'] as String,
-        msrp: json['msrp'] == null ? null : json['msrp'] as int,
-        boxQuantity: json['boxQuantity'] as dynamic,
+        msrp: json['msrp'] == null ? null : json['msrp'] as double,
+        boxQuantity: json['boxQuantity'] as String?,
         caseQuantity:
             json['caseQuantity'] == null ? null : json['caseQuantity'] as int,
         nicotineStrength: json['nicotineStrength'] == null
             ? null
-            : json['nicotineStrength'] as int,
-        volume: json['volume'] == null ? null : json['volume'] as int,
-        ouncePerProduct: json['ouncePerProduct'] as dynamic);
+            : json['nicotineStrength'] as double,
+        volume: json['volume'] == null ? null : json['volume'] as double,
+        ouncePerProduct: json['ouncePerProduct'] as String?);
   }
 
   @override
