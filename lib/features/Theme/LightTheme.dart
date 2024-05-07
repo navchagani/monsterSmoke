@@ -60,7 +60,7 @@ class MonsterThemes {
       ),
       colorScheme: const ColorScheme(
           brightness: Brightness.light,
-          primary: Colors.purple,
+          primary: Color(0xFF7cc34c),
           onPrimary: Colors.white,
           secondary: Colors.black,
           onSecondary: Colors.white,

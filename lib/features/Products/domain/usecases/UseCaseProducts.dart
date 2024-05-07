@@ -11,19 +11,19 @@ class CaseGetProducts extends CaseFuture<DataStates<List<ProductModel>>, void> {
   @override
   Future<DataStates<List<ProductModel>>> call(
       {void params,
-      String? categoryIdList,
-      String? page,
-      String? size,
+      int? categoryIdList,
+      int? page,
+      int? size,
       String? sort,
       String? sortDirection,
-      String? storeIds}) {
+      int? storeIds}) {
     return repo.getProducts(
-        categoryIdList: categoryIdList.toString(),
-        page: page.toString(),
-        size: size.toString(),
+        categoryIdList: categoryIdList,
+        page: page,
+        size: size,
         sort: sort.toString(),
         sortDirection: sortDirection.toString(),
-        storeIds: storeIds.toString());
+        storeIds: storeIds);
   }
 }
 

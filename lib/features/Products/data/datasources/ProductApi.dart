@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:monstersmoke/config/DataStates.dart';
 import 'package:monstersmoke/const/Constants.dart';
@@ -13,12 +15,12 @@ abstract class ProductApi {
 
   @GET('/api/ecommerce/product/category')
   Future<HttpResponse<List<ProductModel>>> getProducts(
-      {@Query('categoryIdList') required String categoryIdList,
-      @Query('page') required String page,
-      @Query('size') required String size,
-      @Query('sort') required String sort,
-      @Query('sortDirection') required String sortDirection,
-      @Query('storeIds') required String storeIds});
+      {@Query('categoryIdList') required int? categoryIdList,
+      @Query('page') required int? page,
+      @Query('size') required int? size,
+      @Query('sort') required String? sort,
+      @Query('sortDirection') required String? sortDirection,
+      @Query('storeIds') required int? storeIds});
   @GET('/api/ecommerce/product/27066')
   Future<HttpResponse<ProductDetailModel>> getProductDetails(
       {@Query('storeIds') required String storeIds, required String productId});

@@ -1,15 +1,15 @@
 class CategoryModel {
   final int? id;
-  final dynamic createdBy;
-  final dynamic insertedTimestamp;
-  final dynamic updatedBy;
-  final dynamic updatedTimestamp;
+  final String? createdBy;
+  final String? insertedTimestamp;
+  final String? updatedBy;
+  final String? updatedTimestamp;
   final int? categoryId;
   final String? name;
   final String? alias;
   final int? parentId;
-  final dynamic imageUrl;
-  final dynamic description;
+  final String? imageUrl;
+  final String? description;
   final bool? ecommerce;
   final bool? customerSpecific;
   final bool? loginRequired;
@@ -17,16 +17,16 @@ class CategoryModel {
   final int? businessTypeId;
   final String? businessTypeName;
   final int? sequenceNumber;
-  final dynamic metaTitle;
-  final dynamic metaData;
-  final dynamic metaDescription;
+  final String? metaTitle;
+  final String? metaData;
+  final String? metaDescription;
   final bool? deleted;
   final bool? taxPaid;
-  final dynamic lastSyncTimestamp;
-  final dynamic businessTypeList;
-  final dynamic categoryBusinessTypeMapList;
+  final String? lastSyncTimestamp;
+  final String? businessTypeList;
+  final String? categoryBusinessTypeMapList;
   final List<dynamic>? subCategories;
-  final dynamic categoryAttachmentMap;
+  final String? categoryAttachmentMap;
   const CategoryModel(
       {this.id,
       this.createdBy,
@@ -58,16 +58,16 @@ class CategoryModel {
       this.categoryAttachmentMap});
   CategoryModel copyWith(
       {int? id,
-      dynamic? createdBy,
-      dynamic? insertedTimestamp,
-      dynamic? updatedBy,
-      dynamic? updatedTimestamp,
+      String? createdBy,
+      String? insertedTimestamp,
+      String? updatedBy,
+      String? updatedTimestamp,
       int? categoryId,
       String? name,
       String? alias,
       int? parentId,
-      dynamic? imageUrl,
-      dynamic? description,
+      String? imageUrl,
+      String? description,
       bool? ecommerce,
       bool? customerSpecific,
       bool? loginRequired,
@@ -75,16 +75,16 @@ class CategoryModel {
       int? businessTypeId,
       String? businessTypeName,
       int? sequenceNumber,
-      dynamic? metaTitle,
-      dynamic? metaData,
-      dynamic? metaDescription,
+      String? metaTitle,
+      String? metaData,
+      String? metaDescription,
       bool? deleted,
       bool? taxPaid,
-      dynamic? lastSyncTimestamp,
-      dynamic? businessTypeList,
-      dynamic? categoryBusinessTypeMapList,
-      List<dynamic>? subCategories,
-      dynamic? categoryAttachmentMap}) {
+      String? lastSyncTimestamp,
+      String? businessTypeList,
+      String? categoryBusinessTypeMapList,
+      List<String?>? subCategories,
+      String? categoryAttachmentMap}) {
     return CategoryModel(
         id: id ?? this.id,
         createdBy: createdBy ?? this.createdBy,
@@ -154,17 +154,17 @@ class CategoryModel {
   static CategoryModel fromJson(Map<String, Object?> json) {
     return CategoryModel(
         id: json['id'] == null ? null : json['id'] as int,
-        createdBy: json['createdBy'] as dynamic,
-        insertedTimestamp: json['insertedTimestamp'] as dynamic,
-        updatedBy: json['updatedBy'] as dynamic,
-        updatedTimestamp: json['updatedTimestamp'] as dynamic,
+        createdBy: json['createdBy'] as String?,
+        insertedTimestamp: json['insertedTimestamp'] as String?,
+        updatedBy: json['updatedBy'] as String?,
+        updatedTimestamp: json['updatedTimestamp'] as String?,
         categoryId:
             json['categoryId'] == null ? null : json['categoryId'] as int,
         name: json['name'] == null ? null : json['name'] as String,
         alias: json['alias'] == null ? null : json['alias'] as String,
         parentId: json['parentId'] == null ? null : json['parentId'] as int,
-        imageUrl: json['imageUrl'] as dynamic,
-        description: json['description'] as dynamic,
+        imageUrl: json['imageUrl'] as String?,
+        description: json['description'] as String?,
         ecommerce: json['ecommerce'] == null ? null : json['ecommerce'] as bool,
         customerSpecific: json['customerSpecific'] == null
             ? null
@@ -184,19 +184,19 @@ class CategoryModel {
         sequenceNumber: json['sequenceNumber'] == null
             ? null
             : json['sequenceNumber'] as int,
-        metaTitle: json['metaTitle'] as dynamic,
-        metaData: json['metaData'] as dynamic,
-        metaDescription: json['metaDescription'] as dynamic,
+        metaTitle: json['metaTitle'] as String?,
+        metaData: json['metaData'] as String?,
+        metaDescription: json['metaDescription'] as String?,
         deleted: json['deleted'] == null ? null : json['deleted'] as bool,
         taxPaid: json['taxPaid'] == null ? null : json['taxPaid'] as bool,
-        lastSyncTimestamp: json['lastSyncTimestamp'] as dynamic,
-        businessTypeList: json['businessTypeList'] as dynamic,
+        lastSyncTimestamp: json['lastSyncTimestamp'] as String?,
+        businessTypeList: json['businessTypeList'] as String?,
         categoryBusinessTypeMapList:
-            json['categoryBusinessTypeMapList'] as dynamic,
+            json['categoryBusinessTypeMapList'] as String?,
         subCategories: json['subCategories'] == null
             ? null
             : json['subCategories'] as List<dynamic>,
-        categoryAttachmentMap: json['categoryAttachmentMap'] as dynamic);
+        categoryAttachmentMap: json['categoryAttachmentMap'] as String?);
   }
 
   @override

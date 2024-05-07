@@ -25,7 +25,7 @@ class _CatBrandApi implements CatBrandApi {
       {required String buissnessTypeId}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'businessTypeId': buissnessTypeId
+      r'businessTypeId': int.parse(buissnessTypeId)
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
@@ -47,10 +47,9 @@ class _CatBrandApi implements CatBrandApi {
               baseUrl,
             ))));
 
-    final value = _result.data!['result'];
-    List<dynamic> content = value['content'];
+    List<dynamic> value = _result.data!['result'];
 
-    var data = content!
+    var data = value
         .map((dynamic i) => CategoryModel.fromJson(i as Map<String, dynamic>))
         .toList();
     final httpResponse = HttpResponse(data, _result);

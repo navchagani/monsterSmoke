@@ -26,21 +26,27 @@ class PlatformBuilder extends StatelessWidget {
     );
   }
 
-  Drawer appDrawer({required BuildContext context}) {
-    return Drawer(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      surfaceTintColor: Colors.transparent,
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            children: [
-              userData(),
-              Decorations.height15,
-              menus(),
-              const Spacer(),
-              footer()
-            ],
+  Widget appDrawer({required BuildContext context}) {
+    return Padding(
+      padding:
+          const EdgeInsets.only(left: 5, bottom: 15.0, top: 35, right: 100.0),
+      child: Drawer(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        surfaceTintColor: Colors.transparent,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              children: [
+                userData(),
+                Decorations.height15,
+                menus(),
+                const Spacer(),
+                footer()
+              ],
+            ),
           ),
         ),
       ),

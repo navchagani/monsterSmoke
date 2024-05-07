@@ -27,42 +27,40 @@ class _SliverBar1State extends State<SliverBar1> {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      automaticallyImplyLeading: false,
-      toolbarHeight: 100,
-      flexibleSpace: FlexibleSpaceBar(
-        background: Container(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          child: BlocProvider.value(
-              value: bloc,
-              child: BlocBuilder<SliderBloc, SliderBlocState>(
-                builder: (context, sliderState) {
-                  if (sliderState is SliderLoadingSlider) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: BlocProvider.value(
+          value: bloc,
+          child: BlocBuilder<SliderBloc, SliderBlocState>(
+            builder: (context, sliderState) {
+              if (sliderState is SliderLoadingSlider) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
 
-                  if (sliderState is SliderCompletedSlider) {
-                    return CustomSlider(
-                      images: sliderState.lisImage,
-                      direction: widget.axis ?? Axis.horizontal,
-                    );
-                  }
+              if (sliderState is SliderCompletedSlider) {
+                return Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: CustomSlider(
+                    borderRadius: 15.0,
+                    images: sliderState.lisImage,
+                    direction: widget.axis ?? Axis.horizontal,
+                  ),
+                );
+              }
 
-                  if (sliderState is SliderErrorSlider) {
-                    return const Center(
-                      child: Text('Unable to load image'),
-                    );
-                  }
+              if (sliderState is SliderErrorSlider) {
+                return const Center(
+                  child: Text('Unable to load image'),
+                );
+              }
 
-                  return Container(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                  );
-                },
-              )),
-        ),
-      ),
+              return Container(
+                color: Theme.of(context).scaffoldBackgroundColor,
+              );
+            },
+          )),
     );
   }
 }

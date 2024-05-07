@@ -22,22 +22,24 @@ class _ProductApi implements ProductApi {
 
   @override
   Future<HttpResponse<List<ProductModel>>> getProducts({
-    required String categoryIdList,
-    required String page,
-    required String size,
-    required String sort,
-    required String sortDirection,
-    required String storeIds,
+    required int? categoryIdList,
+    required int? page,
+    required int? size,
+    required String? sort,
+    required String? sortDirection,
+    required int? storeIds,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'categoryIdList': categoryIdList,
-      r'page': page,
-      r'size': size,
-      r'sort': sort,
-      r'sortDirection': sortDirection,
-      r'storeIds': storeIds,
+      'categoryIdList': categoryIdList,
+      'page': page ?? 0,
+      'size': size ?? 20,
+      // 'sort': sort ?? 'date',
+      // 'sortDirection': sortDirection ?? 'DESC',
+      'storeIds': storeIds,
     };
+    log('${queryParameters}');
+
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -59,6 +61,7 @@ class _ProductApi implements ProductApi {
             ))));
 
     final data = _result.data!['result'];
+    log('${data}');
     List<dynamic> content = data['content'];
     var value = content
         .map((dynamic i) => ProductModel.fromJson(i as Map<String, dynamic>))

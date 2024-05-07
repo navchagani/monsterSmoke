@@ -8,7 +8,9 @@ import 'package:monstersmoke/features/GETAssets/data/models/SliderModel.dart';
 class CustomSlider extends StatefulWidget {
   final List<SliderModel> images;
   final Axis? direction;
-  const CustomSlider({super.key, required this.images, this.direction});
+  final double? borderRadius;
+  const CustomSlider(
+      {super.key, required this.images, this.direction, this.borderRadius});
 
   @override
   State<CustomSlider> createState() => _CustomSliderState();
@@ -36,11 +38,13 @@ class _CustomSliderState extends State<CustomSlider> {
 
   void _onTimer(Timer timer) {
     selectedindex = (selectedindex + 1) % widget.images.length;
-    pageController.animateToPage(
-      selectedindex,
-      duration: const Duration(seconds: 2) ~/ 2,
-      curve: Curves.easeIn,
-    );
+    if (pageController.positions.isNotEmpty) {
+      pageController.animateToPage(
+        selectedindex,
+        duration: const Duration(seconds: 2) ~/ 2,
+        curve: Curves.easeIn,
+      );
+    }
   }
 
   @override
@@ -65,9 +69,15 @@ class _CustomSliderState extends State<CustomSlider> {
                         final image =
                             widget.images[index % widget.images.length];
 
-                        return Image(
-                          fit: BoxFit.fill,
-                          image: NetworkImage(image.imageUrl.toString()),
+                        return Material(
+                          clipBehavior: Clip.hardEdge,
+                          borderRadius: widget.borderRadius != null
+                              ? BorderRadius.circular(10.0)
+                              : null,
+                          child: Image(
+                            fit: BoxFit.fill,
+                            image: NetworkImage(image.imageUrl.toString()),
+                          ),
                         );
                       },
                     ),

@@ -23,7 +23,7 @@ class ProductModel {
   final int? quantityIncrement;
   final bool? hasChildProduct;
   final dynamic promotionType;
-  final int? promotionValue;
+  final double? promotionValue;
   final dynamic promotionStartdate;
   final dynamic promotionEnddate;
   final dynamic promotionNotes;
@@ -91,7 +91,7 @@ class ProductModel {
       int? quantityIncrement,
       bool? hasChildProduct,
       dynamic? promotionType,
-      int? promotionValue,
+      double? promotionValue,
       dynamic? promotionStartdate,
       dynamic? promotionEnddate,
       dynamic? promotionNotes,
@@ -221,7 +221,7 @@ class ProductModel {
         promotionType: json['promotionType'] as dynamic,
         promotionValue: json['promotionValue'] == null
             ? null
-            : json['promotionValue'] as int,
+            : json['promotionValue'] as double,
         promotionStartdate: json['promotionStartdate'] as dynamic,
         promotionEnddate: json['promotionEnddate'] as dynamic,
         promotionNotes: json['promotionNotes'] as dynamic,

@@ -10,9 +10,16 @@ sealed class ProductBlocEvent extends Equatable {
 class ProductInitialEvent extends ProductBlocEvent {}
 
 class GetProductEvent extends ProductBlocEvent {
-  final String? categoryIdList, page, size, sort, sortDirection, storeIds;
-  const GetProductEvent(this.storeIds, this.categoryIdList, this.page,
-      this.size, this.sort, this.sortDirection);
+  final String? sort, sortDirection;
+  final int? categoryIdList, page, size, storeIds;
+
+  const GetProductEvent(
+      {this.storeIds,
+      this.categoryIdList,
+      this.page,
+      this.size,
+      this.sort,
+      this.sortDirection});
 }
 
 class GetProductDetailEvent extends ProductBlocEvent {

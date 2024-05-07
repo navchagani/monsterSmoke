@@ -34,12 +34,12 @@ class ProductRepoImp extends ProductsRepo {
 
   @override
   Future<DataStates<List<ProductModel>>> getProducts(
-      {required String categoryIdList,
-      required String page,
-      required String size,
-      required String sort,
-      required String sortDirection,
-      required String storeIds}) async {
+      {required int? categoryIdList,
+      required int? page,
+      required int? size,
+      required String? sort,
+      required String? sortDirection,
+      required int? storeIds}) async {
     try {
       final data = await productApi.getProducts(
           categoryIdList: categoryIdList,
