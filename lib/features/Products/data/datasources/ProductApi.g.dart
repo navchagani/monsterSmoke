@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'cat&BrandApi.dart';
+part of 'ProductApi.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'cat&BrandApi.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _CatBrandApi implements CatBrandApi {
-  _CatBrandApi(
+class _ProductApi implements ProductApi {
+  _ProductApi(
     this._dio, {
     this.baseUrl,
   }) {
@@ -21,23 +21,34 @@ class _CatBrandApi implements CatBrandApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<List<CategoryModel>>> getCategories(
-      {required String buissnessTypeId}) async {
+  Future<HttpResponse<List<ProductModel>>> getProducts({
+    required String categoryIdList,
+    required String page,
+    required String size,
+    required String sort,
+    required String sortDirection,
+    required String storeIds,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'businessTypeId': buissnessTypeId
+      r'categoryIdList': categoryIdList,
+      r'page': page,
+      r'size': size,
+      r'sort': sort,
+      r'sortDirection': sortDirection,
+      r'storeIds': storeIds,
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<List<CategoryModel>>>(Options(
+        _setStreamType<HttpResponse<List<ProductModel>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               Constants.options(_dio),
-              '/api/menu',
+              '/api/ecommerce/product/category',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -47,37 +58,33 @@ class _CatBrandApi implements CatBrandApi {
               baseUrl,
             ))));
 
-    final value = _result.data!['result'];
-    List<dynamic> content = value['content'];
-
-    var data = content!
-        .map((dynamic i) => CategoryModel.fromJson(i as Map<String, dynamic>))
+    final data = _result.data!['result'];
+    List<dynamic> content = data['content'];
+    var value = content
+        .map((dynamic i) => ProductModel.fromJson(i as Map<String, dynamic>))
         .toList();
-    final httpResponse = HttpResponse(data, _result);
+    final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<List<ProductModel>>> getBrands({
+  Future<HttpResponse<ProductDetailModel>> getProductDetails({
     required String storeIds,
-    required String brandIdList,
+    required String productId,
   }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'storeIds': storeIds,
-      r'brandIdList': brandIdList,
-    };
+    final queryParameters = <String, dynamic>{r'storeIds': storeIds};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<List<CategoryModel>>>(Options(
+        _setStreamType<HttpResponse<ProductDetailModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               Constants.options(_dio),
-              '/api/ecommerce/product/brand',
+              '/api/ecommerce/product/$productId',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -86,11 +93,8 @@ class _CatBrandApi implements CatBrandApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-
-    List<dynamic> content = _result.data!['result'];
-    var value = content
-        .map((dynamic i) => ProductModel.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final data = _result.data!['result'];
+    final value = ProductDetailModel.fromJson(data);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

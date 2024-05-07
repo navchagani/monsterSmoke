@@ -3,6 +3,7 @@ import 'package:monstersmoke/Modes/MobileMode/Widgets/AppBars.dart';
 import 'package:monstersmoke/Modes/MobileMode/Widgets/MainAppBar.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
 import 'package:monstersmoke/core/widgets/CustomProductContainer.dart';
+import 'package:monstersmoke/features/Search/presentation/pages/SearchPage.dart';
 
 GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
@@ -31,8 +32,15 @@ class MobileViewMode extends StatelessWidget {
             primary: false,
             titleSpacing: 0.0,
             toolbarHeight: 50.0,
-            title:
-                const CustomInputField(labelText: 'Search', hintText: 'Search'),
+            title: CustomInputField(
+              inputType: TextInputType.none,
+              labelText: 'Search',
+              hintText: 'Search',
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: ((context) => const SearchPage())));
+              },
+            ),
           )
         ];
       },

@@ -1,72 +1,105 @@
-import 'package:monstersmoke/features/Products/domain/entities/productEntities.dart';
-
-class ProductModel extends ProductEntities {
-  ProductModel(
-      {super.productId,
-      super.sku,
-      super.upc,
-      super.productName,
-      super.alias,
-      super.availableQuantity,
-      super.eta,
-      super.imageUrl,
-      super.masterProductId,
-      super.masterProductName,
-      super.taxClassId,
-      super.standardPrice,
-      super.standardPriceWithoutDiscount,
-      super.sequenceNumber,
-      super.costPrice,
-      super.tags,
-      super.tagName,
-      super.tagId,
-      super.tagImageDtoList,
-      super.minQuantityToSale,
-      super.maxQuantityToSale,
-      super.quantityIncrement,
-      super.hasChildProduct,
-      super.promotionType,
-      super.promotionValue,
-      super.promotionStartdate,
-      super.promotionEnddate,
-      super.promotionNotes,
-      super.weight,
-      super.height,
-      super.length,
-      super.width});
+class ProductModel {
+  final int? productId;
+  final dynamic sku;
+  final String? upc;
+  final String? productName;
+  final String? alias;
+  final int? availableQuantity;
+  final String? eta;
+  final String? imageUrl;
+  final dynamic masterProductId;
+  final dynamic masterProductName;
+  final dynamic taxClassId;
+  final double? standardPrice;
+  final double? standardPriceWithoutDiscount;
+  final int? sequenceNumber;
+  final dynamic costPrice;
+  final dynamic tags;
+  final dynamic tagName;
+  final dynamic tagId;
+  final dynamic tagImageDtoList;
+  final int? minQuantityToSale;
+  final int? maxQuantityToSale;
+  final int? quantityIncrement;
+  final bool? hasChildProduct;
+  final dynamic promotionType;
+  final int? promotionValue;
+  final dynamic promotionStartdate;
+  final dynamic promotionEnddate;
+  final dynamic promotionNotes;
+  final dynamic weight;
+  final dynamic height;
+  final dynamic length;
+  final dynamic width;
+  final int? quantity;
+  const ProductModel(
+      {this.productId,
+      this.sku,
+      this.upc,
+      this.productName,
+      this.alias,
+      this.availableQuantity,
+      this.eta,
+      this.imageUrl,
+      this.masterProductId,
+      this.masterProductName,
+      this.taxClassId,
+      this.standardPrice,
+      this.standardPriceWithoutDiscount,
+      this.sequenceNumber,
+      this.costPrice,
+      this.tags,
+      this.tagName,
+      this.tagId,
+      this.tagImageDtoList,
+      this.minQuantityToSale,
+      this.maxQuantityToSale,
+      this.quantityIncrement,
+      this.hasChildProduct,
+      this.promotionType,
+      this.promotionValue,
+      this.promotionStartdate,
+      this.promotionEnddate,
+      this.promotionNotes,
+      this.weight,
+      this.height,
+      this.length,
+      this.width,
+      this.quantity});
   ProductModel copyWith(
-      {String? productId,
-      String? sku,
+      {int? productId,
+      dynamic? sku,
       String? upc,
       String? productName,
       String? alias,
-      String? availableQuantity,
+      int? availableQuantity,
       String? eta,
       String? imageUrl,
-      String? masterProductId,
-      String? masterProductName,
-      String? taxClassId,
-      String? standardPrice,
-      String? standardPriceWithoutDiscount,
-      String? sequenceNumber,
-      String? costPrice,
-      String? tags,
-      String? tagName,
-      String? tagId,
-      String? tagImageDtoList,
-      String? minQuantityToSale,
-      String? maxQuantityToSale,
-      String? quantityIncrement,
+      dynamic? masterProductId,
+      dynamic? masterProductName,
+      dynamic? taxClassId,
+      double? standardPrice,
+      double? standardPriceWithoutDiscount,
+      int? sequenceNumber,
+      dynamic? costPrice,
+      dynamic? tags,
+      dynamic? tagName,
+      dynamic? tagId,
+      dynamic? tagImageDtoList,
+      int? minQuantityToSale,
+      int? maxQuantityToSale,
+      int? quantityIncrement,
       bool? hasChildProduct,
-      String? promotionType,
-      String? promotionValue,
-      String? promotionStartdate,
-      String? promotionEnddate,
-      String? promotionNotes,
-      String? weight,
-      String? height,
-      String? length,
-      String? width}) {
+      dynamic? promotionType,
+      int? promotionValue,
+      dynamic? promotionStartdate,
+      dynamic? promotionEnddate,
+      dynamic? promotionNotes,
+      dynamic? weight,
+      dynamic? height,
+      dynamic? length,
+      dynamic? width,
+      int? quantity}) {
     return ProductModel(
         productId: productId ?? this.productId,
         sku: sku ?? this.sku,
@@ -100,7 +133,8 @@ class ProductModel extends ProductEntities {
         weight: weight ?? this.weight,
         height: height ?? this.height,
         length: length ?? this.length,
-        width: width ?? this.width);
+        width: width ?? this.width,
+        quantity: quantity ?? this.quantity);
   }
 
   Map<String, Object?> toJson() {
@@ -136,65 +170,66 @@ class ProductModel extends ProductEntities {
       'weight': weight,
       'height': height,
       'length': length,
-      'width': width
+      'width': width,
+      'quantity': quantity
     };
   }
 
   static ProductModel fromJson(Map<String, Object?> json) {
     return ProductModel(
-        productId:
-            json['productId'] == null ? null : json['productId'] as String,
-        sku: json['sku'] as String,
+        productId: json['productId'] == null ? null : json['productId'] as int,
+        sku: json['sku'] as dynamic,
         upc: json['upc'] == null ? null : json['upc'] as String,
         productName:
             json['productName'] == null ? null : json['productName'] as String,
         alias: json['alias'] == null ? null : json['alias'] as String,
         availableQuantity: json['availableQuantity'] == null
             ? null
-            : json['availableQuantity'] as String,
+            : json['availableQuantity'] as int,
         eta: json['eta'] == null ? null : json['eta'] as String,
         imageUrl: json['imageUrl'] == null ? null : json['imageUrl'] as String,
-        masterProductId: json['masterProductId'] as String,
-        masterProductName: json['masterProductName'] as String,
-        taxClassId: json['taxClassId'] as String,
+        masterProductId: json['masterProductId'] as dynamic,
+        masterProductName: json['masterProductName'] as dynamic,
+        taxClassId: json['taxClassId'] as dynamic,
         standardPrice: json['standardPrice'] == null
             ? null
-            : json['standardPrice'] as String,
+            : json['standardPrice'] as double,
         standardPriceWithoutDiscount:
             json['standardPriceWithoutDiscount'] == null
                 ? null
-                : json['standardPriceWithoutDiscount'] as String,
+                : json['standardPriceWithoutDiscount'] as double,
         sequenceNumber: json['sequenceNumber'] == null
             ? null
-            : json['sequenceNumber'] as String,
-        costPrice: json['costPrice'] as String,
-        tags: json['tags'] as String,
-        tagName: json['tagName'] as String,
-        tagId: json['tagId'] as String,
-        tagImageDtoList: json['tagImageDtoList'] as String,
+            : json['sequenceNumber'] as int,
+        costPrice: json['costPrice'] as dynamic,
+        tags: json['tags'] as dynamic,
+        tagName: json['tagName'] as dynamic,
+        tagId: json['tagId'] as dynamic,
+        tagImageDtoList: json['tagImageDtoList'] as dynamic,
         minQuantityToSale: json['minQuantityToSale'] == null
             ? null
-            : json['minQuantityToSale'] as String,
+            : json['minQuantityToSale'] as int,
         maxQuantityToSale: json['maxQuantityToSale'] == null
             ? null
-            : json['maxQuantityToSale'] as String,
+            : json['maxQuantityToSale'] as int,
         quantityIncrement: json['quantityIncrement'] == null
             ? null
-            : json['quantityIncrement'] as String,
+            : json['quantityIncrement'] as int,
         hasChildProduct: json['hasChildProduct'] == null
             ? null
             : json['hasChildProduct'] as bool,
-        promotionType: json['promotionType'] as String,
+        promotionType: json['promotionType'] as dynamic,
         promotionValue: json['promotionValue'] == null
             ? null
-            : json['promotionValue'] as String,
-        promotionStartdate: json['promotionStartdate'] as String,
-        promotionEnddate: json['promotionEnddate'] as String,
-        promotionNotes: json['promotionNotes'] as String,
-        weight: json['weight'] as String,
-        height: json['height'] as String,
-        length: json['length'] as String,
-        width: json['width'] as String);
+            : json['promotionValue'] as int,
+        promotionStartdate: json['promotionStartdate'] as dynamic,
+        promotionEnddate: json['promotionEnddate'] as dynamic,
+        promotionNotes: json['promotionNotes'] as dynamic,
+        weight: json['weight'] as dynamic,
+        height: json['height'] as dynamic,
+        length: json['length'] as dynamic,
+        width: json['width'] as dynamic,
+        quantity: json['quantity'] == null ? null : json['quantity'] as int);
   }
 
   @override
@@ -231,7 +266,8 @@ promotionNotes:$promotionNotes,
 weight:$weight,
 height:$height,
 length:$length,
-width:$width
+width:$width,
+quantity:$quantity
     ) ''';
   }
 
@@ -270,7 +306,8 @@ width:$width
         other.weight == weight &&
         other.height == height &&
         other.length == length &&
-        other.width == width;
+        other.width == width &&
+        other.quantity == quantity;
   }
 
   @override

@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:monstersmoke/config/DataStates.dart';
 import 'package:monstersmoke/features/GETAssets/data/datasources/AssetsApi.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/CountryModel.dart';
+import 'package:monstersmoke/features/GETAssets/data/models/PaymentsModel.dart';
+import 'package:monstersmoke/features/GETAssets/data/models/ShippingAddressModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/SliderModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/StateModel.dart';
 import 'package:monstersmoke/features/GETAssets/domain/repositories/AssetsRepo.dart';
@@ -68,5 +70,17 @@ class AssetsRepoImp extends AssetsRepo {
     } on DioException catch (e) {
       return ErrorState(dioException: e);
     }
+  }
+
+  @override
+  Future<DataStates<List<PaymentsModel>>> getPaymentMethods() {
+    // TODO: implement getPaymentMethods
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<DataStates<List<ShippingAddressModel>>> getShippingAddress() {
+    // TODO: implement getShippingAddress
+    throw UnimplementedError();
   }
 }

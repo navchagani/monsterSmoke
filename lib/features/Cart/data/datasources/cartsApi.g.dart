@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'AssetsApi.dart';
+part of 'cartsApi.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'AssetsApi.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _AssetsApi implements AssetsApi {
-  _AssetsApi(
+class _CartApi implements CartApi {
+  _CartApi(
     this._dio, {
     this.baseUrl,
   }) {
@@ -21,89 +21,23 @@ class _AssetsApi implements AssetsApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<List<CountryModel>>> getCountries() async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<List<CountryModel>>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              Constants.options(_dio),
-              '/api/country/all',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    List<dynamic> data = _result.data!['result'];
-    var value = data
-        .map((dynamic i) => CountryModel.fromJson(i as Map<String, dynamic>))
-        .toList();
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<List<StateModel>>> getStates(
-      {required String stateId}) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<List<StateModel>>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              Constants.options(_dio),
-              '/api/country/$stateId/allState',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    List<dynamic> data = _result.data!['result'];
-    var value = data
-        .map((dynamic i) => StateModel.fromJson(i as Map<String, dynamic>))
-        .toList();
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<List<SliderModel>>> getSliders({
-    required String sliderId,
-    required String buisnessId,
+  Future<HttpResponse<List<CartLineItemDtoList>>> addtoCart({
+    required List<ProductModel> productModel,
+    required String storeId,
   }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      'sliderTypeId': int.parse(sliderId),
-      'businessTypeId': int.parse(buisnessId),
-    };
+    final queryParameters = <String, dynamic>{r'storeId': storeId};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<List<SliderModel>>>(Options(
-      method: 'GET',
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<HttpResponse<List<CartLineItemDtoList>>>(Options(
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               Constants.options(_dio),
-              '/api/home/sliderImages',
+              '/api/cartLineItem',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -112,62 +46,30 @@ class _AssetsApi implements AssetsApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    Map<String, dynamic> data = _result.data!['result'];
-    List<dynamic> slides = data['sliderImageList'];
-    var value = slides
-        .map((dynamic i) => SliderModel.fromJson(i as Map<String, dynamic>))
-        .toList();
-
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<List<SliderModel>>> getPaymentMethods() async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<List<SliderModel>>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              Constants.options(_dio),
-              '/api/store/paymentMode',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    List<dynamic> data = _result.data!['result'];
-    var value = data
-        .map((dynamic i) => SliderModel.fromJson(i as Map<String, dynamic>))
+    var value = _result.data!
+        .map((dynamic i) =>
+            CartLineItemDtoList.fromJson(i as Map<String, dynamic>))
         .toList();
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<List<SliderModel>>> getShippingAddress() async {
+  Future<HttpResponse<UpdateCartModel>> getCart(
+      {required String storeId}) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'storeId': storeId};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<List<SliderModel>>>(Options(
+        _setStreamType<HttpResponse<UpdateCartModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               Constants.options(_dio),
-              '/api/shipping/options',
+              '/api/cartLineItem/search',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -176,10 +78,72 @@ class _AssetsApi implements AssetsApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    List<dynamic> data = _result.data!['result'];
-    var value = data
-        .map((dynamic i) => SliderModel.fromJson(i as Map<String, dynamic>))
+    final value = UpdateCartModel.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<List<CartLineItemDtoList>>> updateCart({
+    required List<UpdateCartModel> updateCartModel,
+    required String storeId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'storeId': storeId};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<HttpResponse<List<CartLineItemDtoList>>>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              Constants.options(_dio),
+              '/api/cartLineItem/updateAll',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    var value = _result.data!
+        .map((dynamic i) =>
+            CartLineItemDtoList.fromJson(i as Map<String, dynamic>))
         .toList();
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<bool>> deleteFromCart({
+    required List<UpdateCartModel> updateCartModel,
+    required String storeId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'storeId': storeId};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result =
+        await _dio.fetch<bool>(_setStreamType<HttpResponse<bool>>(Options(
+      method: 'DELETE',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              Constants.options(_dio),
+              '/api/cartLineItem/clearSelected',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = _result.data!;
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

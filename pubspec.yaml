@@ -108,7 +108,12 @@ targets:
     builders:
       retrofit_generator:
         generate_for: 
-          include: 
-            - lib\features\GetCat&Brand\data\datasources\cat&BrandApi.dart
+          exclude: 
+            - lib\features\Auth\**
+            - lib\features\Cart\**
+            - lib\features\GETAssets\**
+            - lib\features\GetCat&Brand\**
+            - lib\features\Products\**
+            - lib\features\PlaceOrder\**
         options:
           auto_cast_response: false

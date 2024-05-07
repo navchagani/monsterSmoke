@@ -21,4 +21,10 @@ abstract class AssetsApi {
   Future<HttpResponse<List<SliderModel>>> getSliders(
       {@Query('sliderTypeId') required String sliderId,
       @Query('businessTypeId') required String buisnessId});
+
+  @GET('/api/store/paymentMode')
+  Future<HttpResponse<List<SliderModel>>> getPaymentMethods();
+
+  @GET('/api/shipping/options')
+  Future<HttpResponse<List<SliderModel>>> getShippingAddress();
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
+import 'package:monstersmoke/features/GetCat&Brand/data/models/CategoryModel.dart';
+import 'package:monstersmoke/features/GetCat&Brand/presentation/bloc/CategoryBloc/category_bloc.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -42,13 +45,33 @@ class _SearchPageState extends State<SearchPage> {
     final list = ['Smoke', 'Vape', 'Hookah', 'Dispensary', 'AdultNovelty'];
 
     return SingleChildScrollView(
-      child: Column(
-        children: list
-            .map((e) => TreeTile(
-                  list: list,
-                  text: e,
-                ))
-            .toList(),
+      child: BlocBuilder<CategoryBloc, CategoryState>(
+        builder: (context, categoryState) {
+          if (categoryState is CategoryLoadingCategory) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (categoryState is CategoryCompletedCategory) {
+            return Column(
+              children: categoryState.lilstContries
+                  .map((e) => TreeTile(
+                        list: e.subCategories!
+                            .map((e) => CategoryModel.fromJson(e))
+                            .toList(),
+                        text: e.name.toString(),
+                      ))
+                  .toList(),
+            );
+          }
+
+          if (categoryState is CategoryErrorCategory) {
+            return Center(
+              child: Text(categoryState.error.message.toString()),
+            );
+          }
+
+          return Container();
+        },
       ),
     );
   }
@@ -56,7 +79,7 @@ class _SearchPageState extends State<SearchPage> {
 
 class TreeTile extends StatefulWidget {
   final String text;
-  final List<String> list;
+  final List<dynamic> list;
   const TreeTile({super.key, required this.text, required this.list});
 
   @override
@@ -68,6 +91,8 @@ class _TreeTileState extends State<TreeTile> {
 
   @override
   Widget build(BuildContext context) {
+    final data = widget.list as List<CategoryModel>;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,18 +122,26 @@ class _TreeTileState extends State<TreeTile> {
                     const BoxConstraints(maxHeight: 300, minHeight: 40),
                 child: SingleChildScrollView(
                   child: Wrap(
-                    runSpacing: 5.0,
+                    runSpacing: -5.0,
                     spacing: 5.0,
-                    children: widget.list
+                    children: data
                         .map(
                           (e) => RawChip(
+                            surfaceTintColor: Colors.transparent,
+                            backgroundColor: Colors.white,
                             side: const BorderSide(color: Colors.black12),
                             padding: const EdgeInsets.all(2.0),
                             label: Text(
-                              e,
+                              e.name.toString(),
                               style: const TextStyle(fontSize: 15),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              // Navigator.of(context).push(MaterialPageRoute(
+                              //     builder: ((context) => BrandsPage(
+                              //         storeIds: storeIds,
+                              //         brandIdList: brandIdList,
+                              //         title: e.name.toString()))));
+                            },
                             // dense: true,
                           ),
                         )
