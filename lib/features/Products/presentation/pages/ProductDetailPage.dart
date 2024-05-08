@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/cartPage.dart';
 import 'package:monstersmoke/core/inject.dart';
+import 'package:monstersmoke/features/Cart/presentation/widgets/CartBottomBar.dart';
+import 'package:monstersmoke/features/Cart/presentation/widgets/CartFloatingButton.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
 import 'package:monstersmoke/features/Products/presentation/bloc/Productbloc/product_bloc_bloc.dart';
 
@@ -31,6 +31,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     return Scaffold(
       appBar: appBar(),
       body: body(),
+      bottomNavigationBar: const CartBottomBar(),
+      floatingActionButton: const CartFloatButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );
   }
 

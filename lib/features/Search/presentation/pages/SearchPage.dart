@@ -4,6 +4,8 @@ import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
 import 'package:monstersmoke/core/widgets/CustomProductContainer.dart';
 import 'package:monstersmoke/core/widgets/ProductCard.dart';
+import 'package:monstersmoke/features/Cart/presentation/widgets/CartBottomBar.dart';
+import 'package:monstersmoke/features/Cart/presentation/widgets/CartFloatingButton.dart';
 import 'package:monstersmoke/features/GetCat&Brand/data/models/CategoryModel.dart';
 import 'package:monstersmoke/features/GetCat&Brand/presentation/bloc/CategoryBloc/category_bloc.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductSearchModel.dart';
@@ -101,8 +103,6 @@ class _SearchPageState extends State<SearchPage> {
       );
 
   Widget body() {
-    final list = ['Smoke', 'Vape', 'Hookah', 'Dispensary', 'AdultNovelty'];
-
     return SingleChildScrollView(
       child: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, categoryState) {
@@ -209,7 +209,7 @@ class _TreeTileState extends State<TreeTile> {
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: ((context) => ProductCategoriesPage(
-                                        storeIds: 58,
+                                        storeIds: 2,
                                         categoryList: e.id,
                                         heading: e.name.toString(),
                                       ))));
@@ -260,6 +260,9 @@ class ProductCategoriesPage extends StatelessWidget {
         storeIds: storeIds,
         isScrollable: true,
       ),
+      bottomNavigationBar: const CartBottomBar(),
+      floatingActionButton: const CartFloatButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );
   }
 }

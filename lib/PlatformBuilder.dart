@@ -5,6 +5,7 @@ import 'package:monstersmoke/Modes/MobileMode/MobileMode.dart';
 import 'package:monstersmoke/Modes/TabMode.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/CustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
+import 'package:monstersmoke/features/Products/data/models/updateCartModel.dart';
 
 class PlatformBuilder extends StatelessWidget {
   const PlatformBuilder({super.key});
@@ -25,6 +26,31 @@ class PlatformBuilder extends StatelessWidget {
       }),
     );
   }
+
+  Widget bottomBar(
+          {required BuildContext context,
+          required UpdateCartModel updateCartModel}) =>
+      BottomAppBar(
+        height: 50,
+        color: Theme.of(context).colorScheme.primary,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.shopping_cart,
+              color: Theme.of(context).colorScheme.background,
+            ),
+            Decorations.width10,
+            Text(
+              'Your Cart',
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.background,
+                  fontSize: 20),
+            )
+          ],
+        ),
+      );
 
   Widget appDrawer({required BuildContext context}) {
     return Padding(

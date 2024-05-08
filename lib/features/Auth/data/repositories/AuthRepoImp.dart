@@ -6,11 +6,16 @@ import 'package:monstersmoke/features/Auth/data/datasources/AuthApi.dart';
 import 'package:monstersmoke/features/Auth/data/models/CreateCustomerModel.dart';
 import 'package:monstersmoke/features/Auth/data/models/CustomerModel.dart';
 import 'package:monstersmoke/features/Auth/domain/repositories/AuthRepo.dart';
+import 'package:monstersmoke/features/sharedPrefsApi.dart';
 
 class AuthRepoImp extends AuthRepo {
   final AuthApi authApi;
+  final SharedPrefsApi sharedPrefsApi;
 
-  AuthRepoImp({required this.authApi});
+  AuthRepoImp({
+    required this.authApi,
+    required this.sharedPrefsApi,
+  });
 
   @override
   Future<DataStates<CustomerModel?>> getCustomerData(
@@ -38,6 +43,8 @@ class AuthRepoImp extends AuthRepo {
       final data = await authApi.signIn(email: email, password: password);
 
       if (data.response.statusCode == HttpStatus.ok) {
+        await sharedPrefsApi.saveToShared(
+            value: data.data.toString(), key: 'login');
         return SuccessState(data: data.data);
       } else {
         return ErrorState(

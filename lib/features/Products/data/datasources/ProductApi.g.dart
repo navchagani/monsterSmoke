@@ -10,9 +10,7 @@ part of 'ProductApi.dart';
 
 class _ProductApi implements ProductApi {
   _ProductApi(
-    this._dio, {
-    this.baseUrl,
-  }) {
+    this._dio) {
     baseUrl ??= 'https://erp.monstersmokewholesale.com';
   }
 

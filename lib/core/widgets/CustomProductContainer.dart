@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
 import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/widgets/ProductCard.dart';
+import 'package:monstersmoke/features/Cart/presentation/bloc/cart_bloc.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
 import 'package:monstersmoke/features/Products/presentation/bloc/Productbloc/product_bloc_bloc.dart';
 import 'package:monstersmoke/features/Products/presentation/pages/ProductDetailPage.dart';
@@ -35,7 +34,7 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
     bloc.add(GetProductEvent(
         sort: 'date',
         sortDirection: 'DESC',
-        storeIds: widget.storeIds ?? 56,
+        storeIds: widget.storeIds ?? 2,
         categoryIdList: widget.categoryList ?? 25));
     super.initState();
   }
@@ -103,6 +102,7 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
                                   productQuantity:
                                       product.availableQuantity.toString(),
                                   onTap: () => onProductTap(model: product),
+                                  onAddToCart: () => addProductToCart(product),
                                 );
                               }),
                               itemCount: widget.isScrollable ?? true
@@ -148,5 +148,10 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
   onProductTap({required ProductModel model}) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: ((context) => ProductDetailPage(model: model))));
+  }
+
+  addProductToCart(ProductModel product) {
+    CartBloc bloc = getIt<CartBloc>();
+    bloc.add(AddToCartEvent(storeId: 2.toString(), list: [product]));
   }
 }

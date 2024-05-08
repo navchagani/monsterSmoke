@@ -29,15 +29,15 @@ class ShippingAddressModel {
   ShippingAddressModel copyWith(
       {int? id,
       String? name,
-      dynamic? description,
+      dynamic description,
       int? amount,
       bool? ecommerce,
       int? freeShippingLimit,
       String? trackingUrl,
       int? sequenceNumber,
-      dynamic? shippingPriceRange,
-      dynamic? code,
-      dynamic? parentShippingId,
+      dynamic shippingPriceRange,
+      dynamic code,
+      dynamic parentShippingId,
       bool? active,
       bool? systemCreated}) {
     return ShippingAddressModel(

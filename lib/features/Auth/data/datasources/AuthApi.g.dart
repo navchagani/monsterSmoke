@@ -10,9 +10,7 @@ part of 'AuthApi.dart';
 
 class _AuthApi implements AuthApi {
   _AuthApi(
-    this._dio, {
-    this.baseUrl,
-  }) {
+    this._dio) {
     baseUrl ??= 'https://erp.monstersmokewholesale.com';
   }
 

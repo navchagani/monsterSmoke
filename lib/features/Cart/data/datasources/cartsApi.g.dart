@@ -10,14 +10,15 @@ part of 'cartsApi.dart';
 
 class _CartApi implements CartApi {
   _CartApi(
-    this._dio, {
+    this._dio,
+    this.sharedPrefsApi, {
     this.baseUrl,
   }) {
     baseUrl ??= 'https://erp.monstersmokewholesale.com';
   }
 
   final Dio _dio;
-
+  final SharedPrefsApi sharedPrefsApi;
   String? baseUrl;
 
   @override
@@ -27,9 +28,11 @@ class _CartApi implements CartApi {
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'storeId': storeId};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      'Authorization': 'Bearer ${sharedPrefsApi.getFromShared(key: 'login')}'
+    };
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<List<dynamic>>(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<List<CartLineItemDtoList>>>(Options(
       method: 'POST',
       headers: _headers,
@@ -46,7 +49,9 @@ class _CartApi implements CartApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
+
+    List<dynamic> data = _result.data!['result'];
+    var value = data
         .map((dynamic i) =>
             CartLineItemDtoList.fromJson(i as Map<String, dynamic>))
         .toList();
@@ -59,7 +64,9 @@ class _CartApi implements CartApi {
       {required String storeId}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'storeId': storeId};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      'Authorization': 'Bearer ${sharedPrefsApi.getFromShared(key: 'login')}'
+    };
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<UpdateCartModel>>(Options(
@@ -78,7 +85,8 @@ class _CartApi implements CartApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = UpdateCartModel.fromJson(_result.data!);
+
+    final value = UpdateCartModel.fromJson(_result.data!['result']);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
@@ -90,9 +98,11 @@ class _CartApi implements CartApi {
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'storeId': storeId};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      'Authorization': 'Bearer ${sharedPrefsApi.getFromShared(key: 'login')}'
+    };
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<List<dynamic>>(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<List<CartLineItemDtoList>>>(Options(
       method: 'PUT',
       headers: _headers,
@@ -109,7 +119,10 @@ class _CartApi implements CartApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
+
+    List<dynamic> data = _result.data!['result'];
+
+    var value = data
         .map((dynamic i) =>
             CartLineItemDtoList.fromJson(i as Map<String, dynamic>))
         .toList();
@@ -124,7 +137,9 @@ class _CartApi implements CartApi {
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'storeId': storeId};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      'Authorization': 'Bearer ${sharedPrefsApi.getFromShared(key: 'login')}'
+    };
     const Map<String, dynamic>? _data = null;
     final _result =
         await _dio.fetch<bool>(_setStreamType<HttpResponse<bool>>(Options(
@@ -143,7 +158,7 @@ class _CartApi implements CartApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = _result.data!;
+    final value = _result.statusCode == 204 ? true : false;
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

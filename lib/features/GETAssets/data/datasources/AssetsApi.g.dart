@@ -10,9 +10,7 @@ part of 'AssetsApi.dart';
 
 class _AssetsApi implements AssetsApi {
   _AssetsApi(
-    this._dio, {
-    this.baseUrl,
-  }) {
+    this._dio) {
     baseUrl ??= 'https://erp.monstersmokewholesale.com';
   }
 

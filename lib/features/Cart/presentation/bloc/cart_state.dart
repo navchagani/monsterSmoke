@@ -1,7 +1,8 @@
 part of 'cart_bloc.dart';
 
 abstract class CartState extends Equatable {
-  const CartState();
+  final UpdateCartModel? updateCartModel;
+  const CartState({this.updateCartModel});
 
   @override
   List<Object> get props => [];
@@ -10,9 +11,9 @@ abstract class CartState extends Equatable {
 class CartInitial extends CartState {}
 
 class CartLoadedState extends CartState {
-  final UpdateCartModel updateCartModel;
-
-  const CartLoadedState({required this.updateCartModel});
+  final UpdateCartModel? updateCartModel;
+  const CartLoadedState({this.updateCartModel})
+      : super(updateCartModel: updateCartModel);
 }
 
 class CartLoadingState extends CartState {}

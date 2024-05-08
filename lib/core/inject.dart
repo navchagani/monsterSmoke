@@ -33,10 +33,12 @@ import 'package:monstersmoke/features/Products/data/repositories/ProductRepoImp.
 import 'package:monstersmoke/features/Products/domain/repositories/ProductsRepo.dart';
 import 'package:monstersmoke/features/Products/domain/usecases/UseCaseProducts.dart';
 import 'package:monstersmoke/features/Products/presentation/bloc/Productbloc/product_bloc_bloc.dart';
+import 'package:monstersmoke/features/sharedPrefsApi.dart';
 
 final getIt = GetIt.instance;
 
 void depInjection() {
+  getIt.registerSingleton<SharedPrefsApi>(SharedPrefsApi());
   getIt.registerSingleton<Dio>(Dio());
 
   getIt.registerFactory(() => IsMobile());
@@ -45,7 +47,8 @@ void depInjection() {
 
   // Auth Apis
   getIt.registerSingleton<AuthApi>(AuthApi(getIt()));
-  getIt.registerSingleton<AuthRepo>(AuthRepoImp(authApi: getIt()));
+  getIt.registerSingleton<AuthRepo>(
+      AuthRepoImp(authApi: getIt(), sharedPrefsApi: getIt()));
   getIt.registerSingleton<CaseSignIn>(CaseSignIn(repo: getIt()));
   getIt.registerSingleton<CaseSignUp>(CaseSignUp(repo: getIt()));
   getIt.registerSingleton<CaseGetUserData>(CaseGetUserData(repo: getIt()));
@@ -86,7 +89,7 @@ void depInjection() {
   getIt.registerFactory(() => ProductBloc(getIt(), getIt(), getIt()));
 
   // Cart Apis
-  getIt.registerSingleton<CartApi>(CartApi(getIt()));
+  getIt.registerSingleton<CartApi>(CartApi(getIt(), getIt()));
   getIt.registerSingleton<CartRepo>(CartRepoImp(cartApi: getIt()));
   getIt.registerSingleton<CaseGetCart>(CaseGetCart(repo: getIt()));
   getIt.registerSingleton<CaseAddToCart>(CaseAddToCart(repo: getIt()));

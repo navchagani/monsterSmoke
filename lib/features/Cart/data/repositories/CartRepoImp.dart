@@ -20,7 +20,7 @@ class CartRepoImp extends CartRepo {
       final data =
           await cartApi.addtoCart(productModel: productModel, storeId: storeId);
 
-      if (data.response.statusCode == HttpStatus.ok) {
+      if (data.response.statusCode == HttpStatus.created) {
         return SuccessState(data: data.data);
       } else {
         return ErrorState(
@@ -41,7 +41,7 @@ class CartRepoImp extends CartRepo {
       final data = await cartApi.deleteFromCart(
           updateCartModel: updateCartModel, storeId: storeId);
 
-      if (data.response.statusCode == HttpStatus.ok) {
+      if (data.response.statusCode == HttpStatus.noContent) {
         return SuccessState(data: data.data);
       } else {
         return ErrorState(

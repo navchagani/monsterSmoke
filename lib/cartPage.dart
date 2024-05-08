@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
-import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
