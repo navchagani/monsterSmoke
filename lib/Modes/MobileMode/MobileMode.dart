@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/Modes/MobileMode/Widgets/AppBars.dart';
 import 'package:monstersmoke/Modes/MobileMode/Widgets/MainAppBar.dart';
+import 'package:monstersmoke/cartPage.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
 import 'package:monstersmoke/core/widgets/CustomProductContainer.dart';
 import 'package:monstersmoke/features/Search/presentation/pages/SearchPage.dart';
@@ -65,7 +67,7 @@ class MobileViewMode extends StatelessWidget {
   }
 
   Widget floatButton({required BuildContext context}) => FloatingActionButton(
-        onPressed: onMovetoCart,
+        onPressed: () => onMovetoCart(context: context),
         isExtended: true,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,21 +89,22 @@ class MobileViewMode extends StatelessWidget {
       );
 
   Widget body() {
-    final images = [
-      "https://via.placeholder.com/1200x600.png?text=Product+1",
-      "https://via.placeholder.com/1200x600.png?text=Product+2",
-      "https://via.placeholder.com/1200x600.png?text=Product+3",
-      "https://via.placeholder.com/1200x600.png?text=Product+4"
-    ];
     return ListView(
-      children: [
-        CustomProductContainer(productList: images, text: 'Featured'),
-        const SliverBar1(
+      children: const [
+        CustomProductContainer(
+          text: 'Featured',
+          isScrollable: false,
+          showQuantity: 6,
+        ),
+        SliverBar1(
           siderId: 94,
         ),
       ],
     );
   }
 
-  void onMovetoCart() {}
+  void onMovetoCart({required BuildContext context}) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: ((context) => const CartPage())));
+  }
 }

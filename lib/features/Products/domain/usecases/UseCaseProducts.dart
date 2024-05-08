@@ -2,6 +2,7 @@ import 'package:monstersmoke/config/DataStates.dart';
 import 'package:monstersmoke/config/useCases.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductDetailsModel.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
+import 'package:monstersmoke/features/Products/data/models/ProductSearchModel.dart';
 import 'package:monstersmoke/features/Products/domain/repositories/ProductsRepo.dart';
 
 class CaseGetProducts extends CaseFuture<DataStates<List<ProductModel>>, void> {
@@ -37,5 +38,17 @@ class CaseGetProductDetails
       {void params, String? storeIds, String? productId}) {
     return repo.getProductDetails(
         storeIds: storeIds.toString(), productId: productId.toString());
+  }
+}
+
+class CaseSearchProduct
+    extends CaseFuture<DataStates<ProductSearchModel>, void> {
+  final ProductsRepo repo;
+
+  CaseSearchProduct({required this.repo});
+  @override
+  Future<DataStates<ProductSearchModel>> call(
+      {void params, String? searchString}) {
+    return repo.searchProducts(searchString: searchString.toString());
   }
 }

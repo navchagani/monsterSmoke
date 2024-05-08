@@ -1,6 +1,7 @@
 import 'package:monstersmoke/config/DataStates.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductDetailsModel.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
+import 'package:monstersmoke/features/Products/data/models/ProductSearchModel.dart';
 
 abstract class ProductsRepo {
   Future<DataStates<List<ProductModel>>> getProducts(
@@ -12,4 +13,6 @@ abstract class ProductsRepo {
       required int? storeIds});
   Future<DataStates<ProductDetailModel>> getProductDetails(
       {required String storeIds, required String productId});
+  Future<DataStates<ProductSearchModel>> searchProducts(
+      {required String searchString});
 }

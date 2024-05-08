@@ -82,7 +82,8 @@ void depInjection() {
   getIt.registerSingleton<CaseGetProducts>(CaseGetProducts(repo: getIt()));
   getIt.registerSingleton<CaseGetProductDetails>(
       CaseGetProductDetails(repo: getIt()));
-  getIt.registerFactory(() => ProductBloc(getIt(), getIt()));
+  getIt.registerSingleton<CaseSearchProduct>(CaseSearchProduct(repo: getIt()));
+  getIt.registerFactory(() => ProductBloc(getIt(), getIt(), getIt()));
 
   // Cart Apis
   getIt.registerSingleton<CartApi>(CartApi(getIt()));

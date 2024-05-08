@@ -23,6 +23,12 @@ class ProductDetailCompletedState extends ProductBlocState {
   const ProductDetailCompletedState({required this.productDetailModel});
 }
 
+class SearchProductCompletedState extends ProductBlocState {
+  final ProductSearchModel searchModel;
+
+  const SearchProductCompletedState({required this.searchModel});
+}
+
 class ProductErrorState extends ProductBlocState {
   final DioException error;
 

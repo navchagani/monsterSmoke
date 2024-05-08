@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
+import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -18,7 +19,14 @@ class CartPage extends StatelessWidget {
       );
 
   Widget body() {
-    final list = [const CartTile(), const CartTile()];
+    final list = [
+      // const CartTile(
+      //   productModel: ProductModel(),
+      // ),
+      // const CartTile(
+      //   productModel: ProductModel(),
+      // )
+    ];
 
     return Column(
       children: [
@@ -34,45 +42,49 @@ class CartPage extends StatelessWidget {
           itemCount: list.length,
         ),
         Padding(
-          padding: const EdgeInsets.all(25.0),
+          padding: const EdgeInsets.all(15.0),
           child: Material(
             borderRadius: BorderRadius.circular(5.0),
             color: Colors.grey.shade100,
-            child: Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: Column(
-                children: [
-                  const ListTile(
-                    dense: true,
-                    title: Text('Total Cart Quantity'),
-                    trailing: Text('200'),
+            child: Column(
+              children: [
+                const ListTile(
+                  dense: true,
+                  title: Text('Total Cart Quantity'),
+                  trailing: Text('200'),
+                ),
+                const ListTile(
+                  dense: true,
+                  title: Text('Cart SubTotal'),
+                  trailing: Text('\$200'),
+                ),
+                const ListTile(
+                  dense: true,
+                  title: Text('Cart Discount'),
+                  trailing: Text('200'),
+                ),
+                const Divider(),
+                const ListTile(
+                  title: Text('Total Cart Price'),
+                  dense: true,
+                  trailing: Text('\$200'),
+                ),
+                ListTile(
+                  tileColor: Colors.redAccent.shade700,
+                  onTap: () {},
+                  shape: RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.redAccent.shade700)),
+                  dense: true,
+                  title: const Text(
+                    '\$500',
+                    style: TextStyle(color: Colors.white),
                   ),
-                  const ListTile(
-                    dense: true,
-                    title: Text('Cart SubTotal'),
-                    trailing: Text('\$200'),
+                  trailing: const Text(
+                    'CheckOut',
+                    style: TextStyle(color: Colors.white),
                   ),
-                  const ListTile(
-                    dense: true,
-                    title: Text('Cart Discount'),
-                    trailing: Text('200'),
-                  ),
-                  const Divider(),
-                  const ListTile(
-                    title: Text('Total Cart Price'),
-                    dense: true,
-                    trailing: Text('\$200'),
-                  ),
-                  ListTile(
-                    onTap: () {},
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.redAccent.shade700)),
-                    dense: true,
-                    title: const Text('\$500'),
-                    trailing: const Text('CheckOut'),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           ),
         )
@@ -82,86 +94,172 @@ class CartPage extends StatelessWidget {
 }
 
 class CartTile extends StatelessWidget {
-  const CartTile({super.key});
+  final String? name, subSku, price, image, quantity;
+  const CartTile({
+    super.key,
+    this.name,
+    this.price,
+    this.image,
+    this.quantity,
+    this.subSku,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      shape:
-          const RoundedRectangleBorder(side: BorderSide(color: Colors.black26)),
-      child: Row(
-        children: [
-          const SizedBox(
-            // color: Colors.amber,
-            width: 100,
-            height: 100,
-            child: Image(
-                image: NetworkImage(
-                    "https://farm8.staticflickr.com/7377/9359257263_81b080a039_z_d.jpg")),
-          ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              // color: Colors.blue,
-              width: 100,
-              height: 100,
+      color: Colors.grey.shade100,
+      shape: const RoundedRectangleBorder(
+          side: BorderSide(color: Colors.black26),
+          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 80,
+              height: 80,
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Image(
+                  image: NetworkImage(image.toString()),
+                  errorBuilder: ((context, error, stackTrace) {
+                    return const Image(
+                        image: NetworkImage(
+                            'https://monstersmokeoutlet.com/asset/img/place-holder.png'));
+                  }),
+                ),
+              ),
+            ),
+            Decorations.width10,
+            Expanded(
+                child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Row(
+                  Row(
                     children: [
                       Expanded(
                           child: Text(
-                        'Light Rise | TB 18K Disposables | 18000 Puffs | Nic 5% | Pack of 5 | Banana Cake',
-                        maxLines: 2,
+                        name.toString(),
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                      ))
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      )),
                     ],
                   ),
-                  Decorations.height5,
-                  const Row(
-                    children: [Expanded(child: Text('Stock: 299'))],
+                  if (subSku != null)
+                    Row(
+                      children: [
+                        Expanded(
+                            child: Text(
+                          subSku.toString(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontWeight: FontWeight.normal),
+                        )),
+                      ],
+                    ),
+                  Row(
+                    children: [
+                      Expanded(child: Text(price.toString())),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 40,
+                    child: Material(
+                      // color: Colors.amber,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.add_circle_outline,
+                            ),
+                            onPressed: () {},
+                            color: Colors.green.shade600,
+                          ),
+                          Decorations.width5,
+                          Text(quantity.toString()),
+                          Decorations.width5,
+                          IconButton(
+                              icon: const Icon(Icons.remove_circle_outline),
+                              onPressed: () {},
+                              color: Colors.deepOrange.shade600)
+                        ],
+                      ),
+                    ),
                   )
                 ],
               ),
-            ),
-          ),
-          const SizedBox(
-            // color: Colors.deepOrange,
-            width: 100,
-            height: 100,
-            child: Center(
-                child: Text(
-              '\$3500',
-              style: TextStyle(fontSize: 18),
             )),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            // color: Colors.deepPurple,
-            width: 150,
-            height: 100,
-            child: Row(
-              children: [
-                IconButton(
-                    onPressed: onAddQuantity, icon: const Icon(Icons.add)),
-                const Expanded(child: Center(child: Text('100'))),
-                IconButton(
-                    onPressed: onRemoveQuantity, icon: const Icon(Icons.remove))
-              ],
-            ),
-          ),
-          SizedBox(
-            // color: Colors.green,
-            width: 70,
-            height: 100,
-            child: IconButton(
-                color: Colors.deepOrange,
-                onPressed: onRemoveProduct,
-                icon: const Icon(Icons.delete)),
-          ),
-        ],
+
+            // Expanded(
+            //   child: Container(
+            //     padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            //     // color: Colors.blue,
+            //     width: 100,
+            //     height: 100,
+            //     child: Column(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       crossAxisAlignment: CrossAxisAlignment.center,
+            //       children: [
+            //         const Row(
+            //           children: [
+            //             Expanded(
+            //                 child: Text(
+            //               'Light Rise | TB 18K Disposables | 18000 Puffs | Nic 5% | Pack of 5 | Banana Cake',
+            //               maxLines: 2,
+            //               overflow: TextOverflow.ellipsis,
+            //             ))
+            //           ],
+            //         ),
+            //         Decorations.height5,
+            //         const Row(
+            //           children: [Expanded(child: Text('Stock: 299'))],
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(
+            //   // color: Colors.deepOrange,
+            //   width: 100,
+            //   height: 100,
+            //   child: Center(
+            //       child: Text(
+            //     '\$3500',
+            //     style: TextStyle(fontSize: 18),
+            //   )),
+            // ),
+            // Container(
+            //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            //   // color: Colors.deepPurple,
+            //   width: 150,
+            //   height: 100,
+            //   child: Row(
+            //     children: [
+            //       IconButton(
+            //           onPressed: onAddQuantity, icon: const Icon(Icons.add)),
+            //       const Expanded(child: Center(child: Text('100'))),
+            //       IconButton(
+            //           onPressed: onRemoveQuantity, icon: const Icon(Icons.remove))
+            //     ],
+            //   ),
+            // ),
+            // SizedBox(
+            //   // color: Colors.green,
+            //   width: 70,
+            //   height: 100,
+            //   child: IconButton(
+            //       color: Colors.deepOrange,
+            //       onPressed: onRemoveProduct,
+            //       icon: const Icon(Icons.delete)),
+            // ),
+          ],
+        ),
       ),
     );
   }

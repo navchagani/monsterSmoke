@@ -5,6 +5,7 @@ import 'package:monstersmoke/config/DataStates.dart';
 import 'package:monstersmoke/features/Products/data/datasources/ProductApi.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductDetailsModel.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
+import 'package:monstersmoke/features/Products/data/models/ProductSearchModel.dart';
 import 'package:monstersmoke/features/Products/domain/repositories/ProductsRepo.dart';
 
 class ProductRepoImp extends ProductsRepo {
@@ -48,6 +49,25 @@ class ProductRepoImp extends ProductsRepo {
           sort: sort,
           sortDirection: sortDirection,
           storeIds: storeIds);
+
+      if (data.response.statusCode == HttpStatus.ok) {
+        return SuccessState(data: data.data);
+      } else {
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: data.response.requestOptions,
+                message: 'Cannot Get Customer Data'));
+      }
+    } on DioException catch (e) {
+      return ErrorState(dioException: e);
+    }
+  }
+
+  @override
+  Future<DataStates<ProductSearchModel>> searchProducts(
+      {required String searchString}) async {
+    try {
+      final data = await productApi.searchProducts(searchString: searchString);
 
       if (data.response.statusCode == HttpStatus.ok) {
         return SuccessState(data: data.data);

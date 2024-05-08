@@ -60,10 +60,8 @@ class _TabModeState extends State<TabMode> {
                                 SizedBox(
                                   height: 25.0,
                                 ),
+                                CustomProductContainer(text: 'Whats New'),
                                 CustomProductContainer(
-                                    productList: null, text: 'Whats New'),
-                                CustomProductContainer(
-                                    productList: null,
                                     text: 'Featured Product'),
                               ],
                             ),

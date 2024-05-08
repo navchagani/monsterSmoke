@@ -34,8 +34,8 @@ class _ProductApi implements ProductApi {
       'categoryIdList': categoryIdList,
       'page': page ?? 0,
       'size': size ?? 20,
-      // 'sort': sort ?? 'date',
-      // 'sortDirection': sortDirection ?? 'DESC',
+      'sort': sort ?? 'date',
+      'sortDirection': sortDirection ?? 'DESC',
       'storeIds': storeIds,
     };
     log('${queryParameters}');
@@ -130,5 +130,37 @@ class _ProductApi implements ProductApi {
     }
 
     return Uri.parse(dioBaseUrl).resolveUri(url).toString();
+  }
+
+  @override
+  Future<HttpResponse<ProductSearchModel>> searchProducts(
+      {required String searchString}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'searchInput': searchString};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<ProductDetailModel>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              Constants.options(_dio),
+              '/api/ecommerce/product/searchByProductOrCategory',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final data = _result.data!['result'];
+    log('${data}');
+
+    final value = ProductSearchModel.fromJson(data);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
   }
 }

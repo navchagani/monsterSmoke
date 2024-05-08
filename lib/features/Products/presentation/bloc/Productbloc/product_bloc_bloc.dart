@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:monstersmoke/config/DataStates.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductDetailsModel.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
+import 'package:monstersmoke/features/Products/data/models/ProductSearchModel.dart';
 import 'package:monstersmoke/features/Products/domain/usecases/UseCaseProducts.dart';
 
 part 'product_bloc_event.dart';
@@ -14,11 +15,13 @@ part 'product_bloc_state.dart';
 class ProductBloc extends Bloc<ProductBlocEvent, ProductBlocState> {
   final CaseGetProducts getProducts;
   final CaseGetProductDetails getProductDetails;
-  ProductBloc(this.getProducts, this.getProductDetails)
+  final CaseSearchProduct searchProduct;
+  ProductBloc(this.getProducts, this.getProductDetails, this.searchProduct)
       : super(ProductBlocInitial()) {
     on<ProductInitialEvent>(initial);
     on<GetProductEvent>(getProductsFunc);
     on<GetProductDetailEvent>(getProductsDetailFunc);
+    on<SearchProductEvent>(searchProducts);
   }
 
   Future<FutureOr<void>> getProductsFunc(
@@ -59,5 +62,19 @@ class ProductBloc extends Bloc<ProductBlocEvent, ProductBlocState> {
   FutureOr<void> initial(
       ProductInitialEvent event, Emitter<ProductBlocState> emit) {
     emit(ProductBlocInitial());
+  }
+
+  Future<FutureOr<void>> searchProducts(
+      SearchProductEvent event, Emitter<ProductBlocState> emit) async {
+    emit(ProductLoadingState());
+    final data = await searchProduct(searchString: event.searchString);
+
+    if (data is SuccessState) {
+      emit(SearchProductCompletedState(searchModel: data.data!));
+    }
+
+    if (data is ErrorState) {
+      emit(ProductErrorState(error: data.error!));
+    }
   }
 }

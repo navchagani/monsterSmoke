@@ -11,10 +11,17 @@ import 'package:monstersmoke/features/Products/presentation/bloc/Productbloc/pro
 import 'package:monstersmoke/features/Products/presentation/pages/ProductDetailPage.dart';
 
 class CustomProductContainer extends StatefulWidget {
-  final List<String>? productList;
-  final String text;
+  final String? text;
+  final int? storeIds, categoryList, showQuantity;
+  final bool? isScrollable;
+
   const CustomProductContainer(
-      {super.key, required this.productList, required this.text});
+      {super.key,
+      this.text,
+      this.storeIds,
+      this.categoryList,
+      this.showQuantity,
+      this.isScrollable});
 
   @override
   State<CustomProductContainer> createState() => _CustomProductContainerState();
@@ -25,7 +32,11 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
 
   @override
   void initState() {
-    bloc.add(const GetProductEvent(storeIds: 56, categoryIdList: 25));
+    bloc.add(GetProductEvent(
+        sort: 'date',
+        sortDirection: 'DESC',
+        storeIds: widget.storeIds ?? 56,
+        categoryIdList: widget.categoryList ?? 25));
     super.initState();
   }
 
@@ -34,85 +45,102 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
     return SizedBox(
       width: double.infinity,
       child: Column(children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              widget.text,
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            )
-          ],
-        ),
-        BlocProvider.value(
-            value: bloc,
-            child: BlocBuilder(
-              bloc: bloc,
-              builder: (context, productState) {
-                if (productState is ProductLoadingState) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+        if (widget.text != null)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                widget.text.toString(),
+                style:
+                    const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        Expanded(
+          flex: widget.isScrollable ?? true ? 1 : 0,
+          child: SizedBox(
+            height: widget.isScrollable ?? true
+                ? MediaQuery.of(context).size.height
+                : 850,
+            width: MediaQuery.of(context).size.width,
+            child: BlocProvider.value(
+                value: bloc,
+                child: BlocBuilder(
+                  bloc: bloc,
+                  builder: (context, productState) {
+                    if (productState is ProductLoadingState) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
 
-                if (productState is ProductCompletedState) {
-                  final productList = productState.listProducts;
+                    if (productState is ProductCompletedState) {
+                      final productList = productState.listProducts;
+                      final showQuantity = widget.showQuantity ?? 6;
 
-                  return BlocBuilder<IsMobile, bool>(
-                    builder: (context, isMobile) {
-                      if (!isMobile) {
-                        return GridView.builder(
-                          shrinkWrap: true,
-                          padding: const EdgeInsets.all(15.0),
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  mainAxisExtent: 260,
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 12.0,
-                                  crossAxisSpacing: 12.0),
-                          itemBuilder: ((context, index) {
-                            final product = productList[index];
+                      return BlocBuilder<IsMobile, bool>(
+                        builder: (context, isMobile) {
+                          if (!isMobile) {
+                            return GridView.builder(
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.all(15.0),
+                              physics: widget.isScrollable ?? true
+                                  ? const AlwaysScrollableScrollPhysics()
+                                  : const NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      mainAxisExtent: 260,
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 12.0,
+                                      crossAxisSpacing: 12.0),
+                              itemBuilder: ((context, index) {
+                                final product = productList[index];
 
-                            return ProductCardWidget(
-                              productImage: product.imageUrl.toString(),
-                              productName: product.productName.toString(),
-                              productPrice: product.standardPrice.toString(),
-                              productQuantity:
-                                  product.availableQuantity.toString(),
-                              onTap: () => onProductTap(model: product),
-                            );
-                          }),
-                          itemCount:
-                              productList.length > 6 ? 5 : productList.length,
-                        );
-                      }
-
-                      return SizedBox(
-                        height: 220,
-                        width: double.infinity,
-                        child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            padding: const EdgeInsets.all(15.0),
-                            itemBuilder: ((context, index) {
-                              final product = productList[index];
-
-                              return ProductCardWidget(
+                                return ProductCardWidget(
                                   productImage: product.imageUrl.toString(),
                                   productName: product.productName.toString(),
-                                  productPrice: product.costPrice,
+                                  productPrice:
+                                      product.standardPrice.toString(),
                                   productQuantity:
-                                      product.availableQuantity.toString());
-                            }),
-                            separatorBuilder: ((context, index) =>
-                                Decorations.width10),
-                            itemCount: productList.length),
-                      );
-                    },
-                  );
-                }
+                                      product.availableQuantity.toString(),
+                                  onTap: () => onProductTap(model: product),
+                                );
+                              }),
+                              itemCount: widget.isScrollable ?? true
+                                  ? productList.length
+                                  : showQuantity,
+                            );
+                          }
 
-                return Container();
-              },
-            ))
+                          return SizedBox(
+                            height: 220,
+                            width: double.infinity,
+                            child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                padding: const EdgeInsets.all(15.0),
+                                itemBuilder: ((context, index) {
+                                  final product = productList[index];
+
+                                  return ProductCardWidget(
+                                      productImage: product.imageUrl.toString(),
+                                      productName:
+                                          product.productName.toString(),
+                                      productPrice: product.costPrice,
+                                      productQuantity:
+                                          product.availableQuantity.toString());
+                                }),
+                                separatorBuilder: ((context, index) =>
+                                    Decorations.width10),
+                                itemCount: productList.length),
+                          );
+                        },
+                      );
+                    }
+
+                    return Container();
+                  },
+                )),
+          ),
+        )
       ]),
     );
   }

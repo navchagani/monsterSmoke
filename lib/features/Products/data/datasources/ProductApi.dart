@@ -5,6 +5,7 @@ import 'package:monstersmoke/config/DataStates.dart';
 import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductDetailsModel.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
+import 'package:monstersmoke/features/Products/data/models/ProductSearchModel.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'ProductApi.g.dart';
@@ -24,4 +25,7 @@ abstract class ProductApi {
   @GET('/api/ecommerce/product/27066')
   Future<HttpResponse<ProductDetailModel>> getProductDetails(
       {@Query('storeIds') required String storeIds, required String productId});
+  @GET('/api/ecommerce/product/searchByProductOrCategory')
+  Future<HttpResponse<ProductSearchModel>> searchProducts(
+      {@Query('searchInput') required String searchString});
 }

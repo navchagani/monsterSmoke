@@ -26,3 +26,8 @@ class GetProductDetailEvent extends ProductBlocEvent {
   final String? storeIds, productId;
   const GetProductDetailEvent(this.storeIds, this.productId);
 }
+
+class SearchProductEvent extends ProductBlocEvent {
+  final String? searchString;
+  const SearchProductEvent(this.searchString);
+}

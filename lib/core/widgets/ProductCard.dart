@@ -45,10 +45,14 @@ class ProductCardWidget extends StatelessWidget {
                             padding: const EdgeInsets.all(15.0),
                             child: SizedBox(
                               height: 90,
-                              // width: 120,
+                              width: 90,
                               child: Image(
                                 image: NetworkImage(productImage.toString()),
                                 fit: BoxFit.cover,
+                                errorBuilder: ((context, error, stackTrace) =>
+                                    const Image(
+                                        image: NetworkImage(
+                                            'https://monstersmokeoutlet.com/asset/img/place-holder.png'))),
                               ),
                             ),
                           ),
@@ -66,7 +70,7 @@ class ProductCardWidget extends StatelessWidget {
                                     Expanded(
                                       child: Text(
                                         productName,
-                                        maxLines: 3,
+                                        maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
                                             fontSize: 16,
