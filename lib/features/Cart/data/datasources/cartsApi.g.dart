@@ -29,9 +29,12 @@ class _CartApi implements CartApi {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'storeId': storeId};
     final _headers = <String, dynamic>{
-      'Authorization': 'Bearer ${sharedPrefsApi.getFromShared(key: 'login')}'
+      'Authorization':
+          'Bearer ${await sharedPrefsApi.getFromShared(key: 'login')}'
     };
-    const Map<String, dynamic>? _data = null;
+    List<Map<String, dynamic>> _data =
+        productModel.map((e) => e.toJson()).toList();
+
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<List<CartLineItemDtoList>>>(Options(
       method: 'POST',
@@ -65,7 +68,8 @@ class _CartApi implements CartApi {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'storeId': storeId};
     final _headers = <String, dynamic>{
-      'Authorization': 'Bearer ${sharedPrefsApi.getFromShared(key: 'login')}'
+      'Authorization':
+          'Bearer ${await sharedPrefsApi.getFromShared(key: 'login')}'
     };
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -99,9 +103,11 @@ class _CartApi implements CartApi {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'storeId': storeId};
     final _headers = <String, dynamic>{
-      'Authorization': 'Bearer ${sharedPrefsApi.getFromShared(key: 'login')}'
+      'Authorization':
+          'Bearer ${await sharedPrefsApi.getFromShared(key: 'login')}'
     };
-    const Map<String, dynamic>? _data = null;
+    List<Map<String, Object?>> _data =
+        updateCartModel.map((e) => e.toJson()).toList();
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<List<CartLineItemDtoList>>>(Options(
       method: 'PUT',
@@ -138,9 +144,11 @@ class _CartApi implements CartApi {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'storeId': storeId};
     final _headers = <String, dynamic>{
-      'Authorization': 'Bearer ${sharedPrefsApi.getFromShared(key: 'login')}'
+      'Authorization':
+          'Bearer ${await sharedPrefsApi.getFromShared(key: 'login')}'
     };
-    const Map<String, dynamic>? _data = null;
+    List<Map<String, dynamic>> _data =
+        updateCartModel.map((e) => e.toJson()).toList();
     final _result =
         await _dio.fetch<bool>(_setStreamType<HttpResponse<bool>>(Options(
       method: 'DELETE',

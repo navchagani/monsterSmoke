@@ -56,7 +56,6 @@ class MobileViewMode extends StatelessWidget {
           ];
         },
         body: Scaffold(
-          backgroundColor: Colors.white,
           body: body(),
           bottomNavigationBar: const CartBottomBar(),
           floatingActionButton: const CartFloatButton(),

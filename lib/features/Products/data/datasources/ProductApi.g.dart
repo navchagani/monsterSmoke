@@ -9,8 +9,7 @@ part of 'ProductApi.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
 class _ProductApi implements ProductApi {
-  _ProductApi(
-    this._dio) {
+  _ProductApi(this._dio) {
     baseUrl ??= 'https://erp.monstersmokewholesale.com';
   }
 
@@ -36,7 +35,6 @@ class _ProductApi implements ProductApi {
       'sortDirection': sortDirection ?? 'DESC',
       'storeIds': storeIds,
     };
-    log('${queryParameters}');
 
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;

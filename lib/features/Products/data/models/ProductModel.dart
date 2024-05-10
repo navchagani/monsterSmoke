@@ -1,38 +1,38 @@
 class ProductModel {
-  final int? productId;
-  final dynamic sku;
-  final String? upc;
-  final String? productName;
-  final String? alias;
-  final int? availableQuantity;
-  final String? eta;
-  final String? imageUrl;
-  final dynamic masterProductId;
-  final dynamic masterProductName;
-  final dynamic taxClassId;
-  final double? standardPrice;
-  final double? standardPriceWithoutDiscount;
-  final int? sequenceNumber;
-  final dynamic costPrice;
-  final dynamic tags;
-  final dynamic tagName;
-  final dynamic tagId;
-  final dynamic tagImageDtoList;
-  final int? minQuantityToSale;
-  final int? maxQuantityToSale;
-  final int? quantityIncrement;
-  final bool? hasChildProduct;
-  final dynamic promotionType;
-  final double? promotionValue;
-  final dynamic promotionStartdate;
-  final dynamic promotionEnddate;
-  final dynamic promotionNotes;
-  final dynamic weight;
-  final dynamic height;
-  final dynamic length;
-  final dynamic width;
-  final int? quantity;
-  const ProductModel(
+  int? productId;
+  dynamic sku;
+  String? upc;
+  String? productName;
+  String? alias;
+  int? availableQuantity;
+  String? eta;
+  String? imageUrl;
+  dynamic masterProductId;
+  dynamic masterProductName;
+  dynamic taxClassId;
+  double? standardPrice;
+  double? standardPriceWithoutDiscount;
+  int? sequenceNumber;
+  dynamic costPrice;
+  dynamic tags;
+  dynamic tagName;
+  dynamic tagId;
+  dynamic tagImageDtoList;
+  int? minQuantityToSale;
+  int? maxQuantityToSale;
+  int? quantityIncrement;
+  bool? hasChildProduct;
+  dynamic promotionType;
+  double? promotionValue;
+  dynamic promotionStartdate;
+  dynamic promotionEnddate;
+  dynamic promotionNotes;
+  dynamic weight;
+  dynamic height;
+  dynamic length;
+  dynamic width;
+  int? quantity = 1;
+  ProductModel(
       {this.productId,
       this.sku,
       this.upc,
@@ -99,7 +99,7 @@ class ProductModel {
       dynamic height,
       dynamic length,
       dynamic width,
-      int? quantity}) {
+      int? quantity = 1}) {
     return ProductModel(
         productId: productId ?? this.productId,
         sku: sku ?? this.sku,

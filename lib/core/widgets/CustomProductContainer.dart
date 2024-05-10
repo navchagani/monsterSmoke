@@ -151,7 +151,7 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
   }
 
   addProductToCart(ProductModel product) {
-    CartBloc bloc = getIt<CartBloc>();
+    CartBloc bloc = BlocProvider.of(context);
     bloc.add(AddToCartEvent(storeId: 2.toString(), list: [product]));
   }
 }

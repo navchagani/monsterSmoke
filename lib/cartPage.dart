@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
+import 'package:monstersmoke/const/Constants.dart';
+import 'package:monstersmoke/features/Products/data/models/updateCartModel.dart';
 
 class CartPage extends StatelessWidget {
-  const CartPage({super.key});
+  final UpdateCartModel model;
+  const CartPage({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -165,28 +168,36 @@ class CartTile extends StatelessWidget {
                       Expanded(child: Text(price.toString())),
                     ],
                   ),
+                  Decorations.height10,
                   SizedBox(
                     height: 40,
                     child: Material(
                       // color: Colors.amber,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           IconButton(
                             icon: const Icon(
-                              Icons.add_circle_outline,
+                              Icons.keyboard_arrow_up_rounded,
                             ),
                             onPressed: () {},
                             color: Colors.green.shade600,
                           ),
-                          Decorations.width5,
                           Text(quantity.toString()),
-                          Decorations.width5,
                           IconButton(
-                              icon: const Icon(Icons.remove_circle_outline),
+                              icon:
+                                  const Icon(Icons.keyboard_arrow_down_rounded),
                               onPressed: () {},
-                              color: Colors.deepOrange.shade600)
+                              color: Colors.deepOrange.shade600),
+                          Spacer(),
+                          IconButton(
+                              onPressed: onRemoveProduct,
+                              icon: const Icon(
+                                Icons.close,
+                                size: 17,
+                                color: Constants.monsterBlue,
+                              ))
                         ],
                       ),
                     ),

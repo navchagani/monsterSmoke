@@ -133,18 +133,18 @@ class ProductCardWidget extends StatelessWidget {
                                               fontWeight: FontWeight.normal,
                                               overflow: TextOverflow.ellipsis),
                                         )),
-                                        if (quantity > 0)
-                                          IconButton(
-                                              onPressed: isSignedIn
-                                                  ? onAddToCart
-                                                  : () =>
-                                                      showAuthRequiredDialog(
-                                                          context),
-                                              icon: const Icon(
-                                                Icons
-                                                    .add_circle_outline_outlined,
-                                                size: 30,
-                                              )),
+                                        // if (quantity > 0)
+                                        //   IconButton(
+                                        //       onPressed: isSignedIn
+                                        //           ? onAddToCart
+                                        //           : () =>
+                                        //               showAuthRequiredDialog(
+                                        //                   context),
+                                        //       icon: const Icon(
+                                        //         Icons
+                                        //             .add_circle_outline_outlined,
+                                        //         size: 30,
+                                        //       )),
                                       ],
                                     ),
                                   ],
@@ -211,18 +211,18 @@ class ProductCardWidget extends StatelessWidget {
                                   ],
                                 ),
                                 const Spacer(),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(
-                                          Icons.add_circle_outline_outlined,
-                                          size: 30,
-                                        )),
-                                  ],
-                                ),
+                                // Row(
+                                //   mainAxisAlignment: MainAxisAlignment.end,
+                                //   crossAxisAlignment: CrossAxisAlignment.end,
+                                //   children: [
+                                //     IconButton(
+                                //         onPressed: () {},
+                                //         icon: const Icon(
+                                //           Icons.add_circle_outline_outlined,
+                                //           size: 30,
+                                //         )),
+                                //   ],
+                                // ),
                               ],
                             ),
                           ),

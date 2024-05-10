@@ -50,7 +50,6 @@ class _LoginPageState extends State<LoginPage> {
           }
 
           if (customerState is CustomerCompletedState) {
-            log('${customerState.customerModel.toJson()}');
             Navigator.of(context).popUntil((route) => route.isFirst);
           }
 

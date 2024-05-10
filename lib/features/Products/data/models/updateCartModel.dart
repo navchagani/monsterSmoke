@@ -1,7 +1,7 @@
 class UpdateCartModel {
   final int? totalCartQuantity;
   final double? cartSubTotal;
-  final int? cartDiscount;
+  final double? cartDiscount;
   final double? totalCartPrice;
   final List<CartLineItemDtoList>? cartLineItemDtoList;
   const UpdateCartModel(
@@ -13,7 +13,7 @@ class UpdateCartModel {
   UpdateCartModel copyWith(
       {int? totalCartQuantity,
       double? cartSubTotal,
-      int? cartDiscount,
+      double? cartDiscount,
       double? totalCartPrice,
       List<CartLineItemDtoList>? cartLineItemDtoList}) {
     return UpdateCartModel(
@@ -44,8 +44,9 @@ class UpdateCartModel {
         cartSubTotal: json['cartSubTotal'] == null
             ? null
             : json['cartSubTotal'] as double,
-        cartDiscount:
-            json['cartDiscount'] == null ? null : json['cartDiscount'] as int,
+        cartDiscount: json['cartDiscount'] == null
+            ? null
+            : json['cartDiscount'] as double,
         totalCartPrice: json['totalCartPrice'] == null
             ? null
             : json['totalCartPrice'] as double,
@@ -101,16 +102,16 @@ class CartLineItemDtoList {
   final double? cartStandardPrice;
   final double? tierPrice;
   final double? originalStandardPrice;
-  final int? adminRetailPrice;
+  final double? adminRetailPrice;
   final int? availableQuantity;
   final bool? deleted;
-  final int? discountValue;
+  final double? discountValue;
   final dynamic discountType;
-  final int? discountAmount;
+  final double? discountAmount;
   final dynamic taxClassId;
   final dynamic taxType;
-  final int? taxPercentage;
-  final int? taxPerVolume;
+  final double? taxPercentage;
+  final double? taxPerVolume;
   final bool? outOfStock;
   final int? minQuantityToSale;
   final int? maxQuantityToSale;
@@ -120,12 +121,12 @@ class CartLineItemDtoList {
   final dynamic updatedBy;
   final String? insertedTimestamp;
   final String? updatedTimestamp;
-  final int? discount;
+  final double? discount;
   final dynamic taxIncludedInSellingPrice;
   final dynamic taxPerOunce;
   final dynamic directTaxPercentage;
-  final int? maxCostPrice;
-  final int? taxAmount;
+  final double? maxCostPrice;
+  final double? taxAmount;
   final dynamic size;
   final bool? serviceProduct;
   final double? subtotal;
@@ -187,16 +188,16 @@ class CartLineItemDtoList {
       double? cartStandardPrice,
       double? tierPrice,
       double? originalStandardPrice,
-      int? adminRetailPrice,
+      double? adminRetailPrice,
       int? availableQuantity,
       bool? deleted,
-      int? discountValue,
+      double? discountValue,
       dynamic discountType,
-      int? discountAmount,
+      double? discountAmount,
       dynamic taxClassId,
       dynamic taxType,
-      int? taxPercentage,
-      int? taxPerVolume,
+      double? taxPercentage,
+      double? taxPerVolume,
       bool? outOfStock,
       int? minQuantityToSale,
       int? maxQuantityToSale,
@@ -206,12 +207,12 @@ class CartLineItemDtoList {
       dynamic updatedBy,
       String? insertedTimestamp,
       String? updatedTimestamp,
-      int? discount,
+      double? discount,
       dynamic taxIncludedInSellingPrice,
       dynamic taxPerOunce,
       dynamic directTaxPercentage,
-      int? maxCostPrice,
-      int? taxAmount,
+      double? maxCostPrice,
+      double? taxAmount,
       dynamic size,
       bool? serviceProduct,
       double? subtotal}) {
@@ -337,23 +338,26 @@ class CartLineItemDtoList {
             : json['originalStandardPrice'] as double,
         adminRetailPrice: json['adminRetailPrice'] == null
             ? null
-            : json['adminRetailPrice'] as int,
+            : json['adminRetailPrice'] as double,
         availableQuantity: json['availableQuantity'] == null
             ? null
             : json['availableQuantity'] as int,
         deleted: json['deleted'] == null ? null : json['deleted'] as bool,
-        discountValue:
-            json['discountValue'] == null ? null : json['discountValue'] as int,
+        discountValue: json['discountValue'] == null
+            ? null
+            : json['discountValue'] as double,
         discountType: json['discountType'] as dynamic,
         discountAmount: json['discountAmount'] == null
             ? null
-            : json['discountAmount'] as int,
+            : json['discountAmount'] as double,
         taxClassId: json['taxClassId'] as dynamic,
         taxType: json['taxType'] as dynamic,
-        taxPercentage:
-            json['taxPercentage'] == null ? null : json['taxPercentage'] as int,
-        taxPerVolume:
-            json['taxPerVolume'] == null ? null : json['taxPerVolume'] as int,
+        taxPercentage: json['taxPercentage'] == null
+            ? null
+            : json['taxPercentage'] as double,
+        taxPerVolume: json['taxPerVolume'] == null
+            ? null
+            : json['taxPerVolume'] as double,
         outOfStock:
             json['outOfStock'] == null ? null : json['outOfStock'] as bool,
         minQuantityToSale: json['minQuantityToSale'] == null
@@ -376,13 +380,15 @@ class CartLineItemDtoList {
         updatedTimestamp: json['updatedTimestamp'] == null
             ? null
             : json['updatedTimestamp'] as String,
-        discount: json['discount'] == null ? null : json['discount'] as int,
+        discount: json['discount'] == null ? null : json['discount'] as double,
         taxIncludedInSellingPrice: json['taxIncludedInSellingPrice'] as dynamic,
         taxPerOunce: json['taxPerOunce'] as dynamic,
         directTaxPercentage: json['directTaxPercentage'] as dynamic,
-        maxCostPrice:
-            json['maxCostPrice'] == null ? null : json['maxCostPrice'] as int,
-        taxAmount: json['taxAmount'] == null ? null : json['taxAmount'] as int,
+        maxCostPrice: json['maxCostPrice'] == null
+            ? null
+            : json['maxCostPrice'] as double,
+        taxAmount:
+            json['taxAmount'] == null ? null : json['taxAmount'] as double,
         size: json['size'] as dynamic,
         serviceProduct: json['serviceProduct'] == null
             ? null

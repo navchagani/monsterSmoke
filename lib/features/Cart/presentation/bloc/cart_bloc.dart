@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
@@ -74,6 +75,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     final data = await caseGetCart(storeId: event.storeId);
 
     if (data is SuccessState) {
+      log('${data.data}');
       emit(CartLoadedState(updateCartModel: data.data!));
     }
 

@@ -65,9 +65,10 @@ class Decorations {
           borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
         contentPadding: const EdgeInsets.all(16),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+              color: Theme.of(context).colorScheme.primary, width: 2.0),
+          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
         ),
       );
 

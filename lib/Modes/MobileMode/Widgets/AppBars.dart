@@ -28,7 +28,7 @@ class _SliverBar1State extends State<SliverBar1> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
+      // color: Theme.of(context).scaffoldBackgroundColor,
       child: BlocProvider.value(
           value: bloc,
           child: BlocBuilder<SliderBloc, SliderBlocState>(

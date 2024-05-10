@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
+import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/features/Cart/presentation/bloc/cart_bloc.dart';
 
 class CartBottomBar extends StatelessWidget {
@@ -11,7 +12,7 @@ class CartBottomBar extends StatelessWidget {
     return BlocBuilder<CartBloc, CartState>(builder: (context, state) {
       return BottomAppBar(
         height: 50,
-        color: Theme.of(context).colorScheme.primary,
+        color: Constants.monsterBlue,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,

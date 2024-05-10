@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/cartPage.dart';
+import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/features/Cart/presentation/bloc/cart_bloc.dart';
+import 'package:monstersmoke/features/Products/data/models/updateCartModel.dart';
 
 class CartFloatButton extends StatelessWidget {
   const CartFloatButton({super.key});
@@ -9,33 +11,52 @@ class CartFloatButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(builder: (context, state) {
-      final length =
-          state.updateCartModel?.cartLineItemDtoList?.length ?? 0.toString();
+      if (state is CartLoadingState) {
+        return const FloatingActionButton(
+            backgroundColor: Constants.monsterBlue,
+            onPressed: null,
+            isExtended: true,
+            child: Padding(
+              padding: EdgeInsets.all(20.0),
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            ));
+      }
 
-      final isLoading = state is CartLoadingState;
+      if (state is CartLoadedState) {
+        final length = state.updateCartModel?.totalCartQuantity ?? 0;
+        return FloatingActionButton(
+          backgroundColor: Constants.monsterBlue,
+          onPressed: () =>
+              onMovetoCart(context: context, model: state.updateCartModel!),
+          isExtended: true,
+          child: Text(
+            length.toString(),
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.background, fontSize: 20),
+          ),
+        );
+      }
 
       return FloatingActionButton(
-        onPressed: () => onMovetoCart(context: context),
+        backgroundColor: Constants.monsterBlue,
+        onPressed: null,
         isExtended: true,
-        child: isLoading
-            ? const Padding(
-                padding: EdgeInsets.all(20.0),
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                ),
-              )
-            : Text(
-                length.toString(),
-                style: TextStyle(
-                    color: Theme.of(context).colorScheme.background,
-                    fontSize: 20),
-              ),
+        child: Text(
+          '0',
+          style: TextStyle(
+              color: Theme.of(context).colorScheme.background, fontSize: 20),
+        ),
       );
     });
   }
 
-  void onMovetoCart({required BuildContext context}) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: ((context) => const CartPage())));
+  void onMovetoCart(
+      {required BuildContext context, required UpdateCartModel model}) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: ((context) => CartPage(
+              model: model,
+            ))));
   }
 }

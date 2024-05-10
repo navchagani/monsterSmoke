@@ -48,7 +48,6 @@ class _SignUpPageState extends State<SignUpPage> {
         }
 
         if (signUpState is SignUpCompletedState) {
-          log('${signUpState.customerModel.toJson()}');
           Navigator.of(context).pop();
           CustomDialog(context: context, text: 'Signed Up Successfully..')
               .showCompletedDialog();

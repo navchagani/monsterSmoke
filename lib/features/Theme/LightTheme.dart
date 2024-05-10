@@ -131,7 +131,7 @@ class MonsterThemes {
       ),
       iconTheme:
           IconThemeData(color: Colors.black45.withOpacity(0.45), size: 24),
-      scaffoldBackgroundColor: Colors.white,
+      scaffoldBackgroundColor: const Color(0xFFe6eae2),
       tabBarTheme: TabBarTheme(
           indicator: BoxDecoration(
               color: Colors.purple, borderRadius: BorderRadius.circular(100.0)),

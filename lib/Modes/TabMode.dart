@@ -206,7 +206,9 @@ class _TabModeState extends State<TabMode> {
   }
 
   void onCart() {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: ((context) => const CartPage())));
+    // Navigator.of(context).push(MaterialPageRoute(
+    //     builder: ((context) => const CartPage(
+    //           model: null,
+    //         ))));
   }
 }
