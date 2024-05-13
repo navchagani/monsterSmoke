@@ -22,10 +22,10 @@ abstract class CartApi {
       {@Query('storeId') required String storeId});
   @PUT('/api/cartLineItem/updateAll')
   Future<HttpResponse<List<CartLineItemDtoList>>> updateCart(
-      {required List<UpdateCartModel> updateCartModel,
+      {required List<CartLineItemDtoList> updateCartModel,
       @Query('storeId') required String storeId});
   @DELETE('/api/cartLineItem/clearSelected')
   Future<HttpResponse<bool>> deleteFromCart(
-      {required List<UpdateCartModel> updateCartModel,
+      {required List<CartLineItemDtoList> updateCartModel,
       @Query('storeId') required String storeId});
 }

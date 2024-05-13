@@ -7,9 +7,9 @@ abstract class CartRepo {
       {required List<ProductModel> productModel, required String storeId});
   Future<DataStates<UpdateCartModel>> getCart({required String storeId});
   Future<DataStates<List<CartLineItemDtoList>>> updateCart(
-      {required List<UpdateCartModel> updateCartModel,
+      {required List<CartLineItemDtoList> updateCartModel,
       required String storeId});
   Future<DataStates<bool>> deleteFromCart(
-      {required List<UpdateCartModel> updateCartModel,
+      {required List<CartLineItemDtoList> updateCartModel,
       required String storeId});
 }

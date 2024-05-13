@@ -18,14 +18,14 @@ class AddToCartEvent extends CartEvent {
 
 class UpdateCartEvent extends CartEvent {
   final String storeId;
-  final List<UpdateCartModel> list;
+  final List<CartLineItemDtoList> list;
 
   const UpdateCartEvent({required this.storeId, required this.list});
 }
 
 class RemoveFromCartEvent extends CartEvent {
   final String storeId;
-  final List<UpdateCartModel> list;
+  final List<CartLineItemDtoList> list;
 
   const RemoveFromCartEvent({required this.storeId, required this.list});
 }

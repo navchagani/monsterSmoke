@@ -1,135 +1,194 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/const/Constants.dart';
+import 'package:monstersmoke/core/blocs/CartBloc.dart';
+import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/CustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
+import 'package:monstersmoke/features/Cart/presentation/bloc/cart_bloc.dart';
 import 'package:monstersmoke/features/Products/data/models/updateCartModel.dart';
 
-class CartPage extends StatelessWidget {
-  final UpdateCartModel model;
-  const CartPage({super.key, required this.model});
+class CartPage extends StatefulWidget {
+  const CartPage({super.key});
+
+  @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  @override
+  void initState() {
+    // final cartBloc = BlocProvider.of<CartBloc>(context);
+    // cartBloc.add(GetCartEvent(storeId: 2.toString()));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
-      body: body(),
+      body: body(context),
     );
   }
 
   AppBar appBar() => AppBar(
-        toolbarHeight: 100,
         title: const Text('Shopping Cart'),
       );
 
-  Widget body() {
-    return Column(
-      children: [
-        ListView.separated(
-          shrinkWrap: true,
-          padding: const EdgeInsets.all(15.0),
-          itemBuilder: (BuildContext context, int index) {
-            final product = model.cartLineItemDtoList![index];
+  Widget body(BuildContext context) {
+    LocalCartBloc bloc = BlocProvider.of<LocalCartBloc>(context);
+    final cartBloc = BlocProvider.of<CartBloc>(context);
+    return BlocConsumer<CartBloc, CartState>(
+      bloc: cartBloc,
+      listener: (context, cardState) {},
+      builder: (context, cardState) {
+        if (cardState is CartLoadedState) {
+          return Column(
+            // alignment: Alignment.bottomCenter,
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.all(15.0),
+                        itemBuilder: (BuildContext context, int index) {
+                          final model =
+                              cardState.updateCartModel?.cartLineItemDtoList!;
 
-            return CartTile(
-                isCart: true,
-                name: product.productName,
-                quantity: product.quantity,
-                image: product.imageUrl,
-                price: product.standardPrice.toString());
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Decorations.height10;
-          },
-          itemCount: model.cartLineItemDtoList!.length,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Material(
-            clipBehavior: Clip.hardEdge,
-            borderRadius: BorderRadius.circular(10.0),
-            color: Colors.grey.shade100,
-            child: Column(
-              children: [
-                ListTile(
-                  dense: true,
-                  title: const Text('Total Cart Quantity'),
-                  trailing: Text(
-                    model.totalCartQuantity.toString(),
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
+                          if (model == null) {
+                            return const Center(
+                              child: Text('Empty Cart'),
+                            );
+                          }
+
+                          final product = model[index];
+
+                          return CartTile(
+                            isCart: true,
+                            name: product.productName,
+                            quantity: product.quantity,
+                            image: product.imageUrl,
+                            price: product.standardPrice.toString(),
+                            availableQuantity: product.availableQuantity,
+                            onIncrement: () {
+                              cartBloc.add(UpdateCartEvent(
+                                  storeId: 2.toString(), list: model));
+                            },
+                            onDecrement: () {
+                              cartBloc.add(UpdateCartEvent(
+                                  storeId: 2.toString(), list: model));
+                            },
+                            onRemove: () => onRemoveProduct(
+                                context: context, list: [product]),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Decorations.height10;
+                        },
+                        itemCount: cardState
+                                .updateCartModel?.cartLineItemDtoList?.length ??
+                            0,
+                      ),
+                    ),
+                  ],
                 ),
-                ListTile(
-                  dense: true,
-                  title: const Text('Cart SubTotal'),
-                  trailing: Text(
-                    '\$${model.totalCartPrice.toString()}',
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
+              ),
+              Builder(builder: (context) {
+                final model = cardState.updateCartModel;
+                return Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Material(
+                    elevation: 15.0,
+                    clipBehavior: Clip.hardEdge,
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.grey.shade100,
+                    child: Wrap(
+                      children: [
+                        ListTile(
+                          dense: true,
+                          title: const Text('Total Cart Quantity'),
+                          trailing: Text(
+                            (model?.totalCartQuantity ?? 0.toString())
+                                .toString(),
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                        ),
+                        ListTile(
+                          dense: true,
+                          title: const Text('Cart SubTotal'),
+                          trailing: Text(
+                            '\$${model?.totalCartPrice ?? 0}',
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                        ),
+                        ListTile(
+                          dense: true,
+                          title: const Text('Cart Discount'),
+                          trailing: Text(
+                            (model?.cartDiscount ?? 0).toString(),
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                        ),
+                        ListTile(
+                          tileColor: Colors.redAccent.shade700,
+                          onTap: () {},
+                          shape: RoundedRectangleBorder(
+                              side:
+                                  BorderSide(color: Colors.redAccent.shade700)),
+                          dense: true,
+                          title: Text(
+                            '\$${model?.cartSubTotal ?? 0}',
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          trailing: const Text(
+                            'CheckOut',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                ListTile(
-                  dense: true,
-                  title: const Text('Cart Discount'),
-                  trailing: Text(
-                    model.cartDiscount.toString(),
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
-                ),
-                const Divider(),
-                ListTile(
-                  title: const Text('Total Cart Price'),
-                  dense: true,
-                  trailing: Text(
-                    '\$${model.cartSubTotal.toString()}',
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
-                ),
-                ListTile(
-                  tileColor: Colors.redAccent.shade700,
-                  onTap: () {},
-                  shape: RoundedRectangleBorder(
-                      side: BorderSide(color: Colors.redAccent.shade700)),
-                  dense: true,
-                  title: Text(
-                    '\$${model.cartSubTotal.toString()}',
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
-                  trailing: const Text(
-                    'CheckOut',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  ),
-                )
-              ],
-            ),
-          ),
-        )
-      ],
+                );
+              })
+            ],
+          );
+        }
+        return Container();
+      },
     );
+  }
+
+  void onRemoveProduct(
+      {required BuildContext context,
+      required List<CartLineItemDtoList> list}) {
+    CartBloc cartBloc = BlocProvider.of<CartBloc>(context);
+    cartBloc.add(RemoveFromCartEvent(storeId: 2.toString(), list: list));
   }
 }
 
 class CartTile extends StatelessWidget {
   final String? name, subSku, price, image;
-  final Function()? onIncrement, onDecrement;
+  final Function()? onIncrement, onDecrement, onRemove;
   final bool? isCart;
   final int? quantity, availableQuantity;
   const CartTile({
@@ -143,12 +202,13 @@ class CartTile extends StatelessWidget {
     this.onDecrement,
     this.isCart,
     this.availableQuantity,
+    this.onRemove,
   });
 
   @override
   Widget build(BuildContext context) {
     final qty = availableQuantity ?? 0;
-    final isInStock = qty > 0 ? true : false;
+    final isInStock = qty >= 0 ? true : false;
 
     return BlocBuilder<CustomerBloc, CustomerBlocState>(
       builder: (context, customerState) {
@@ -217,12 +277,12 @@ class CartTile extends StatelessWidget {
                         ],
                       ),
                       // Decorations.height10,
-                      if (isCart == false && int.parse(quantity.toString()) > 0)
+                      if (isCart == false)
                         SizedBox(
                           height: 40,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               isInStock
                                   ? Text(
@@ -237,14 +297,29 @@ class CartTile extends StatelessWidget {
                                     ),
                               const Spacer(),
                               if (isInStock)
-                                IconButton(
-                                    onPressed: isSignedIn
-                                        ? onIncrement
-                                        : () => showAuthRequiredDialog(context),
-                                    icon: const Icon(
-                                      Icons.add_circle_outline_outlined,
-                                      size: 30,
-                                    )),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                        onPressed: isSignedIn
+                                            ? onDecrement
+                                            : () =>
+                                                showAuthRequiredDialog(context),
+                                        icon: const Icon(
+                                          Icons.remove,
+                                          size: 30,
+                                        )),
+                                    Text(quantity.toString()),
+                                    IconButton(
+                                        onPressed: isSignedIn
+                                            ? onIncrement
+                                            : () =>
+                                                showAuthRequiredDialog(context),
+                                        icon: const Icon(
+                                          Icons.add,
+                                          size: 27,
+                                        )),
+                                  ],
+                                ),
                             ],
                           ),
                         ),
@@ -261,20 +336,27 @@ class CartTile extends StatelessWidget {
                                     icon: const Icon(
                                       Icons.keyboard_arrow_up_rounded,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: isSignedIn
+                                        ? onIncrement
+                                        : () => showAuthRequiredDialog(context),
                                     color: Colors.green.shade600,
                                   ),
                                   Text(quantity.toString()),
                                   IconButton(
                                       icon: const Icon(
                                           Icons.keyboard_arrow_down_rounded),
-                                      onPressed: () {},
+                                      onPressed: isSignedIn
+                                          ? onDecrement
+                                          : () =>
+                                              showAuthRequiredDialog(context),
                                       color: Colors.deepOrange.shade600),
                                 ],
                               ),
                               const Spacer(),
                               IconButton(
-                                  onPressed: onRemoveProduct,
+                                  onPressed: isSignedIn
+                                      ? onRemove
+                                      : () => showAuthRequiredDialog(context),
                                   icon: const Icon(
                                     Icons.close,
                                     size: 17,
@@ -361,8 +443,6 @@ class CartTile extends StatelessWidget {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => const AuthActionPage()));
   }
-
-  void onRemoveProduct() {}
 
   void onAddQuantity() {}
 

@@ -97,7 +97,7 @@ class _CartApi implements CartApi {
 
   @override
   Future<HttpResponse<List<CartLineItemDtoList>>> updateCart({
-    required List<UpdateCartModel> updateCartModel,
+    required List<CartLineItemDtoList> updateCartModel,
     required String storeId,
   }) async {
     final _extra = <String, dynamic>{};
@@ -138,7 +138,7 @@ class _CartApi implements CartApi {
 
   @override
   Future<HttpResponse<bool>> deleteFromCart({
-    required List<UpdateCartModel> updateCartModel,
+    required List<CartLineItemDtoList> updateCartModel,
     required String storeId,
   }) async {
     final _extra = <String, dynamic>{};

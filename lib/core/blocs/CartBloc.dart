@@ -27,14 +27,22 @@ class LocalCartBloc extends Bloc<LocalCartEvents, LocalCartState> {
 
       if (!isSame) {
         log('not found');
-        productList.add(event.product);
+
+        productList.add(event.product..quantity = 1);
       } else {
         log('found');
         final prod = productList.firstWhere(
             (element) => element.productId == event.product.productId);
-        prod.quantity = prod.quantity! + 1;
-        log(prod.availableQuantity.toString());
-        log('$prod');
+
+        final availableQty = prod.availableQuantity ?? 0;
+        final qty = prod.quantity ?? 0;
+
+        if (availableQty > qty) {
+          prod.quantity = qty + 1;
+          log(prod.availableQuantity.toString());
+          log(prod.quantity.toString());
+          log('${prod.toJson()}');
+        }
       }
     }
 
@@ -60,7 +68,10 @@ class LocalCartBloc extends Bloc<LocalCartEvents, LocalCartState> {
     final product = productList
         .firstWhere((element) => element.productId == event.product.productId);
 
-    product.quantity = product.quantity ?? 1 + 1;
+    log('quantity ${product.quantity}');
+    if (product.availableQuantity! >= product.quantity!) {
+      product.quantity = product.quantity ?? 0 + 1;
+    }
 
     emitter(LocalCartLoadedState(productList));
   }
@@ -71,8 +82,8 @@ class LocalCartBloc extends Bloc<LocalCartEvents, LocalCartState> {
     final product = productList
         .firstWhere((element) => element.productId == event.product.productId);
 
-    if (int.parse(product.quantity.toString()) > 1) {
-      product.quantity = product.quantity ?? 1 - 1;
+    if (int.parse(product.quantity.toString()) > 0) {
+      product.quantity = product.quantity! - 1;
     }
 
     emitter(LocalCartLoadedState(productList));

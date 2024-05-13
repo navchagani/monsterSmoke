@@ -21,6 +21,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc(this.caseAddToCart, this.caseGetCart, this.caseRemoveFromCart,
       this.caseUpdateToCart)
       : super(CartInitial()) {
+    on<CartInitialEvent>(initial);
     on<AddToCartEvent>(addToCart);
     on<UpdateCartEvent>(updateCart);
     on<RemoveFromCartEvent>(removeFromCart);
@@ -82,5 +83,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     if (data is ErrorState) {
       emit(CartErrorState(error: data.error!));
     }
+  }
+
+  FutureOr<void> initial(CartInitialEvent event, Emitter<CartState> emit) {
+    emit(CartInitial());
   }
 }

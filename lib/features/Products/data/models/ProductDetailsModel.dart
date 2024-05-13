@@ -408,9 +408,9 @@ class MasterProductDetails {
   double? nicotineStrength;
   double? volume;
   String? ouncePerProduct;
-  int? quantity = 1;
+  int? quantity = 0;
   MasterProductDetails(
-      {this.quantity = 1,
+      {this.quantity = 0,
       this.masterProductId,
       this.productId,
       this.productCategoryId,
@@ -444,7 +444,7 @@ class MasterProductDetails {
       this.volume,
       this.ouncePerProduct});
   MasterProductDetails copyWith(
-      {int? quantity = 1,
+      {int? quantity = 0,
       int? masterProductId,
       int? productId,
       String? productCategoryId,

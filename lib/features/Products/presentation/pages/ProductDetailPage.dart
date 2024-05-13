@@ -48,7 +48,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   productState.productDetailModel.masterProductDetails;
               return NestedScrollView(
                 body: Scaffold(
-                  body: body(model: product!),
+                  body: body(),
                   bottomNavigationBar: const CartBottomBar(),
                   floatingActionButton: const CartFloatButton(),
                   floatingActionButtonLocation:
@@ -57,7 +57,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 headerSliverBuilder:
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return [
-                    sliverAppBar(model: product),
+                    sliverAppBar(model: product!),
                     sliverAppBar1(product: productState.productDetailModel),
                     sliverAppBar2()
                   ];
@@ -72,35 +72,43 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   Widget sliverAppBar1({required ProductDetailModel product}) {
     LocalCartBloc bloc = BlocProvider.of<LocalCartBloc>(context);
 
-    return SliverAppBar(
-        leadingWidth: 0.0,
-        primary: false,
-        toolbarHeight: 140,
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        flexibleSpace: FlexibleSpaceBar(
-          background: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: CartTile(
-              isCart: false,
-              onIncrement: () {
-                bloc.add(LocalCartAddProductEvent(
-                    product.masterProductDetails!..quantity = 1));
-              },
-              onDecrement: () {
-                bloc.add(
-                    LocalCartOndecrementEvent(product.masterProductDetails!));
-              },
-              name: product.masterProductDetails?.productName.toString(),
-              subSku: 'SubSku: ${product.masterProductDetails?.sku.toString()}',
-              image: product.productImageList!.first.toString(),
-              price: product.masterProductDetails?.standardPrice.toString(),
-              quantity: product.masterProductDetails?.quantity ?? 0,
-              availableQuantity:
-                  product.masterProductDetails?.availableQuantity ?? 0,
-            ),
-          ),
-        ));
+    return BlocBuilder<LocalCartBloc, LocalCartState>(
+      builder: (context, cartState) {
+        int newQ = cartState.listProduct.contains(product.masterProductDetails)
+            ? product.masterProductDetails?.quantity ?? 0
+            : 0;
+        return SliverAppBar(
+            leadingWidth: 0.0,
+            primary: false,
+            toolbarHeight: 140,
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: CartTile(
+                  isCart: false,
+                  onIncrement: () {
+                    bloc.add(LocalCartAddProductEvent(
+                        product.masterProductDetails!..quantity = newQ));
+                  },
+                  onDecrement: () {
+                    bloc.add(LocalCartOndecrementEvent(
+                        product.masterProductDetails!));
+                  },
+                  name: product.masterProductDetails?.productName.toString(),
+                  subSku:
+                      'SubSku: ${product.masterProductDetails?.sku.toString()}',
+                  image: product.productImageList!.first.toString(),
+                  price: product.masterProductDetails?.standardPrice.toString(),
+                  quantity: product.masterProductDetails?.quantity,
+                  availableQuantity:
+                      product.masterProductDetails?.availableQuantity ?? 0,
+                ),
+              ),
+            ));
+      },
+    );
   }
 
   Widget sliverAppBar({required MasterProductDetails model}) => SliverAppBar(
@@ -136,7 +144,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ),
       );
 
-  Widget body({required MasterProductDetails model}) => BlocProvider.value(
+  Widget body() => BlocProvider.value(
         value: bloc,
         child: BlocBuilder<ProductBloc, ProductBlocState>(
           bloc: bloc,
@@ -169,7 +177,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                       int newQ = cartState.listProduct
                                               .contains(variationProduct)
                                           ? variationProduct?.quantity ?? 0
-                                          : 1;
+                                          : 0;
 
                                       return CartTile(
                                         isCart: false,

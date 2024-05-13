@@ -35,7 +35,7 @@ class CartRepoImp extends CartRepo {
 
   @override
   Future<DataStates<bool>> deleteFromCart(
-      {required List<UpdateCartModel> updateCartModel,
+      {required List<CartLineItemDtoList> updateCartModel,
       required String storeId}) async {
     try {
       final data = await cartApi.deleteFromCart(
@@ -74,7 +74,7 @@ class CartRepoImp extends CartRepo {
 
   @override
   Future<DataStates<List<CartLineItemDtoList>>> updateCart(
-      {required List<UpdateCartModel> updateCartModel,
+      {required List<CartLineItemDtoList> updateCartModel,
       required String storeId}) async {
     try {
       final data = await cartApi.updateCart(

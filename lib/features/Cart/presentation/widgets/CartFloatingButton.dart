@@ -25,13 +25,12 @@ class _CartFloatButtonState extends State<CartFloatButton> {
         bloc: cartBloc,
         listener: (context, cardState) {
           if (cardState is CartLoadedState) {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: ((context) => CartPage(
-                      model: cardState.updateCartModel!,
-                    ))));
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: ((context) => const CartPage())));
 
             LocalCartBloc localCartBloc = BlocProvider.of(context);
             localCartBloc.add(LocalCartClearProductEvent());
+            // cartBloc.add(CartInitialEvent());
           }
         },
         builder: (context, cartState) {
@@ -40,29 +39,13 @@ class _CartFloatButtonState extends State<CartFloatButton> {
                 backgroundColor: Constants.monsterBlue,
                 onPressed: null,
                 child: Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: EdgeInsets.all(20.0),
                   child: CircularProgressIndicator(
-                    strokeWidth: 3.0,
+                    strokeWidth: 5.0,
                     color: Colors.white,
                   ),
                 ));
           }
-
-          // if (cartState is CartLoadedState) {
-          //   return FloatingActionButton(
-          //     backgroundColor: Constants.monsterBlue,
-          //     onPressed: () =>
-          //         onMovetoCart(context: context, list: cartState.updateCartModel.cartLineItemDtoList),
-          //     child: length == 0
-          //         ? const Icon(Icons.add_shopping_cart_outlined)
-          //         : Text(
-          //             '$length',
-          //             style: TextStyle(
-          //                 color: Theme.of(context).colorScheme.background,
-          //                 fontSize: 20),
-          //           ),
-          //   );
-          // }
 
           return BlocProvider.value(
             value: bloc,
@@ -86,24 +69,22 @@ class _CartFloatButtonState extends State<CartFloatButton> {
                         ));
                   }
 
-                  if (state is LocalCartLoadedState) {
+                  if (state is LocalCartLoadedState && length > 0) {
                     return FloatingActionButton(
                       backgroundColor: Constants.monsterBlue,
                       onPressed: () => onMovetoCart(
                           context: context, list: state.listProduct),
-                      child: Text(
-                        '$length',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.background,
-                            fontSize: 20),
-                      ),
+                      child: const Icon(Icons.forward),
                     );
                   }
 
-                  return const FloatingActionButton(
+                  return FloatingActionButton(
                       backgroundColor: Constants.monsterBlue,
-                      onPressed: null,
-                      child: Icon(Icons.add_shopping_cart_outlined));
+                      onPressed: () {
+                        CartBloc cartBloc = BlocProvider.of<CartBloc>(context);
+                        cartBloc.add(GetCartEvent(storeId: 2.toString()));
+                      },
+                      child: const Icon(Icons.add_shopping_cart_outlined));
                 }),
           );
         });

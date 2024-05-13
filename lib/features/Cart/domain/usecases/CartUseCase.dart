@@ -36,7 +36,7 @@ class CaseUpdateToCart
   @override
   Future<DataStates<List<CartLineItemDtoList>>> call(
       {void params,
-      List<UpdateCartModel>? cartLineItemDtoList,
+      List<CartLineItemDtoList>? cartLineItemDtoList,
       String? storeId}) {
     return repo.updateCart(
         updateCartModel: cartLineItemDtoList!, storeId: storeId.toString());
@@ -49,7 +49,9 @@ class CaseRemoveFromCart extends CaseFuture<DataStates<bool>, void> {
   CaseRemoveFromCart({required this.repo});
   @override
   Future<DataStates<bool>> call(
-      {void params, List<UpdateCartModel>? updateCartModel, String? storeId}) {
+      {void params,
+      List<CartLineItemDtoList>? updateCartModel,
+      String? storeId}) {
     return repo.deleteFromCart(
         storeId: storeId.toString(), updateCartModel: updateCartModel!);
   }
