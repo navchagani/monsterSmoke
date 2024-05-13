@@ -1,9 +1,9 @@
 class ProductDetailModel {
-  final MasterProductDetails? masterProductDetails;
-  final List<dynamic>? productImageList;
-  final List<dynamic>? header;
-  final Body? body;
-  const ProductDetailModel(
+  MasterProductDetails? masterProductDetails;
+  List<dynamic>? productImageList;
+  List<dynamic>? header;
+  Body? body;
+  ProductDetailModel(
       {this.masterProductDetails,
       this.productImageList,
       this.header,
@@ -72,18 +72,18 @@ body:${body.toString()}
 }
 
 class Body {
-  final List<Content>? content;
-  final Pageable? pageable;
-  final int? totalElements;
-  final int? totalPages;
-  final bool? last;
-  final bool? first;
-  final Sort? sort;
-  final int? size;
-  final int? number;
-  final int? numberOfElements;
-  final bool? empty;
-  const Body(
+  List<MasterProductDetails>? content;
+  Pageable? pageable;
+  int? totalElements;
+  int? totalPages;
+  bool? last;
+  bool? first;
+  Sort? sort;
+  int? size;
+  int? number;
+  int? numberOfElements;
+  bool? empty;
+  Body(
       {this.content,
       this.pageable,
       this.totalElements,
@@ -96,7 +96,7 @@ class Body {
       this.numberOfElements,
       this.empty});
   Body copyWith(
-      {List<Content>? content,
+      {List<MasterProductDetails>? content,
       Pageable? pageable,
       int? totalElements,
       int? totalPages,
@@ -143,8 +143,8 @@ class Body {
         content: json['content'] == null
             ? null
             : (json['content'] as List)
-                .map<Content>(
-                    (data) => Content.fromJson(data as Map<String, Object?>))
+                .map<MasterProductDetails>((data) =>
+                    MasterProductDetails.fromJson(data as Map<String, Object?>))
                 .toList(),
         pageable: json['pageable'] == null
             ? null
@@ -208,13 +208,13 @@ empty:$empty
 }
 
 class Pageable {
-  final Sort? sort;
-  final int? pageNumber;
-  final int? pageSize;
-  final int? offset;
-  final bool? unpaged;
-  final bool? paged;
-  const Pageable(
+  Sort? sort;
+  int? pageNumber;
+  int? pageSize;
+  int? offset;
+  bool? unpaged;
+  bool? paged;
+  Pageable(
       {this.sort,
       this.pageNumber,
       this.pageSize,
@@ -293,10 +293,10 @@ paged:$paged
 }
 
 class Sort {
-  final bool? sorted;
-  final bool? unsorted;
-  final bool? empty;
-  const Sort({this.sorted, this.unsorted, this.empty});
+  bool? sorted;
+  bool? unsorted;
+  bool? empty;
+  Sort({this.sorted, this.unsorted, this.empty});
   Sort copyWith({bool? sorted, bool? unsorted, bool? empty}) {
     return Sort(
         sorted: sorted ?? this.sorted,
@@ -339,346 +339,9 @@ empty:$empty
   }
 }
 
-class Content {
-  final String? masterProductId;
-  final int? productId;
-  final String? productCategoryId;
-  final String? productName;
-  final String? urlAlias;
-  final String? shortDescription;
-  final String? fullDescription;
-  final int? availableQuantity;
-  final String? eta;
-  final double? standardPrice;
-  final double? standardPriceWithoutDiscount;
-  final String? imageUrl;
-  final String? upc;
-  final String? sku;
-  final String? sequenceNumber;
-  final ProductVariantLabelValues? productVariantLabelValues;
-  final bool? categorySelected;
-  final int? minQuantityToSale;
-  final int? maxQuantityToSale;
-  final int? quantityIncrement;
-  final String? tagImageDtoList;
-  final String? attachmentUrlList;
-  final String? metaTitle;
-  final String? metaKeyword;
-  final String? metaDescription;
-  final String? modelName;
-  final double? msrp;
-  final int? boxQuantity;
-  final int? caseQuantity;
-  final double? nicotineStrength;
-  final double? volume;
-  final String? ouncePerProduct;
-  const Content(
-      {this.masterProductId,
-      this.productId,
-      this.productCategoryId,
-      this.productName,
-      this.urlAlias,
-      this.shortDescription,
-      this.fullDescription,
-      this.availableQuantity,
-      this.eta,
-      this.standardPrice,
-      this.standardPriceWithoutDiscount,
-      this.imageUrl,
-      this.upc,
-      this.sku,
-      this.sequenceNumber,
-      this.productVariantLabelValues,
-      this.categorySelected,
-      this.minQuantityToSale,
-      this.maxQuantityToSale,
-      this.quantityIncrement,
-      this.tagImageDtoList,
-      this.attachmentUrlList,
-      this.metaTitle,
-      this.metaKeyword,
-      this.metaDescription,
-      this.modelName,
-      this.msrp,
-      this.boxQuantity,
-      this.caseQuantity,
-      this.nicotineStrength,
-      this.volume,
-      this.ouncePerProduct});
-  Content copyWith(
-      {String? masterProductId,
-      int? productId,
-      String? productCategoryId,
-      String? productName,
-      String? urlAlias,
-      String? shortDescription,
-      String? fullDescription,
-      int? availableQuantity,
-      String? eta,
-      double? standardPrice,
-      double? standardPriceWithoutDiscount,
-      String? imageUrl,
-      String? upc,
-      String? sku,
-      String? sequenceNumber,
-      ProductVariantLabelValues? productVariantLabelValues,
-      bool? categorySelected,
-      int? minQuantityToSale,
-      int? maxQuantityToSale,
-      int? quantityIncrement,
-      String? tagImageDtoList,
-      String? attachmentUrlList,
-      String? metaTitle,
-      String? metaKeyword,
-      String? metaDescription,
-      String? modelName,
-      double? msrp,
-      int? boxQuantity,
-      int? caseQuantity,
-      double? nicotineStrength,
-      double? volume,
-      String? ouncePerProduct}) {
-    return Content(
-        masterProductId: masterProductId ?? this.masterProductId,
-        productId: productId ?? this.productId,
-        productCategoryId: productCategoryId ?? this.productCategoryId,
-        productName: productName ?? this.productName,
-        urlAlias: urlAlias ?? this.urlAlias,
-        shortDescription: shortDescription ?? this.shortDescription,
-        fullDescription: fullDescription ?? this.fullDescription,
-        availableQuantity: availableQuantity ?? this.availableQuantity,
-        eta: eta ?? this.eta,
-        standardPrice: standardPrice ?? this.standardPrice,
-        standardPriceWithoutDiscount:
-            standardPriceWithoutDiscount ?? this.standardPriceWithoutDiscount,
-        imageUrl: imageUrl ?? this.imageUrl,
-        upc: upc ?? this.upc,
-        sku: sku ?? this.sku,
-        sequenceNumber: sequenceNumber ?? this.sequenceNumber,
-        productVariantLabelValues:
-            productVariantLabelValues ?? this.productVariantLabelValues,
-        categorySelected: categorySelected ?? this.categorySelected,
-        minQuantityToSale: minQuantityToSale ?? this.minQuantityToSale,
-        maxQuantityToSale: maxQuantityToSale ?? this.maxQuantityToSale,
-        quantityIncrement: quantityIncrement ?? this.quantityIncrement,
-        tagImageDtoList: tagImageDtoList ?? this.tagImageDtoList,
-        attachmentUrlList: attachmentUrlList ?? this.attachmentUrlList,
-        metaTitle: metaTitle ?? this.metaTitle,
-        metaKeyword: metaKeyword ?? this.metaKeyword,
-        metaDescription: metaDescription ?? this.metaDescription,
-        modelName: modelName ?? this.modelName,
-        msrp: msrp ?? this.msrp,
-        boxQuantity: boxQuantity ?? this.boxQuantity,
-        caseQuantity: caseQuantity ?? this.caseQuantity,
-        nicotineStrength: nicotineStrength ?? this.nicotineStrength,
-        volume: volume ?? this.volume,
-        ouncePerProduct: ouncePerProduct ?? this.ouncePerProduct);
-  }
-
-  Map<String, Object?> toJson() {
-    return {
-      'masterProductId': masterProductId,
-      'productId': productId,
-      'productCategoryId': productCategoryId,
-      'productName': productName,
-      'urlAlias': urlAlias,
-      'shortDescription': shortDescription,
-      'fullDescription': fullDescription,
-      'availableQuantity': availableQuantity,
-      'eta': eta,
-      'standardPrice': standardPrice,
-      'standardPriceWithoutDiscount': standardPriceWithoutDiscount,
-      'imageUrl': imageUrl,
-      'upc': upc,
-      'sku': sku,
-      'sequenceNumber': sequenceNumber,
-      'productVariantLabelValues': productVariantLabelValues?.toJson(),
-      'categorySelected': categorySelected,
-      'minQuantityToSale': minQuantityToSale,
-      'maxQuantityToSale': maxQuantityToSale,
-      'quantityIncrement': quantityIncrement,
-      'tagImageDtoList': tagImageDtoList,
-      'attachmentUrlList': attachmentUrlList,
-      'metaTitle': metaTitle,
-      'metaKeyword': metaKeyword,
-      'metaDescription': metaDescription,
-      'modelName': modelName,
-      'msrp': msrp,
-      'boxQuantity': boxQuantity,
-      'caseQuantity': caseQuantity,
-      'nicotineStrength': nicotineStrength,
-      'volume': volume,
-      'ouncePerProduct': ouncePerProduct
-    };
-  }
-
-  static Content fromJson(Map<String, Object?> json) {
-    return Content(
-        masterProductId: json['masterProductId'] as String?,
-        productId: json['productId'] == null ? null : json['productId'] as int,
-        productCategoryId: json['productCategoryId'] as String?,
-        productName:
-            json['productName'] == null ? null : json['productName'] as String,
-        urlAlias: json['urlAlias'] as String?,
-        shortDescription: json['shortDescription'] == null
-            ? null
-            : json['shortDescription'] as String,
-        fullDescription: json['fullDescription'] == null
-            ? null
-            : json['fullDescription'] as String,
-        availableQuantity: json['availableQuantity'] == null
-            ? null
-            : json['availableQuantity'] as int,
-        eta: json['eta'] == null ? null : json['eta'] as String,
-        standardPrice: json['standardPrice'] == null
-            ? null
-            : json['standardPrice'] as double,
-        standardPriceWithoutDiscount:
-            json['standardPriceWithoutDiscount'] == null
-                ? null
-                : json['standardPriceWithoutDiscount'] as double,
-        imageUrl: json['imageUrl'] == null ? null : json['imageUrl'] as String,
-        upc: json['upc'] == null ? null : json['upc'] as String,
-        sku: json['sku'] == null ? null : json['sku'] as String,
-        sequenceNumber: json['sequenceNumber'] as String?,
-        productVariantLabelValues: json['productVariantLabelValues'] == null
-            ? null
-            : ProductVariantLabelValues.fromJson(
-                json['productVariantLabelValues'] as Map<String, Object?>),
-        categorySelected: json['categorySelected'] == null
-            ? null
-            : json['categorySelected'] as bool,
-        minQuantityToSale: json['minQuantityToSale'] == null
-            ? null
-            : json['minQuantityToSale'] as int,
-        maxQuantityToSale: json['maxQuantityToSale'] == null
-            ? null
-            : json['maxQuantityToSale'] as int,
-        quantityIncrement: json['quantityIncrement'] == null
-            ? null
-            : json['quantityIncrement'] as int,
-        tagImageDtoList: json['tagImageDtoList'] as String?,
-        attachmentUrlList: json['attachmentUrlList'] as String?,
-        metaTitle: json['metaTitle'] as String?,
-        metaKeyword: json['metaKeyword'] as String?,
-        metaDescription: json['metaDescription'] as String?,
-        modelName: json['modelName'] as String?,
-        msrp: json['msrp'] == null ? null : json['msrp'] as double,
-        boxQuantity: json['boxQuantity'] as int?,
-        caseQuantity:
-            json['caseQuantity'] == null ? null : json['caseQuantity'] as int,
-        nicotineStrength: json['nicotineStrength'] == null
-            ? null
-            : json['nicotineStrength'] as double,
-        volume: json['volume'] == null ? null : json['volume'] as double,
-        ouncePerProduct: json['ouncePerProduct'] as String?);
-  }
-
-  @override
-  String toString() {
-    return '''Content(
-                masterProductId:$masterProductId,
-productId:$productId,
-productCategoryId:$productCategoryId,
-productName:$productName,
-urlAlias:$urlAlias,
-shortDescription:$shortDescription,
-fullDescription:$fullDescription,
-availableQuantity:$availableQuantity,
-eta:$eta,
-standardPrice:$standardPrice,
-standardPriceWithoutDiscount:$standardPriceWithoutDiscount,
-imageUrl:$imageUrl,
-upc:$upc,
-sku:$sku,
-sequenceNumber:$sequenceNumber,
-productVariantLabelValues:${productVariantLabelValues.toString()},
-categorySelected:$categorySelected,
-minQuantityToSale:$minQuantityToSale,
-maxQuantityToSale:$maxQuantityToSale,
-quantityIncrement:$quantityIncrement,
-tagImageDtoList:$tagImageDtoList,
-attachmentUrlList:$attachmentUrlList,
-metaTitle:$metaTitle,
-metaKeyword:$metaKeyword,
-metaDescription:$metaDescription,
-modelName:$modelName,
-msrp:$msrp,
-boxQuantity:$boxQuantity,
-caseQuantity:$caseQuantity,
-nicotineStrength:$nicotineStrength,
-volume:$volume,
-ouncePerProduct:$ouncePerProduct
-    ) ''';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is Content &&
-        other.runtimeType == runtimeType &&
-        other.masterProductId == masterProductId &&
-        other.productId == productId &&
-        other.productCategoryId == productCategoryId &&
-        other.productName == productName &&
-        other.urlAlias == urlAlias &&
-        other.shortDescription == shortDescription &&
-        other.fullDescription == fullDescription &&
-        other.availableQuantity == availableQuantity &&
-        other.eta == eta &&
-        other.standardPrice == standardPrice &&
-        other.standardPriceWithoutDiscount == standardPriceWithoutDiscount &&
-        other.imageUrl == imageUrl &&
-        other.upc == upc &&
-        other.sku == sku &&
-        other.sequenceNumber == sequenceNumber &&
-        other.productVariantLabelValues == productVariantLabelValues &&
-        other.categorySelected == categorySelected &&
-        other.minQuantityToSale == minQuantityToSale &&
-        other.maxQuantityToSale == maxQuantityToSale &&
-        other.quantityIncrement == quantityIncrement &&
-        other.tagImageDtoList == tagImageDtoList &&
-        other.attachmentUrlList == attachmentUrlList &&
-        other.metaTitle == metaTitle &&
-        other.metaKeyword == metaKeyword &&
-        other.metaDescription == metaDescription &&
-        other.modelName == modelName &&
-        other.msrp == msrp &&
-        other.boxQuantity == boxQuantity &&
-        other.caseQuantity == caseQuantity &&
-        other.nicotineStrength == nicotineStrength &&
-        other.volume == volume &&
-        other.ouncePerProduct == ouncePerProduct;
-  }
-
-  @override
-  int get hashCode {
-    return Object.hash(
-        runtimeType,
-        masterProductId,
-        productId,
-        productCategoryId,
-        productName,
-        urlAlias,
-        shortDescription,
-        fullDescription,
-        availableQuantity,
-        eta,
-        standardPrice,
-        standardPriceWithoutDiscount,
-        imageUrl,
-        upc,
-        sku,
-        sequenceNumber,
-        productVariantLabelValues,
-        categorySelected,
-        minQuantityToSale,
-        maxQuantityToSale);
-  }
-}
-
 class ProductVariantLabelValues {
-  final String? FLAVORS;
-  const ProductVariantLabelValues({this.FLAVORS});
+  String? FLAVORS;
+  ProductVariantLabelValues({this.FLAVORS});
   ProductVariantLabelValues copyWith({String? FLAVORS}) {
     return ProductVariantLabelValues(FLAVORS: FLAVORS ?? this.FLAVORS);
   }
@@ -713,40 +376,42 @@ class ProductVariantLabelValues {
 }
 
 class MasterProductDetails {
-  final int? masterProductId;
-  final int? productId;
-  final String? productCategoryId;
-  final String? productName;
-  final String? urlAlias;
-  final String? shortDescription;
-  final String? fullDescription;
-  final int? availableQuantity;
-  final String? eta;
-  final double? standardPrice;
-  final double? standardPriceWithoutDiscount;
-  final String? imageUrl;
-  final String? upc;
-  final String? sku;
-  final String? sequenceNumber;
-  final String? productVariantLabelValues;
-  final bool? categorySelected;
-  final int? minQuantityToSale;
-  final int? maxQuantityToSale;
-  final int? quantityIncrement;
-  final String? tagImageDtoList;
-  final String? attachmentUrlList;
-  final String? metaTitle;
-  final String? metaKeyword;
-  final String? metaDescription;
-  final String? modelName;
-  final double? msrp;
-  final String? boxQuantity;
-  final int? caseQuantity;
-  final double? nicotineStrength;
-  final double? volume;
-  final String? ouncePerProduct;
-  const MasterProductDetails(
-      {this.masterProductId,
+  int? masterProductId;
+  int? productId;
+  String? productCategoryId;
+  String? productName;
+  String? urlAlias;
+  String? shortDescription;
+  String? fullDescription;
+  int? availableQuantity;
+  String? eta;
+  double? standardPrice;
+  double? standardPriceWithoutDiscount;
+  String? imageUrl;
+  String? upc;
+  String? sku;
+  String? sequenceNumber;
+  Map<String, dynamic>? productVariantLabelValues;
+  bool? categorySelected;
+  int? minQuantityToSale;
+  int? maxQuantityToSale;
+  int? quantityIncrement;
+  String? tagImageDtoList;
+  String? attachmentUrlList;
+  String? metaTitle;
+  String? metaKeyword;
+  String? metaDescription;
+  String? modelName;
+  double? msrp;
+  int? boxQuantity;
+  int? caseQuantity;
+  double? nicotineStrength;
+  double? volume;
+  String? ouncePerProduct;
+  int? quantity = 1;
+  MasterProductDetails(
+      {this.quantity = 1,
+      this.masterProductId,
       this.productId,
       this.productCategoryId,
       this.productName,
@@ -779,7 +444,8 @@ class MasterProductDetails {
       this.volume,
       this.ouncePerProduct});
   MasterProductDetails copyWith(
-      {int? masterProductId,
+      {int? quantity = 1,
+      int? masterProductId,
       int? productId,
       String? productCategoryId,
       String? productName,
@@ -794,7 +460,7 @@ class MasterProductDetails {
       String? upc,
       String? sku,
       String? sequenceNumber,
-      String? productVariantLabelValues,
+      Map<String, dynamic>? productVariantLabelValues,
       bool? categorySelected,
       int? minQuantityToSale,
       int? maxQuantityToSale,
@@ -806,12 +472,13 @@ class MasterProductDetails {
       String? metaDescription,
       String? modelName,
       double? msrp,
-      String? boxQuantity,
+      int? boxQuantity,
       int? caseQuantity,
       double? nicotineStrength,
       double? volume,
       String? ouncePerProduct}) {
     return MasterProductDetails(
+        quantity: quantity ?? quantity,
         masterProductId: masterProductId ?? this.masterProductId,
         productId: productId ?? this.productId,
         productCategoryId: productCategoryId ?? this.productCategoryId,
@@ -916,7 +583,8 @@ class MasterProductDetails {
         upc: json['upc'] == null ? null : json['upc'] as String,
         sku: json['sku'] == null ? null : json['sku'] as String,
         sequenceNumber: json['sequenceNumber'] as String?,
-        productVariantLabelValues: json['productVariantLabelValues'] as String?,
+        productVariantLabelValues:
+            json['productVariantLabelValues'] as Map<String, dynamic>?,
         categorySelected: json['categorySelected'] == null
             ? null
             : json['categorySelected'] as bool,
@@ -937,7 +605,7 @@ class MasterProductDetails {
         modelName:
             json['modelName'] == null ? null : json['modelName'] as String,
         msrp: json['msrp'] == null ? null : json['msrp'] as double,
-        boxQuantity: json['boxQuantity'] as String?,
+        boxQuantity: json['boxQuantity'] as int?,
         caseQuantity:
             json['caseQuantity'] == null ? null : json['caseQuantity'] as int,
         nicotineStrength: json['nicotineStrength'] == null
@@ -981,7 +649,9 @@ boxQuantity:$boxQuantity,
 caseQuantity:$caseQuantity,
 nicotineStrength:$nicotineStrength,
 volume:$volume,
-ouncePerProduct:$ouncePerProduct
+ouncePerProduct:$ouncePerProduct,
+quantity:$quantity
+
     ) ''';
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:monstersmoke/core/blocs/CartBloc.dart';
 import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
 import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/CustomerBloc/customer_bloc_bloc.dart';
@@ -41,6 +42,7 @@ class Registery {
 
         // CustomerBlocs
         BlocProvider<CustomerBloc>(create: ((context) => getIt())),
+        BlocProvider<LocalCartBloc>(create: ((context) => getIt())),
 
         // CartBlocs
         BlocProvider<CartBloc>.value(value: getIt<CartBloc>()),

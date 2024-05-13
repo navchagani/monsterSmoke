@@ -33,12 +33,12 @@ class ProductCardWidget extends StatelessWidget {
             height: double.infinity,
             width: 360,
             child: Material(
-              elevation: 10.0,
+              elevation: 4.0,
               shadowColor:
-                  Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                  Theme.of(context).colorScheme.onBackground.withOpacity(0.8),
               color: Colors.white,
               shape: RoundedRectangleBorder(
-                side: const BorderSide(color: Colors.black26, width: 1.0),
+                side: BorderSide.none,
                 borderRadius: BorderRadius.circular(10.0),
               ),
               clipBehavior: Clip.hardEdge,

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:monstersmoke/core/blocs/CartBloc.dart';
 import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
 import 'package:monstersmoke/features/Auth/data/datasources/AuthApi.dart';
 import 'package:monstersmoke/features/Auth/data/repositories/AuthRepoImp.dart';
@@ -42,7 +43,7 @@ void depInjection() {
   getIt.registerSingleton<Dio>(Dio());
 
   getIt.registerFactory(() => IsMobile());
-
+  getIt.registerFactory(() => LocalCartBloc());
   getIt.registerFactory(() => AuthAction());
 
   // Auth Apis

@@ -36,6 +36,7 @@ class CustomInputField extends StatelessWidget {
       elevation: elevation ?? 0.0,
       borderRadius: BorderRadiusDirectional.circular(10.0),
       child: TextFormField(
+          // autofocus: false,
           onTap: onTap,
           enabled: enabled ?? true,
           controller: controller,

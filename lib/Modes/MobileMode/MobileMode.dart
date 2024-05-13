@@ -31,25 +31,26 @@ class MobileViewMode extends StatelessWidget {
               automaticallyImplyLeading: false,
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               shadowColor: Colors.black,
-              elevation: 50.0,
               pinned: true,
               primary: false,
               titleSpacing: 0.0,
-              toolbarHeight: 50.0,
+              toolbarHeight: 60.0,
               title: Padding(
                 padding:
-                    const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 5.0),
-                child: CustomInputField(
-                  elevation: 1.0,
-                  enabled: true,
-                  inputType: TextInputType.none,
+                    const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 0.0),
+                child: GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: ((context) => const SearchPage())));
                   },
-                  icon: const Icon(Icons.search),
-                  labelText: 'Search Products',
-                  hintText: 'Search Products',
+                  child: const CustomInputField(
+                    elevation: 0.0,
+                    enabled: false,
+                    inputType: TextInputType.none,
+                    icon: Icon(Icons.search),
+                    labelText: 'Search Products',
+                    hintText: 'Search Products',
+                  ),
                 ),
               ),
             )

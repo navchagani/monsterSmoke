@@ -50,25 +50,25 @@ class Decorations {
         isDense: true,
         floatingLabelBehavior: FloatingLabelBehavior.always,
         filled: noFill ?? true ? true : false,
-        fillColor: Theme.of(context).colorScheme.background,
-        focusColor: Colors.grey.shade100,
+        fillColor: Theme.of(context).colorScheme.onBackground.withOpacity(0.07),
+        focusColor: Colors.grey.shade300,
         suffixIcon: icon,
         suffixStyle: TextStyle(color: Colors.grey.withOpacity(0.8)),
         hintText: hint,
         hintStyle: const TextStyle(color: Colors.black26),
         border: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black45),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.all(Radius.circular(50.0)),
         ),
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black45),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.all(Radius.circular(50.0)),
         ),
         contentPadding: const EdgeInsets.all(16),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
               color: Theme.of(context).colorScheme.primary, width: 2.0),
-          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(50.0)),
         ),
       );
 

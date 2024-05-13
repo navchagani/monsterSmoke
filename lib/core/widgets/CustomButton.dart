@@ -30,7 +30,7 @@ class CustomButton extends StatelessWidget {
           : enabled ?? false
               ? 10.0
               : elevation ?? 0.0,
-      borderRadius: radius == null ? BorderRadius.circular(10.0) : null,
+      borderRadius: radius == null ? BorderRadius.circular(50.0) : null,
       color: isBordered ?? false
           ? Colors.transparent
           : enabled ?? true
