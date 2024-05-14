@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/Global/Widgets/DropDowns.dart';
+import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
 import 'package:monstersmoke/features/Auth/data/models/CustomerModel.dart';
@@ -102,6 +103,9 @@ class _BillingPageState extends State<BillingPage> {
       selectedAddress = value?.address1;
     });
 
+    SelectedAddressBloc bloc = BlocProvider.of(context);
+    bloc.add(value);
+
     if (selectedAddress != null) {
       Future.delayed(const Duration(milliseconds: 700)).whenComplete(() {
         setState(() {
@@ -117,12 +121,6 @@ class _BillingPageState extends State<BillingPage> {
         builder: ((context) {
           return const AddNewCustomerAddressPage();
         }));
-  }
-
-  void onCurrentAddressChanged(bool? value) {
-    setState(() {
-      currentAddress = true;
-    });
   }
 }
 
@@ -140,6 +138,8 @@ class _AddNewCustomerAddressPageState extends State<AddNewCustomerAddressPage> {
   final cityController = TextEditingController();
   final zipCodeController = TextEditingController();
   final phoneController = TextEditingController();
+
+  String? selectedCountry, selectedState;
 
   @override
   Widget build(BuildContext context) {
@@ -223,7 +223,15 @@ class _AddNewCustomerAddressPageState extends State<AddNewCustomerAddressPage> {
 
   address2Changed(String value) => setState(() {});
 
-  onCountryChanged(CountryModel? p1) {}
+  onCountryChanged(CountryModel? p1) {
+    setState(() {
+      selectedCountry = p1?.name;
+    });
+  }
 
-  onStateChanged(StateModel? p1) {}
+  onStateChanged(StateModel? p1) {
+    setState(() {
+      selectedState = p1?.name;
+    });
+  }
 }

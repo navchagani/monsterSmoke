@@ -927,6 +927,7 @@ class CustomerStoreAddressList {
   final bool? defaultBillingAddress;
   final bool? defaultShippingAddress;
   final bool? active;
+
   const CustomerStoreAddressList(
       {this.id,
       this.customerId,

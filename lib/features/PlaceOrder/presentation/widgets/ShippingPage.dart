@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
+import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/ShippingAddressModel.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/ShippingBloc/shipping_bloc_bloc.dart';
 
@@ -60,6 +61,9 @@ class _ShippingPageState extends State<ShippingPage> {
     setState(() {
       model = e;
     });
+
+    SelectedShipmentBloc bloc = BlocProvider.of(context);
+    bloc.add(model);
 
     if (model != null) {
       Future.delayed(const Duration(milliseconds: 700)).whenComplete(() {

@@ -46,6 +46,10 @@ void depInjection() {
   getIt.registerFactory(() => LocalCartBloc());
   getIt.registerFactory(() => AuthAction());
 
+  getIt.registerFactory(() => SelectedShipmentBloc());
+  getIt.registerFactory(() => SelectedPaymentBloc());
+  getIt.registerFactory(() => SelectedAddressBloc());
+
   // Auth Apis
   getIt.registerSingleton<AuthApi>(AuthApi(getIt()));
   getIt.registerSingleton<AuthRepo>(

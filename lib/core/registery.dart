@@ -53,5 +53,9 @@ class Registery {
         // CustomBlocs
         BlocProvider<IsMobile>(create: ((context) => getIt())),
         BlocProvider<AuthAction>(create: ((context) => getIt())),
+
+        BlocProvider<SelectedAddressBloc>(create: ((context) => getIt())),
+        BlocProvider<SelectedPaymentBloc>(create: ((context) => getIt())),
+        BlocProvider<SelectedShipmentBloc>(create: ((context) => getIt())),
       ];
 }

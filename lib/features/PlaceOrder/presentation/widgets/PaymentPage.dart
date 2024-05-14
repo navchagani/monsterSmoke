@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/Global/Widgets/DropDowns.dart';
+import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/CountryModel.dart';
@@ -66,6 +67,9 @@ class _PaymentPageState extends State<PaymentPage> {
     setState(() {
       model = data;
     });
+
+    SelectedPaymentBloc bloc = BlocProvider.of(context);
+    bloc.add(model);
 
     if (data.id == 2) {
       showBottomSheet(
