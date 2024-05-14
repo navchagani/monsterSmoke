@@ -3,10 +3,10 @@ import 'package:monstersmoke/config/useCases.dart';
 import 'package:monstersmoke/features/Auth/data/models/CustomerModel.dart';
 import 'package:monstersmoke/features/Customer/domain/repositories/CustomerRepository.dart';
 
-class CaseGetUserData extends CaseFuture<DataStates<CustomerModel?>, void> {
+class CaseGetCustomerData extends CaseFuture<DataStates<CustomerModel?>, void> {
   final CustomerRepository repo;
 
-  CaseGetUserData({required this.repo});
+  CaseGetCustomerData({required this.repo});
 
   @override
   Future<DataStates<CustomerModel?>> call({void params, String? token}) {
@@ -14,11 +14,11 @@ class CaseGetUserData extends CaseFuture<DataStates<CustomerModel?>, void> {
   }
 }
 
-class CaseAddUserAddress
+class CaseAddCustomerAddress
     extends CaseFuture<DataStates<CustomerStoreAddressList?>, void> {
   final CustomerRepository repo;
 
-  CaseAddUserAddress({required this.repo});
+  CaseAddCustomerAddress({required this.repo});
 
   @override
   Future<DataStates<CustomerStoreAddressList?>> call(
@@ -27,10 +27,11 @@ class CaseAddUserAddress
   }
 }
 
-class CaseUpdateUserData extends CaseFuture<DataStates<CustomerModel?>, void> {
+class CaseUpdateCustomerData
+    extends CaseFuture<DataStates<CustomerModel?>, void> {
   final CustomerRepository repo;
 
-  CaseUpdateUserData({required this.repo});
+  CaseUpdateCustomerData({required this.repo});
 
   @override
   Future<DataStates<CustomerModel?>> call(
@@ -39,11 +40,11 @@ class CaseUpdateUserData extends CaseFuture<DataStates<CustomerModel?>, void> {
   }
 }
 
-class CaseUpdateUserAddress
+class CaseUpdateCustomerAddress
     extends CaseFuture<DataStates<CustomerStoreAddressList?>, void> {
   final CustomerRepository repo;
 
-  CaseUpdateUserAddress({required this.repo});
+  CaseUpdateCustomerAddress({required this.repo});
 
   @override
   Future<DataStates<CustomerStoreAddressList?>> call(

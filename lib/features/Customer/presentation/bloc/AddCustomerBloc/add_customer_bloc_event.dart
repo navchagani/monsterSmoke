@@ -6,3 +6,11 @@ sealed class AddCustomerBlocEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class AddCustomerInitialEvent extends AddCustomerBlocEvent {}
+
+class AddCustomerAddressEvent extends AddCustomerBlocEvent {
+  final CustomerStoreAddressList addressList;
+
+  const AddCustomerAddressEvent({required this.addressList});
+}

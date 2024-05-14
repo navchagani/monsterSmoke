@@ -6,3 +6,11 @@ sealed class UpdateCustomerBlocEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class UpdateCustomerInitialEvent extends UpdateCustomerBlocEvent {}
+
+class UpdateCustomerEvent extends UpdateCustomerBlocEvent {
+  final CustomerModel customerModel;
+
+  const UpdateCustomerEvent({required this.customerModel});
+}
