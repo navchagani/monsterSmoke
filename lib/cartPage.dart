@@ -9,6 +9,7 @@ import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/CustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
 import 'package:monstersmoke/features/Cart/presentation/bloc/cart_bloc.dart';
+import 'package:monstersmoke/features/PlaceOrder/presentation/pages/CheckOutPage.dart';
 import 'package:monstersmoke/features/Products/data/models/updateCartModel.dart';
 
 class CartPage extends StatefulWidget {
@@ -19,10 +20,10 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  final cartBloc = getIt<CartBloc>();
   @override
   void initState() {
-    // final cartBloc = BlocProvider.of<CartBloc>(context);
-    // cartBloc.add(GetCartEvent(storeId: 2.toString()));
+    cartBloc.add(GetCartEvent(storeId: 2.toString()));
     super.initState();
   }
 
@@ -39,12 +40,22 @@ class _CartPageState extends State<CartPage> {
       );
 
   Widget body(BuildContext context) {
-    LocalCartBloc bloc = BlocProvider.of<LocalCartBloc>(context);
-    final cartBloc = BlocProvider.of<CartBloc>(context);
     return BlocConsumer<CartBloc, CartState>(
       bloc: cartBloc,
       listener: (context, cardState) {},
       builder: (context, cardState) {
+        if (cardState is CartLoadingState) {
+          return const Column(
+            children: [
+              Expanded(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            ],
+          );
+        }
+
         if (cardState is CartLoadedState) {
           return Column(
             // alignment: Alignment.bottomCenter,
@@ -76,12 +87,18 @@ class _CartPageState extends State<CartPage> {
                             price: product.standardPrice.toString(),
                             availableQuantity: product.availableQuantity,
                             onIncrement: () {
+                              setState(() {
+                                product.quantity = product.quantity! + 1;
+                              });
                               cartBloc.add(UpdateCartEvent(
-                                  storeId: 2.toString(), list: model));
+                                  storeId: 2.toString(), list: [product]));
                             },
                             onDecrement: () {
-                              cartBloc.add(UpdateCartEvent(
-                                  storeId: 2.toString(), list: model));
+                              product.quantity = product.quantity! - 1;
+                              if (product.quantity! > 0) {
+                                cartBloc.add(UpdateCartEvent(
+                                    storeId: 2.toString(), list: [product]));
+                              }
                             },
                             onRemove: () => onRemoveProduct(
                                 context: context, list: [product]),
@@ -145,7 +162,7 @@ class _CartPageState extends State<CartPage> {
                         ),
                         ListTile(
                           tileColor: Colors.redAccent.shade700,
-                          onTap: () {},
+                          onTap: onMoveToCheckOut,
                           shape: RoundedRectangleBorder(
                               side:
                                   BorderSide(color: Colors.redAccent.shade700)),
@@ -181,15 +198,19 @@ class _CartPageState extends State<CartPage> {
   void onRemoveProduct(
       {required BuildContext context,
       required List<CartLineItemDtoList> list}) {
-    CartBloc cartBloc = BlocProvider.of<CartBloc>(context);
     cartBloc.add(RemoveFromCartEvent(storeId: 2.toString(), list: list));
+  }
+
+  void onMoveToCheckOut() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: ((context) => CheckOutPage())));
   }
 }
 
 class CartTile extends StatelessWidget {
-  final String? name, subSku, price, image;
+  final String? name, subSku, price, image, viewCartQuantity, viewPriductTotal;
   final Function()? onIncrement, onDecrement, onRemove;
-  final bool? isCart;
+  final bool? isCart, isView;
   final int? quantity, availableQuantity;
   const CartTile({
     super.key,
@@ -203,6 +224,9 @@ class CartTile extends StatelessWidget {
     this.isCart,
     this.availableQuantity,
     this.onRemove,
+    this.isView,
+    this.viewCartQuantity,
+    this.viewPriductTotal,
   });
 
   @override
@@ -258,6 +282,7 @@ class CartTile extends StatelessWidget {
                           )),
                         ],
                       ),
+
                       if (subSku != null)
                         Row(
                           children: [
@@ -276,6 +301,13 @@ class CartTile extends StatelessWidget {
                           Expanded(child: Text('price \$${price.toString()}')),
                         ],
                       ),
+                      if (isView ?? false)
+                        Row(
+                          children: [
+                            Expanded(child: Text(viewCartQuantity.toString())),
+                            Expanded(child: Text(viewPriductTotal.toString()))
+                          ],
+                        ),
                       // Decorations.height10,
                       if (isCart == false)
                         SizedBox(

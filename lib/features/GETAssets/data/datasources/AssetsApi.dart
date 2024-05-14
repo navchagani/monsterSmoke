@@ -1,7 +1,8 @@
-
 import 'package:dio/dio.dart';
 import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/CountryModel.dart';
+import 'package:monstersmoke/features/GETAssets/data/models/PaymentsModel.dart';
+import 'package:monstersmoke/features/GETAssets/data/models/ShippingAddressModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/SliderModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/StateModel.dart';
 import 'package:retrofit/retrofit.dart';
@@ -22,8 +23,8 @@ abstract class AssetsApi {
       @Query('businessTypeId') required String buisnessId});
 
   @GET('/api/store/paymentMode')
-  Future<HttpResponse<List<SliderModel>>> getPaymentMethods();
+  Future<HttpResponse<List<PaymentsModel>>> getPaymentMethods();
 
   @GET('/api/shipping/options')
-  Future<HttpResponse<List<SliderModel>>> getShippingAddress();
+  Future<HttpResponse<List<ShippingAddressModel>>> getShippingAddress();
 }

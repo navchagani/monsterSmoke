@@ -1,0 +1,256 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:monstersmoke/Decorations/Decorations.dart';
+import 'package:monstersmoke/Global/Widgets/DropDowns.dart';
+import 'package:monstersmoke/core/widgets/CustomButton.dart';
+import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
+import 'package:monstersmoke/features/GETAssets/data/models/CountryModel.dart';
+import 'package:monstersmoke/features/GETAssets/data/models/PaymentsModel.dart';
+import 'package:monstersmoke/features/GETAssets/data/models/StateModel.dart';
+import 'package:monstersmoke/features/GETAssets/presentation/bloc/PaymentBloc/payment_bloc_bloc.dart';
+
+class PaymentPage extends StatefulWidget {
+  final Function(int index)? moveToNext;
+  const PaymentPage({super.key, this.moveToNext});
+
+  @override
+  State<PaymentPage> createState() => _PaymentPageState();
+}
+
+class _PaymentPageState extends State<PaymentPage> {
+  PaymentsModel? model;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<PaymentBloc, PaymentBlocState>(
+      builder: (context, state) {
+        if (state is PaymentBlocInitial) {
+          return Container(
+            height: 40,
+            color: Colors.amber,
+          );
+        }
+        if (state is PaymentCompletedPayment) {
+          final list = state.lilstContries
+              .where((element) => element.ecommerce == true)
+              .toList();
+          return Wrap(
+            runSpacing: 4.0,
+            spacing: 4.0,
+            children: List.generate(list.length, (index) {
+              final data = list[index];
+              final selected = data.id == model?.id;
+
+              return RawChip(
+                  selectedColor: Theme.of(context).colorScheme.primary,
+                  selected: selected,
+                  labelStyle: TextStyle(
+                      color: selected ? Colors.white : Colors.black45),
+                  onPressed: () => onChipTap(data),
+                  backgroundColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                          color: Theme.of(context).colorScheme.onBackground),
+                      borderRadius: BorderRadius.circular(10.0)),
+                  label: Text(data.name.toString()));
+            }),
+          );
+        }
+
+        return Container();
+      },
+    );
+  }
+
+  onChipTap(PaymentsModel data) {
+    setState(() {
+      model = data;
+    });
+
+    if (data.id == 2) {
+      showBottomSheet(
+          context: context, builder: ((context) => const AddNewPaymentPage()));
+    } else {
+      if (model?.id != null) {
+        Future.delayed(const Duration(milliseconds: 700)).whenComplete(() {
+          setState(() {
+            widget.moveToNext!(3);
+          });
+        });
+      }
+    }
+  }
+}
+
+class AddNewPaymentPage extends StatefulWidget {
+  const AddNewPaymentPage({super.key});
+
+  @override
+  State<AddNewPaymentPage> createState() => _AddNewCustomerAddressPageState();
+}
+
+class _AddNewCustomerAddressPageState extends State<AddNewPaymentPage> {
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final cardNumberController = TextEditingController();
+  final expiryMonthController = TextEditingController();
+  final expiryYearController = TextEditingController();
+
+  final cvcController = TextEditingController();
+  final addressController = TextEditingController();
+  final cityController = TextEditingController();
+  final zipCodeController = TextEditingController();
+
+  String? selectedContry, selectedCity;
+
+  @override
+  Widget build(BuildContext context) {
+    return addNewAddress();
+  }
+
+  Widget addNewAddress() => Material(
+        child: ListView(
+          padding: const EdgeInsets.all(15.0),
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(Icons.arrow_drop_down_circle_outlined))
+              ],
+            ),
+            const ListTile(
+                contentPadding: EdgeInsets.all(0.0),
+                title: Text(
+                  'Add Payment Info',
+                  style: TextStyle(fontSize: 20, color: Colors.black),
+                )),
+            Decorations.height5,
+            CustomInputField(
+                labelText: 'Enter First Name',
+                hintText: 'Enter First Name',
+                controller: firstNameController,
+                onChanged: firstNameChanged),
+            Decorations.height5,
+            CustomInputField(
+                labelText: 'Enter Second Name',
+                hintText: 'Enter Second Name',
+                controller: lastNameController,
+                onChanged: lastNameChanged),
+            Decorations.height5,
+            CustomInputField(
+                labelText: 'Enter Card Number',
+                hintText: 'Enter Card Number',
+                controller: cardNumberController,
+                onChanged: onCardNumberChanged),
+            Decorations.height5,
+            Row(
+              children: [
+                Expanded(
+                  child: CustomInputField(
+                      labelText: 'Expiration Month MM',
+                      hintText: 'Expiration Month MM',
+                      controller: expiryMonthController,
+                      onChanged: onMonthExpiryChanged),
+                ),
+                Decorations.width5,
+                Expanded(
+                  child: CustomInputField(
+                    labelText: 'Expiration Year YY',
+                    hintText: 'Expiration Year YY',
+                    controller: expiryYearController,
+                    onChanged: onYearExpiryChanged,
+                  ),
+                ),
+              ],
+            ),
+            Decorations.height5,
+            Row(
+              children: [
+                Expanded(
+                  child: CustomInputField(
+                      labelText: 'Enter CVV2',
+                      hintText: 'Enter CVV2',
+                      controller: cvcController,
+                      onChanged: onCVVChanged),
+                ),
+                Decorations.width5,
+                Expanded(
+                  child: CustomInputField(
+                    labelText: 'Address',
+                    hintText: 'Address',
+                    controller: addressController,
+                    onChanged: onAddressChanged,
+                  ),
+                ),
+              ],
+            ),
+            Decorations.height5,
+            CountryDropDown(onCountryChanged: onCountryChanged),
+            Decorations.height5,
+            StateDropDown(onStateChanged: onStateChanged),
+            Decorations.height5,
+            Row(
+              children: [
+                Expanded(
+                  child: CustomInputField(
+                      labelText: 'City',
+                      hintText: 'City',
+                      controller: cityController,
+                      onChanged: onCityChanged),
+                ),
+                Decorations.width5,
+                Expanded(
+                  child: CustomInputField(
+                    labelText: 'Zip Code',
+                    hintText: 'Zip Code',
+                    controller: zipCodeController,
+                    onChanged: onzipCodeChanged,
+                  ),
+                ),
+              ],
+            ),
+            Decorations.height30,
+            const CustomButton(
+              text: 'Continue',
+            )
+          ],
+        ),
+      );
+
+  firstNameChanged(String value) => setState(() {});
+
+  onPhoneChanged(String value) => setState(() {});
+
+  onzipCodeChanged(String value) => setState(() {});
+
+  onCityChanged(String value) => setState(() {});
+
+  lastNameChanged(String value) => setState(() {});
+
+  onCountryChanged(CountryModel? p1) {
+    setState(() {
+      selectedContry = p1?.name.toString();
+    });
+  }
+
+  onStateChanged(StateModel? p1) {
+    setState(() {
+      selectedCity = p1?.name.toString();
+    });
+  }
+
+  onCardNumberChanged(String value) => setState(() {});
+
+  onMonthExpiryChanged(String value) => setState(() {});
+
+  onYearExpiryChanged(String value) => setState(() {});
+
+  onCVVChanged(String value) => setState(() {});
+
+  onAddressChanged(String value) => setState(() {});
+}

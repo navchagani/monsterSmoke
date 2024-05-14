@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
+import 'package:monstersmoke/Global/Widgets/DropDowns.dart';
 import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/core/widgets/CustomDialog.dart';
@@ -161,52 +162,9 @@ class _SignUpPageState extends State<SignUpPage> {
               ],
             ),
             Decorations.height10,
-            BlocBuilder<CountryBloc, CountryBlocState>(
-              builder: (context, countryState) {
-                if (countryState is CountryCompletedCountry) {
-                  return DropdownButtonFormField<CountryModel>(
-                      decoration: Decorations.inputDecoration(
-                          hint: 'Country', context: context),
-                      items: countryState.lilstContries
-                          .map((e) => DropdownMenuItem(
-                                value: e,
-                                child: Text(e.name.toString()),
-                              ))
-                          .toList(),
-                      onChanged: onAddressChanged);
-                }
-
-                return DropdownButtonFormField<CountryModel>(
-                    decoration: Decorations.inputDecoration(
-                        hint: 'Country', context: context),
-                    items: const [],
-                    onChanged: onAddressChanged);
-              },
-            ),
+            CountryDropDown(onCountryChanged: onAddressChanged),
             Decorations.height10,
-            BlocBuilder<StateBloc, StateBlocState>(
-              builder: (context, states) {
-                if (states is StateCompletedState) {
-                  return DropdownButtonFormField<StateModel>(
-                      isExpanded: true,
-                      decoration: Decorations.inputDecoration(
-                          hint: 'State', context: context),
-                      items: states.lilstContries
-                          .map((e) => DropdownMenuItem(
-                                value: e,
-                                child: Text(e.name.toString()),
-                              ))
-                          .toList(),
-                      onChanged: onStateChanged);
-                }
-
-                return DropdownButtonFormField<CountryModel>(
-                    decoration: Decorations.inputDecoration(
-                        hint: 'States', context: context),
-                    items: const [],
-                    onChanged: onAddressChanged);
-              },
-            ),
+            StateDropDown(onStateChanged: onStateChanged),
             Decorations.height10,
             CustomInputField(
               labelText: 'Zip Code',

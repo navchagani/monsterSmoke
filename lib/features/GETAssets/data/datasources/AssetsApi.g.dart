@@ -9,8 +9,7 @@ part of 'AssetsApi.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
 class _AssetsApi implements AssetsApi {
-  _AssetsApi(
-    this._dio) {
+  _AssetsApi(this._dio) {
     baseUrl ??= 'https://erp.monstersmokewholesale.com';
   }
 
@@ -121,7 +120,7 @@ class _AssetsApi implements AssetsApi {
   }
 
   @override
-  Future<HttpResponse<List<SliderModel>>> getPaymentMethods() async {
+  Future<HttpResponse<List<PaymentsModel>>> getPaymentMethods() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -145,14 +144,14 @@ class _AssetsApi implements AssetsApi {
             ))));
     List<dynamic> data = _result.data!['result'];
     var value = data
-        .map((dynamic i) => SliderModel.fromJson(i as Map<String, dynamic>))
+        .map((dynamic i) => PaymentsModel.fromJson(i as Map<String, dynamic>))
         .toList();
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<List<SliderModel>>> getShippingAddress() async {
+  Future<HttpResponse<List<ShippingAddressModel>>> getShippingAddress() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -176,7 +175,8 @@ class _AssetsApi implements AssetsApi {
             ))));
     List<dynamic> data = _result.data!['result'];
     var value = data
-        .map((dynamic i) => SliderModel.fromJson(i as Map<String, dynamic>))
+        .map((dynamic i) =>
+            ShippingAddressModel.fromJson(i as Map<String, dynamic>))
         .toList();
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;

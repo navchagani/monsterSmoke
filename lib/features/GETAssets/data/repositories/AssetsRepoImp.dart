@@ -73,14 +73,39 @@ class AssetsRepoImp extends AssetsRepo {
   }
 
   @override
-  Future<DataStates<List<PaymentsModel>>> getPaymentMethods() {
-    // TODO: implement getPaymentMethods
-    throw UnimplementedError();
+  Future<DataStates<List<PaymentsModel>>> getPaymentMethods() async {
+    try {
+      final data = await assetsApi.getPaymentMethods();
+
+      if (data.response.statusCode == HttpStatus.ok) {
+        return SuccessState(data: data.data);
+      } else {
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: data.response.requestOptions,
+                message: 'Cannot Get Customer Data'));
+      }
+    } on DioException catch (e) {
+      return ErrorState(dioException: e);
+    }
+    ;
   }
 
   @override
-  Future<DataStates<List<ShippingAddressModel>>> getShippingAddress() {
-    // TODO: implement getShippingAddress
-    throw UnimplementedError();
+  Future<DataStates<List<ShippingAddressModel>>> getShippingAddress() async {
+    try {
+      final data = await assetsApi.getShippingAddress();
+
+      if (data.response.statusCode == HttpStatus.ok) {
+        return SuccessState(data: data.data);
+      } else {
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: data.response.requestOptions,
+                message: 'Cannot Get Customer Data'));
+      }
+    } on DioException catch (e) {
+      return ErrorState(dioException: e);
+    }
   }
 }

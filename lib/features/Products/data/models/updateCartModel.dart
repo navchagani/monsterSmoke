@@ -1,10 +1,10 @@
 class UpdateCartModel {
-  final int? totalCartQuantity;
-  final double? cartSubTotal;
-  final double? cartDiscount;
-  final double? totalCartPrice;
-  final List<CartLineItemDtoList>? cartLineItemDtoList;
-  const UpdateCartModel(
+  int? totalCartQuantity;
+  double? cartSubTotal;
+  double? cartDiscount;
+  double? totalCartPrice;
+  List<CartLineItemDtoList>? cartLineItemDtoList;
+  UpdateCartModel(
       {this.totalCartQuantity,
       this.cartSubTotal,
       this.cartDiscount,
@@ -88,49 +88,49 @@ cartLineItemDtoList:${cartLineItemDtoList.toString()}
 }
 
 class CartLineItemDtoList {
-  final int? id;
-  final int? productId;
-  final int? customerId;
-  final int? storeId;
-  final String? productName;
-  final dynamic sku;
-  final String? upc;
-  final int? quantity;
-  final dynamic status;
-  final double? costPrice;
-  final double? standardPrice;
-  final double? cartStandardPrice;
-  final double? tierPrice;
-  final double? originalStandardPrice;
-  final double? adminRetailPrice;
-  final int? availableQuantity;
-  final bool? deleted;
-  final double? discountValue;
-  final dynamic discountType;
-  final double? discountAmount;
-  final dynamic taxClassId;
-  final dynamic taxType;
-  final double? taxPercentage;
-  final double? taxPerVolume;
-  final bool? outOfStock;
-  final int? minQuantityToSale;
-  final int? maxQuantityToSale;
-  final int? quantityIncrement;
-  final bool? cartLineItemUpdated;
-  final String? imageUrl;
-  final dynamic updatedBy;
-  final String? insertedTimestamp;
-  final String? updatedTimestamp;
-  final double? discount;
-  final dynamic taxIncludedInSellingPrice;
-  final dynamic taxPerOunce;
-  final dynamic directTaxPercentage;
-  final double? maxCostPrice;
-  final double? taxAmount;
-  final dynamic size;
-  final bool? serviceProduct;
-  final double? subtotal;
-  const CartLineItemDtoList(
+  int? id;
+  int? productId;
+  int? customerId;
+  int? storeId;
+  String? productName;
+  dynamic sku;
+  String? upc;
+  int? quantity;
+  dynamic status;
+  double? costPrice;
+  double? standardPrice;
+  double? cartStandardPrice;
+  double? tierPrice;
+  double? originalStandardPrice;
+  double? adminRetailPrice;
+  int? availableQuantity;
+  bool? deleted;
+  double? discountValue;
+  dynamic discountType;
+  double? discountAmount;
+  dynamic taxClassId;
+  dynamic taxType;
+  double? taxPercentage;
+  double? taxPerVolume;
+  bool? outOfStock;
+  int? minQuantityToSale;
+  int? maxQuantityToSale;
+  int? quantityIncrement;
+  bool? cartLineItemUpdated;
+  String? imageUrl;
+  dynamic updatedBy;
+  String? insertedTimestamp;
+  String? updatedTimestamp;
+  double? discount;
+  dynamic taxIncludedInSellingPrice;
+  dynamic taxPerOunce;
+  dynamic directTaxPercentage;
+  double? maxCostPrice;
+  double? taxAmount;
+  dynamic size;
+  bool? serviceProduct;
+  double? subtotal;
+  CartLineItemDtoList(
       {this.id,
       this.productId,
       this.customerId,

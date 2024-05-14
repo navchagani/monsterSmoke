@@ -4,6 +4,7 @@ import 'package:monstersmoke/Functions/FunctionsProduct.dart';
 import 'package:monstersmoke/cartPage.dart';
 import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/core/blocs/CartBloc.dart';
+import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/features/Cart/presentation/bloc/cart_bloc.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductDetailsModel.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
@@ -16,16 +17,16 @@ class CartFloatButton extends StatefulWidget {
 }
 
 class _CartFloatButtonState extends State<CartFloatButton> {
+  final cartBloc = getIt<CartBloc>();
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<LocalCartBloc>(context);
-    final cartBloc = BlocProvider.of<CartBloc>(context);
 
     return BlocConsumer<CartBloc, CartState>(
         bloc: cartBloc,
         listener: (context, cardState) {
           if (cardState is CartLoadedState) {
-            Navigator.of(context).pushReplacement(
+            Navigator.of(context).push(
                 MaterialPageRoute(builder: ((context) => const CartPage())));
 
             LocalCartBloc localCartBloc = BlocProvider.of(context);
@@ -81,7 +82,6 @@ class _CartFloatButtonState extends State<CartFloatButton> {
                   return FloatingActionButton(
                       backgroundColor: Constants.monsterBlue,
                       onPressed: () {
-                        CartBloc cartBloc = BlocProvider.of<CartBloc>(context);
                         cartBloc.add(GetCartEvent(storeId: 2.toString()));
                       },
                       child: const Icon(Icons.add_shopping_cart_outlined));
@@ -110,7 +110,7 @@ class _CartFloatButtonState extends State<CartFloatButton> {
             quantity: e.quantity))
         .toList();
 
-    CartBloc cartBloc = BlocProvider.of<CartBloc>(context);
+    // CartBloc cartBloc = getIt<CartBloc>();
     cartBloc.add(AddToCartEvent(storeId: 2.toString(), list: productList));
   }
 }

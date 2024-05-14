@@ -2,9 +2,9 @@ class ShippingAddressModel {
   final int? id;
   final String? name;
   final dynamic description;
-  final int? amount;
+  final double? amount;
   final bool? ecommerce;
-  final int? freeShippingLimit;
+  final double? freeShippingLimit;
   final String? trackingUrl;
   final int? sequenceNumber;
   final dynamic shippingPriceRange;
@@ -30,9 +30,9 @@ class ShippingAddressModel {
       {int? id,
       String? name,
       dynamic description,
-      int? amount,
+      double? amount,
       bool? ecommerce,
-      int? freeShippingLimit,
+      double? freeShippingLimit,
       String? trackingUrl,
       int? sequenceNumber,
       dynamic shippingPriceRange,
@@ -79,11 +79,11 @@ class ShippingAddressModel {
         id: json['id'] == null ? null : json['id'] as int,
         name: json['name'] == null ? null : json['name'] as String,
         description: json['description'] as dynamic,
-        amount: json['amount'] == null ? null : json['amount'] as int,
+        amount: json['amount'] == null ? null : json['amount'] as double,
         ecommerce: json['ecommerce'] == null ? null : json['ecommerce'] as bool,
         freeShippingLimit: json['freeShippingLimit'] == null
             ? null
-            : json['freeShippingLimit'] as int,
+            : json['freeShippingLimit'] as double,
         trackingUrl:
             json['trackingUrl'] == null ? null : json['trackingUrl'] as String,
         sequenceNumber: json['sequenceNumber'] == null
