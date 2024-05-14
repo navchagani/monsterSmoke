@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: Registery.initializeBlocs(context: context),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: MonsterThemes.themeLight,
         home: const SplashScreen(),
