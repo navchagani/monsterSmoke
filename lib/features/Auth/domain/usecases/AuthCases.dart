@@ -28,14 +28,3 @@ class CaseSignUp extends CaseFuture<DataStates<CustomerModel?>, void> {
         createCustomerModel: customerModel ?? const CreateCustomerModel());
   }
 }
-
-class CaseGetUserData extends CaseFuture<DataStates<CustomerModel?>, void> {
-  final AuthRepo repo;
-
-  CaseGetUserData({required this.repo});
-
-  @override
-  Future<DataStates<CustomerModel?>> call({void params, String? token}) {
-    return repo.getCustomerData(token: token.toString());
-  }
-}

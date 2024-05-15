@@ -11,9 +11,7 @@ part of 'cartsApi.dart';
 class _CartApi implements CartApi {
   _CartApi(
     this._dio,
-    this.sharedPrefsApi, {
-    this.baseUrl,
-  }) {
+    this.sharedPrefsApi) {
     baseUrl ??= 'https://erp.monstersmokewholesale.com';
   }
 

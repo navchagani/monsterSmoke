@@ -18,25 +18,6 @@ class AuthRepoImp extends AuthRepo {
   });
 
   @override
-  Future<DataStates<CustomerModel?>> getCustomerData(
-      {required String token}) async {
-    try {
-      final data = await authApi.getCustomerData(token: token);
-
-      if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
-      } else {
-        return ErrorState(
-            dioException: DioException(
-                requestOptions: data.response.requestOptions,
-                message: 'Cannot Get Customer Data'));
-      }
-    } on DioException catch (e) {
-      return ErrorState(dioException: e);
-    }
-  }
-
-  @override
   Future<DataStates<String?>> signIn(
       {required String email, required String password}) async {
     try {

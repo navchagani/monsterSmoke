@@ -5,13 +5,13 @@ import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:monstersmoke/config/DataStates.dart';
 import 'package:monstersmoke/features/Auth/data/models/CustomerModel.dart';
-import 'package:monstersmoke/features/Auth/domain/usecases/AuthCases.dart';
+import 'package:monstersmoke/features/Customer/domain/usecases/CaseCustomers.dart';
 
 part 'customer_bloc_event.dart';
 part 'customer_bloc_state.dart';
 
 class CustomerBloc extends Bloc<CustomerBlocEvent, CustomerBlocState> {
-  final CaseGetUserData caseGetUserData;
+  final CaseGetCustomerData caseGetUserData;
   CustomerBloc(this.caseGetUserData) : super(CustomerBlocInitial()) {
     on<CustomerInitialEvent>(customerInitial);
     on<GetCustomerEvent>(getCustomer);

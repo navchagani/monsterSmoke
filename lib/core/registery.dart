@@ -3,10 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/core/blocs/CartBloc.dart';
 import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
 import 'package:monstersmoke/core/inject.dart';
-import 'package:monstersmoke/features/Auth/presentation/bloc/CustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/SignInBloc/sign_in_bloc_bloc.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/SignUpBloc/sign_up_bloc_bloc.dart';
 import 'package:monstersmoke/features/Cart/presentation/bloc/cart_bloc.dart';
+import 'package:monstersmoke/features/Customer/presentation/bloc/AddCustomerBloc/add_customer_bloc_bloc.dart';
+import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
+import 'package:monstersmoke/features/Customer/presentation/bloc/UpdateCustomerAddressBloc/update_customer_address_bloc_bloc.dart';
+import 'package:monstersmoke/features/Customer/presentation/bloc/UpdateCustomerBloc/update_customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/CountryBloc/country_bloc_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/PaymentBloc/payment_bloc_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/ShippingBloc/shipping_bloc_bloc.dart';
@@ -42,6 +45,10 @@ class Registery {
 
         // CustomerBlocs
         BlocProvider<CustomerBloc>(create: ((context) => getIt())),
+        BlocProvider<AddCustomerAddressBloc>(create: ((context) => getIt())),
+        BlocProvider<UpdateCustomerAddressBlocBloc>(
+            create: ((context) => getIt())),
+        BlocProvider<UpdateCustomerBlocBloc>(create: ((context) => getIt())),
         BlocProvider<LocalCartBloc>(create: ((context) => getIt())),
 
         // CartBlocs
@@ -57,5 +64,7 @@ class Registery {
         BlocProvider<SelectedAddressBloc>(create: ((context) => getIt())),
         BlocProvider<SelectedPaymentBloc>(create: ((context) => getIt())),
         BlocProvider<SelectedShipmentBloc>(create: ((context) => getIt())),
+
+        BlocProvider<CustomerCardBloc>(create: ((context) => getIt())),
       ];
 }

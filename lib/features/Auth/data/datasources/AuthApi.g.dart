@@ -9,8 +9,7 @@ part of 'AuthApi.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
 class _AuthApi implements AuthApi {
-  _AuthApi(
-    this._dio) {
+  _AuthApi(this._dio) {
     baseUrl ??= 'https://erp.monstersmokewholesale.com';
   }
 
@@ -86,41 +85,6 @@ class _AuthApi implements AuthApi {
     final value = customerModel.CustomerModel.fromJson(_result.data!['result']);
 
     final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<customerModel.CustomerModel?>> getCustomerData(
-      {required String token}) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': 'Bearer $token'};
-    _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>?>(
-        _setStreamType<HttpResponse<customerModel.CustomerModel>>(dio.Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              Constants.options(_dio),
-              '/api/ecommerce/customer',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-
-    final value = _result.data!['result'];
-    final customerData = value['customerDto'];
-    final model = _result.data == null
-        ? null
-        : customerModel.CustomerModel.fromJson(customerData!);
-    final httpResponse = HttpResponse(model, _result);
     return httpResponse;
   }
 

@@ -88,7 +88,6 @@ class AssetsRepoImp extends AssetsRepo {
     } on DioException catch (e) {
       return ErrorState(dioException: e);
     }
-    ;
   }
 
   @override

@@ -6,7 +6,6 @@ import 'package:monstersmoke/features/Auth/data/datasources/AuthApi.dart';
 import 'package:monstersmoke/features/Auth/data/repositories/AuthRepoImp.dart';
 import 'package:monstersmoke/features/Auth/domain/repositories/AuthRepo.dart';
 import 'package:monstersmoke/features/Auth/domain/usecases/AuthCases.dart';
-import 'package:monstersmoke/features/Auth/presentation/bloc/CustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/SignInBloc/sign_in_bloc_bloc.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/SignUpBloc/sign_up_bloc_bloc.dart';
 import 'package:monstersmoke/features/Cart/data/datasources/cartsApi.dart';
@@ -14,6 +13,14 @@ import 'package:monstersmoke/features/Cart/data/repositories/CartRepoImp.dart';
 import 'package:monstersmoke/features/Cart/domain/repositories/CartRepo.dart';
 import 'package:monstersmoke/features/Cart/domain/usecases/CartUseCase.dart';
 import 'package:monstersmoke/features/Cart/presentation/bloc/cart_bloc.dart';
+import 'package:monstersmoke/features/Customer/data/datasources/CustomerApi.dart';
+import 'package:monstersmoke/features/Customer/data/repositories/CustomerRepoImp.dart';
+import 'package:monstersmoke/features/Customer/domain/repositories/CustomerRepository.dart';
+import 'package:monstersmoke/features/Customer/domain/usecases/CaseCustomers.dart';
+import 'package:monstersmoke/features/Customer/presentation/bloc/AddCustomerBloc/add_customer_bloc_bloc.dart';
+import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
+import 'package:monstersmoke/features/Customer/presentation/bloc/UpdateCustomerAddressBloc/update_customer_address_bloc_bloc.dart';
+import 'package:monstersmoke/features/Customer/presentation/bloc/UpdateCustomerBloc/update_customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/data/datasources/AssetsApi.dart';
 import 'package:monstersmoke/features/GETAssets/data/repositories/AssetsRepoImp.dart';
 import 'package:monstersmoke/features/GETAssets/domain/repositories/AssetsRepo.dart';
@@ -50,16 +57,16 @@ void depInjection() {
   getIt.registerFactory(() => SelectedPaymentBloc());
   getIt.registerFactory(() => SelectedAddressBloc());
 
+  getIt.registerFactory(() => CustomerCardBloc());
+
   // Auth Apis
   getIt.registerSingleton<AuthApi>(AuthApi(getIt()));
   getIt.registerSingleton<AuthRepo>(
       AuthRepoImp(authApi: getIt(), sharedPrefsApi: getIt()));
   getIt.registerSingleton<CaseSignIn>(CaseSignIn(repo: getIt()));
   getIt.registerSingleton<CaseSignUp>(CaseSignUp(repo: getIt()));
-  getIt.registerSingleton<CaseGetUserData>(CaseGetUserData(repo: getIt()));
   getIt.registerFactory(() => SignInBloc(getIt()));
   getIt.registerFactory(() => SignUpBloc(getIt()));
-  getIt.registerFactory(() => CustomerBloc(getIt()));
 
   // Assets Apis
   getIt.registerSingleton<AssetsApi>(AssetsApi(getIt()));
@@ -102,4 +109,21 @@ void depInjection() {
   getIt
       .registerSingleton<CaseRemoveFromCart>(CaseRemoveFromCart(repo: getIt()));
   getIt.registerFactory(() => CartBloc(getIt(), getIt(), getIt(), getIt()));
+
+  // Customer Bloc
+  getIt.registerSingleton<CustomerApi>(CustomerApi(getIt()));
+  getIt
+      .registerSingleton<CustomerRepository>(CustomerRepoImp(getIt(), getIt()));
+  getIt.registerSingleton<CaseAddCustomerAddress>(
+      CaseAddCustomerAddress(repo: getIt()));
+  getIt.registerSingleton<CaseGetCustomerData>(
+      CaseGetCustomerData(repo: getIt()));
+  getIt.registerSingleton<CaseUpdateCustomerAddress>(
+      CaseUpdateCustomerAddress(repo: getIt()));
+  getIt.registerSingleton<CaseUpdateCustomerData>(
+      CaseUpdateCustomerData(repo: getIt()));
+  getIt.registerFactory(() => AddCustomerAddressBloc(getIt()));
+  getIt.registerFactory(() => UpdateCustomerAddressBlocBloc(getIt()));
+  getIt.registerFactory(() => UpdateCustomerBlocBloc(getIt()));
+  getIt.registerFactory(() => CustomerBloc(getIt()));
 }

@@ -13,6 +13,7 @@ final class CustomerBlocInitial extends CustomerBlocState {}
 class CustomerLoadingState extends CustomerBlocState {}
 
 class CustomerCompletedState extends CustomerBlocState {
+  @override
   final CustomerModel customerModel;
 
   const CustomerCompletedState({required this.customerModel})

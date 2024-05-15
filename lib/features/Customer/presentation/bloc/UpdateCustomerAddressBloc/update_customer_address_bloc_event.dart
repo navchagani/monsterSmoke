@@ -7,10 +7,11 @@ sealed class UpdateCustomerAddressBlocEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class UpdateCustomerInitialEvent extends UpdateCustomerAddressBlocEvent {}
+class UpdateCustomerAddressInitialEvent
+    extends UpdateCustomerAddressBlocEvent {}
 
-class UpdateCustomerEvent extends UpdateCustomerAddressBlocEvent {
-  final CustomerModel customerModel;
+class UpdateCustomerAddressEvent extends UpdateCustomerAddressBlocEvent {
+  final CustomerStoreAddressList addressList;
 
-  const UpdateCustomerEvent({required this.customerModel});
+  const UpdateCustomerAddressEvent({required this.addressList});
 }

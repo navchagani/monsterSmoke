@@ -7,5 +7,4 @@ abstract class AuthRepo {
       {required String email, required String password});
   Future<DataStates<CustomerModel?>> signUp(
       {required CreateCustomerModel createCustomerModel});
-  Future<DataStates<CustomerModel?>> getCustomerData({required String token});
 }

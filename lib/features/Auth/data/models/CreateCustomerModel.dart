@@ -1,3 +1,5 @@
+import 'package:monstersmoke/features/Auth/data/models/CustomerModel.dart';
+
 class CreateCustomerModel {
   final List<CustomerStoreAddressList>? customerStoreAddressList;
   final String? firstName;
@@ -116,71 +118,71 @@ taxId:$taxId
   }
 }
 
-class CustomerStoreAddressList {
-  final String? address1;
-  final String? city;
-  final int? countryId;
-  final int? stateId;
-  final String? zip;
-  const CustomerStoreAddressList(
-      {this.address1, this.city, this.countryId, this.stateId, this.zip});
-  CustomerStoreAddressList copyWith(
-      {String? address1,
-      String? city,
-      int? countryId,
-      int? stateId,
-      String? zip}) {
-    return CustomerStoreAddressList(
-        address1: address1 ?? this.address1,
-        city: city ?? this.city,
-        countryId: countryId ?? this.countryId,
-        stateId: stateId ?? this.stateId,
-        zip: zip ?? this.zip);
-  }
+// class CustomerStoreAddressList {
+//   final String? address1;
+//   final String? city;
+//   final int? countryId;
+//   final int? stateId;
+//   final String? zip;
+//   const CustomerStoreAddressList(
+//       {this.address1, this.city, this.countryId, this.stateId, this.zip});
+//   CustomerStoreAddressList copyWith(
+//       {String? address1,
+//       String? city,
+//       int? countryId,
+//       int? stateId,
+//       String? zip}) {
+//     return CustomerStoreAddressList(
+//         address1: address1 ?? this.address1,
+//         city: city ?? this.city,
+//         countryId: countryId ?? this.countryId,
+//         stateId: stateId ?? this.stateId,
+//         zip: zip ?? this.zip);
+//   }
 
-  Map<String, Object?> toJson() {
-    return {
-      'address1': address1,
-      'city': city,
-      'countryId': countryId,
-      'stateId': stateId,
-      'zip': zip
-    };
-  }
+//   Map<String, Object?> toJson() {
+//     return {
+//       'address1': address1,
+//       'city': city,
+//       'countryId': countryId,
+//       'stateId': stateId,
+//       'zip': zip
+//     };
+//   }
 
-  static CustomerStoreAddressList fromJson(Map<String, Object?> json) {
-    return CustomerStoreAddressList(
-        address1: json['address1'] == null ? null : json['address1'] as String,
-        city: json['city'] == null ? null : json['city'] as String,
-        countryId: json['countryId'] == null ? null : json['countryId'] as int,
-        stateId: json['stateId'] == null ? null : json['stateId'] as int,
-        zip: json['zip'] == null ? null : json['zip'] as String);
-  }
+//   static CustomerStoreAddressList fromJson(Map<String, Object?> json) {
+//     return CustomerStoreAddressList(
+//         address1: json['address1'] == null ? null : json['address1'] as String,
+//         city: json['city'] == null ? null : json['city'] as String,
+//         countryId: json['countryId'] == null ? null : json['countryId'] as int,
+//         stateId: json['stateId'] == null ? null : json['stateId'] as int,
+//         zip: json['zip'] == null ? null : json['zip'] as String);
+//   }
 
-  @override
-  String toString() {
-    return '''CustomerStoreAddressList(
-                address1:$address1,
-city:$city,
-countryId:$countryId,
-stateId:$stateId,
-zip:$zip
-    ) ''';
-  }
+//   @override
+//   String toString() {
+//     return '''CustomerStoreAddressList(
+//                 address1:$address1,
+// city:$city,
+// countryId:$countryId,
+// stateId:$stateId,
+// zip:$zip
+//     ) ''';
+//   }
 
-  @override
-  bool operator ==(Object other) {
-    return other is CustomerStoreAddressList &&
-        other.runtimeType == runtimeType &&
-        other.address1 == address1 &&
-        other.city == city &&
-        other.countryId == countryId &&
-        other.stateId == stateId &&
-        other.zip == zip;
-  }
+//   @override
+//   bool operator ==(Object other) {
+//     return other is CustomerStoreAddressList &&
+//         other.runtimeType == runtimeType &&
+//         other.address1 == address1 &&
+//         other.city == city &&
+//         other.countryId == countryId &&
+//         other.stateId == stateId &&
+//         other.zip == zip;
+//   }
 
-  @override
-  int get hashCode {
-    return Object.hash(runtimeType, address1, city, countryId, stateId, zip);
-  }
-}
+//   @override
+//   int get hashCode {
+//     return Object.hash(runtimeType, address1, city, countryId, stateId, zip);
+//   }
+// }

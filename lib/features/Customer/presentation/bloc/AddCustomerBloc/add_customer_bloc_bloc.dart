@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:monstersmoke/config/DataStates.dart';
 import 'package:monstersmoke/features/Customer/domain/usecases/CaseCustomers.dart';
+import 'package:monstersmoke/features/sharedPrefsApi.dart';
 
 import '../../../../Auth/data/models/CustomerModel.dart';
 
@@ -23,9 +24,11 @@ class AddCustomerAddressBloc
       AddCustomerAddressEvent event, Emitter<AddCustomerBlocState> emit) async {
     emit(AddCustomerLoadingState());
     final data = await addCustomer.call(addressList: event.addressList);
+    final token = await SharedPrefsApi.instance.getFromShared(key: 'login');
 
     if (data is SuccessState) {
-      emit(AddCustomerCompletedState(addressList: data.data!));
+      emit(AddCustomerCompletedState(
+          addressList: data.data!, token: token.toString()));
     }
 
     if (data is ErrorState) {

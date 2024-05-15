@@ -9,10 +9,10 @@ import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/core/widgets/CustomDialog.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
 import 'package:monstersmoke/features/Auth/data/models/CreateCustomerModel.dart';
+import 'package:monstersmoke/features/Auth/data/models/CustomerModel.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/SignUpBloc/sign_up_bloc_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/CountryModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/StateModel.dart';
-import 'package:monstersmoke/features/GETAssets/presentation/bloc/CountryBloc/country_bloc_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/StateBloc/state_bloc_bloc.dart';
 
 class SignUpPage extends StatefulWidget {

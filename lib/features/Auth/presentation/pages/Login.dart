@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,8 +6,8 @@ import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/core/widgets/CustomDialog.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
-import 'package:monstersmoke/features/Auth/presentation/bloc/CustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/SignInBloc/sign_in_bloc_bloc.dart';
+import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

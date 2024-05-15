@@ -21,7 +21,4 @@ abstract class AuthApi {
   @POST('/api/ecommerce/customer/withDocuments')
   Future<HttpResponse<customerModel.CustomerModel?>> signUp(
       {@Body() required CreateCustomerModel createCustomerModel});
-  @GET('/api/ecommerce/customer')
-  Future<HttpResponse<customerModel.CustomerModel?>> getCustomerData(
-      {@Header('Authorization') required String token});
 }

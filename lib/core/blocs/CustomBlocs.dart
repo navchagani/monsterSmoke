@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/features/Auth/data/models/CustomerModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/PaymentsModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/ShippingAddressModel.dart';
+import 'package:monstersmoke/features/PlaceOrder/data/models/placeOrderModel.dart';
 
 class IsMobile extends Bloc<bool, bool> {
   IsMobile() : super(false) {
@@ -32,5 +33,11 @@ class SelectedAddressBloc
     extends Bloc<CustomerStoreAddressList?, CustomerStoreAddressList?> {
   SelectedAddressBloc() : super(null) {
     on<CustomerStoreAddressList?>((event, emit) => emit(event));
+  }
+}
+
+class CustomerCardBloc extends Bloc<CustomerOrderCard?, CustomerOrderCard?> {
+  CustomerCardBloc() : super(null) {
+    on<CustomerOrderCard?>((event, emit) => emit(event));
   }
 }

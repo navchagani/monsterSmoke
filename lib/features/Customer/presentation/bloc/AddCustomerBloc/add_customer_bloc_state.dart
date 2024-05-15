@@ -14,9 +14,12 @@ class AddCustomerLoadingState extends AddCustomerBlocState {}
 
 class AddCustomerCompletedState extends AddCustomerBlocState {
   final CustomerStoreAddressList addressList;
+  final String token;
 
-  const AddCustomerCompletedState({required this.addressList})
-      : super(addressList: addressList);
+  const AddCustomerCompletedState({
+    required this.addressList,
+    required this.token,
+  }) : super(addressList: addressList);
 }
 
 class AddCustomerErrorState extends AddCustomerBlocState {

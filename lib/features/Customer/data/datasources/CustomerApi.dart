@@ -7,6 +7,8 @@ part 'CustomerApi.g.dart';
 
 @RestApi(baseUrl: Constants.baseUrl)
 abstract class CustomerApi {
+  factory CustomerApi(Dio dio) = _CustomerApi;
+
   @POST('/api/ecommerce/customer/1863/address')
   Future<HttpResponse<CustomerStoreAddressList>> addCustomerAddress(
       {@Header('Authorization') required String token,

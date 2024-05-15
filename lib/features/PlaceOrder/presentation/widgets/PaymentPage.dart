@@ -9,6 +9,7 @@ import 'package:monstersmoke/features/GETAssets/data/models/CountryModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/PaymentsModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/StateModel.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/PaymentBloc/payment_bloc_bloc.dart';
+import 'package:monstersmoke/features/PlaceOrder/data/models/placeOrderModel.dart';
 
 class PaymentPage extends StatefulWidget {
   final Function(int index)? moveToNext;
@@ -73,7 +74,10 @@ class _PaymentPageState extends State<PaymentPage> {
 
     if (data.id == 2) {
       showBottomSheet(
-          context: context, builder: ((context) => const AddNewPaymentPage()));
+          context: context,
+          builder: ((context) => AddNewPaymentPage(
+                moveToNext: widget.moveToNext!(3),
+              )));
     } else {
       if (model?.id != null) {
         Future.delayed(const Duration(milliseconds: 700)).whenComplete(() {
@@ -87,7 +91,8 @@ class _PaymentPageState extends State<PaymentPage> {
 }
 
 class AddNewPaymentPage extends StatefulWidget {
-  const AddNewPaymentPage({super.key});
+  final Function(int index)? moveToNext;
+  const AddNewPaymentPage({super.key, this.moveToNext});
 
   @override
   State<AddNewPaymentPage> createState() => _AddNewCustomerAddressPageState();
@@ -219,8 +224,9 @@ class _AddNewCustomerAddressPageState extends State<AddNewPaymentPage> {
               ],
             ),
             Decorations.height30,
-            const CustomButton(
-              text: 'Continue',
+            CustomButton(
+              text: 'Add New Method',
+              onTap: onAddNewMethod,
             )
           ],
         ),
@@ -257,4 +263,24 @@ class _AddNewCustomerAddressPageState extends State<AddNewPaymentPage> {
   onCVVChanged(String value) => setState(() {});
 
   onAddressChanged(String value) => setState(() {});
+
+  onAddNewMethod() {
+    final addNewMethod = CustomerOrderCard(
+        firstName: firstNameController.text,
+        lastName: lastNameController.text,
+        cardNumber: cardNumberController.text,
+        expirationMonth: expiryMonthController.text,
+        expirationYear: expiryYearController.text,
+        countryId: int.parse(selectedContry.toString()),
+        stateId: int.parse(selectedCity.toString()),
+        city: cityController.text,
+        zipcode: zipCodeController.toString());
+
+    CustomerCardBloc bloc = BlocProvider.of<CustomerCardBloc>(context);
+    bloc.add(addNewMethod);
+
+    Navigator.of(context).pop();
+    Future.delayed(const Duration(milliseconds: 200))
+        .whenComplete(() => widget.moveToNext!(3));
+  }
 }
