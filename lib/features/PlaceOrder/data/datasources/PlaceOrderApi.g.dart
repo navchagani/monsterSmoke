@@ -10,9 +10,7 @@ part of 'PlaceOrderApi.dart';
 
 class _PlaceOrderApi implements PlaceOrderApi {
   _PlaceOrderApi(
-    this._dio, {
-    this.baseUrl,
-  }) {
+    this._dio) {
     baseUrl ??= 'https://erp.monstersmokewholesale.com';
   }
 
@@ -85,7 +83,7 @@ class _PlaceOrderApi implements PlaceOrderApi {
     final data = _result.data!['result'];
     List<dynamic> content = data!['content'];
 
-    var value = content!
+    var value = content
         .map((dynamic i) =>
             CustomerOrderModel.fromJson(i as Map<String, dynamic>))
         .toList();

@@ -6,3 +6,35 @@ abstract class PlaceorderEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class CustomerOrderInitialEvent extends PlaceorderEvent {}
+
+class GetCustomerOrderEvent extends PlaceorderEvent {
+  final String? token;
+  final int? page, size;
+
+  const GetCustomerOrderEvent(
+      {required this.token, required this.page, required this.size});
+}
+
+class GetCustomerOrderDetailsEvent extends PlaceorderEvent {
+  final String token, defaultStoreId, storeIdList, isEcommerce;
+  final int orderNumber;
+
+  const GetCustomerOrderDetailsEvent(
+      {required this.token,
+      required this.defaultStoreId,
+      required this.storeIdList,
+      required this.isEcommerce,
+      required this.orderNumber});
+}
+
+class PlaceOrderEvent extends PlaceorderEvent {
+  final PlaceOrderModel placeOrderModel;
+  final String token, storeId;
+
+  const PlaceOrderEvent(
+      {required this.placeOrderModel,
+      required this.token,
+      required this.storeId});
+}

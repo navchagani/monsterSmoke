@@ -36,6 +36,11 @@ import 'package:monstersmoke/features/GetCat&Brand/domain/repositories/cat&Brand
 import 'package:monstersmoke/features/GetCat&Brand/domain/usecases/cat&BrandUseCase.dart';
 import 'package:monstersmoke/features/GetCat&Brand/presentation/bloc/BrandBloc/brand_bloc.dart';
 import 'package:monstersmoke/features/GetCat&Brand/presentation/bloc/CategoryBloc/category_bloc.dart';
+import 'package:monstersmoke/features/PlaceOrder/data/datasources/PlaceOrderApi.dart';
+import 'package:monstersmoke/features/PlaceOrder/data/repositories/PlaceOrderRepoImp.dart';
+import 'package:monstersmoke/features/PlaceOrder/domain/repositories/PlaceOrderRepo.dart';
+import 'package:monstersmoke/features/PlaceOrder/domain/usecases/CasePlaceOrder.dart';
+import 'package:monstersmoke/features/PlaceOrder/presentation/bloc/placeorder_bloc.dart';
 import 'package:monstersmoke/features/Products/data/datasources/ProductApi.dart';
 import 'package:monstersmoke/features/Products/data/repositories/ProductRepoImp.dart';
 import 'package:monstersmoke/features/Products/domain/repositories/ProductsRepo.dart';
@@ -126,4 +131,15 @@ void depInjection() {
   getIt.registerFactory(() => UpdateCustomerAddressBlocBloc(getIt()));
   getIt.registerFactory(() => UpdateCustomerBlocBloc(getIt()));
   getIt.registerFactory(() => CustomerBloc(getIt()));
+
+  // Place Order Apis
+  getIt.registerSingleton<PlaceOrderApi>(PlaceOrderApi(getIt()));
+  getIt.registerSingleton<PlaceOrderRepo>(
+      PlaceOrderRepoImp(placeOrderApi: getIt(), sharedPrefsApi: getIt()));
+  getIt.registerSingleton<CasePlaceOrder>(CasePlaceOrder(repo: getIt()));
+  getIt.registerSingleton<CaseGetCustomerOrder>(
+      CaseGetCustomerOrder(repo: getIt()));
+  getIt.registerSingleton<CaseOrderDetails>(CaseOrderDetails(repo: getIt()));
+
+  getIt.registerFactory(() => PlaceorderBloc(getIt(), getIt(), getIt()));
 }

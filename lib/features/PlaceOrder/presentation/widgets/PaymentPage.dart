@@ -76,7 +76,7 @@ class _PaymentPageState extends State<PaymentPage> {
       showBottomSheet(
           context: context,
           builder: ((context) => AddNewPaymentPage(
-                moveToNext: widget.moveToNext!(3),
+                moveToNext: (index) => widget.moveToNext!(3),
               )));
     } else {
       if (model?.id != null) {

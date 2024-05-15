@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/Global/Widgets/DropDowns.dart';
-import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/core/widgets/CustomDialog.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
-import 'package:monstersmoke/features/Auth/data/models/CreateCustomerModel.dart';
 import 'package:monstersmoke/features/Auth/data/models/CustomerModel.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/AddCustomerBloc/add_customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
@@ -75,6 +73,12 @@ class _AddNewCustomerAddressPageState extends State<AddNewCustomerAddressPage> {
                         icon: const Icon(Icons.arrow_drop_down_circle_outlined))
                   ],
                 ),
+                const ListTile(
+                    contentPadding: EdgeInsets.all(0.0),
+                    title: Text(
+                      'Add New Address',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    )),
                 CustomInputField(
                     labelText: 'Address line 1',
                     hintText: 'Address line 1',

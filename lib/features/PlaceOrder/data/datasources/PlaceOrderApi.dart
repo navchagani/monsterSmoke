@@ -3,13 +3,14 @@ import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/features/PlaceOrder/data/models/CustomerOrderModel.dart';
 import 'package:monstersmoke/features/PlaceOrder/data/models/PlaceOrderResModel.dart';
 import 'package:monstersmoke/features/PlaceOrder/data/models/placeOrderModel.dart';
-import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'PlaceOrderApi.g.dart';
 
 @RestApi(baseUrl: Constants.baseUrl)
 abstract class PlaceOrderApi {
+  factory PlaceOrderApi(Dio dio) = _PlaceOrderApi;
+
   @POST('/api/ecommerce/order?storeId=2')
   Future<HttpResponse<PlaceOrderResModel>> placeOrder(
       {@Body() required PlaceOrderModel placeOrderModel,

@@ -17,6 +17,7 @@ import 'package:monstersmoke/features/GETAssets/presentation/bloc/SliderBloc/sli
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/StateBloc/state_bloc_bloc.dart';
 import 'package:monstersmoke/features/GetCat&Brand/presentation/bloc/BrandBloc/brand_bloc.dart';
 import 'package:monstersmoke/features/GetCat&Brand/presentation/bloc/CategoryBloc/category_bloc.dart';
+import 'package:monstersmoke/features/PlaceOrder/presentation/bloc/placeorder_bloc.dart';
 import 'package:monstersmoke/features/Products/presentation/bloc/Productbloc/product_bloc_bloc.dart';
 
 class Registery {
@@ -56,6 +57,9 @@ class Registery {
 
         // ProductBlocs
         BlocProvider<ProductBloc>(create: ((context) => getIt())),
+
+        // Place Order Apis
+        BlocProvider<PlaceorderBloc>.value(value: getIt<PlaceorderBloc>()),
 
         // CustomBlocs
         BlocProvider<IsMobile>(create: ((context) => getIt())),

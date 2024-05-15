@@ -55,7 +55,7 @@ class PlaceOrderRepoImp extends PlaceOrderRepo {
           orderNumber: orderNumber);
 
       if (data.response.statusCode == HttpStatus.created) {
-        return SuccessState(data: data.data);
+        return SuccessState(data: null);
       } else {
         return ErrorState(
             dioException: DioException(

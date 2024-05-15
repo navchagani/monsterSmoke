@@ -31,10 +31,10 @@ class CustomerOrderModel {
       double? totalAmount,
       double? dueBalance,
       String? status,
-      dynamic? customerName,
+      dynamic customerName,
       String? companyName,
       String? storeName,
-      dynamic? trackingNumber,
+      dynamic trackingNumber,
       String? trackingNumberUrl,
       String? insertedTimestamp}) {
     return CustomerOrderModel(
