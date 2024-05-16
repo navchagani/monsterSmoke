@@ -80,6 +80,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         return SliverAppBar(
             leadingWidth: 0.0,
             primary: false,
+            pinned: true,
             toolbarHeight: 140,
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
@@ -116,16 +117,19 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         toolbarHeight: 70,
         backgroundColor: Colors.white,
         expandedHeight: 330,
-        flexibleSpace: FlexibleSpaceBar(
-            background: Image(
-          image: NetworkImage(widget.model.imageUrl.toString()),
-          errorBuilder: ((context, error, stackTrace) {
-            return const Image(
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                    'https://monstersmokeoutlet.com/asset/img/place-holder.png'));
-          }),
-        )),
+        flexibleSpace: Padding(
+          padding: const EdgeInsets.all(35.0),
+          child: FlexibleSpaceBar(
+              background: Image(
+            image: NetworkImage(widget.model.imageUrl.toString()),
+            errorBuilder: ((context, error, stackTrace) {
+              return const Image(
+                  fit: BoxFit.fitWidth,
+                  image: NetworkImage(
+                      'https://monstersmokeoutlet.com/asset/img/place-holder.png'));
+            }),
+          )),
+        ),
         title: Text(
           widget.model.productName.toString(),
           overflow: TextOverflow.ellipsis,
@@ -153,69 +157,64 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               return Column(
                 children: [
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                        children: [
-                          Decorations.height15,
-                          Expanded(
-                              child: Column(
-                            children: [
-                              Expanded(
-                                  child: ListView.separated(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 15.0),
-                                itemBuilder: ((context, index) {
-                                  LocalCartBloc bloc = BlocProvider.of(context);
+                    child: Column(
+                      children: [
+                        Expanded(
+                            child: Column(
+                          children: [
+                            Expanded(
+                                child: ListView.separated(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 0.0),
+                              itemBuilder: ((context, index) {
+                                LocalCartBloc bloc = BlocProvider.of(context);
 
-                                  final variationProduct = productState
-                                      .productDetailModel.body?.content![index];
+                                final variationProduct = productState
+                                    .productDetailModel.body?.content![index];
 
-                                  return BlocBuilder<LocalCartBloc,
-                                      LocalCartState>(
-                                    builder: (context, cartState) {
-                                      int newQ = cartState.listProduct
-                                              .contains(variationProduct)
-                                          ? variationProduct?.quantity ?? 0
-                                          : 0;
+                                return BlocBuilder<LocalCartBloc,
+                                    LocalCartState>(
+                                  builder: (context, cartState) {
+                                    int newQ = cartState.listProduct
+                                            .contains(variationProduct)
+                                        ? variationProduct?.quantity ?? 0
+                                        : 0;
 
-                                      return CartTile(
-                                        isCart: false,
-                                        onIncrement: () {
-                                          bloc.add(LocalCartAddProductEvent(
-                                              variationProduct!
-                                                ..quantity = newQ));
-                                        },
-                                        onDecrement: () {
-                                          bloc.add(LocalCartOndecrementEvent(
-                                              variationProduct!));
-                                        },
-                                        name: variationProduct?.productName
-                                            .toString(),
-                                        price: variationProduct?.standardPrice
-                                            .toString(),
-                                        quantity:
-                                            variationProduct?.quantity ?? 0,
-                                        image: variationProduct?.imageUrl
-                                            .toString(),
-                                        availableQuantity:
-                                            variationProduct?.availableQuantity,
-                                      );
-                                    },
-                                  );
-                                }),
-                                itemCount: productState.productDetailModel.body
-                                        ?.content?.length ??
-                                    0,
-                                separatorBuilder:
-                                    (BuildContext context, int index) {
-                                  return Decorations.height10;
-                                },
-                              ))
-                            ],
-                          ))
-                        ],
-                      ),
+                                    return CartTile(
+                                      isCart: false,
+                                      onIncrement: () {
+                                        bloc.add(LocalCartAddProductEvent(
+                                            variationProduct!
+                                              ..quantity = newQ));
+                                      },
+                                      onDecrement: () {
+                                        bloc.add(LocalCartOndecrementEvent(
+                                            variationProduct!));
+                                      },
+                                      name: variationProduct?.productName
+                                          .toString(),
+                                      price: variationProduct?.standardPrice
+                                          .toString(),
+                                      quantity: variationProduct?.quantity ?? 0,
+                                      image:
+                                          variationProduct?.imageUrl.toString(),
+                                      availableQuantity:
+                                          variationProduct?.availableQuantity,
+                                    );
+                                  },
+                                );
+                              }),
+                              itemCount: productState.productDetailModel.body
+                                      ?.content?.length ??
+                                  0,
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return Decorations.height10;
+                              },
+                            ))
+                          ],
+                        ))
+                      ],
                     ),
                   )
                 ],

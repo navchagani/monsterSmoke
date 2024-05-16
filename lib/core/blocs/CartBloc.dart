@@ -27,8 +27,10 @@ class LocalCartBloc extends Bloc<LocalCartEvents, LocalCartState> {
 
       if (!isSame) {
         // log('not found');
-
-        productList.add(event.product..quantity = 1);
+        final available = event.product.availableQuantity ?? 0;
+        if (available > 0) {
+          productList.add(event.product..quantity = 1);
+        }
       } else {
         // log('found');
         final prod = productList.firstWhere(

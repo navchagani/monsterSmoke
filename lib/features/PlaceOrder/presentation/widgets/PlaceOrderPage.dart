@@ -1,8 +1,9 @@
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
-import 'package:monstersmoke/core/PDFs/PDFfunctions.dart';
+import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
 import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
@@ -17,6 +18,7 @@ import 'package:monstersmoke/features/PlaceOrder/data/models/placeOrderModel.dar
 import 'package:monstersmoke/features/PlaceOrder/presentation/bloc/placeorder_bloc.dart';
 import 'package:monstersmoke/features/Products/data/models/updateCartModel.dart';
 import 'package:monstersmoke/features/sharedPrefsApi.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class PlaceOrderPage extends StatefulWidget {
   const PlaceOrderPage({super.key});
@@ -50,17 +52,21 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
             CustomDialog(context: context, text: 'Order Placed Successfully..')
                 .showCompletedDialog();
 
-            placeOrderBloc.add(GetCustomerOrderDetailsEvent(
-                token: null,
-                defaultStoreId: 2.toString(),
-                storeIdList: '1,2',
-                isEcommerce: true,
-                orderNumber: placeOrderState.placeOrderResModel.orderDto?.id));
+            moveToPdfViewer(
+                invoiceNumber:
+                    placeOrderState.placeOrderResModel.orderDto!.id.toString());
+
+            // placeOrderBloc.add(GetCustomerOrderDetailsEvent(
+            //     token: null,
+            //     defaultStoreId: 2.toString(),
+            //     storeIdList: '1,2',
+            //     isEcommerce: true,
+            //     orderNumber: placeOrderState.placeOrderResModel.orderDto?.id));
           }
 
-          if (placeOrderState is OrderDetailsCompletedState) {
-            moveToPdfViewer(pdfString: placeOrderState.pdf!);
-          }
+          // if (placeOrderState is OrderDetailsCompletedState) {
+          //   moveToPdfViewer(pdfString: placeOrderState.pdf!);
+          // }
 
           if (placeOrderState is PlaceOrderErrorState) {
             Navigator.of(context).pop();
@@ -184,13 +190,33 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
     );
   }
 
-  moveToPdfViewer({required String pdfString}) async {
-    final file = await MakePDF.saveTempPdf(pdfString);
+  moveToPdfViewer({required String invoiceNumber}) async {
+    final token = await SharedPrefsApi.instance.getFromShared(key: 'login');
 
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-            builder: ((context) => PdfPreviewPage(pdf: file.path))),
-        (route) => route.isFirst);
+    final url =
+        '${Constants.baseUrl}/services/pdf/sales-order/invoice/$invoiceNumber?token=$token&defaultStoreId=${2}&storeIdList=${'1,2'}&isEcommerce=${true}';
+
+    log(url);
+
+    final browser = ChromeSafariBrowser();
+
+    await browser.open(
+        url: WebUri(url),
+        settings: ChromeSafariBrowserSettings(
+            shareState: CustomTabsShareState.SHARE_STATE_OFF,
+            barCollapsingEnabled: true));
+
+    // Navigator.of(context).pushAndRemoveUntil(
+    //     MaterialPageRoute(builder: ((context) => WebPreviewPage(url: url))),
+    //     (route) => route.isFirst);
+
+    // Navigator.of(context).pushAndRemoveUntil(
+    //     MaterialPageRoute(
+    //         builder: ((context) => PdfPreviewPage(
+    //               pdf: file.path,
+    //               pdfData: pdfString,
+    //             ))),
+    //     (route) => route.isFirst);
   }
 
   onPlaceOrder(

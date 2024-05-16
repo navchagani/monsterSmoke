@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:monstersmoke/config/DataStates.dart';
@@ -55,6 +56,7 @@ class PlaceOrderRepoImp extends PlaceOrderRepo {
           orderNumber: orderNumber);
 
       if (data.response.statusCode == HttpStatus.ok) {
+        log('${data.data}');
         return SuccessState(data: data.data);
       } else {
         return ErrorState(

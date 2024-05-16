@@ -1,64 +1,51 @@
-import 'dart:developer';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
-import 'package:monstersmoke/core/PDFs/PDFfunctions.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-class PdfPreviewPage extends StatefulWidget {
-  final String pdf;
+class WebPreviewPage extends StatefulWidget {
+  final String url;
 
-  const PdfPreviewPage({
+  const WebPreviewPage({
     super.key,
-    required this.pdf,
+    required this.url,
   });
 
   @override
-  State<PdfPreviewPage> createState() => _PdfPreviewPageState();
+  State<WebPreviewPage> createState() => _WebPreviewPageState();
 }
 
-class _PdfPreviewPageState extends State<PdfPreviewPage> {
+class _WebPreviewPageState extends State<WebPreviewPage> {
+  InAppWebViewController? webController;
+
+  InAppWebViewController? webViewController;
+  InAppWebViewSettings settings = InAppWebViewSettings(
+      // javaScriptEnabled: false,
+      isInspectable: kDebugMode,
+      mediaPlaybackRequiresUserGesture: false,
+      allowsInlineMediaPlayback: true,
+      iframeAllow: "camera; microphone",
+      iframeAllowFullscreen: true);
+
   @override
   void dispose() {
-    onDispose();
+    webController?.dispose();
     super.dispose();
-  }
-
-  onDispose() async {
-    await MakePDF.saveTempPdf(widget.pdf);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('PDF Preview'),
-      ),
-      body: PDFView(
-        filePath: widget.pdf,
-        // pdfData: Uint8List.fromList(widget.pdf.codeUnits),
-        enableSwipe: true,
-        swipeHorizontal: true,
-        autoSpacing: false,
-        pageFling: false,
-        onRender: (pages) {
-          setState(() {
-            // pages = _pages;
-          });
-          log('$pages');
-        },
-        onError: (error) {
-          log(error.toString());
-        },
-        onPageError: (page, error) {
-          log('$page: ${error.toString()}');
-        },
-        onViewCreated: (PDFViewController pdfViewController) {
-          log('created Successfully');
-        },
-        // onPageChanged: (int page, int total) {
-        //   // log('page change: $page/$total');
-        // },
-      ),
-    );
+        appBar: AppBar(
+          title: const Text('PDF Preview'),
+        ),
+        body: InAppWebView(
+          initialSettings: settings,
+          initialUrlRequest: URLRequest(url: WebUri(widget.url)),
+          onWebViewCreated: (controller) {
+            setState(() {
+              webController = controller;
+            });
+          },
+        ));
   }
 }

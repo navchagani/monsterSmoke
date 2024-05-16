@@ -43,8 +43,9 @@ dependencies:
   retrofit: ^4.1.0
   dio: ^5.4.3+1
   flutter_launcher_icons: ^0.13.1
-  flutter_pdfview: ^1.3.2
-  path_provider: ^2.1.3
+  flutter_inappwebview: ^6.0.0
+  
+  
   
 
 dev_dependencies:
