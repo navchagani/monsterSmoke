@@ -9,8 +9,7 @@ part of 'PlaceOrderApi.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
 class _PlaceOrderApi implements PlaceOrderApi {
-  _PlaceOrderApi(
-    this._dio) {
+  _PlaceOrderApi(this._dio) {
     baseUrl ??= 'https://erp.monstersmokewholesale.com';
   }
 
@@ -25,7 +24,7 @@ class _PlaceOrderApi implements PlaceOrderApi {
       required String storeId}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'token': token};
+    final _headers = <String, dynamic>{r'Authorization': 'Bearer $token'};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(placeOrderModel.toJson());
@@ -46,7 +45,10 @@ class _PlaceOrderApi implements PlaceOrderApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = PlaceOrderResModel.fromJson(_result.data!);
+
+    final data = _result.data!['result'];
+
+    final value = PlaceOrderResModel.fromJson(data);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
@@ -59,7 +61,7 @@ class _PlaceOrderApi implements PlaceOrderApi {
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'token': size};
+    final _headers = <String, dynamic>{r'token': 'Bearer $token'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -101,7 +103,7 @@ class _PlaceOrderApi implements PlaceOrderApi {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{
-      r'token': token,
+      r'token': 'Bearer ${token}',
       r'defaultStoreId': defaultStoreId,
       r'storeIdList': storeIdList,
       r'isEcommerce': isEcommerce,

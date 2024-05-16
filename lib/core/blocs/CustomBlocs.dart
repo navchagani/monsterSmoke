@@ -11,7 +11,7 @@ class IsMobile extends Bloc<bool, bool> {
 }
 
 class AuthAction extends Bloc<bool, bool> {
-  AuthAction() : super(true) {
+  AuthAction() : super(false) {
     on<bool>((event, emit) => emit(event));
   }
 }

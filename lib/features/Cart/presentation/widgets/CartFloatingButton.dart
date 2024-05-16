@@ -5,7 +5,9 @@ import 'package:monstersmoke/cartPage.dart';
 import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/core/blocs/CartBloc.dart';
 import 'package:monstersmoke/core/inject.dart';
+import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
 import 'package:monstersmoke/features/Cart/presentation/bloc/cart_bloc.dart';
+import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductDetailsModel.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
 
@@ -48,44 +50,53 @@ class _CartFloatButtonState extends State<CartFloatButton> {
                 ));
           }
 
-          return BlocProvider.value(
-            value: bloc,
-            child: BlocBuilder<LocalCartBloc, LocalCartState>(
-                bloc: bloc,
-                builder: (context, state) {
-                  final length = FunctionMasterProductDetails
-                      .getMasterProductDetailsLength(
-                          productList: state.listProduct);
+          return BlocBuilder<CustomerBloc, CustomerBlocState>(
+            builder: (context, customerState) {
+              return BlocProvider.value(
+                value: bloc,
+                child: BlocBuilder<LocalCartBloc, LocalCartState>(
+                    bloc: bloc,
+                    builder: (context, state) {
+                      final length = FunctionMasterProductDetails
+                          .getMasterProductDetailsLength(
+                              productList: state.listProduct);
 
-                  if (state is LocalCartLoadingState) {
-                    return const FloatingActionButton(
-                        backgroundColor: Constants.monsterBlue,
-                        onPressed: null,
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: CircularProgressIndicator(
-                            strokeWidth: 3.0,
-                            color: Colors.white,
-                          ),
-                        ));
-                  }
+                      if (state is LocalCartLoadingState) {
+                        return const FloatingActionButton(
+                            backgroundColor: Constants.monsterBlue,
+                            onPressed: null,
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: CircularProgressIndicator(
+                                strokeWidth: 3.0,
+                                color: Colors.white,
+                              ),
+                            ));
+                      }
 
-                  if (state is LocalCartLoadedState && length > 0) {
-                    return FloatingActionButton(
-                      backgroundColor: Constants.monsterBlue,
-                      onPressed: () => onMovetoCart(
-                          context: context, list: state.listProduct),
-                      child: const Icon(Icons.forward),
-                    );
-                  }
+                      if (state is LocalCartLoadedState && length > 0) {
+                        return FloatingActionButton(
+                          backgroundColor: Constants.monsterBlue,
+                          onPressed: customerState.customerModel == null
+                              ? () => navigateToAuthPage()
+                              : () => onMovetoCart(
+                                  context: context, list: state.listProduct),
+                          child: const Icon(Icons.forward),
+                        );
+                      }
 
-                  return FloatingActionButton(
-                      backgroundColor: Constants.monsterBlue,
-                      onPressed: () {
-                        cartBloc.add(GetCartEvent(storeId: 2.toString()));
-                      },
-                      child: const Icon(Icons.add_shopping_cart_outlined));
-                }),
+                      return FloatingActionButton(
+                          backgroundColor: Constants.monsterBlue,
+                          onPressed: customerState.customerModel == null
+                              ? () => navigateToAuthPage()
+                              : () {
+                                  cartBloc
+                                      .add(GetCartEvent(storeId: 2.toString()));
+                                },
+                          child: const Icon(Icons.add_shopping_cart_outlined));
+                    }),
+              );
+            },
           );
         });
   }
@@ -112,5 +123,10 @@ class _CartFloatButtonState extends State<CartFloatButton> {
 
     // CartBloc cartBloc = getIt<CartBloc>();
     cartBloc.add(AddToCartEvent(storeId: 2.toString(), list: productList));
+  }
+
+  navigateToAuthPage() {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: ((context) => const AuthActionPage())));
   }
 }

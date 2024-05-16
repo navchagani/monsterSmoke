@@ -24,7 +24,7 @@ class PlaceOrderRepoImp extends PlaceOrderRepo {
       final data = await placeOrderApi.getCustomerOrder(
           token: token.toString(), page: page, size: size);
 
-      if (data.response.statusCode == HttpStatus.created) {
+      if (data.response.statusCode == HttpStatus.ok) {
         return SuccessState(data: data.data);
       } else {
         return ErrorState(
@@ -54,7 +54,7 @@ class PlaceOrderRepoImp extends PlaceOrderRepo {
           isEcommerce: isEcommerce,
           orderNumber: orderNumber);
 
-      if (data.response.statusCode == HttpStatus.created) {
+      if (data.response.statusCode == HttpStatus.ok) {
         return SuccessState(data: null);
       } else {
         return ErrorState(

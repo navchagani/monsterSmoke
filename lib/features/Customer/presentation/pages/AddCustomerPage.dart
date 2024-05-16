@@ -10,6 +10,7 @@ import 'package:monstersmoke/features/Customer/presentation/bloc/AddCustomerBloc
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/CountryModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/StateModel.dart';
+import 'package:monstersmoke/features/GETAssets/presentation/bloc/StateBloc/state_bloc_bloc.dart';
 
 class AddNewCustomerAddressPage extends StatefulWidget {
   const AddNewCustomerAddressPage({super.key});
@@ -26,7 +27,7 @@ class _AddNewCustomerAddressPageState extends State<AddNewCustomerAddressPage> {
   final zipCodeController = TextEditingController();
   final phoneController = TextEditingController();
 
-  String? selectedCountry, selectedState;
+  int? selectedCountry, selectedState;
 
   @override
   Widget build(BuildContext context) {
@@ -122,9 +123,22 @@ class _AddNewCustomerAddressPageState extends State<AddNewCustomerAddressPage> {
                     controller: phoneController,
                     onChanged: onPhoneChanged),
                 Decorations.height30,
-                CustomButton(
-                  text: 'Add Address',
-                  onTap: onAddCustomerAddress,
+                BlocBuilder<CustomerBloc, CustomerBlocState>(
+                  builder: (context, customerState) {
+                    return CustomButton(
+                      text: 'Add Address',
+                      onTap: () => onAddCustomerAddress(
+                          customerModel: customerState.customerModel!),
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      enabled: phoneController.text.isNotEmpty &&
+                          zipCodeController.text.isNotEmpty &&
+                          cityController.text.isNotEmpty &&
+                          address1Controller.text.isNotEmpty &&
+                          address2Controller.text.isNotEmpty &&
+                          selectedCountry != null &&
+                          selectedState != null,
+                    );
+                  },
                 )
               ],
             ),
@@ -142,25 +156,28 @@ class _AddNewCustomerAddressPageState extends State<AddNewCustomerAddressPage> {
 
   onCountryChanged(CountryModel? p1) {
     setState(() {
-      selectedCountry = p1?.name;
+      selectedCountry = p1?.id;
     });
+
+    StateBloc bloc = BlocProvider.of<StateBloc>(context);
+    bloc.add(GetStateEvent(stateId: p1!.id.toString()));
   }
 
   onStateChanged(StateModel? p1) {
     setState(() {
-      selectedState = p1?.name;
+      selectedState = p1?.id;
     });
   }
 
-  onAddCustomerAddress() {
+  onAddCustomerAddress({required CustomerModel customerModel}) {
     final addressList = CustomerStoreAddressList(
-      address1: address1Controller.text,
-      address2: address2Controller.text,
-      countryId: int.parse(selectedCountry.toString()),
-      stateId: int.parse(selectedState.toString()),
-      city: cityController.text,
-      zip: zipCodeController.text,
-    );
+        address1: address1Controller.text,
+        address2: address2Controller.text,
+        countryId: int.parse(selectedCountry.toString()),
+        stateId: int.parse(selectedState.toString()),
+        city: cityController.text,
+        zip: zipCodeController.text,
+        customerId: customerModel.id);
 
     final addCustomerAddress = BlocProvider.of<AddCustomerAddressBloc>(context);
     addCustomerAddress.add(AddCustomerAddressEvent(addressList: addressList));

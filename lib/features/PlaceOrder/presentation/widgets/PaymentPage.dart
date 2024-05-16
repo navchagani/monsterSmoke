@@ -37,13 +37,15 @@ class _PaymentPageState extends State<PaymentPage> {
               .where((element) => element.ecommerce == true)
               .toList();
           return Wrap(
-            runSpacing: 4.0,
-            spacing: 4.0,
+            runSpacing: 6.0,
+            spacing: 6.0,
             children: List.generate(list.length, (index) {
               final data = list[index];
               final selected = data.id == model?.id;
 
               return RawChip(
+                  // elevation: 4.0,
+                  // shadowColor: Colors.black26,
                   selectedColor: Theme.of(context).colorScheme.primary,
                   selected: selected,
                   labelStyle: TextStyle(

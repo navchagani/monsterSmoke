@@ -160,7 +160,7 @@ class PaymentDtoList {
   final dynamic insertedTimestamp;
   final dynamic updatedBy;
   final dynamic updatedTimestamp;
-  final dynamic orderId;
+  final int? orderId;
   final dynamic customerId;
   final dynamic customerName;
   final dynamic company;
@@ -246,7 +246,7 @@ class PaymentDtoList {
       dynamic insertedTimestamp,
       dynamic updatedBy,
       dynamic updatedTimestamp,
-      dynamic orderId,
+      int? orderId,
       dynamic customerId,
       dynamic customerName,
       dynamic company,
@@ -394,7 +394,7 @@ class PaymentDtoList {
         insertedTimestamp: json['insertedTimestamp'] as dynamic,
         updatedBy: json['updatedBy'] as dynamic,
         updatedTimestamp: json['updatedTimestamp'] as dynamic,
-        orderId: json['orderId'] as dynamic,
+        orderId: json['orderId'] == null ? null : json['orderId'] as int,
         customerId: json['customerId'] as dynamic,
         customerName: json['customerName'] as dynamic,
         company: json['company'] as dynamic,
@@ -597,7 +597,7 @@ class OrderDto {
   final int? customerShippingAddressId;
   final int? customerBillingAddressId;
   final int? totalQuantity;
-  final int? subTotal;
+  final double? subTotal;
   final int? lineItemDiscount;
   final int? couponDiscount;
   final int? orderDiscount;
@@ -717,7 +717,7 @@ class OrderDto {
       int? customerShippingAddressId,
       int? customerBillingAddressId,
       int? totalQuantity,
-      int? subTotal,
+      double? subTotal,
       int? lineItemDiscount,
       int? couponDiscount,
       int? orderDiscount,
@@ -928,7 +928,7 @@ class OrderDto {
             : json['customerBillingAddressId'] as int,
         totalQuantity:
             json['totalQuantity'] == null ? null : json['totalQuantity'] as int,
-        subTotal: json['subTotal'] == null ? null : json['subTotal'] as int,
+        subTotal: json['subTotal'] == null ? null : json['subTotal'] as double,
         lineItemDiscount: json['lineItemDiscount'] == null
             ? null
             : json['lineItemDiscount'] as int,

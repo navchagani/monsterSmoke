@@ -26,13 +26,15 @@ class _ShippingPageState extends State<ShippingPage> {
       }
       if (state is ShippingCompletedShipping) {
         return Wrap(
-          runSpacing: 4.0,
-          spacing: 4.0,
+          runSpacing: 6.0,
+          spacing: 6.0,
           children: List.generate(state.lilstContries.length, (index) {
             final data = state.lilstContries[index];
             final selected = data.id == model?.id;
 
             return RawChip(
+                // elevation: 4.0,
+                // shadowColor: Colors.black54,
                 selectedColor: Theme.of(context).colorScheme.primary,
                 selected: selected,
                 labelStyle:

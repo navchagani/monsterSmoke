@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/Modes/MobileMode/MobileMode.dart';
 import 'package:monstersmoke/Modes/TabMode.dart';
+import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Products/data/models/updateCartModel.dart';
@@ -55,7 +56,7 @@ class PlatformBuilder extends StatelessWidget {
   Widget appDrawer({required BuildContext context}) {
     return Padding(
       padding:
-          const EdgeInsets.only(left: 5, bottom: 15.0, top: 35, right: 100.0),
+          const EdgeInsets.only(left: 5, bottom: 15.0, top: 35, right: 50.0),
       child: Drawer(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -159,7 +160,12 @@ class PlatformBuilder extends StatelessWidget {
                                 'Phone ${customerState.customerModel.phone.toString()}'),
                             Decorations.height15,
                             Text(
-                                'Company ${customerState.customerModel.company.toString()}')
+                                'Company ${customerState.customerModel.company.toString()}'),
+                            Decorations.height15,
+                            ElevatedButton(
+                              onPressed: onMoveTODashboard,
+                              child: const Text('Move To Dashboard'),
+                            )
                           ],
                         ),
                       ),
@@ -189,4 +195,6 @@ class PlatformBuilder extends StatelessWidget {
   void onMoveToPolicy() {}
 
   void onMoveToFaq() {}
+
+  void onMoveTODashboard() {}
 }
