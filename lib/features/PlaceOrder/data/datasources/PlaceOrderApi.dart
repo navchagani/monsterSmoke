@@ -25,10 +25,10 @@ abstract class PlaceOrderApi {
 
   @GET(
       '/services/pdf/sales-order/invoice/17867?token=token&defaultStoreId=2&storeIdList=1,2&isEcommerce=true')
-  Future<HttpResponse<void>> getOrderDetails(
+  Future<HttpResponse<String?>> getOrderDetails(
       {@Header('token') @Header('Authorization') required String token,
       @Header('defaultStoreId') required String defaultStoreId,
       @Header('storeIdList') required String storeIdList,
-      @Header('isEcommerce') required String isEcommerce,
+      @Header('isEcommerce') required bool isEcommerce,
       required int orderNumber});
 }

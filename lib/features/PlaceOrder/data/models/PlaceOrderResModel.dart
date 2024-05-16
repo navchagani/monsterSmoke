@@ -175,8 +175,8 @@ class PaymentDtoList {
   final dynamic excessPaymentParentId;
   final dynamic transactionId;
   final dynamic authorizationTransactionId;
-  final int? amount;
-  final int? excessAmount;
+  final double? amount;
+  final double? excessAmount;
   final dynamic status;
   final bool? sendConfirmation;
   final dynamic createdByEmployeeName;
@@ -185,14 +185,14 @@ class PaymentDtoList {
   final dynamic brainTreePaymentNonceDto;
   final dynamic customerOrderCard;
   final dynamic storePaymentConfigurationDto;
-  final int? dueBalance;
-  final int? totalPaidAmount;
-  final int? totalOrderAmount;
+  final double? dueBalance;
+  final double? totalPaidAmount;
+  final double? totalOrderAmount;
   final dynamic authorizeDotNetCustomerProfileId;
   final dynamic authorizeDotNetCustomerPaymentProfileId;
-  final int? cashAmount;
-  final int? checkAmount;
-  final int? creditCardAmount;
+  final double? cashAmount;
+  final double? checkAmount;
+  final double? creditCardAmount;
   final dynamic orderIds;
   final bool? capturePaymentWithTransactionId;
   final dynamic notes;
@@ -261,8 +261,8 @@ class PaymentDtoList {
       dynamic excessPaymentParentId,
       dynamic transactionId,
       dynamic authorizationTransactionId,
-      int? amount,
-      int? excessAmount,
+      double? amount,
+      double? excessAmount,
       dynamic status,
       bool? sendConfirmation,
       dynamic createdByEmployeeName,
@@ -271,14 +271,14 @@ class PaymentDtoList {
       dynamic brainTreePaymentNonceDto,
       dynamic customerOrderCard,
       dynamic storePaymentConfigurationDto,
-      int? dueBalance,
-      int? totalPaidAmount,
-      int? totalOrderAmount,
+      double? dueBalance,
+      double? totalPaidAmount,
+      double? totalOrderAmount,
       dynamic authorizeDotNetCustomerProfileId,
       dynamic authorizeDotNetCustomerPaymentProfileId,
-      int? cashAmount,
-      int? checkAmount,
-      int? creditCardAmount,
+      double? cashAmount,
+      double? checkAmount,
+      double? creditCardAmount,
       dynamic orderIds,
       bool? capturePaymentWithTransactionId,
       dynamic notes,
@@ -411,9 +411,10 @@ class PaymentDtoList {
         transactionId: json['transactionId'] as dynamic,
         authorizationTransactionId:
             json['authorizationTransactionId'] as dynamic,
-        amount: json['amount'] == null ? null : json['amount'] as int,
-        excessAmount:
-            json['excessAmount'] == null ? null : json['excessAmount'] as int,
+        amount: json['amount'] == null ? null : json['amount'] as double,
+        excessAmount: json['excessAmount'] == null
+            ? null
+            : json['excessAmount'] as double,
         status: json['status'] as dynamic,
         sendConfirmation: json['sendConfirmation'] == null
             ? null
@@ -431,24 +432,24 @@ class PaymentDtoList {
         storePaymentConfigurationDto:
             json['storePaymentConfigurationDto'] as dynamic,
         dueBalance:
-            json['dueBalance'] == null ? null : json['dueBalance'] as int,
+            json['dueBalance'] == null ? null : json['dueBalance'] as double,
         totalPaidAmount: json['totalPaidAmount'] == null
             ? null
-            : json['totalPaidAmount'] as int,
+            : json['totalPaidAmount'] as double,
         totalOrderAmount: json['totalOrderAmount'] == null
             ? null
-            : json['totalOrderAmount'] as int,
+            : json['totalOrderAmount'] as double,
         authorizeDotNetCustomerProfileId:
             json['authorizeDotNetCustomerProfileId'] as dynamic,
         authorizeDotNetCustomerPaymentProfileId:
             json['authorizeDotNetCustomerPaymentProfileId'] as dynamic,
         cashAmount:
-            json['cashAmount'] == null ? null : json['cashAmount'] as int,
+            json['cashAmount'] == null ? null : json['cashAmount'] as double,
         checkAmount:
-            json['checkAmount'] == null ? null : json['checkAmount'] as int,
+            json['checkAmount'] == null ? null : json['checkAmount'] as double,
         creditCardAmount: json['creditCardAmount'] == null
             ? null
-            : json['creditCardAmount'] as int,
+            : json['creditCardAmount'] as double,
         orderIds: json['orderIds'] as dynamic,
         capturePaymentWithTransactionId:
             json['capturePaymentWithTransactionId'] == null
@@ -598,14 +599,14 @@ class OrderDto {
   final int? customerBillingAddressId;
   final int? totalQuantity;
   final double? subTotal;
-  final int? lineItemDiscount;
-  final int? couponDiscount;
-  final int? orderDiscount;
+  final double? lineItemDiscount;
+  final double? couponDiscount;
+  final double? orderDiscount;
   final dynamic orderDiscountType;
-  final int? shippingAmount;
-  final int? taxAmount;
-  final int? totalAmount;
-  final int? dueAmount;
+  final double? shippingAmount;
+  final double? taxAmount;
+  final double? totalAmount;
+  final double? dueAmount;
   final double? previousDueBalance;
   final dynamic totalDueAmount;
   final String? internalNotes;
@@ -617,8 +618,8 @@ class OrderDto {
   final dynamic shipTimestamp;
   final dynamic invoiceTimestamp;
   final dynamic returnOrderId;
-  final int? freightCharge;
-  final int? hazmatCharge;
+  final double? freightCharge;
+  final double? hazmatCharge;
   final dynamic repairOrderId;
   final String? dueDate;
   final int? preferredShippingModeId;
@@ -627,7 +628,7 @@ class OrderDto {
   final dynamic quotationId;
   final dynamic parentOrderId;
   final dynamic adjustmentId;
-  final int? adjustmentValue;
+  final double? adjustmentValue;
   final dynamic adjustmentName;
   final dynamic orderFulfillmentId;
   final dynamic saleRepresentativeName;
@@ -635,9 +636,9 @@ class OrderDto {
   final dynamic preferredPaymentModeName;
   final dynamic createdByName;
   final dynamic createdByCustomerName;
-  final int? grossMargin;
-  final int? grossMarginPercentage;
-  final int? totalCostPrice;
+  final double? grossMargin;
+  final double? grossMarginPercentage;
+  final double? totalCostPrice;
   final dynamic totalML;
   final dynamic totalTaxableML;
   final dynamic orderFulfilledBy;
@@ -718,14 +719,14 @@ class OrderDto {
       int? customerBillingAddressId,
       int? totalQuantity,
       double? subTotal,
-      int? lineItemDiscount,
-      int? couponDiscount,
-      int? orderDiscount,
+      double? lineItemDiscount,
+      double? couponDiscount,
+      double? orderDiscount,
       dynamic orderDiscountType,
-      int? shippingAmount,
-      int? taxAmount,
-      int? totalAmount,
-      int? dueAmount,
+      double? shippingAmount,
+      double? taxAmount,
+      double? totalAmount,
+      double? dueAmount,
       double? previousDueBalance,
       dynamic totalDueAmount,
       String? internalNotes,
@@ -737,8 +738,8 @@ class OrderDto {
       dynamic shipTimestamp,
       dynamic invoiceTimestamp,
       dynamic returnOrderId,
-      int? freightCharge,
-      int? hazmatCharge,
+      double? freightCharge,
+      double? hazmatCharge,
       dynamic repairOrderId,
       String? dueDate,
       int? preferredShippingModeId,
@@ -747,7 +748,7 @@ class OrderDto {
       dynamic quotationId,
       dynamic parentOrderId,
       dynamic adjustmentId,
-      int? adjustmentValue,
+      double? adjustmentValue,
       dynamic adjustmentName,
       dynamic orderFulfillmentId,
       dynamic saleRepresentativeName,
@@ -755,9 +756,9 @@ class OrderDto {
       dynamic preferredPaymentModeName,
       dynamic createdByName,
       dynamic createdByCustomerName,
-      int? grossMargin,
-      int? grossMarginPercentage,
-      int? totalCostPrice,
+      double? grossMargin,
+      double? grossMarginPercentage,
+      double? totalCostPrice,
       dynamic totalML,
       dynamic totalTaxableML,
       dynamic orderFulfilledBy,
@@ -931,20 +932,23 @@ class OrderDto {
         subTotal: json['subTotal'] == null ? null : json['subTotal'] as double,
         lineItemDiscount: json['lineItemDiscount'] == null
             ? null
-            : json['lineItemDiscount'] as int,
+            : json['lineItemDiscount'] as double,
         couponDiscount: json['couponDiscount'] == null
             ? null
-            : json['couponDiscount'] as int,
-        orderDiscount:
-            json['orderDiscount'] == null ? null : json['orderDiscount'] as int,
+            : json['couponDiscount'] as double,
+        orderDiscount: json['orderDiscount'] == null
+            ? null
+            : json['orderDiscount'] as double,
         orderDiscountType: json['orderDiscountType'] as dynamic,
         shippingAmount: json['shippingAmount'] == null
             ? null
-            : json['shippingAmount'] as int,
-        taxAmount: json['taxAmount'] == null ? null : json['taxAmount'] as int,
+            : json['shippingAmount'] as double,
+        taxAmount:
+            json['taxAmount'] == null ? null : json['taxAmount'] as double,
         totalAmount:
-            json['totalAmount'] == null ? null : json['totalAmount'] as int,
-        dueAmount: json['dueAmount'] == null ? null : json['dueAmount'] as int,
+            json['totalAmount'] == null ? null : json['totalAmount'] as double,
+        dueAmount:
+            json['dueAmount'] == null ? null : json['dueAmount'] as double,
         previousDueBalance: json['previousDueBalance'] == null
             ? null
             : json['previousDueBalance'] as double,
@@ -965,10 +969,12 @@ class OrderDto {
         shipTimestamp: json['shipTimestamp'] as dynamic,
         invoiceTimestamp: json['invoiceTimestamp'] as dynamic,
         returnOrderId: json['returnOrderId'] as dynamic,
-        freightCharge:
-            json['freightCharge'] == null ? null : json['freightCharge'] as int,
-        hazmatCharge:
-            json['hazmatCharge'] == null ? null : json['hazmatCharge'] as int,
+        freightCharge: json['freightCharge'] == null
+            ? null
+            : json['freightCharge'] as double,
+        hazmatCharge: json['hazmatCharge'] == null
+            ? null
+            : json['hazmatCharge'] as double,
         repairOrderId: json['repairOrderId'] as dynamic,
         dueDate: json['dueDate'] == null ? null : json['dueDate'] as String,
         preferredShippingModeId: json['preferredShippingModeId'] == null
@@ -985,7 +991,7 @@ class OrderDto {
         adjustmentId: json['adjustmentId'] as dynamic,
         adjustmentValue: json['adjustmentValue'] == null
             ? null
-            : json['adjustmentValue'] as int,
+            : json['adjustmentValue'] as double,
         adjustmentName: json['adjustmentName'] as dynamic,
         orderFulfillmentId: json['orderFulfillmentId'] as dynamic,
         saleRepresentativeName: json['saleRepresentativeName'] as dynamic,
@@ -994,13 +1000,13 @@ class OrderDto {
         createdByName: json['createdByName'] as dynamic,
         createdByCustomerName: json['createdByCustomerName'] as dynamic,
         grossMargin:
-            json['grossMargin'] == null ? null : json['grossMargin'] as int,
+            json['grossMargin'] == null ? null : json['grossMargin'] as double,
         grossMarginPercentage: json['grossMarginPercentage'] == null
             ? null
-            : json['grossMarginPercentage'] as int,
+            : json['grossMarginPercentage'] as double,
         totalCostPrice: json['totalCostPrice'] == null
             ? null
-            : json['totalCostPrice'] as int,
+            : json['totalCostPrice'] as double,
         totalML: json['totalML'] as dynamic,
         totalTaxableML: json['totalTaxableML'] as dynamic,
         orderFulfilledBy: json['orderFulfilledBy'] as dynamic,

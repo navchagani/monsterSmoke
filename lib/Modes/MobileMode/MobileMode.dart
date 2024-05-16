@@ -59,7 +59,9 @@ class MobileViewMode extends StatelessWidget {
         body: Scaffold(
           body: body(),
           bottomNavigationBar: const CartBottomBar(),
-          floatingActionButton: const CartFloatButton(),
+          floatingActionButton: const CartFloatButton(
+            fromHome: true,
+          ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         ));
   }

@@ -94,11 +94,11 @@ class _PlaceOrderApi implements PlaceOrderApi {
   }
 
   @override
-  Future<HttpResponse<void>> getOrderDetails(
+  Future<HttpResponse<String?>> getOrderDetails(
       {required String token,
       required String defaultStoreId,
       required String storeIdList,
-      required String isEcommerce,
+      required bool isEcommerce,
       required int orderNumber}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -111,7 +111,7 @@ class _PlaceOrderApi implements PlaceOrderApi {
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _result =
-        await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
+        await _dio.fetch<String>(_setStreamType<HttpResponse<void>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -127,7 +127,8 @@ class _PlaceOrderApi implements PlaceOrderApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final httpResponse = HttpResponse(null, _result);
+
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 

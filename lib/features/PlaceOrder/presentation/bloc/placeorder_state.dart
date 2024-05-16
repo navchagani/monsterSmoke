@@ -33,7 +33,8 @@ class CustomerOrderCompletedState extends PlaceorderState {
 }
 
 class OrderDetailsCompletedState extends PlaceorderState {
-  const OrderDetailsCompletedState() : super();
+  final String? pdf;
+  const OrderDetailsCompletedState(this.pdf) : super();
 }
 
 class PlaceOrderErrorState extends PlaceorderState {

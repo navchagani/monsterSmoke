@@ -10,10 +10,10 @@ abstract class PlaceOrderRepo {
       required String storeId});
   Future<DataStates<List<CustomerOrderModel>>> getCustomerOrder(
       {required String token, required int page, required int size});
-  Future<DataStates<void>> getOrderDetails(
+  Future<DataStates<String?>> getOrderDetails(
       {required String token,
       required String defaultStoreId,
       required String storeIdList,
-      required String isEcommerce,
+      required bool isEcommerce,
       required int orderNumber});
 }

@@ -18,8 +18,9 @@ class GetCustomerOrderEvent extends PlaceorderEvent {
 }
 
 class GetCustomerOrderDetailsEvent extends PlaceorderEvent {
-  final String token, defaultStoreId, storeIdList, isEcommerce;
-  final int orderNumber;
+  final String? token, defaultStoreId, storeIdList;
+  final int? orderNumber;
+  final bool? isEcommerce;
 
   const GetCustomerOrderDetailsEvent(
       {required this.token,

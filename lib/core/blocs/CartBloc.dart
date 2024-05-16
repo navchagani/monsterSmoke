@@ -23,14 +23,14 @@ class LocalCartBloc extends Bloc<LocalCartEvents, LocalCartState> {
     } else {
       final productIdList = productList.map((e) => e.productId).toList();
       final isSame = productIdList.contains(event.product.productId);
-      log('add cart triggered');
+      // log('add cart triggered');
 
       if (!isSame) {
-        log('not found');
+        // log('not found');
 
         productList.add(event.product..quantity = 1);
       } else {
-        log('found');
+        // log('found');
         final prod = productList.firstWhere(
             (element) => element.productId == event.product.productId);
 
@@ -41,7 +41,7 @@ class LocalCartBloc extends Bloc<LocalCartEvents, LocalCartState> {
           prod.quantity = qty + 1;
           log(prod.availableQuantity.toString());
           log(prod.quantity.toString());
-          log('${prod.toJson()}');
+          // log('${prod.toJson()}');
         }
       }
     }

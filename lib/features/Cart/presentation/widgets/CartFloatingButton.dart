@@ -12,7 +12,8 @@ import 'package:monstersmoke/features/Products/data/models/ProductDetailsModel.d
 import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
 
 class CartFloatButton extends StatefulWidget {
-  const CartFloatButton({super.key});
+  final bool? fromHome;
+  const CartFloatButton({super.key, this.fromHome});
 
   @override
   State<CartFloatButton> createState() => _CartFloatButtonState();
@@ -28,8 +29,13 @@ class _CartFloatButtonState extends State<CartFloatButton> {
         bloc: cartBloc,
         listener: (context, cardState) {
           if (cardState is CartLoadedState) {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: ((context) => const CartPage())));
+            if (widget.fromHome ?? false) {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: ((context) => const CartPage())));
+            } else {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: ((context) => const CartPage())));
+            }
 
             LocalCartBloc localCartBloc = BlocProvider.of(context);
             localCartBloc.add(LocalCartClearProductEvent());

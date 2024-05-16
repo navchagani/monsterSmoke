@@ -38,11 +38,11 @@ class PlaceOrderRepoImp extends PlaceOrderRepo {
   }
 
   @override
-  Future<DataStates<void>> getOrderDetails(
+  Future<DataStates<String?>> getOrderDetails(
       {required String token,
       required String defaultStoreId,
       required String storeIdList,
-      required String isEcommerce,
+      required bool isEcommerce,
       required int orderNumber}) async {
     try {
       final token = await sharedPrefsApi.getFromShared(key: 'login');
@@ -55,7 +55,7 @@ class PlaceOrderRepoImp extends PlaceOrderRepo {
           orderNumber: orderNumber);
 
       if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: null);
+        return SuccessState(data: data.data);
       } else {
         return ErrorState(
             dioException: DioException(
@@ -81,6 +81,7 @@ class PlaceOrderRepoImp extends PlaceOrderRepo {
           storeId: storeId);
 
       if (data.response.statusCode == HttpStatus.created) {
+        // log('${data.data.toJson()}');
         return SuccessState(data: data.data);
       } else {
         return ErrorState(

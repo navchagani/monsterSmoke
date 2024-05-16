@@ -11,6 +11,7 @@ abstract class CartState extends Equatable {
 class CartInitial extends CartState {}
 
 class CartLoadedState extends CartState {
+  @override
   final UpdateCartModel? updateCartModel;
   const CartLoadedState({this.updateCartModel})
       : super(updateCartModel: updateCartModel);

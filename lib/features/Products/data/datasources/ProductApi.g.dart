@@ -57,7 +57,7 @@ class _ProductApi implements ProductApi {
             ))));
 
     final data = _result.data!['result'];
-    log('${data}');
+    // log('${data}');
     List<dynamic> content = data['content'];
     var value = content
         .map((dynamic i) => ProductModel.fromJson(i as Map<String, dynamic>))
@@ -153,7 +153,7 @@ class _ProductApi implements ProductApi {
               baseUrl,
             ))));
     final data = _result.data!['result'];
-    log('${data}');
+    // log('${data}');
 
     final value = ProductSearchModel.fromJson(data);
     final httpResponse = HttpResponse(value, _result);

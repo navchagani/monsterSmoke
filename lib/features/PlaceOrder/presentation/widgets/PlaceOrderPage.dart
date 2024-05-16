@@ -1,14 +1,14 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
+import 'package:monstersmoke/core/PDFs/PDFfunctions.dart';
 import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
 import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/core/widgets/CustomDialog.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
+import 'package:monstersmoke/core/widgets/CustomPDFViewer.dart';
 import 'package:monstersmoke/features/Auth/data/models/CustomerModel.dart';
 import 'package:monstersmoke/features/Cart/presentation/bloc/cart_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/PaymentsModel.dart';
@@ -49,6 +49,17 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
             Navigator.of(context).pop();
             CustomDialog(context: context, text: 'Order Placed Successfully..')
                 .showCompletedDialog();
+
+            placeOrderBloc.add(GetCustomerOrderDetailsEvent(
+                token: null,
+                defaultStoreId: 2.toString(),
+                storeIdList: '1,2',
+                isEcommerce: true,
+                orderNumber: placeOrderState.placeOrderResModel.orderDto?.id));
+          }
+
+          if (placeOrderState is OrderDetailsCompletedState) {
+            moveToPdfViewer(pdfString: placeOrderState.pdf!);
           }
 
           if (placeOrderState is PlaceOrderErrorState) {
@@ -173,6 +184,15 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
     );
   }
 
+  moveToPdfViewer({required String pdfString}) async {
+    final file = await MakePDF.saveTempPdf(pdfString);
+
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: ((context) => PdfPreviewPage(pdf: file.path))),
+        (route) => route.isFirst);
+  }
+
   onPlaceOrder(
       {UpdateCartModel? cartList,
       CustomerStoreAddressList? selectedAddress,
@@ -210,8 +230,8 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
         orderDto: orderDto);
 
     final token = await SharedPrefsApi.instance.getFromShared(key: 'login');
-    log('$token');
-    log('${placeOrderModel.toJson()}');
+    // log('$token');
+    // log('${placeOrderModel.toJson()}');
 
     placeOrderBloc.add(PlaceOrderEvent(
         placeOrderModel: placeOrderModel,
