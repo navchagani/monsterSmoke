@@ -35,7 +35,7 @@ class CustomButton extends StatelessWidget {
           ? Colors.transparent
           : enabled ?? true
               ? backgroundColor ?? Colors.transparent
-              : Theme.of(context).focusColor,
+              : Theme.of(context).colorScheme.onBackground.withOpacity(0.1),
       clipBehavior: Clip.hardEdge,
       child: InkWell(
         onTap: enabled ?? true ? onTap : null,

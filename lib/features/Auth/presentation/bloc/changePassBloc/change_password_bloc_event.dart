@@ -17,3 +17,11 @@ class ChangePasswordEvent extends ChangePasswordBlocEvent {
       required this.password,
       required this.confirmPassword});
 }
+
+class ForgotPasswordEvent extends ChangePasswordBlocEvent {
+  final String? email;
+
+  const ForgotPasswordEvent({
+    required this.email,
+  });
+}

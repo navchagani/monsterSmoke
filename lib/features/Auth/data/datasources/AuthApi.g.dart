@@ -173,7 +173,7 @@ class _AuthApi implements AuthApi {
     )
             .compose(
               _dio.options,
-              '/api/ecommerce/customer/sendForgotPasswordEmai',
+              '/api/ecommerce/customer/sendForgotPasswordEmail',
               queryParameters: queryParameters,
               data: _data,
             )

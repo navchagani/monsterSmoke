@@ -8,6 +8,7 @@ import 'package:monstersmoke/features/Auth/domain/repositories/AuthRepo.dart';
 import 'package:monstersmoke/features/Auth/domain/usecases/AuthCases.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/SignInBloc/sign_in_bloc_bloc.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/SignUpBloc/sign_up_bloc_bloc.dart';
+import 'package:monstersmoke/features/Auth/presentation/bloc/changePassBloc/change_password_bloc_bloc.dart';
 import 'package:monstersmoke/features/Cart/data/datasources/cartsApi.dart';
 import 'package:monstersmoke/features/Cart/data/repositories/CartRepoImp.dart';
 import 'package:monstersmoke/features/Cart/domain/repositories/CartRepo.dart';
@@ -21,6 +22,11 @@ import 'package:monstersmoke/features/Customer/presentation/bloc/AddCustomerBloc
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/UpdateCustomerAddressBloc/update_customer_address_bloc_bloc.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/UpdateCustomerBloc/update_customer_bloc_bloc.dart';
+import 'package:monstersmoke/features/Dashboard/data/datasources/dashboardApi.dart';
+import 'package:monstersmoke/features/Dashboard/data/repositories/dashboardRepoImp.dart';
+import 'package:monstersmoke/features/Dashboard/domain/repositories/dashboardRepo.dart';
+import 'package:monstersmoke/features/Dashboard/domain/usecases/caseDashboard.dart';
+import 'package:monstersmoke/features/Dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/data/datasources/AssetsApi.dart';
 import 'package:monstersmoke/features/GETAssets/data/repositories/AssetsRepoImp.dart';
 import 'package:monstersmoke/features/GETAssets/domain/repositories/AssetsRepo.dart';
@@ -71,8 +77,13 @@ void depInjection() {
       AuthRepoImp(authApi: getIt(), sharedPrefsApi: getIt()));
   getIt.registerSingleton<CaseSignIn>(CaseSignIn(repo: getIt()));
   getIt.registerSingleton<CaseSignUp>(CaseSignUp(repo: getIt()));
+  getIt.registerSingleton<CaseForgotPass>(CaseForgotPass(repo: getIt()));
+  getIt
+      .registerSingleton<CaseChangePassword>(CaseChangePassword(repo: getIt()));
+
   getIt.registerFactory(() => SignInBloc(getIt()));
   getIt.registerFactory(() => SignUpBloc(getIt()));
+  getIt.registerFactory(() => ChangePasswordBloc(getIt(), getIt()));
 
   // Assets Apis
   getIt.registerSingleton<AssetsApi>(AssetsApi(getIt()));
@@ -135,6 +146,15 @@ void depInjection() {
   getIt.registerFactory(() => UpdateCustomerAddressBlocBloc(getIt()));
   getIt.registerFactory(() => UpdateCustomerBlocBloc(getIt()));
   getIt.registerFactory(() => CustomerBloc(getIt()));
+
+  // Dashboard Bloc
+  getIt.registerSingleton<DashboardApi>(DashboardApi(getIt()));
+  getIt.registerSingleton<DashboardRepository>(
+      DashboardRepoImp(dashboardApi: getIt(), prefsApi: getIt()));
+  getIt.registerSingleton<CaseDashboard>(CaseDashboard(repository: getIt()));
+  getIt.registerSingleton<CaseGetStatement>(
+      CaseGetStatement(repository: getIt()));
+  getIt.registerFactory(() => DashboardBloc(getIt(), getIt()));
 
   // Place Order Apis
   getIt.registerSingleton<PlaceOrderApi>(PlaceOrderApi(getIt()));
