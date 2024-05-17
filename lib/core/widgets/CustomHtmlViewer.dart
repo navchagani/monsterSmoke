@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:html/parser.dart' as htmlParser;
+import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/GetPagesbloc/get_pages_bloc.dart';
 
@@ -34,59 +36,64 @@ class _HTMLViewerState extends State<HTMLViewer> {
       appBar: AppBar(
         title: Text(widget.title.toString()),
       ),
-      body: SingleChildScrollView(
-        child: BlocProvider.value(
-          value: pagesBloc,
-          child: BlocBuilder<GetPagesBloc, GetPagesState>(
-            bloc: pagesBloc,
-            builder: (context, pageState) {
-              if (pageState is GetPagesLoadingState) {
-                return const Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              }
+      body: BlocProvider.value(
+        value: pagesBloc,
+        child: BlocBuilder<GetPagesBloc, GetPagesState>(
+          bloc: pagesBloc,
+          builder: (context, pageState) {
+            if (pageState is GetPagesLoadingState) {
+              return const Expanded(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
 
-              if (pageState is GetPagesCompletedState) {
-                final document = htmlParser.parse(pageState.htmlModel.body);
-                return Material(
-                  // elevation: 20.0,
-                  borderRadius: BorderRadius.circular(20.0),
-                  color: Theme.of(context).colorScheme.background,
-                  child: Padding(
-                    padding: const EdgeInsets.all(25.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: document.body!.children.map((element) {
-                        if (element.localName == 'p') {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(
-                              element.text,
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onBackground),
+            if (pageState is GetPagesCompletedState) {
+              final document = htmlParser.parse(pageState.htmlModel.body);
+              return Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final element = document.body?.children[index];
+                          return Material(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Theme.of(context).colorScheme.background,
+                            child: Padding(
+                              padding: const EdgeInsets.all(25.0),
+                              child: Text(
+                                element!.text,
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground),
+                              ),
                             ),
                           );
-                        }
+                        },
+                        separatorBuilder: (context, index) =>
+                            Decorations.height5,
+                        itemCount: document.body!.children.length,
+
                         // Handle other HTML elements as needed
-                        return Container();
-                      }).toList(),
+                      ),
                     ),
-                  ),
-                );
-              }
+                  ],
+                ),
+              );
+            }
 
-              if (pageState is GetPagesErrorState) {
-                return Center(child: Text(pageState.error.message.toString()));
-              }
+            if (pageState is GetPagesErrorState) {
+              return Center(child: Text(pageState.error.message.toString()));
+            }
 
-              return Container();
-            },
-          ),
+            return Container();
+          },
         ),
       ),
     );

@@ -62,18 +62,16 @@ class PlatformBuilder extends StatelessWidget {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Colors.transparent,
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              children: [
-                userData(),
-                Decorations.height15,
-                menus(),
-                const Spacer(),
-                footer()
-              ],
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Column(
+            children: [
+              userData(),
+              Decorations.height15,
+              menus(),
+              const Spacer(),
+              footer()
+            ],
           ),
         ),
       ),
@@ -108,8 +106,9 @@ class PlatformBuilder extends StatelessWidget {
       return Material(
         color: Colors.white,
         elevation: 2.0,
-        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+        borderRadius: const BorderRadius.all(Radius.circular(15.0)),
         child: ListView.builder(
+          padding: const EdgeInsets.all(10.0),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
@@ -121,19 +120,23 @@ class PlatformBuilder extends StatelessWidget {
     });
   }
 
-  Widget footer() => const Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Copyright © Monster Smoke, Inc.',
-            style: TextStyle(color: Colors.black),
-          ),
-          Text('All rights reserved.', style: TextStyle(color: Colors.black54)),
-          Text(
-              'FDA Disclaimer: These statements have not been evaluated by the Food and Drug Administration. These products are not intended to diagnose, treat, cure or prevent any disease.',
-              style: TextStyle(color: Colors.black26))
-        ],
+  Widget footer() => const Padding(
+        padding: EdgeInsets.all(15.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Copyright © Monster Smoke, Inc.',
+              style: TextStyle(color: Colors.black),
+            ),
+            Text('All rights reserved.',
+                style: TextStyle(color: Colors.black54)),
+            Text(
+                'FDA Disclaimer: These statements have not been evaluated by the Food and Drug Administration. These products are not intended to diagnose, treat, cure or prevent any disease.',
+                style: TextStyle(color: Colors.black26))
+          ],
+        ),
       );
 
   Widget userData() => BlocBuilder<CustomerBloc, CustomerBlocState>(
@@ -142,11 +145,11 @@ class PlatformBuilder extends StatelessWidget {
           return Material(
               color: Colors.white,
               elevation: 2.0,
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+              borderRadius: const BorderRadius.all(Radius.circular(15.0)),
               child: InkWell(
                 onTap: () {},
                 child: Padding(
-                  padding: const EdgeInsets.all(13.0),
+                  padding: const EdgeInsets.all(15.0),
                   child: Row(
                     children: [
                       Expanded(
@@ -173,6 +176,16 @@ class PlatformBuilder extends StatelessWidget {
                                 'Company ${customerState.customerModel.company.toString()}'),
                             Decorations.height15,
                             ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Theme.of(context).colorScheme.secondary),
+                                  foregroundColor: MaterialStateProperty.all(
+                                      Theme.of(context).colorScheme.background),
+                                  textStyle: MaterialStateProperty.all(
+                                      TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background))),
                               onPressed: () => onMoveTODashboard(context),
                               child: const Text('Move To Dashboard'),
                             )

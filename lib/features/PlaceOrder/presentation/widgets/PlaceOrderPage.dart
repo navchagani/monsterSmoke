@@ -90,60 +90,79 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
                             return BlocBuilder<SelectedPaymentBloc,
                                 PaymentsModel?>(
                               builder: (context, selectedPayment) {
+                                final list = [
+                                  Row(children: [
+                                    Expanded(
+                                        child: Text(
+                                            'Total Items (${state.updateCartModel?.totalCartQuantity})')),
+                                    Expanded(
+                                        child: Text(
+                                      '\$${state.updateCartModel!.totalCartPrice.toString()}',
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                          color: Colors.green.shade600),
+                                    )),
+                                  ]),
+                                  Row(children: [
+                                    const Expanded(
+                                        child: Text('Shipping Charges')),
+                                    Expanded(
+                                        child: Text(
+                                      '\$${selectedShipment?.amount.toString()}',
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                          color: Colors.green.shade600),
+                                    )),
+                                  ]),
+                                  Row(children: [
+                                    const Expanded(child: Text('Tax Charges')),
+                                    Expanded(
+                                        child: Text(
+                                      '\$${0.0}',
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                          color: Colors.green.shade600),
+                                    )),
+                                  ]),
+                                  Row(children: [
+                                    const Expanded(child: Text('Grand Total')),
+                                    Expanded(
+                                        child: Text(
+                                      '\$${state.updateCartModel!.totalCartPrice.toString()}',
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                          color: Colors.green.shade600),
+                                    )),
+                                  ]),
+                                ];
+
                                 return Column(
                                   children: [
                                     Material(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background,
                                       borderRadius: BorderRadius.circular(10.0),
                                       child: Padding(
                                         padding: const EdgeInsets.all(15.0),
-                                        child: Column(children: [
-                                          Row(children: [
-                                            Expanded(
-                                                child: Text(
-                                                    'Total Items (${state.updateCartModel?.totalCartQuantity})')),
-                                            Expanded(
-                                                child: Text(
-                                              '\$${state.updateCartModel!.totalCartPrice.toString()}',
-                                              textAlign: TextAlign.end,
-                                              style: TextStyle(
-                                                  color: Colors.green.shade600),
-                                            )),
-                                          ]),
-                                          Row(children: [
-                                            const Expanded(
-                                                child:
-                                                    Text('Shipping Charges')),
-                                            Expanded(
-                                                child: Text(
-                                              '\$${selectedShipment?.amount.toString()}',
-                                              textAlign: TextAlign.end,
-                                              style: TextStyle(
-                                                  color: Colors.green.shade600),
-                                            )),
-                                          ]),
-                                          Row(children: [
-                                            const Expanded(
-                                                child: Text('Tax Charges')),
-                                            Expanded(
-                                                child: Text(
-                                              '\$${0.0}',
-                                              textAlign: TextAlign.end,
-                                              style: TextStyle(
-                                                  color: Colors.green.shade600),
-                                            )),
-                                          ]),
-                                          Row(children: [
-                                            const Expanded(
-                                                child: Text('Grand Total')),
-                                            Expanded(
-                                                child: Text(
-                                              '\$${state.updateCartModel!.totalCartPrice.toString()}',
-                                              textAlign: TextAlign.end,
-                                              style: TextStyle(
-                                                  color: Colors.green.shade600),
-                                            )),
-                                          ]),
-                                        ]),
+                                        child: ListView.separated(
+                                            shrinkWrap: true,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemBuilder: ((context, index) =>
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
+                                                  child: list[index],
+                                                )),
+                                            separatorBuilder:
+                                                ((context, index) => Divider(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .onBackground
+                                                          .withOpacity(0.5),
+                                                    )),
+                                            itemCount: list.length),
                                       ),
                                     ),
                                     Decorations.height30,

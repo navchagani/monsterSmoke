@@ -886,6 +886,7 @@ class _CustomStepperState extends State<CustomStepper>
     return Column(
       children: <Widget>[
         Material(
+          color: Theme.of(context).colorScheme.background,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: SingleChildScrollView(

@@ -80,13 +80,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         return SliverAppBar(
             leadingWidth: 0.0,
             primary: false,
-            pinned: true,
+            pinned: false,
             toolbarHeight: 140,
             automaticallyImplyLeading: false,
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             flexibleSpace: FlexibleSpaceBar(
               background: Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 15.0, vertical: 15.0),
                 child: CartTile(
                   isCart: false,
                   onIncrement: () {
@@ -115,20 +116,24 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   Widget sliverAppBar({required MasterProductDetails model}) => SliverAppBar(
         pinned: true,
         toolbarHeight: 70,
-        backgroundColor: Colors.white,
-        expandedHeight: 330,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        expandedHeight: 380,
         flexibleSpace: Padding(
-          padding: const EdgeInsets.all(35.0),
-          child: FlexibleSpaceBar(
-              background: Image(
-            image: NetworkImage(widget.model.imageUrl.toString()),
-            errorBuilder: ((context, error, stackTrace) {
-              return const Image(
-                  fit: BoxFit.fitWidth,
-                  image: NetworkImage(
-                      'https://monstersmokeoutlet.com/asset/img/place-holder.png'));
-            }),
-          )),
+          padding: const EdgeInsets.all(25.0),
+          child: Material(
+            clipBehavior: Clip.hardEdge,
+            borderRadius: BorderRadius.circular(30.0),
+            child: FlexibleSpaceBar(
+                background: Image(
+              image: NetworkImage(widget.model.imageUrl.toString()),
+              errorBuilder: ((context, error, stackTrace) {
+                return const Image(
+                    fit: BoxFit.fitWidth,
+                    image: NetworkImage(
+                        'https://monstersmokeoutlet.com/asset/img/place-holder.png'));
+              }),
+            )),
+          ),
         ),
         title: Text(
           widget.model.productName.toString(),
@@ -136,13 +141,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ),
       );
 
-  Widget sliverAppBar2() => const SliverAppBar(
+  Widget sliverAppBar2() => SliverAppBar(
         automaticallyImplyLeading: false,
         pinned: true,
         primary: false,
         toolbarHeight: 40,
-        backgroundColor: Colors.white,
-        title: Text(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: const Text(
           'Product Variations',
           overflow: TextOverflow.ellipsis,
         ),
@@ -157,66 +162,48 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               return Column(
                 children: [
                   Expanded(
-                    child: Column(
-                      children: [
-                        Expanded(
-                            child: Column(
-                          children: [
-                            Expanded(
-                                child: ListView.separated(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 0.0),
-                              itemBuilder: ((context, index) {
-                                LocalCartBloc bloc = BlocProvider.of(context);
+                      child: ListView.separated(
+                    padding: const EdgeInsets.all(15.0),
+                    itemBuilder: ((context, index) {
+                      LocalCartBloc bloc = BlocProvider.of(context);
 
-                                final variationProduct = productState
-                                    .productDetailModel.body?.content![index];
+                      final variationProduct =
+                          productState.productDetailModel.body?.content![index];
 
-                                return BlocBuilder<LocalCartBloc,
-                                    LocalCartState>(
-                                  builder: (context, cartState) {
-                                    int newQ = cartState.listProduct
-                                            .contains(variationProduct)
-                                        ? variationProduct?.quantity ?? 0
-                                        : 0;
+                      return BlocBuilder<LocalCartBloc, LocalCartState>(
+                        builder: (context, cartState) {
+                          int newQ =
+                              cartState.listProduct.contains(variationProduct)
+                                  ? variationProduct?.quantity ?? 0
+                                  : 0;
 
-                                    return CartTile(
-                                      isCart: false,
-                                      onIncrement: () {
-                                        bloc.add(LocalCartAddProductEvent(
-                                            variationProduct!
-                                              ..quantity = newQ));
-                                      },
-                                      onDecrement: () {
-                                        bloc.add(LocalCartOndecrementEvent(
-                                            variationProduct!));
-                                      },
-                                      name: variationProduct?.productName
-                                          .toString(),
-                                      price: variationProduct?.standardPrice
-                                          .toString(),
-                                      quantity: variationProduct?.quantity ?? 0,
-                                      image:
-                                          variationProduct?.imageUrl.toString(),
-                                      availableQuantity:
-                                          variationProduct?.availableQuantity,
-                                    );
-                                  },
-                                );
-                              }),
-                              itemCount: productState.productDetailModel.body
-                                      ?.content?.length ??
-                                  0,
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return Decorations.height10;
-                              },
-                            ))
-                          ],
-                        ))
-                      ],
-                    ),
-                  )
+                          return CartTile(
+                            isCart: false,
+                            onIncrement: () {
+                              bloc.add(LocalCartAddProductEvent(
+                                  variationProduct!..quantity = newQ));
+                            },
+                            onDecrement: () {
+                              bloc.add(
+                                  LocalCartOndecrementEvent(variationProduct!));
+                            },
+                            name: variationProduct?.productName.toString(),
+                            price: variationProduct?.standardPrice.toString(),
+                            quantity: variationProduct?.quantity ?? 0,
+                            image: variationProduct?.imageUrl.toString(),
+                            availableQuantity:
+                                variationProduct?.availableQuantity,
+                          );
+                        },
+                      );
+                    }),
+                    itemCount:
+                        productState.productDetailModel.body?.content?.length ??
+                            0,
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Decorations.height10;
+                    },
+                  ))
                 ],
               );
             }
