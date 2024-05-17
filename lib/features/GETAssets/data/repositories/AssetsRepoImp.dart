@@ -8,6 +8,7 @@ import 'package:monstersmoke/features/GETAssets/data/models/PaymentsModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/ShippingAddressModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/SliderModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/StateModel.dart';
+import 'package:monstersmoke/features/GETAssets/data/models/htmlModel.dart';
 import 'package:monstersmoke/features/GETAssets/domain/repositories/AssetsRepo.dart';
 
 class AssetsRepoImp extends AssetsRepo {
@@ -94,6 +95,24 @@ class AssetsRepoImp extends AssetsRepo {
   Future<DataStates<List<ShippingAddressModel>>> getShippingAddress() async {
     try {
       final data = await assetsApi.getShippingAddress();
+
+      if (data.response.statusCode == HttpStatus.ok) {
+        return SuccessState(data: data.data);
+      } else {
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: data.response.requestOptions,
+                message: 'Cannot Get Customer Data'));
+      }
+    } on DioException catch (e) {
+      return ErrorState(dioException: e);
+    }
+  }
+
+  @override
+  Future<DataStates<HtmlModel>> getPage({required String alias}) async {
+    try {
+      final data = await assetsApi.getPage(alias: alias);
 
       if (data.response.statusCode == HttpStatus.ok) {
         return SuccessState(data: data.data);

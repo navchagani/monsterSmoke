@@ -5,6 +5,7 @@ import 'package:monstersmoke/features/GETAssets/data/models/PaymentsModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/ShippingAddressModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/SliderModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/StateModel.dart';
+import 'package:monstersmoke/features/GETAssets/data/models/htmlModel.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'AssetsApi.g.dart';
@@ -27,4 +28,8 @@ abstract class AssetsApi {
 
   @GET('/api/shipping/options')
   Future<HttpResponse<List<ShippingAddressModel>>> getShippingAddress();
+
+  @GET('/api/ecommerce/staticPage')
+  Future<HttpResponse<HtmlModel>> getPage(
+      {@Query('alias') required String alias});
 }

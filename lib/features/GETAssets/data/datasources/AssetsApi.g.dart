@@ -182,6 +182,35 @@ class _AssetsApi implements AssetsApi {
     return httpResponse;
   }
 
+  @override
+  Future<HttpResponse<HtmlModel>> getPage({required String alias}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{"alias": alias};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<List<CountryModel>>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              Constants.options(_dio),
+              '/api/ecommerce/staticPage',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    Map<String, dynamic> data = _result.data!['result'];
+    var value = HtmlModel.fromJson(data);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

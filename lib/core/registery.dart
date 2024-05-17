@@ -11,6 +11,7 @@ import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc
 import 'package:monstersmoke/features/Customer/presentation/bloc/UpdateCustomerAddressBloc/update_customer_address_bloc_bloc.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/UpdateCustomerBloc/update_customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/CountryBloc/country_bloc_bloc.dart';
+import 'package:monstersmoke/features/GETAssets/presentation/bloc/GetPagesbloc/get_pages_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/PaymentBloc/payment_bloc_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/ShippingBloc/shipping_bloc_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/SliderBloc/slider_bloc_bloc.dart';
@@ -34,6 +35,7 @@ class Registery {
         BlocProvider<CountryBloc>(
             create: ((context) => getIt()..add(const GetCountryEvent()))),
         BlocProvider<StateBloc>(create: ((context) => getIt())),
+        BlocProvider<GetPagesBloc>(create: ((context) => getIt())),
 
         // Auth Blocs
         BlocProvider<SignInBloc>(create: ((context) => getIt())),

@@ -9,6 +9,7 @@ abstract class AuthRepo {
       {required CreateCustomerModel createCustomerModel});
   Future<DataStates<void>> resetPassword(
       {required String? email, required String? token});
+  Future<DataStates<void>> forgotPassword({required String? email});
   Future<DataStates<void>> changePassword(
       {required String? oldPassword,
       required String? password,

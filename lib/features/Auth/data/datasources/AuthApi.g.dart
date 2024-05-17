@@ -158,6 +158,34 @@ class _AuthApi implements AuthApi {
     return httpResponse;
   }
 
+  @override
+  Future<HttpResponse<void>> forgotPassword({required String? email}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{"email": email.toString()};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    Map<String, dynamic>? _data = {};
+    final _result =
+        await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/ecommerce/customer/sendForgotPasswordEmai',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final httpResponse = HttpResponse(null, _result);
+    return httpResponse;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

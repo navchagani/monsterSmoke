@@ -70,7 +70,7 @@ class AuthRepoImp extends AuthRepo {
           newPassword: newPassword);
 
       if (data.response.statusCode == HttpStatus.noContent) {
-        return SuccessState(data: data.data);
+        return SuccessState(data: null);
       } else {
         return ErrorState(
             dioException: DioException(
@@ -80,7 +80,6 @@ class AuthRepoImp extends AuthRepo {
     } on DioException catch (e) {
       return ErrorState(dioException: e);
     }
-    ;
   }
 
   @override
@@ -102,5 +101,23 @@ class AuthRepoImp extends AuthRepo {
     //   } on DioException catch (e) {
     //     return ErrorState(dioException: e);
     //   };
+  }
+
+  @override
+  Future<DataStates<void>> forgotPassword({required String? email}) async {
+    try {
+      final data = await authApi.forgotPassword(email: email.toString());
+
+      if (data.response.statusCode == HttpStatus.noContent) {
+        return SuccessState(data: null);
+      } else {
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: data.response.requestOptions,
+                message: 'Error Signing Up'));
+      }
+    } on DioException catch (e) {
+      return ErrorState(dioException: e);
+    }
   }
 }

@@ -31,4 +31,7 @@ abstract class AuthApi {
       {@Body() required String? oldPassword,
       @Body() required String? password,
       @Body() required String? newPassword});
+
+  @POST('/api/ecommerce/customer/sendForgotPasswordEmail?email=email')
+  Future<HttpResponse<void>> forgotPassword({required String? email});
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/Modes/MobileMode/MobileMode.dart';
 import 'package:monstersmoke/Modes/TabMode.dart';
+import 'package:monstersmoke/core/widgets/CustomHtmlViewer.dart';
 import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Products/data/models/updateCartModel.dart';
@@ -80,34 +81,44 @@ class PlatformBuilder extends StatelessWidget {
   }
 
   Widget menus() {
-    final list = [
-      ListTile(
-        dense: true,
-        title: const Text('Account'),
-        onTap: onMoveToAccount,
-      ),
-      ListTile(
-          dense: true, title: const Text('About Us'), onTap: onMoveToAbout),
-      ListTile(dense: true, title: const Text('FAQ\'S'), onTap: onMoveToFaq),
-      ListTile(dense: true, title: const Text('Policy'), onTap: onMoveToPolicy),
-    ];
-
-    return Material(
-      color: Colors.white,
-      elevation: 2.0,
-      borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-      child: ListView.separated(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (BuildContext context, int index) {
-          return list[index];
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return const Divider();
-        },
-        itemCount: list.length,
-      ),
-    );
+    return Builder(builder: (context) {
+      final list = [
+        ListTile(
+          dense: true,
+          title: const Text('Account'),
+          onTap: () => onMoveToAccount(context),
+        ),
+        ListTile(
+            dense: true,
+            title: const Text('About Us'),
+            onTap: () => onMoveToAbout(context)),
+        ListTile(
+            dense: true,
+            title: const Text('Contact Us'),
+            onTap: () => onMoveToCosntact(context)),
+        ListTile(
+            dense: true,
+            title: const Text('FAQ\'S'),
+            onTap: () => onMoveToFaq(context)),
+        ListTile(
+            dense: true,
+            title: const Text('Policy'),
+            onTap: () => onMoveToPolicy(context)),
+      ];
+      return Material(
+        color: Colors.white,
+        elevation: 2.0,
+        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+        child: ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (BuildContext context, int index) {
+            return list[index];
+          },
+          itemCount: list.length,
+        ),
+      );
+    });
   }
 
   Widget footer() => const Column(
@@ -162,7 +173,7 @@ class PlatformBuilder extends StatelessWidget {
                                 'Company ${customerState.customerModel.company.toString()}'),
                             Decorations.height15,
                             ElevatedButton(
-                              onPressed: onMoveTODashboard,
+                              onPressed: () => onMoveTODashboard(context),
                               child: const Text('Move To Dashboard'),
                             )
                           ],
@@ -187,13 +198,40 @@ class PlatformBuilder extends StatelessWidget {
         );
       }));
 
-  void onMoveToAccount() {}
+  void onMoveToAccount(BuildContext context) {
+    // Navigator.of(context).push(MaterialPageRoute(
+    //     builder: ((context) => const HTMLViewer(
+    //           title: 'contact-us',
+    //         ))));
+  }
 
-  void onMoveToAbout() {}
+  void onMoveToCosntact(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: ((context) => const HTMLViewer(
+              title: 'contact-us',
+            ))));
+  }
 
-  void onMoveToPolicy() {}
+  void onMoveToAbout(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: ((context) => const HTMLViewer(
+              title: 'about-us',
+            ))));
+  }
 
-  void onMoveToFaq() {}
+  void onMoveToPolicy(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: ((context) => const HTMLViewer(
+              title: 'return-policy',
+            ))));
+  }
 
-  void onMoveTODashboard() {}
+  void onMoveToFaq(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: ((context) => const HTMLViewer(
+              title: 'faqs',
+            ))));
+  }
+
+  void onMoveTODashboard(BuildContext context) {}
 }
