@@ -65,15 +65,8 @@ class _SignUpPageState extends State<SignUpPage> {
       child: Material(
         borderRadius: BorderRadius.circular(10.0),
         clipBehavior: Clip.hardEdge,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-              maxHeight: 800,
-              minHeight: 100,
-              maxWidth: MediaQuery.of(context).size.width * 0.7),
-          child: Scaffold(
-            appBar: appBar(),
-            body: body(),
-          ),
+        child: Scaffold(
+          body: body(),
         ),
       ),
     );
@@ -243,28 +236,6 @@ class _SignUpPageState extends State<SignUpPage> {
           backgroundColor: Theme.of(context).colorScheme.primary,
           textColor: Colors.white,
         ),
-        const SizedBox(
-          height: 20.0,
-        ),
-        const Row(
-          children: [
-            Expanded(child: Divider()),
-            SizedBox(
-              width: 80,
-              child: Center(child: Text('Or')),
-            ),
-            Expanded(child: Divider())
-          ],
-        ),
-        const SizedBox(
-          height: 20.0,
-        ),
-        CustomButton(
-          onTap: onMoveToSignIn,
-          isBordered: true,
-          text: 'Sign In',
-          enabled: true,
-        )
       ],
     );
   }

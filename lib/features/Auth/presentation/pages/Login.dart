@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
@@ -6,6 +5,7 @@ import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/core/widgets/CustomDialog.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
+import 'package:monstersmoke/core/widgets/CustomLinkButton.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/SignInBloc/sign_in_bloc_bloc.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 
@@ -19,6 +19,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  bool showPass = true;
 
   @override
   Widget build(BuildContext context) {
@@ -58,18 +60,12 @@ class _LoginPageState extends State<LoginPage> {
                 .showErrorDialog();
           }
         },
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-              maxHeight: 450,
-              minHeight: 100,
-              maxWidth: MediaQuery.of(context).size.width * 0.7),
-          child: Material(
-            borderRadius: BorderRadius.circular(10.0),
-            clipBehavior: Clip.hardEdge,
-            child: Scaffold(
-              appBar: appBar(),
-              body: body(),
-            ),
+        child: Material(
+          borderRadius: BorderRadius.circular(10.0),
+          clipBehavior: Clip.hardEdge,
+          child: Scaffold(
+            // appBar: appBar(),
+            body: body(),
           ),
         ),
       ),
@@ -95,13 +91,18 @@ class _LoginPageState extends State<LoginPage> {
           ),
           Decorations.height10,
           CustomInputField(
+              icon: IconButton(
+                  onPressed: onShowPass,
+                  icon: !showPass
+                      ? const Icon(Icons.remove_red_eye_sharp)
+                      : const Icon(Icons.remove_red_eye_outlined)),
+              toHide: showPass,
               labelText: 'Password',
               hintText: 'Enter Password',
               controller: passwordController,
               onChanged: onPasswordChanged),
-          const SizedBox(
-            height: 30.0,
-          ),
+          CustomLinkButton(onTap: onForgotPassword, text: 'Forgot Password?'),
+          Decorations.height10,
           CustomButton(
             onTap: onSignIn,
             text: 'Sign In',
@@ -110,28 +111,20 @@ class _LoginPageState extends State<LoginPage> {
             backgroundColor: Theme.of(context).colorScheme.primary,
             textColor: Colors.white,
           ),
-          const SizedBox(
-            height: 20.0,
-          ),
-          const Row(
+          Decorations.height10,
+          Row(
             children: [
-              Expanded(child: Divider()),
-              SizedBox(
-                width: 80,
-                child: Center(child: Text('Or')),
-              ),
-              Expanded(child: Divider())
+              const Text('Don\'t Have An Account?'),
+              CustomLinkButton(
+                onTap: onMoveToSignUp,
+                text: 'SignUp',
+                textColor: Theme.of(context).colorScheme.secondary,
+              )
             ],
           ),
           const SizedBox(
-            height: 20.0,
+            height: 30.0,
           ),
-          CustomButton(
-            onTap: onMoveToSignUp,
-            isBordered: true,
-            text: 'Sign Up',
-            enabled: true,
-          )
         ],
       );
 
@@ -148,5 +141,13 @@ class _LoginPageState extends State<LoginPage> {
     SignInBloc bloc = BlocProvider.of<SignInBloc>(context);
     bloc.add(SignInEvent(
         email: emailController.text, password: passwordController.text));
+  }
+
+  onForgotPassword() {}
+
+  void onShowPass() {
+    setState(() {
+      showPass = !showPass;
+    });
   }
 }

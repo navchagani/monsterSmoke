@@ -21,4 +21,14 @@ abstract class AuthApi {
   @POST('/api/ecommerce/customer/withDocuments')
   Future<HttpResponse<customerModel.CustomerModel?>> signUp(
       {@Body() required CreateCustomerModel createCustomerModel});
+
+  @POST('/api/ecommerce/customer/resetPassword?email=email&token=token')
+  Future<HttpResponse<void>> resetPassword(
+      {@Query('email') required String? email,
+      @Query('token') required String? token});
+  @POST('/api/ecommerce/customer/changePassword')
+  Future<HttpResponse<void>> changePassword(
+      {@Body() required String? oldPassword,
+      @Body() required String? password,
+      @Body() required String? newPassword});
 }

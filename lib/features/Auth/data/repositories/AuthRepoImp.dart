@@ -57,4 +57,50 @@ class AuthRepoImp extends AuthRepo {
       return ErrorState(dioException: e);
     }
   }
+
+  @override
+  Future<DataStates<void>> changePassword(
+      {required String? oldPassword,
+      required String? password,
+      required String? newPassword}) async {
+    try {
+      final data = await authApi.changePassword(
+          oldPassword: oldPassword,
+          password: password,
+          newPassword: newPassword);
+
+      if (data.response.statusCode == HttpStatus.noContent) {
+        return SuccessState(data: data.data);
+      } else {
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: data.response.requestOptions,
+                message: 'Error Signing Up'));
+      }
+    } on DioException catch (e) {
+      return ErrorState(dioException: e);
+    }
+    ;
+  }
+
+  @override
+  Future<DataStates<void>> resetPassword(
+      {required String? email, required String? token}) {
+    throw UnimplementedError();
+    //  try {
+    //     final data =
+    //         await authApi.signUp(createCustomerModel: createCustomerModel);
+
+    //     if (data.response.statusCode == HttpStatus.created) {
+    //       return SuccessState(data: data.data);
+    //     } else {
+    //       return ErrorState(
+    //           dioException: DioException(
+    //               requestOptions: data.response.requestOptions,
+    //               message: 'Error Signing Up'));
+    //     }
+    //   } on DioException catch (e) {
+    //     return ErrorState(dioException: e);
+    //   };
+  }
 }
