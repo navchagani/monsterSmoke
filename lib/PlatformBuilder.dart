@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/Modes/MobileMode/MobileMode.dart';
 import 'package:monstersmoke/Modes/TabMode.dart';
+import 'package:monstersmoke/dashboard/changepassword.dart';
+import 'package:monstersmoke/dashboard/dashboard.dart';
+import 'package:monstersmoke/dashboard/statement.dart';
 import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Products/data/models/updateCartModel.dart';
@@ -16,10 +19,9 @@ class PlatformBuilder extends StatelessWidget {
       key: globalKey,
       drawer: appDrawer(context: context),
       body: LayoutBuilder(builder: (context, constraints) {
-        final isMobile = constraints.maxWidth > 400 ? false : true;
-
+        final isMobile = constraints.maxWidth > 600 ? false : true;
         if (isMobile) {
-          return const MobileViewMode();
+          return const CustomerDashboard();
         }
 
         return const TabMode();
@@ -89,6 +91,7 @@ class PlatformBuilder extends StatelessWidget {
       ListTile(
           dense: true, title: const Text('About Us'), onTap: onMoveToAbout),
       ListTile(dense: true, title: const Text('FAQ\'S'), onTap: onMoveToFaq),
+      ListTile(dense: true, title: const Text('Policy'), onTap: onMoveToPolicy),
       ListTile(dense: true, title: const Text('Policy'), onTap: onMoveToPolicy),
     ];
 

@@ -5,7 +5,7 @@ class CustomButton extends StatelessWidget {
   final String text;
   final Function()? onTap;
   final double? elevation, radius;
-  final Color? backgroundColor, textColor;
+  final Color? backgroundColor, textColor, iconColor;
   final IconData? iconData;
   final bool? isLoading, enabled, isBordered;
 
@@ -20,7 +20,8 @@ class CustomButton extends StatelessWidget {
       this.iconData,
       this.isLoading,
       this.enabled,
-      this.isBordered});
+      this.isBordered,
+      this.iconColor});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,10 @@ class CustomButton extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     )
                   : iconData != null
-                      ? Icon(iconData)
+                      ? Icon(
+                          iconData,
+                          color: iconColor,
+                        )
                       : Container(),
               if (iconData != null) Decorations.width5,
               Center(
@@ -60,7 +64,7 @@ class CustomButton extends StatelessWidget {
                 style: TextStyle(
                     color: enabled ?? false
                         ? textColor ?? Colors.black
-                        : Colors.black),
+                        : Colors.white),
               )),
             ],
           ),
