@@ -4,6 +4,7 @@ import 'package:monstersmoke/features/GETAssets/data/models/PaymentsModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/ShippingAddressModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/SliderModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/StateModel.dart';
+import 'package:monstersmoke/features/GETAssets/data/models/htmlModel.dart';
 
 abstract class AssetsRepo {
   Future<DataStates<List<CountryModel>>> getCountries();
@@ -13,4 +14,6 @@ abstract class AssetsRepo {
 
   Future<DataStates<List<PaymentsModel>>> getPaymentMethods();
   Future<DataStates<List<ShippingAddressModel>>> getShippingAddress();
+
+  Future<DataStates<HtmlModel>> getPage({required String alias});
 }

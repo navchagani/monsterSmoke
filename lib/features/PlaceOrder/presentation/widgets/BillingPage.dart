@@ -47,7 +47,7 @@ class _BillingPageState extends State<BillingPage> {
         return Column(
           children: [
             DropdownButtonFormField(
-              items: customerState.customerModel!.customerStoreAddressList!
+              items: customerState.customerModel?.customerStoreAddressList!
                   .map((e) => DropdownMenuItem<CustomerStoreAddressList>(
                         value: e,
                         child: Text(e.address1.toString()),

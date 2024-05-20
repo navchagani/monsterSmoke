@@ -28,3 +28,33 @@ class CaseSignUp extends CaseFuture<DataStates<CustomerModel?>, void> {
         createCustomerModel: customerModel ?? const CreateCustomerModel());
   }
 }
+
+class CaseChangePassword extends CaseFuture<DataStates<void>, void> {
+  final AuthRepo repo;
+
+  CaseChangePassword({required this.repo});
+
+  @override
+  Future<DataStates<void>> call({
+    void params,
+    String? oldPassword,
+    String? password,
+    String? confirmPassword,
+  }) {
+    return repo.changePassword(
+        oldPassword: oldPassword,
+        password: password,
+        newPassword: confirmPassword);
+  }
+}
+
+class CaseForgotPass extends CaseFuture<DataStates<void>, void> {
+  final AuthRepo repo;
+
+  CaseForgotPass({required this.repo});
+
+  @override
+  Future<DataStates<void>> call({void params, String? email}) {
+    return repo.forgotPassword(email: email);
+  }
+}

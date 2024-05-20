@@ -37,19 +37,21 @@ class _PaymentPageState extends State<PaymentPage> {
               .where((element) => element.ecommerce == true)
               .toList();
           return Wrap(
-            runSpacing: 4.0,
-            spacing: 4.0,
+            runSpacing: -3.0,
+            spacing: 6.0,
             children: List.generate(list.length, (index) {
               final data = list[index];
               final selected = data.id == model?.id;
 
               return RawChip(
+                  elevation: 4.0,
+                  shadowColor: Colors.black54,
                   selectedColor: Theme.of(context).colorScheme.primary,
                   selected: selected,
                   labelStyle: TextStyle(
                       color: selected ? Colors.white : Colors.black45),
                   onPressed: () => onChipTap(data),
-                  backgroundColor: Colors.transparent,
+                  backgroundColor: Theme.of(context).colorScheme.background,
                   shape: RoundedRectangleBorder(
                       side: BorderSide(
                           color: Theme.of(context).colorScheme.onBackground),

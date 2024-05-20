@@ -49,8 +49,8 @@ class Decorations {
       InputDecoration(
         isDense: true,
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        filled: noFill ?? true ? false : false,
-        fillColor: Theme.of(context).colorScheme.onBackground.withOpacity(0.07),
+        filled: noFill ?? true ? true : false,
+        fillColor: Theme.of(context).colorScheme.background,
         focusColor: Colors.grey.shade300,
         suffixIcon: icon,
         suffixStyle: TextStyle(color: Colors.grey.withOpacity(0.8)),

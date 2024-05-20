@@ -5,12 +5,15 @@ import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
 import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/SignInBloc/sign_in_bloc_bloc.dart';
 import 'package:monstersmoke/features/Auth/presentation/bloc/SignUpBloc/sign_up_bloc_bloc.dart';
+import 'package:monstersmoke/features/Auth/presentation/bloc/changePassBloc/change_password_bloc_bloc.dart';
 import 'package:monstersmoke/features/Cart/presentation/bloc/cart_bloc.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/AddCustomerBloc/add_customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/UpdateCustomerAddressBloc/update_customer_address_bloc_bloc.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/UpdateCustomerBloc/update_customer_bloc_bloc.dart';
+import 'package:monstersmoke/features/Dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/CountryBloc/country_bloc_bloc.dart';
+import 'package:monstersmoke/features/GETAssets/presentation/bloc/GetPagesbloc/get_pages_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/PaymentBloc/payment_bloc_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/ShippingBloc/shipping_bloc_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/SliderBloc/slider_bloc_bloc.dart';
@@ -34,10 +37,12 @@ class Registery {
         BlocProvider<CountryBloc>(
             create: ((context) => getIt()..add(const GetCountryEvent()))),
         BlocProvider<StateBloc>(create: ((context) => getIt())),
+        BlocProvider<GetPagesBloc>(create: ((context) => getIt())),
 
         // Auth Blocs
         BlocProvider<SignInBloc>(create: ((context) => getIt())),
         BlocProvider<SignUpBloc>(create: ((context) => getIt())),
+        BlocProvider<ChangePasswordBloc>(create: ((context) => getIt())),
 
         // Category Brand Blocs
         BlocProvider<CategoryBloc>.value(
@@ -60,6 +65,9 @@ class Registery {
 
         // Place Order Apis
         BlocProvider<PlaceorderBloc>.value(value: getIt<PlaceorderBloc>()),
+
+        // Dashboard Blocs
+        BlocProvider<DashboardBloc>.value(value: getIt<DashboardBloc>()),
 
         // CustomBlocs
         BlocProvider<IsMobile>(create: ((context) => getIt())),

@@ -9,35 +9,65 @@ import 'package:monstersmoke/features/Search/presentation/pages/SearchPage.dart'
 
 GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
-class MobileViewMode extends StatelessWidget {
+class MobileViewMode extends StatefulWidget {
   const MobileViewMode({super.key});
+
+  @override
+  State<MobileViewMode> createState() => _MobileViewModeState();
+}
+
+class _MobileViewModeState extends State<MobileViewMode> {
+  late ScrollController scrollController;
+  bool showPrimary = false;
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    scrollController.addListener(() {
+      if (scrollController.offset > 0) {
+        setState(() {
+          showPrimary = true;
+        });
+      } else {
+        setState(() {
+          showPrimary = false;
+        });
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
+        controller: scrollController,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
             const MainAppBar(),
-            const SliverAppBar(
-              automaticallyImplyLeading: false,
-              toolbarHeight: 140,
-              flexibleSpace: FlexibleSpaceBar(
-                  background: SliverBar1(
-                axis: Axis.vertical,
-                siderId: 86,
-              )),
-            ),
+            // const SliverAppBar(
+            //   automaticallyImplyLeading: false,
+            //   toolbarHeight: 140,
+            //   flexibleSpace: FlexibleSpaceBar(
+            //       background: SliverBar1(
+            //     axis: Axis.vertical,
+            //     siderId: 86,
+            //   )),
+            // ),
             SliverAppBar(
               automaticallyImplyLeading: false,
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              backgroundColor: showPrimary
+                  ? Theme.of(context).focusColor
+                  : Theme.of(context).scaffoldBackgroundColor,
               shadowColor: Colors.black,
               pinned: true,
-              primary: false,
+              primary: showPrimary,
               titleSpacing: 0.0,
-              toolbarHeight: 60.0,
+              toolbarHeight: showPrimary ? 70.0 : 50.0,
               title: Padding(
-                padding:
-                    const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 0.0),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 15.0,
+                  vertical: showPrimary ? 15.0 : 0.0,
+                ),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -59,13 +89,16 @@ class MobileViewMode extends StatelessWidget {
         body: Scaffold(
           body: body(),
           bottomNavigationBar: const CartBottomBar(),
-          floatingActionButton: const CartFloatButton(),
+          floatingActionButton: const CartFloatButton(
+            fromHome: true,
+          ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         ));
   }
 
   Widget body() {
     return ListView(
+      padding: const EdgeInsets.all(15.0),
       children: const [
         CustomProductContainer(
           text: 'Featured',

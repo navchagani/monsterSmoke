@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
@@ -25,6 +26,8 @@ class AddCustomerAddressBloc
     emit(AddCustomerLoadingState());
     final data = await addCustomer.call(addressList: event.addressList);
     final token = await SharedPrefsApi.instance.getFromShared(key: 'login');
+
+    log(token.toString());
 
     if (data is SuccessState) {
       emit(AddCustomerCompletedState(

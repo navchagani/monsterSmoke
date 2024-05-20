@@ -35,23 +35,23 @@ class CaseGetCustomerOrder
   }
 }
 
-class CaseOrderDetails extends CaseFuture<DataStates<void>, void> {
+class CaseOrderDetails extends CaseFuture<DataStates<String?>, void> {
   final PlaceOrderRepo repo;
 
   CaseOrderDetails({required this.repo});
   @override
-  Future<DataStates<void>> call(
+  Future<DataStates<String?>> call(
       {void params,
       String? token,
       String? defaultStoreId,
       String? storeIdList,
-      String? isEcommerce,
+      bool? isEcommerce,
       int? orderNumber}) {
     return repo.getOrderDetails(
         token: token.toString(),
         defaultStoreId: defaultStoreId.toString(),
         storeIdList: storeIdList.toString(),
-        isEcommerce: isEcommerce.toString(),
+        isEcommerce: isEcommerce ?? false,
         orderNumber: orderNumber ?? 0);
   }
 }

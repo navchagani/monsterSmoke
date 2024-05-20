@@ -5,6 +5,7 @@ import 'package:monstersmoke/features/GETAssets/data/models/PaymentsModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/ShippingAddressModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/SliderModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/StateModel.dart';
+import 'package:monstersmoke/features/GETAssets/data/models/htmlModel.dart';
 import 'package:monstersmoke/features/GETAssets/domain/repositories/AssetsRepo.dart';
 
 class CaseGetSliders extends CaseFuture<DataStates<List<SliderModel>>, void> {
@@ -59,5 +60,15 @@ class CaseGetPayments
   @override
   Future<DataStates<List<PaymentsModel>>> call({void params}) {
     return repo.getPaymentMethods();
+  }
+}
+
+class CaseGetPage extends CaseFuture<DataStates<HtmlModel>, void> {
+  final AssetsRepo repo;
+
+  CaseGetPage({required this.repo});
+  @override
+  Future<DataStates<HtmlModel>> call({void params, String? alias}) {
+    return repo.getPage(alias: alias.toString());
   }
 }

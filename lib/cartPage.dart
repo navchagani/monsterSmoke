@@ -237,7 +237,7 @@ class CartTile extends StatelessWidget {
 
         return Material(
           elevation: 4.0,
-          color: Colors.grey.shade100,
+          color: Theme.of(context).colorScheme.background,
           shape: const RoundedRectangleBorder(
               side: BorderSide.none,
               borderRadius: BorderRadius.all(Radius.circular(10.0))),

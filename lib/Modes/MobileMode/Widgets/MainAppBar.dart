@@ -24,7 +24,7 @@ class _MainAppBarState extends State<MainAppBar> {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      pinned: true,
+      pinned: false,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       centerTitle: true,
       toolbarHeight: 80,

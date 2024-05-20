@@ -39,7 +39,7 @@ class _CustomerApi implements CustomerApi {
     )
             .compose(
               Constants.options(_dio),
-              '/api/ecommerce/customer/1863/address',
+              '/api/ecommerce/customer/${addressList.id}/address',
               queryParameters: queryParameters,
               data: _data,
             )

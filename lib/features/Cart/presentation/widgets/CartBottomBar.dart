@@ -22,11 +22,11 @@ class CartBottomBar extends StatelessWidget {
               ? carttate.updateCartModel?.cartLineItemDtoList?.length ?? 0
               : length;
           return Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(0.0),
             child: SizedBox(
               height: 50,
               child: ListTile(
-                tileColor: Theme.of(context).focusColor,
+                tileColor: Theme.of(context).colorScheme.background,
                 shape: Decorations.boxShape,
                 // subtitle: Text(''),
                 title: Row(

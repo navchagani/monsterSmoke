@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:monstersmoke/config/DataStates.dart';
@@ -24,7 +25,7 @@ class PlaceOrderRepoImp extends PlaceOrderRepo {
       final data = await placeOrderApi.getCustomerOrder(
           token: token.toString(), page: page, size: size);
 
-      if (data.response.statusCode == HttpStatus.created) {
+      if (data.response.statusCode == HttpStatus.ok) {
         return SuccessState(data: data.data);
       } else {
         return ErrorState(
@@ -38,11 +39,11 @@ class PlaceOrderRepoImp extends PlaceOrderRepo {
   }
 
   @override
-  Future<DataStates<void>> getOrderDetails(
+  Future<DataStates<String?>> getOrderDetails(
       {required String token,
       required String defaultStoreId,
       required String storeIdList,
-      required String isEcommerce,
+      required bool isEcommerce,
       required int orderNumber}) async {
     try {
       final token = await sharedPrefsApi.getFromShared(key: 'login');
@@ -54,8 +55,9 @@ class PlaceOrderRepoImp extends PlaceOrderRepo {
           isEcommerce: isEcommerce,
           orderNumber: orderNumber);
 
-      if (data.response.statusCode == HttpStatus.created) {
-        return SuccessState(data: null);
+      if (data.response.statusCode == HttpStatus.ok) {
+        log('${data.data}');
+        return SuccessState(data: data.data);
       } else {
         return ErrorState(
             dioException: DioException(
@@ -81,6 +83,7 @@ class PlaceOrderRepoImp extends PlaceOrderRepo {
           storeId: storeId);
 
       if (data.response.statusCode == HttpStatus.created) {
+        // log('${data.data.toJson()}');
         return SuccessState(data: data.data);
       } else {
         return ErrorState(

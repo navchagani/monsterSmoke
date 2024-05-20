@@ -46,8 +46,8 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
       child: Column(children: [
         if (widget.text != null)
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 widget.text.toString(),
@@ -81,7 +81,6 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
                           if (!isMobile) {
                             return GridView.builder(
                               shrinkWrap: true,
-                              padding: const EdgeInsets.all(15.0),
                               physics: widget.isScrollable ?? true
                                   ? const AlwaysScrollableScrollPhysics()
                                   : const NeverScrollableScrollPhysics(),
@@ -89,8 +88,8 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                       mainAxisExtent: 260,
                                       crossAxisCount: 2,
-                                      mainAxisSpacing: 12.0,
-                                      crossAxisSpacing: 12.0),
+                                      mainAxisSpacing: 8.0,
+                                      crossAxisSpacing: 6.0),
                               itemBuilder: ((context, index) {
                                 final product = productList[index];
 

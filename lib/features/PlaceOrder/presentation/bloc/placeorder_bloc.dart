@@ -58,7 +58,7 @@ class PlaceorderBloc extends Bloc<PlaceorderEvent, PlaceorderState> {
     );
 
     if (data is SuccessState) {
-      emit(const OrderDetailsCompletedState());
+      emit(OrderDetailsCompletedState(data.data));
     }
 
     if (data is ErrorState) {
