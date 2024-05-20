@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Modes/MobileMode/MobileMode.dart';
+import 'package:monstersmoke/dashboard/dashboard.dart';
 import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
+import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/SliderBloc/slider_bloc_bloc.dart';
 
 class MainAppBar extends StatefulWidget {
@@ -38,7 +40,7 @@ class _MainAppBarState extends State<MainAppBar> {
       //     child: CustomInputField(labelText: 'Search', hintText: 'Search')),
       actions: [
         IconButton(
-            onPressed: () => onMoveToAuthPage(context: context),
+            onPressed: () => _onMoveToAuthPage(context),
             icon: const Icon(Icons.person))
       ],
     );
@@ -48,8 +50,21 @@ class _MainAppBarState extends State<MainAppBar> {
     globalKey.currentState?.openDrawer();
   }
 
-  void onMoveToAuthPage({required BuildContext context}) {
+  void _onMoveToAuthPage(BuildContext context) {
     Navigator.of(context).push(
-        MaterialPageRoute(builder: ((context) => const AuthActionPage())));
+      MaterialPageRoute(
+        builder: (context) {
+          return BlocBuilder<CustomerBloc, CustomerBlocState>(
+            builder: (context, customerState) {
+              if (customerState is CustomerCompletedState) {
+                return const CustomerDashboard();
+              } else {
+                return const AuthActionPage();
+              }
+            },
+          );
+        },
+      ),
+    );
   }
 }
