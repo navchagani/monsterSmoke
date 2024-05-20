@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
+import 'package:monstersmoke/dashboard/dashboard.dart';
 import 'package:monstersmoke/dashboard/dashboardDrawer.dart';
 import 'package:monstersmoke/dashboard/recentOrders.dart';
 
@@ -92,15 +93,15 @@ class UserStatementState extends State<UserStatement> {
           ),
         ),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.menu,
             color: Colors.white,
           ),
           onPressed: () {
-            Scaffold.of(context).openDrawer();
+            globalDashboardKey.currentState?.openDrawer();
           },
         ),
-        backgroundColor: Color(0xff202b38),
+        backgroundColor: const Color(0xff202b38),
         actions: [],
       ),
       drawer: const DashboardDrawer(),

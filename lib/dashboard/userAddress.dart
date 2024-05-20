@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
+import 'package:monstersmoke/dashboard/dashboard.dart';
 import 'package:monstersmoke/dashboard/dashboardDrawer.dart';
 
 class UserAddresses extends StatefulWidget {
@@ -13,6 +14,7 @@ class _UserAddressesState extends State<UserAddresses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // key: globalDashboardKey,
       appBar: AppBar(
         title: const Text(
           'Addresses',
@@ -22,15 +24,15 @@ class _UserAddressesState extends State<UserAddresses> {
           ),
         ),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.menu,
             color: Colors.white,
           ),
           onPressed: () {
-            Scaffold.of(context).openDrawer();
+            globalDashboardKey.currentState?.openDrawer();
           },
         ),
-        backgroundColor: Color(0xff202b38),
+        backgroundColor: const Color(0xff202b38),
       ),
       drawer: const DashboardDrawer(),
       body: Padding(

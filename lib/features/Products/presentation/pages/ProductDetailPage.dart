@@ -119,7 +119,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         expandedHeight: 380,
         flexibleSpace: Padding(
-          padding: const EdgeInsets.all(25.0),
+          padding: const EdgeInsets.all(15.0),
           child: Material(
             clipBehavior: Clip.hardEdge,
             borderRadius: BorderRadius.circular(30.0),

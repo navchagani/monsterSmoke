@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:monstersmoke/dashboard/dashboardDrawer.dart';
 import 'package:monstersmoke/dashboard/recentOrders.dart';
 
+GlobalKey<ScaffoldState> globalDashboardKey = GlobalKey<ScaffoldState>();
+
 class CustomerDashboard extends StatefulWidget {
   const CustomerDashboard({super.key});
 
@@ -82,6 +84,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: globalDashboardKey,
       appBar: AppBar(
         title: const Text(
           'Dashboard',
@@ -91,15 +94,15 @@ class CustomerDashboardState extends State<CustomerDashboard> {
           ),
         ),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.menu,
             color: Colors.white,
           ),
           onPressed: () {
-            Scaffold.of(context).openDrawer();
+            globalDashboardKey.currentState?.openDrawer();
           },
         ),
-        backgroundColor: Color(0xff202b38),
+        backgroundColor: const Color(0xff202b38),
         actions: [],
       ),
       drawer: const DashboardDrawer(),

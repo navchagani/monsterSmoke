@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/Modes/MobileMode/MobileMode.dart';
 import 'package:monstersmoke/Modes/TabMode.dart';
+import 'package:monstersmoke/core/widgets/CustomHtmlViewer.dart';
 import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Products/data/models/updateCartModel.dart';
@@ -67,7 +68,7 @@ class PlatformBuilder extends StatelessWidget {
               children: [
                 userData(),
                 Decorations.height15,
-                menus(),
+                menus(context),
                 const Spacer(),
                 footer()
               ],
@@ -78,18 +79,29 @@ class PlatformBuilder extends StatelessWidget {
     );
   }
 
-  Widget menus() {
+  Widget menus(BuildContext context) {
     final list = [
       ListTile(
         dense: true,
         title: const Text('Account'),
-        onTap: onMoveToAccount,
+        onTap: () => onMoveToAccount(context),
       ),
       ListTile(
-          dense: true, title: const Text('About Us'), onTap: onMoveToAbout),
-      ListTile(dense: true, title: const Text('FAQ\'S'), onTap: onMoveToFaq),
-      ListTile(dense: true, title: const Text('Policy'), onTap: onMoveToPolicy),
-      ListTile(dense: true, title: const Text('Policy'), onTap: onMoveToPolicy),
+          dense: true,
+          title: const Text('About Us'),
+          onTap: () => onMoveToAbout(context)),
+      ListTile(
+          dense: true,
+          title: const Text('Contact Us'),
+          onTap: () => onMoveToCosntact(context)),
+      ListTile(
+          dense: true,
+          title: const Text('FAQ\'S'),
+          onTap: () => onMoveToFaq(context)),
+      ListTile(
+          dense: true,
+          title: const Text('Policy'),
+          onTap: () => onMoveToPolicy(context)),
     ];
 
     return Material(
@@ -182,11 +194,38 @@ class PlatformBuilder extends StatelessWidget {
         );
       }));
 
-  void onMoveToAccount() {}
+  void onMoveToAccount(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: ((context) => const HTMLViewer(
+              title: 'contact-us',
+            ))));
+  }
 
-  void onMoveToAbout() {}
+  void onMoveToCosntact(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: ((context) => const HTMLViewer(
+              title: 'contact-us',
+            ))));
+  }
 
-  void onMoveToPolicy() {}
+  void onMoveToAbout(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: ((context) => const HTMLViewer(
+              title: 'about-us',
+            ))));
+  }
 
-  void onMoveToFaq() {}
+  void onMoveToPolicy(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: ((context) => const HTMLViewer(
+              title: 'return-policy',
+            ))));
+  }
+
+  void onMoveToFaq(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: ((context) => const HTMLViewer(
+              title: 'faqs',
+            ))));
+  }
 }
