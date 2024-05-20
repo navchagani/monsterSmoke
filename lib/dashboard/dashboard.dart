@@ -87,9 +87,10 @@ class CustomerDashboardState extends State<CustomerDashboard> {
           'Dashboard',
           style: TextStyle(
             fontSize: 17,
-            color: Color(0xff202b38),
+            color: Colors.white,
           ),
         ),
+        backgroundColor: Color(0xff202b38),
         actions: [],
       ),
       drawer: const DashboardDrawer(),
@@ -128,12 +129,10 @@ class CustomerDashboardState extends State<CustomerDashboard> {
               ),
             ),
             Container(
-              color: const Color(0xff202b38),
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 decoration: const BoxDecoration(
-                    color: Colors.white,
                     borderRadius:
                         BorderRadius.only(topLeft: Radius.circular(50))),
                 child: Column(
