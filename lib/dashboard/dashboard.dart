@@ -90,6 +90,15 @@ class CustomerDashboardState extends State<CustomerDashboard> {
             color: Colors.white,
           ),
         ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.menu,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        ),
         backgroundColor: Color(0xff202b38),
         actions: [],
       ),

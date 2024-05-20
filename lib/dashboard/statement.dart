@@ -88,9 +88,19 @@ class UserStatementState extends State<UserStatement> {
           'Statement',
           style: TextStyle(
             fontSize: 17,
-            color: Color(0xff202b38),
+            color: Colors.white,
           ),
         ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.menu,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        ),
+        backgroundColor: Color(0xff202b38),
         actions: [],
       ),
       drawer: const DashboardDrawer(),
@@ -129,12 +139,10 @@ class UserStatementState extends State<UserStatement> {
               ),
             ),
             Container(
-              color: const Color(0xff202b38),
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 decoration: const BoxDecoration(
-                    color: Colors.white,
                     borderRadius:
                         BorderRadius.only(topLeft: Radius.circular(50))),
                 child: Column(

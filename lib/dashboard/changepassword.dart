@@ -20,8 +20,21 @@ class _ChangepasswordState extends State<Changepassword> {
         appBar: AppBar(
           title: const Text(
             'Change Password',
-            style: TextStyle(fontSize: 17, color: Color(0xff202b38)),
+            style: TextStyle(
+              fontSize: 17,
+              color: Colors.white,
+            ),
           ),
+          leading: IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
+          backgroundColor: Color(0xff202b38),
         ),
         drawer: const DashboardDrawer(),
         body: SingleChildScrollView(

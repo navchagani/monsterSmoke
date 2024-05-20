@@ -23,7 +23,23 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User Profile'),
+        title: const Text(
+          'User Profile',
+          style: TextStyle(
+            fontSize: 17,
+            color: Colors.white,
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.menu,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        ),
+        backgroundColor: Color(0xff202b38),
       ),
       drawer: const DashboardDrawer(),
       body: SingleChildScrollView(

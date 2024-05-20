@@ -14,7 +14,23 @@ class _UserAddressesState extends State<UserAddresses> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Addresses'),
+        title: const Text(
+          'Addresses',
+          style: TextStyle(
+            fontSize: 17,
+            color: Colors.white,
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.menu,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        ),
+        backgroundColor: Color(0xff202b38),
       ),
       drawer: const DashboardDrawer(),
       body: Padding(
