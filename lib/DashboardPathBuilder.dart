@@ -52,6 +52,7 @@ class DashboardPathBuilder extends StatelessWidget {
         if (path == 'password') {
           return const Changepassword();
         }
+
         if (path == 'statement') {
           return const UserStatement();
         }

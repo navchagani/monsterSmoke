@@ -20,9 +20,10 @@ class MonsterThemes {
           centerTitle: false,
           elevation: 0,
           systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: const Color(0xFF647a67).withOpacity(0.1),
             statusBarBrightness: Brightness.light,
             statusBarIconBrightness: Brightness.dark,
-            systemNavigationBarColor: Colors.grey.shade100,
+            systemNavigationBarColor: const Color.fromARGB(255, 237, 244, 255),
           )),
       textTheme: TextTheme(
         displaySmall: const TextStyle(
@@ -60,7 +61,7 @@ class MonsterThemes {
       ),
       colorScheme: const ColorScheme(
           brightness: Brightness.light,
-          primary: Color(0xFF7cc34c),
+          primary: Color(0xFF647a67),
           onPrimary: Colors.white,
           secondary: Colors.black,
           onSecondary: Colors.white,
@@ -131,7 +132,7 @@ class MonsterThemes {
       ),
       iconTheme:
           IconThemeData(color: Colors.black45.withOpacity(0.45), size: 24),
-      scaffoldBackgroundColor: Color.fromARGB(255, 239, 238, 247),
+      scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
       tabBarTheme: TabBarTheme(
           indicator: BoxDecoration(
               color: Colors.purple, borderRadius: BorderRadius.circular(100.0)),

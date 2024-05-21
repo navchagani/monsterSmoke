@@ -56,17 +56,17 @@ class _MobileViewModeState extends State<MobileViewMode> {
             SliverAppBar(
               automaticallyImplyLeading: false,
               backgroundColor: showPrimary
-                  ? Theme.of(context).focusColor
+                  ? Theme.of(context).colorScheme.background
                   : Theme.of(context).scaffoldBackgroundColor,
               shadowColor: Colors.black,
               pinned: true,
               primary: showPrimary,
               titleSpacing: 0.0,
-              toolbarHeight: showPrimary ? 70.0 : 50.0,
+              toolbarHeight: showPrimary ? 50.0 : 50.0,
               title: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 15.0,
-                  vertical: showPrimary ? 15.0 : 0.0,
+                  horizontal: showPrimary ? 0.0 : 15.0,
+                  vertical: showPrimary ? 0.0 : 0.0,
                 ),
                 child: GestureDetector(
                   onTap: () {

@@ -44,10 +44,10 @@ class _CartFloatButtonState extends State<CartFloatButton> {
         },
         builder: (context, cartState) {
           if (cartState is CartLoadingState) {
-            return const FloatingActionButton(
-                backgroundColor: Constants.monsterBlue,
+            return FloatingActionButton(
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 onPressed: null,
-                child: Padding(
+                child: const Padding(
                   padding: EdgeInsets.all(20.0),
                   child: CircularProgressIndicator(
                     strokeWidth: 5.0,
@@ -68,10 +68,11 @@ class _CartFloatButtonState extends State<CartFloatButton> {
                               productList: state.listProduct);
 
                       if (state is LocalCartLoadingState) {
-                        return const FloatingActionButton(
-                            backgroundColor: Constants.monsterBlue,
+                        return FloatingActionButton(
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
                             onPressed: null,
-                            child: Padding(
+                            child: const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: CircularProgressIndicator(
                                 strokeWidth: 3.0,
@@ -82,7 +83,8 @@ class _CartFloatButtonState extends State<CartFloatButton> {
 
                       if (state is LocalCartLoadedState && length > 0) {
                         return FloatingActionButton(
-                          backgroundColor: Constants.monsterBlue,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
                           onPressed: customerState.customerModel == null
                               ? () => navigateToAuthPage()
                               : () => onMovetoCart(
@@ -92,7 +94,8 @@ class _CartFloatButtonState extends State<CartFloatButton> {
                       }
 
                       return FloatingActionButton(
-                          backgroundColor: Constants.monsterBlue,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
                           onPressed: customerState.customerModel == null
                               ? () => navigateToAuthPage()
                               : () {

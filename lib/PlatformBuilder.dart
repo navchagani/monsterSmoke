@@ -55,7 +55,7 @@ class PlatformBuilder extends StatelessWidget {
   Widget appDrawer({required BuildContext context}) {
     return Padding(
       padding:
-          const EdgeInsets.only(left: 5, bottom: 15.0, top: 35, right: 100.0),
+          const EdgeInsets.only(left: 5, bottom: 15.0, top: 35, right: 60.0),
       child: Drawer(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -63,11 +63,11 @@ class PlatformBuilder extends StatelessWidget {
         surfaceTintColor: Colors.transparent,
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(25.0),
             child: Column(
               children: [
                 userData(),
-                Decorations.height15,
+                Decorations.height10,
                 menus(context),
                 const Spacer(),
                 footer()
@@ -105,9 +105,9 @@ class PlatformBuilder extends StatelessWidget {
     ];
 
     return Material(
-      color: Colors.white,
-      elevation: 2.0,
-      borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+      color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+      // elevation: 2.0,
+      borderRadius: const BorderRadius.all(Radius.circular(10.0)),
       child: ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -141,9 +141,10 @@ class PlatformBuilder extends StatelessWidget {
           builder: ((context, customerState) {
         if (customerState is CustomerCompletedState) {
           return Material(
-              color: Colors.white,
-              elevation: 2.0,
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              // elevation: 5.0,
+              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+              clipBehavior: Clip.hardEdge,
               child: InkWell(
                 onTap: () {},
                 child: Padding(

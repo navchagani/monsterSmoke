@@ -122,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
             controller: emailController,
             onChanged: onEmailChanged,
           ),
-          if (!onSwitchFP) Decorations.height10,
+          if (!onSwitchFP) Decorations.height5,
           if (!onSwitchFP)
             CustomInputField(
                 icon: IconButton(
