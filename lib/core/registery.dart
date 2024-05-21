@@ -78,5 +78,6 @@ class Registery {
         BlocProvider<SelectedShipmentBloc>(create: ((context) => getIt())),
 
         BlocProvider<CustomerCardBloc>(create: ((context) => getIt())),
+        BlocProvider<DashboardPathBloc>(create: ((context) => getIt())),
       ];
 }

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monstersmoke/dashboard/changepassword.dart';
-import 'package:monstersmoke/dashboard/dashboard.dart';
-import 'package:monstersmoke/dashboard/statement.dart';
-import 'package:monstersmoke/dashboard/userAddress.dart';
-import 'package:monstersmoke/dashboard/userProfile.dart';
+import 'package:monstersmoke/DashboardPathBuilder.dart';
 
 class DashboardDrawer extends StatefulWidget {
   const DashboardDrawer({super.key});
@@ -60,36 +56,22 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
               style: TextStyle(fontSize: 15),
             ),
             leading: const Icon(Icons.dashboard),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const CustomerDashboard()));
-            },
+            onTap: () => changePath(context, 'dashboard'),
           ),
           ListTile(
-            title: const Text(
-              'Profile',
-              style: TextStyle(fontSize: 15),
-            ),
-            leading: const Icon(Icons.person),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const UserProfile()));
-            },
-          ),
+              title: const Text(
+                'Profile',
+                style: TextStyle(fontSize: 15),
+              ),
+              leading: const Icon(Icons.person),
+              onTap: () => changePath(context, 'profile')),
           ListTile(
             title: const Text(
               'Address List',
               style: TextStyle(fontSize: 15),
             ),
             leading: const Icon(Icons.location_on),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const UserAddresses()));
-            },
+            onTap: () => changePath(context, 'address'),
           ),
           ListTile(
             title: const Text(
@@ -97,12 +79,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
               style: TextStyle(fontSize: 15),
             ),
             leading: const Icon(Icons.lock),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const Changepassword()));
-            },
+            onTap: () => changePath(context, 'password'),
           ),
           ListTile(
             title: const Text(
@@ -110,12 +87,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
               style: TextStyle(fontSize: 15),
             ),
             leading: const Icon(Icons.receipt),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const UserStatement()));
-            },
+            onTap: () => changePath(context, 'statement'),
           ),
         ],
       ),

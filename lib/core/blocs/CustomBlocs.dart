@@ -41,3 +41,9 @@ class CustomerCardBloc extends Bloc<CustomerOrderCard?, CustomerOrderCard?> {
     on<CustomerOrderCard?>((event, emit) => emit(event));
   }
 }
+
+class DashboardPathBloc extends Bloc<String?, String?> {
+  DashboardPathBloc() : super('dashboard') {
+    on<String?>((event, emit) => emit(event));
+  }
+}

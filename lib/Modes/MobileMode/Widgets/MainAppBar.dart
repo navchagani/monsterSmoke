@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:monstersmoke/DashboardPathBuilder.dart';
 import 'package:monstersmoke/Modes/MobileMode/MobileMode.dart';
 import 'package:monstersmoke/dashboard/dashboard.dart';
 import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
@@ -57,7 +58,7 @@ class _MainAppBarState extends State<MainAppBar> {
           return BlocBuilder<CustomerBloc, CustomerBlocState>(
             builder: (context, customerState) {
               if (customerState is CustomerCompletedState) {
-                return const CustomerDashboard();
+                return const DashboardPathBuilder();
               } else {
                 return const AuthActionPage();
               }

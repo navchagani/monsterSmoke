@@ -71,6 +71,8 @@ void depInjection() {
 
   getIt.registerFactory(() => CustomerCardBloc());
 
+  getIt.registerFactory(() => DashboardPathBloc());
+
   // Auth Apis
   getIt.registerSingleton<AuthApi>(AuthApi(getIt()));
   getIt.registerSingleton<AuthRepo>(
