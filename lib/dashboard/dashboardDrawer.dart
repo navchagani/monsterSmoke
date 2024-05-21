@@ -56,7 +56,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
               style: TextStyle(fontSize: 15),
             ),
             leading: const Icon(Icons.dashboard),
-            onTap: () => changePath(context, 'dashboard'),
+            onTap: () => changePath(context, 'Dashboard'),
           ),
           ListTile(
               title: const Text(
@@ -64,14 +64,14 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                 style: TextStyle(fontSize: 15),
               ),
               leading: const Icon(Icons.person),
-              onTap: () => changePath(context, 'profile')),
+              onTap: () => changePath(context, 'Profile')),
           ListTile(
             title: const Text(
-              'Address List',
+              'Addresses',
               style: TextStyle(fontSize: 15),
             ),
             leading: const Icon(Icons.location_on),
-            onTap: () => changePath(context, 'address'),
+            onTap: () => changePath(context, 'Addresses'),
           ),
           ListTile(
             title: const Text(
@@ -79,7 +79,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
               style: TextStyle(fontSize: 15),
             ),
             leading: const Icon(Icons.lock),
-            onTap: () => changePath(context, 'password'),
+            onTap: () => changePath(context, 'Change Password'),
           ),
           ListTile(
             title: const Text(
@@ -87,7 +87,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
               style: TextStyle(fontSize: 15),
             ),
             leading: const Icon(Icons.receipt),
-            onTap: () => changePath(context, 'statement'),
+            onTap: () => changePath(context, 'Statement'),
           ),
         ],
       ),

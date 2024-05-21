@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
-import 'package:monstersmoke/dashboard/dashboard.dart';
-import 'package:monstersmoke/dashboard/dashboardDrawer.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
@@ -165,7 +162,7 @@ class _UserProfileState extends State<UserProfile> {
                 CustomButton(
                   onTap: () {},
                   text: 'Update',
-                  // enabled: firstName.text.isNotEmpty,
+                  enabled: true,
                   backgroundColor: const Color(0xff202b38),
                   textColor: Colors.white,
                 ),

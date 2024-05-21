@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:monstersmoke/dashboard/dashboardDrawer.dart';
 import 'package:monstersmoke/dashboard/recentOrders.dart';
 
 class CustomerDashboard extends StatefulWidget {
@@ -93,7 +92,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
             ),
             child: Column(
               children: [
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 30),
                   title: const Text(
@@ -111,7 +110,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
                         'https://img.freepik.com/premium-vector/anonymous-user-circle-icon-vector-illustration-flat-style-with-long-shadow_520826-1931.jpg'),
                   ),
                 ),
-                const SizedBox(height: 50)
+                const SizedBox(height: 30)
               ],
             ),
           ),
@@ -123,6 +122,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
                       BorderRadius.only(topLeft: Radius.circular(50))),
               child: Column(
                 children: [
+                  const SizedBox(height: 10),
                   const Text(
                     "Dashboard",
                     style: TextStyle(
@@ -131,6 +131,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
                         fontSize: 18),
                     textAlign: TextAlign.left,
                   ),
+                  const SizedBox(height: 20),
                   GridView.count(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -160,6 +161,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(height: 10),
               Text(
                 "Recent Orders",
                 style: TextStyle(
@@ -167,13 +169,13 @@ class CustomerDashboardState extends State<CustomerDashboard> {
                     fontWeight: FontWeight.w600,
                     fontSize: 18),
               ),
+              const SizedBox(height: 10),
             ],
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Container(
-              width: MediaQuery.of(context).size.width -
-                  40, // Adjust the width as necessary
+              width: MediaQuery.of(context).size.width - 40,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
@@ -182,7 +184,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 1,
                     blurRadius: 6,
-                    offset: const Offset(0, 3), // changes position of shadow
+                    offset: const Offset(0, 3),
                   ),
                 ],
               ),

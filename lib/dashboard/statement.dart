@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
-import 'package:monstersmoke/dashboard/dashboard.dart';
-import 'package:monstersmoke/dashboard/dashboardDrawer.dart';
 import 'package:monstersmoke/dashboard/recentOrders.dart';
 
 class UserStatement extends StatefulWidget {
@@ -95,7 +93,7 @@ class UserStatementState extends State<UserStatement> {
             ),
             child: Column(
               children: [
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 30),
                   title: const Text(
@@ -113,7 +111,7 @@ class UserStatementState extends State<UserStatement> {
                         'https://img.freepik.com/premium-vector/anonymous-user-circle-icon-vector-illustration-flat-style-with-long-shadow_520826-1931.jpg'),
                   ),
                 ),
-                const SizedBox(height: 50)
+                const SizedBox(height: 30)
               ],
             ),
           ),
@@ -125,6 +123,7 @@ class UserStatementState extends State<UserStatement> {
                       BorderRadius.only(topLeft: Radius.circular(50))),
               child: Column(
                 children: [
+                  const SizedBox(height: 10),
                   const Text(
                     "Statement",
                     style: TextStyle(
@@ -133,6 +132,7 @@ class UserStatementState extends State<UserStatement> {
                         fontSize: 18),
                     textAlign: TextAlign.left,
                   ),
+                  const SizedBox(height: 20),
                   GridView.count(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -151,7 +151,7 @@ class UserStatementState extends State<UserStatement> {
                     ],
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
                   Align(
                     alignment: Alignment.centerRight,
@@ -160,6 +160,7 @@ class UserStatementState extends State<UserStatement> {
                       text: 'Print',
                       backgroundColor: const Color(0xff202b38),
                       textColor: Colors.white,
+                      enabled: true,
                     ),
                   ),
                 ],
@@ -170,6 +171,7 @@ class UserStatementState extends State<UserStatement> {
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(height: 10),
               Text(
                 "Statements",
                 style: TextStyle(
@@ -179,11 +181,11 @@ class UserStatementState extends State<UserStatement> {
               ),
             ],
           ),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Container(
-              width: MediaQuery.of(context).size.width -
-                  40, // Adjust the width as necessary
+              width: MediaQuery.of(context).size.width - 40,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
@@ -192,7 +194,7 @@ class UserStatementState extends State<UserStatement> {
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 1,
                     blurRadius: 6,
-                    offset: const Offset(0, 3), // changes position of shadow
+                    offset: const Offset(0, 3),
                   ),
                 ],
               ),
@@ -266,7 +268,7 @@ class UserStatementState extends State<UserStatement> {
             columns: const <DataColumn>[
               DataColumn(
                 label: Text(
-                  '#',
+                  'Order',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -274,7 +276,7 @@ class UserStatementState extends State<UserStatement> {
               ),
               DataColumn(
                 label: Text(
-                  'Product Name',
+                  'Date',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -282,7 +284,7 @@ class UserStatementState extends State<UserStatement> {
               ),
               DataColumn(
                 label: Text(
-                  'Unit Price',
+                  'Ship To',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -290,7 +292,7 @@ class UserStatementState extends State<UserStatement> {
               ),
               DataColumn(
                 label: Text(
-                  'Sell Quantity',
+                  'Total Amount',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -298,7 +300,7 @@ class UserStatementState extends State<UserStatement> {
               ),
               DataColumn(
                 label: Text(
-                  'Returned',
+                  'Total Due',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),

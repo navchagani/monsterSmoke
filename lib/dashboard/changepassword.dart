@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
-import 'package:monstersmoke/dashboard/dashboard.dart';
-import 'package:monstersmoke/dashboard/dashboardDrawer.dart';
 
 class Changepassword extends StatefulWidget {
   const Changepassword({super.key});
@@ -28,7 +26,7 @@ class _ChangepasswordState extends State<Changepassword> {
         ),
         child: Column(
           children: [
-            const SizedBox(height: 50),
+            const SizedBox(height: 30),
             ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 30),
               title: Text(
@@ -48,7 +46,7 @@ class _ChangepasswordState extends State<Changepassword> {
                 ),
               ),
             ),
-            const SizedBox(height: 50)
+            const SizedBox(height: 30)
           ],
         ),
       ),

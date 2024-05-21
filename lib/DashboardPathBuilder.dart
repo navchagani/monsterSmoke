@@ -15,50 +15,63 @@ class DashboardPathBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: globalDashboardKey,
-      drawer: const DashboardDrawer(),
-      appBar: AppBar(
+    return BlocBuilder<DashboardPathBloc, String?>(builder: ((context, path) {
+      return Scaffold(
+        key: globalDashboardKey,
+        drawer: const DashboardDrawer(),
+        appBar: AppBar(
+            backgroundColor: const Color(0xff202b38),
+            title: Text(
+              path.toString(),
+              style: const TextStyle(
+                fontSize: 17,
+                color: Colors.white,
+              ),
+            ),
+            leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back_rounded,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )),
+        body: Builder(builder: (context) {
+          if (path == 'Dashboard') {
+            return const CustomerDashboard();
+          }
+
+          if (path == 'Profile') {
+            return const UserProfile();
+          }
+
+          if (path == 'Addresses') {
+            return const UserAddresses();
+          }
+
+          if (path == 'Change Password') {
+            return const Changepassword();
+          }
+          if (path == 'Statement') {
+            return const UserStatement();
+          }
+
+          return Container();
+        }),
+        floatingActionButton: FloatingActionButton(
           backgroundColor: const Color(0xff202b38),
-          title: const Text(
-            'Dashboard',
-            style: TextStyle(
-              fontSize: 17,
-              color: Colors.white,
-            ),
+          foregroundColor: Colors.white,
+          onPressed: () {
+            globalDashboardKey.currentState?.openDrawer();
+          },
+          child: const Icon(
+            Icons.menu_open_rounded,
+            size: 35,
           ),
-          leading: IconButton(
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              globalDashboardKey.currentState?.openDrawer();
-            },
-          )),
-      body: BlocBuilder<DashboardPathBloc, String?>(builder: ((context, path) {
-        if (path == 'dashboard') {
-          return const CustomerDashboard();
-        }
-
-        if (path == 'profile') {
-          return const UserProfile();
-        }
-
-        if (path == 'address') {
-          return const UserAddresses();
-        }
-
-        if (path == 'password') {
-          return const Changepassword();
-        }
-        if (path == 'statement') {
-          return const UserStatement();
-        }
-
-        return Container();
-      })),
-    );
+        ),
+      );
+    }));
   }
 }
 
