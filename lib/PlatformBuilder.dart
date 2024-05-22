@@ -4,9 +4,11 @@ import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/Modes/MobileMode/MobileMode.dart';
 import 'package:monstersmoke/Modes/TabMode.dart';
 import 'package:monstersmoke/core/widgets/CustomHtmlViewer.dart';
+import 'package:monstersmoke/core/widgets/CustomLinkButton.dart';
 import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Products/data/models/updateCartModel.dart';
+import 'package:monstersmoke/features/sharedPrefsApi.dart';
 
 class PlatformBuilder extends StatelessWidget {
   const PlatformBuilder({super.key});
@@ -69,13 +71,32 @@ class PlatformBuilder extends StatelessWidget {
                 userData(),
                 Decorations.height10,
                 menus(context),
+                Decorations.height10,
+                logoutButton(context),
                 const Spacer(),
-                footer()
+                footer(),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget logoutButton(BuildContext context) {
+    return Row(
+      children: [
+        CustomLinkButton(
+          onTap: () => onLogout(context),
+          text: 'Log Out',
+          textColor: Colors.deepOrange,
+        ),
+        // Decorations.width5,
+        const Icon(
+          Icons.arrow_circle_right_outlined,
+          color: Colors.deepOrange,
+        )
+      ],
     );
   }
 
@@ -106,8 +127,8 @@ class PlatformBuilder extends StatelessWidget {
 
     return Material(
       color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-      // elevation: 2.0,
       borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+      clipBehavior: Clip.hardEdge,
       child: ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -115,7 +136,9 @@ class PlatformBuilder extends StatelessWidget {
           return list[index];
         },
         separatorBuilder: (BuildContext context, int index) {
-          return const Divider();
+          return const Divider(
+            height: 0.0,
+          );
         },
         itemCount: list.length,
       ),
@@ -228,5 +251,15 @@ class PlatformBuilder extends StatelessWidget {
         builder: ((context) => const HTMLViewer(
               title: 'faqs',
             ))));
+  }
+
+  onLogout(BuildContext context) async {
+    CustomerBloc bloc = BlocProvider.of(context);
+    bloc.add(CustomerInitialEvent());
+
+    final shared = SharedPrefsApi();
+    await shared.removeFromShared(key: 'login');
+
+    Navigator.of(context).pop();
   }
 }

@@ -6,6 +6,7 @@ import 'package:monstersmoke/features/Products/data/datasources/ProductApi.dart'
 import 'package:monstersmoke/features/Products/data/models/ProductDetailsModel.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductSearchModel.dart';
+import 'package:monstersmoke/features/Products/data/models/TagProductModel.dart';
 import 'package:monstersmoke/features/Products/domain/repositories/ProductsRepo.dart';
 
 class ProductRepoImp extends ProductsRepo {
@@ -68,6 +69,52 @@ class ProductRepoImp extends ProductsRepo {
       {required String searchString}) async {
     try {
       final data = await productApi.searchProducts(searchString: searchString);
+
+      if (data.response.statusCode == HttpStatus.ok) {
+        return SuccessState(data: data.data);
+      } else {
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: data.response.requestOptions,
+                message: 'Cannot Get Customer Data'));
+      }
+    } on DioException catch (e) {
+      return ErrorState(dioException: e);
+    }
+  }
+
+  @override
+  Future<DataStates<List<ProductModel>>> getTaggedProducts(
+      {required int tagId,
+      required int? page,
+      required int? size,
+      required int? storeId,
+      required int? buisnessTypeId}) async {
+    try {
+      final data = await productApi.getTaggedProducts(
+          tagId: tagId,
+          page: page,
+          size: size,
+          storeId: storeId,
+          buisnessTypeId: buisnessTypeId);
+
+      if (data.response.statusCode == HttpStatus.ok) {
+        return SuccessState(data: data.data);
+      } else {
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: data.response.requestOptions,
+                message: 'Cannot Get Customer Data'));
+      }
+    } on DioException catch (e) {
+      return ErrorState(dioException: e);
+    }
+  }
+
+  @override
+  Future<DataStates<List<TagProductModel>>> getTags() async {
+    try {
+      final data = await productApi.getTags();
 
       if (data.response.statusCode == HttpStatus.ok) {
         return SuccessState(data: data.data);

@@ -159,4 +159,83 @@ class _ProductApi implements ProductApi {
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
+
+  @override
+  Future<HttpResponse<List<TagProductModel>>> getTags() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<TagProductModel>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/home/productTagList',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+
+    List<dynamic> data = _result.data!['result'];
+    var value = data
+        .map((dynamic i) => TagProductModel.fromJson(i as Map<String, dynamic>))
+        .toList();
+
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<List<ProductModel>>> getTaggedProducts({
+    required int tagId,
+    int? page,
+    int? size,
+    int? storeId,
+    int? buisnessTypeId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'tagId': tagId,
+      r'page': page,
+      r'size': size,
+      r'storeId': storeId,
+      r'buisnessTypeId': buisnessTypeId,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<ProductModel>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/home/product/tagId/$tagId',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+
+    final data = _result.data!['result'];
+    List<dynamic> content = data['content'];
+    var value = content
+        .map((dynamic i) => ProductModel.fromJson(i as Map<String, dynamic>))
+        .toList();
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
 }

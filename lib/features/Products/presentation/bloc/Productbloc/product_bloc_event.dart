@@ -31,3 +31,13 @@ class SearchProductEvent extends ProductBlocEvent {
   final String? searchString;
   const SearchProductEvent(this.searchString);
 }
+
+class GetTagProductEvents extends ProductBlocEvent {
+  final int? tagId, page, size, storeIds, buisnessTypeId;
+  const GetTagProductEvents(
+      this.tagId, this.page, this.size, this.storeIds, this.buisnessTypeId);
+}
+
+class GetTagsEvent extends ProductBlocEvent {
+  const GetTagsEvent();
+}

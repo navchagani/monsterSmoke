@@ -29,10 +29,23 @@ class PlaceOrderPage extends StatefulWidget {
 class _PlaceOrderPageState extends State<PlaceOrderPage> {
   final cartBloc = getIt<CartBloc>();
   final placeOrderBloc = getIt<PlaceorderBloc>();
+  final commentController = TextEditingController();
   @override
   void initState() {
     cartBloc.add(GetCartEvent(storeId: 2.toString()));
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    onDispose();
+    super.dispose();
+  }
+
+  onDispose() async {
+    commentController.dispose();
+    await cartBloc.close();
+    await placeOrderBloc.close();
   }
 
   @override
@@ -141,7 +154,8 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
                                     Material(
                                       color: Theme.of(context)
                                           .colorScheme
-                                          .background,
+                                          .primary
+                                          .withOpacity(0.1),
                                       borderRadius: BorderRadius.circular(10.0),
                                       child: Padding(
                                         padding: const EdgeInsets.all(15.0),
@@ -172,7 +186,9 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
                                       ],
                                     ),
                                     Decorations.height15,
-                                    const CustomInputField(
+                                    CustomInputField(
+                                        controller: commentController,
+                                        onChanged: onCommentChanged,
                                         labelText: 'Comment',
                                         hintText: 'Leave A Comment'),
                                     Decorations.height15,
@@ -223,18 +239,6 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
         settings: ChromeSafariBrowserSettings(
             shareState: CustomTabsShareState.SHARE_STATE_OFF,
             barCollapsingEnabled: true));
-
-    // Navigator.of(context).pushAndRemoveUntil(
-    //     MaterialPageRoute(builder: ((context) => WebPreviewPage(url: url))),
-    //     (route) => route.isFirst);
-
-    // Navigator.of(context).pushAndRemoveUntil(
-    //     MaterialPageRoute(
-    //         builder: ((context) => PdfPreviewPage(
-    //               pdf: file.path,
-    //               pdfData: pdfString,
-    //             ))),
-    //     (route) => route.isFirst);
   }
 
   onPlaceOrder(
@@ -244,24 +248,25 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
       PaymentsModel? selectedPayment,
       CustomerOrderCard? card}) async {
     OrderDto orderDto = OrderDto(
-        customerBillingAddressId: selectedAddress?.id,
-        paymentTermsId: 1,
-        customerShippingAddressId: selectedShipment?.id,
-        shippingAmount: selectedShipment?.amount?.toInt(),
-        preferredPaymentMethodId: selectedPayment?.id,
-        preferredPaymentModeId: selectedPayment?.id,
-        preferredShippingModeId: selectedShipment?.id,
-        primarySalesRepresentativeId: selectedShipment?.id,
-        totalAmount: cartList?.cartSubTotal,
-        totalQuantity: cartList?.totalCartQuantity,
-        subTotal: cartList?.cartSubTotal,
-        status: 'Pro Forma',
-        storeId: 2,
-        taxAmount: 0,
-        adjustmentValue: 0,
-        orderNotes: '',
-        customerNotes: '',
-        internalNotes: '');
+      customerBillingAddressId: selectedAddress?.id,
+      paymentTermsId: 1,
+      customerShippingAddressId: selectedShipment?.id,
+      shippingAmount: selectedShipment?.amount?.toInt(),
+      preferredPaymentMethodId: selectedPayment?.id,
+      preferredPaymentModeId: selectedPayment?.id,
+      preferredShippingModeId: selectedShipment?.id,
+      primarySalesRepresentativeId: selectedShipment?.id,
+      totalAmount: cartList?.cartSubTotal,
+      totalQuantity: cartList?.totalCartQuantity,
+      subTotal: cartList?.cartSubTotal,
+      status: 'Pro Forma',
+      storeId: 2,
+      taxAmount: 0,
+      adjustmentValue: 0,
+      orderNotes: '',
+      customerNotes: commentController.text,
+      internalNotes: '',
+    );
 
     PaymentDtoList paymentDtoList = PaymentDtoList(
         paymentModeId: selectedPayment?.id,
@@ -274,12 +279,12 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
         orderDto: orderDto);
 
     final token = await SharedPrefsApi.instance.getFromShared(key: 'login');
-    // log('$token');
-    // log('${placeOrderModel.toJson()}');
 
     placeOrderBloc.add(PlaceOrderEvent(
         placeOrderModel: placeOrderModel,
         token: token.toString(),
         storeId: 2.toString()));
   }
+
+  onCommentChanged(String value) {}
 }

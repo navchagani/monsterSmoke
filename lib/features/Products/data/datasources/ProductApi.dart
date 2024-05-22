@@ -1,9 +1,9 @@
-
 import 'package:dio/dio.dart';
 import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductDetailsModel.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductSearchModel.dart';
+import 'package:monstersmoke/features/Products/data/models/TagProductModel.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'ProductApi.g.dart';
@@ -26,4 +26,14 @@ abstract class ProductApi {
   @GET('/api/ecommerce/product/searchByProductOrCategory')
   Future<HttpResponse<ProductSearchModel>> searchProducts(
       {@Query('searchInput') required String searchString});
+
+  @GET('/api/home/productTagList')
+  Future<HttpResponse<List<TagProductModel>>> getTags();
+  @GET('/api/home/product/tagId/2')
+  Future<HttpResponse<List<ProductModel>>> getTaggedProducts(
+      {required int tagId,
+      required int? page,
+      required int? size,
+      required int? storeId,
+      required int? buisnessTypeId});
 }

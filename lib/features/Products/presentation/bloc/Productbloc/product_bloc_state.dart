@@ -29,6 +29,18 @@ class SearchProductCompletedState extends ProductBlocState {
   const SearchProductCompletedState({required this.searchModel});
 }
 
+class TagsLoadedState extends ProductBlocState {
+  final List<TagProductModel> tagsList;
+
+  const TagsLoadedState({required this.tagsList});
+}
+
+// class TagsProductsLoadedState extends ProductBlocState {
+//   final List<ProductModel> tagsList;
+
+//   const TagsProductsLoadedState({required this.tagsList});
+// }
+
 class ProductErrorState extends ProductBlocState {
   final DioException error;
 
