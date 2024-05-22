@@ -58,15 +58,12 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
               return Column(
                 children: [
                   _buildListTile(
-                    context: context,
-                    title: 'Home',
-                    icon: Icons.home,
-                    isActive: path == 'Home',
-                    onTap: () => Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MobileViewMode())),
-                  ),
+                      context: context,
+                      title: 'Home',
+                      icon: Icons.home,
+                      isActive: path == 'Home',
+                      onTap: () => Navigator.popUntil(
+                          context, (route) => route.isFirst)),
                   _buildListTile(
                     context: context,
                     title: 'Dashboard',

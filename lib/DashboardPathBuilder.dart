@@ -37,23 +37,23 @@ class DashboardPathBuilder extends StatelessWidget {
             },
           )),
       body: BlocBuilder<DashboardPathBloc, String?>(builder: ((context, path) {
-        if (path == 'dashboard') {
+        if (path == 'Dashboard') {
           return const CustomerDashboard();
         }
 
-        if (path == 'profile') {
+        if (path == 'Profile') {
           return const UserProfile();
         }
 
-        if (path == 'address') {
+        if (path == 'Addresses') {
           return const UserAddresses();
         }
 
-        if (path == 'password') {
+        if (path == 'Password') {
           return const Changepassword();
         }
 
-        if (path == 'statement') {
+        if (path == 'Statement') {
           return const UserStatement();
         }
 
