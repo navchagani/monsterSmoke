@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/DashboardPathBuilder.dart';
+import 'package:monstersmoke/Modes/MobileMode/MobileMode.dart';
+import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
 
 class DashboardDrawer extends StatefulWidget {
   const DashboardDrawer({super.key});
@@ -50,47 +53,85 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
               ),
             ),
           ),
-          ListTile(
-            title: const Text(
-              'Dashboard',
-              style: TextStyle(fontSize: 15),
-            ),
-            leading: const Icon(Icons.dashboard),
-            onTap: () => changePath(context, 'Dashboard'),
-          ),
-          ListTile(
-              title: const Text(
-                'Profile',
-                style: TextStyle(fontSize: 15),
-              ),
-              leading: const Icon(Icons.person),
-              onTap: () => changePath(context, 'Profile')),
-          ListTile(
-            title: const Text(
-              'Addresses',
-              style: TextStyle(fontSize: 15),
-            ),
-            leading: const Icon(Icons.location_on),
-            onTap: () => changePath(context, 'Addresses'),
-          ),
-          ListTile(
-            title: const Text(
-              'Change Password',
-              style: TextStyle(fontSize: 15),
-            ),
-            leading: const Icon(Icons.lock),
-            onTap: () => changePath(context, 'Change Password'),
-          ),
-          ListTile(
-            title: const Text(
-              'Statement',
-              style: TextStyle(fontSize: 15),
-            ),
-            leading: const Icon(Icons.receipt),
-            onTap: () => changePath(context, 'Statement'),
+          BlocBuilder<DashboardPathBloc, String?>(
+            builder: (context, path) {
+              return Column(
+                children: [
+                  _buildListTile(
+                    context: context,
+                    title: 'Home',
+                    icon: Icons.home,
+                    isActive: path == 'Home',
+                    onTap: () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MobileViewMode())),
+                  ),
+                  _buildListTile(
+                    context: context,
+                    title: 'Dashboard',
+                    icon: Icons.dashboard,
+                    isActive: path == 'Dashboard',
+                    onTap: () => changePath(context, 'Dashboard'),
+                  ),
+                  _buildListTile(
+                    context: context,
+                    title: 'Profile',
+                    icon: Icons.person,
+                    isActive: path == 'Profile',
+                    onTap: () => changePath(context, 'Profile'),
+                  ),
+                  _buildListTile(
+                    context: context,
+                    title: 'Addresses',
+                    icon: Icons.location_on,
+                    isActive: path == 'Addresses',
+                    onTap: () => changePath(context, 'Addresses'),
+                  ),
+                  _buildListTile(
+                    context: context,
+                    title: 'Change Password',
+                    icon: Icons.lock,
+                    isActive: path == 'Change Password',
+                    onTap: () => changePath(context, 'Change Password'),
+                  ),
+                  _buildListTile(
+                    context: context,
+                    title: 'Statement',
+                    icon: Icons.receipt,
+                    isActive: path == 'Statement',
+                    onTap: () => changePath(context, 'Statement'),
+                  ),
+                ],
+              );
+            },
           ),
         ],
       ),
+    );
+  }
+
+  ListTile _buildListTile({
+    required BuildContext context,
+    required String title,
+    required IconData icon,
+    required bool isActive,
+    required VoidCallback onTap,
+  }) {
+    return ListTile(
+      title: Text(
+        title,
+        style: TextStyle(
+          fontSize: 15,
+          color:
+              isActive ? const Color.fromARGB(255, 171, 29, 48) : Colors.black,
+        ),
+      ),
+      leading: Icon(
+        icon,
+        color: isActive ? const Color.fromARGB(255, 171, 29, 48) : Colors.black,
+      ),
+      onTap: onTap,
     );
   }
 }

@@ -49,7 +49,7 @@ class _UserAddressesState extends State<UserAddresses> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(15.0),
             child: Column(
               children: [
                 const SizedBox(
@@ -84,7 +84,7 @@ class _UserAddressesState extends State<UserAddresses> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(15.00),
+                          padding: const EdgeInsets.all(25.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[

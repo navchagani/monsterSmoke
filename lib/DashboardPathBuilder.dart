@@ -20,23 +20,24 @@ class DashboardPathBuilder extends StatelessWidget {
         key: globalDashboardKey,
         drawer: const DashboardDrawer(),
         appBar: AppBar(
-            backgroundColor: const Color(0xff202b38),
-            title: Text(
-              path.toString(),
-              style: const TextStyle(
-                fontSize: 17,
-                color: Colors.white,
-              ),
+          backgroundColor: const Color(0xff202b38),
+          title: Text(
+            path ?? "",
+            style: const TextStyle(
+              fontSize: 17,
+              color: Colors.white,
             ),
-            leading: IconButton(
-              icon: const Icon(
-                Icons.arrow_back_rounded,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            )),
+          ),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              globalDashboardKey.currentState?.openDrawer();
+            },
+          ),
+        ),
         body: Builder(builder: (context) {
           if (path == 'Dashboard') {
             return const CustomerDashboard();
@@ -59,17 +60,15 @@ class DashboardPathBuilder extends StatelessWidget {
 
           return Container();
         }),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color(0xff202b38),
-          foregroundColor: Colors.white,
-          onPressed: () {
-            globalDashboardKey.currentState?.openDrawer();
-          },
-          child: const Icon(
-            Icons.menu_open_rounded,
-            size: 35,
-          ),
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   backgroundColor: const Color(0xff202b38),
+        //   foregroundColor: Colors.white,
+        //   onPressed: () {},
+        //   child: const Icon(
+        //     Icons.menu_open_rounded,
+        //     size: 35,
+        //   ),
+        // ),
       );
     }));
   }

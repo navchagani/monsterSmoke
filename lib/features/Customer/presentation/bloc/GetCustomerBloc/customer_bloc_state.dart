@@ -1,3 +1,5 @@
+// ignore_for_file: overridden_fields
+
 part of 'customer_bloc_bloc.dart';
 
 sealed class CustomerBlocState extends Equatable {

@@ -43,7 +43,7 @@ class CustomerCardBloc extends Bloc<CustomerOrderCard?, CustomerOrderCard?> {
 }
 
 class DashboardPathBloc extends Bloc<String?, String?> {
-  DashboardPathBloc() : super('dashboard') {
+  DashboardPathBloc() : super('Dashboard') {
     on<String?>((event, emit) => emit(event));
   }
 }

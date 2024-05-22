@@ -93,11 +93,12 @@ class _CustomerApi implements CustomerApi {
     required String token,
     required CustomerModel customerModel,
   }) async {
+    log("Customer Data ${customerModel.toJson()}");
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': 'Bearer $token'};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
+    final _data = customerModel.toJson();
     _data.addAll(customerModel.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<CustomerModel>>(Options(
@@ -153,6 +154,8 @@ class _CustomerApi implements CustomerApi {
     final customerData = value['customerDto'];
     final model =
         _result.data == null ? null : CustomerModel.fromJson(customerData!);
+    log('getcustomer data : ${_result.data}');
+
     final httpResponse = HttpResponse(model, _result);
     return httpResponse;
   }

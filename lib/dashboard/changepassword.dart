@@ -81,6 +81,7 @@ class _ChangepasswordState extends State<Changepassword> {
             CustomButton(
               onTap: () {},
               text: 'Change Password',
+              enabled: true,
               backgroundColor: const Color(0xff202b38),
               textColor: Colors.white,
             )

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -57,7 +58,7 @@ class CustomerRepoImp extends CustomerRepository {
       {required CustomerModel customerModel}) async {
     try {
       final token = await sharedPrefsApi.getFromShared(key: 'login');
-
+      log('tokendata $token');
       final data = await customerApi.updateCustomer(
           token: token.toString(), customerModel: customerModel);
 
