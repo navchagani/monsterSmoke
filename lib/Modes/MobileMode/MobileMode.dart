@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Modes/MobileMode/Widgets/AppBars.dart';
 import 'package:monstersmoke/Modes/MobileMode/Widgets/MainAppBar.dart';
+import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
 import 'package:monstersmoke/core/widgets/CustomProductContainer.dart';
 import 'package:monstersmoke/features/Cart/presentation/widgets/CartBottomBar.dart';
 import 'package:monstersmoke/features/Cart/presentation/widgets/CartFloatingButton.dart';
+import 'package:monstersmoke/features/Products/presentation/bloc/Productbloc/product_bloc_bloc.dart';
 import 'package:monstersmoke/features/Search/presentation/pages/SearchPage.dart';
 
 GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
@@ -19,9 +22,13 @@ class MobileViewMode extends StatefulWidget {
 class _MobileViewModeState extends State<MobileViewMode> {
   late ScrollController scrollController;
   bool showPrimary = false;
+  final getTagsBloc = getIt<ProductBloc>();
 
   @override
   void initState() {
+    ProductBloc bloc = BlocProvider.of(context);
+    bloc.add(const GetTagsEvent());
+
     scrollController = ScrollController();
     scrollController.addListener(() {
       if (scrollController.offset > 0) {
@@ -35,6 +42,13 @@ class _MobileViewModeState extends State<MobileViewMode> {
       }
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    getTagsBloc.close();
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -86,13 +100,28 @@ class _MobileViewModeState extends State<MobileViewMode> {
             )
           ];
         },
-        body: Scaffold(
-          body: body(),
-          bottomNavigationBar: const CartBottomBar(),
-          floatingActionButton: const CartFloatButton(
-            fromHome: true,
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        body: BlocBuilder<ProductBloc, ProductBlocState>(
+          builder: (context, productState) {
+            return Scaffold(
+              body: body(),
+              bottomNavigationBar: const CartBottomBar(),
+              floatingActionButton: const CartFloatButton(
+                fromHome: true,
+              ),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.endDocked,
+            );
+            // if (productState is TagsLoadedState) {
+            //   for (var element in productState.tagsList) {
+            //     getTagsBloc.add(GetTagProductEvents(
+            //         tagId: element.id,
+            //         page: 0,
+            //         size: 10,
+            //         storeIds: 2,
+            //         buisnessTypeId: 1));
+            //   }
+            // }
+          },
         ));
   }
 

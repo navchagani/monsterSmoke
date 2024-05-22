@@ -35,7 +35,7 @@ class SearchProductEvent extends ProductBlocEvent {
 class GetTagProductEvents extends ProductBlocEvent {
   final int? tagId, page, size, storeIds, buisnessTypeId;
   const GetTagProductEvents(
-      this.tagId, this.page, this.size, this.storeIds, this.buisnessTypeId);
+      {this.tagId, this.page, this.size, this.storeIds, this.buisnessTypeId});
 }
 
 class GetTagsEvent extends ProductBlocEvent {

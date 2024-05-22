@@ -28,6 +28,12 @@ class _LoginPageState extends State<LoginPage> {
   bool onSwitchFP = false;
 
   @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: bloc,

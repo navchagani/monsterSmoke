@@ -11,7 +11,7 @@ import 'package:monstersmoke/features/Products/presentation/pages/ProductDetailP
 
 class CustomProductContainer extends StatefulWidget {
   final String? text;
-  final int? storeIds, categoryList, showQuantity;
+  final int? tagId, storeIds, categoryList, showQuantity;
   final bool? isScrollable;
 
   const CustomProductContainer(
@@ -20,7 +20,8 @@ class CustomProductContainer extends StatefulWidget {
       this.storeIds,
       this.categoryList,
       this.showQuantity,
-      this.isScrollable});
+      this.isScrollable,
+      this.tagId});
 
   @override
   State<CustomProductContainer> createState() => _CustomProductContainerState();
@@ -31,12 +32,19 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
 
   @override
   void initState() {
-    bloc.add(GetProductEvent(
-        sort: 'date',
-        sortDirection: 'DESC',
+    bloc.add(GetTagProductEvents(
+        tagId: widget.tagId ?? 2,
+        size: 10,
+        page: 0,
         storeIds: widget.storeIds ?? 2,
-        categoryIdList: widget.categoryList ?? 25));
+        buisnessTypeId: widget.categoryList ?? 1));
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
   }
 
   @override

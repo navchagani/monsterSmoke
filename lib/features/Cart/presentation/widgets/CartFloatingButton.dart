@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Functions/FunctionsProduct.dart';
 import 'package:monstersmoke/cartPage.dart';
-import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/core/blocs/CartBloc.dart';
 import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
@@ -21,6 +20,13 @@ class CartFloatButton extends StatefulWidget {
 
 class _CartFloatButtonState extends State<CartFloatButton> {
   final cartBloc = getIt<CartBloc>();
+
+  @override
+  void dispose() {
+    cartBloc.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<LocalCartBloc>(context);
@@ -130,7 +136,6 @@ class _CartFloatButtonState extends State<CartFloatButton> {
             quantity: e.quantity))
         .toList();
 
-    // CartBloc cartBloc = getIt<CartBloc>();
     cartBloc.add(AddToCartEvent(storeId: 2.toString(), list: productList));
   }
 

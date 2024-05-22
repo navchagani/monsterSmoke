@@ -23,6 +23,12 @@ class _ReviewPageState extends State<ReviewPage> {
   }
 
   @override
+  void dispose() {
+    cartBloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<CartBloc, CartState>(
       bloc: cartBloc,

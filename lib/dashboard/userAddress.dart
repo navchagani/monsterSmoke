@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
-import 'package:monstersmoke/dashboard/dashboard.dart';
-import 'package:monstersmoke/dashboard/dashboardDrawer.dart';
 
 class UserAddresses extends StatefulWidget {
   const UserAddresses({super.key});
@@ -96,7 +94,7 @@ class _UserAddressesState extends State<UserAddresses> {
                               Container(
                                 decoration: const BoxDecoration(
                                     border: BorderDirectional(
-                                        end: const BorderSide(
+                                        end: BorderSide(
                                             color: Color.fromARGB(
                                                 255, 218, 216, 216),
                                             width: 1))),
@@ -242,7 +240,7 @@ class _UserAddressesState extends State<UserAddresses> {
                               Container(
                                 decoration: const BoxDecoration(
                                     border: BorderDirectional(
-                                        end: const BorderSide(
+                                        end: BorderSide(
                                             color: Color.fromARGB(
                                                 255, 218, 216, 216),
                                             width: 1))),
@@ -388,7 +386,7 @@ class _UserAddressesState extends State<UserAddresses> {
                               Container(
                                 decoration: const BoxDecoration(
                                     border: BorderDirectional(
-                                        end: const BorderSide(
+                                        end: BorderSide(
                                             color: Color.fromARGB(
                                                 255, 218, 216, 216),
                                             width: 1))),
