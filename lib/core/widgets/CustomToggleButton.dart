@@ -53,7 +53,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
   }
 
   void centerSelectedChip(int index) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final RenderBox renderBox = context.findRenderObject() as RenderBox;
       final double screenWidth = renderBox.size.width;
       const double selectedChipWidth =
@@ -64,9 +64,5 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
       scrollController.animateTo(scrollTo,
           duration: const Duration(milliseconds: 700), curve: Curves.linear);
     });
-  }
-
-  onPressed(int index) {
-    ;
   }
 }

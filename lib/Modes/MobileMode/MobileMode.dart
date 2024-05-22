@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
-import 'package:monstersmoke/Modes/MobileMode/Widgets/AppBars.dart';
 import 'package:monstersmoke/Modes/MobileMode/Widgets/MainAppBar.dart';
 import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';

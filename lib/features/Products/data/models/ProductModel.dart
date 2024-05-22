@@ -336,7 +336,7 @@ class Content {
       this.width});
   Content copyWith(
       {int? productId,
-      dynamic? sku,
+      dynamic sku,
       String? upc,
       String? productName,
       String? alias,
