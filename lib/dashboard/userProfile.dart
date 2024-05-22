@@ -26,11 +26,11 @@ class _UserProfileState extends State<UserProfile> {
   TextEditingController companyName = TextEditingController();
   TextEditingController taxId = TextEditingController();
 
-  final customer = getIt<CustomerBloc>();
+  // final customer = getIt<CustomerBloc>();
 
   @override
   void initState() {
-    // CustomerBloc customer = BlocProvider.of<CustomerBloc>(context);
+    CustomerBloc customer = BlocProvider.of<CustomerBloc>(context);
     setState(() {
       firstName.text = customer.state.customerModel!.firstName.toString();
       lastName.text = customer.state.customerModel!.lastName.toString();
@@ -234,6 +234,7 @@ class _UserProfileState extends State<UserProfile> {
   onTaxIdChanged(String value) => setState(() {});
 
   onUpdateCustomer() {
+    CustomerBloc customer = BlocProvider.of<CustomerBloc>(context);
     final customerModel = customer.state.customerModel!
       ..firstName = firstName.text
       ..lastName = lastName.text
