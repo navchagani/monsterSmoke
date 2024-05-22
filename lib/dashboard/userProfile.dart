@@ -1,8 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/core/widgets/CustomDialog.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
+import 'package:monstersmoke/features/Auth/data/models/CustomerModel.dart';
+import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
+
+import '../features/Customer/presentation/bloc/UpdateCustomerBloc/update_customer_bloc_bloc.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
@@ -19,9 +26,11 @@ class _UserProfileState extends State<UserProfile> {
   TextEditingController companyName = TextEditingController();
   TextEditingController taxId = TextEditingController();
 
+  final customer = getIt<CustomerBloc>();
+
   @override
   void initState() {
-    CustomerBloc customer = BlocProvider.of<CustomerBloc>(context);
+    // CustomerBloc customer = BlocProvider.of<CustomerBloc>(context);
     setState(() {
       firstName.text = customer.state.customerModel!.firstName.toString();
       lastName.text = customer.state.customerModel!.lastName.toString();
@@ -60,7 +69,7 @@ class _UserProfileState extends State<UserProfile> {
               height: 20,
             ),
             Column(children: [
-              Stack(
+              const Stack(
                 alignment: Alignment.center,
                 children: [
                   CircleAvatar(
@@ -73,7 +82,7 @@ class _UserProfileState extends State<UserProfile> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.email,
                     color: Color(0xff202b38),
                   ),
@@ -225,13 +234,20 @@ class _UserProfileState extends State<UserProfile> {
   onTaxIdChanged(String value) => setState(() {});
 
   onUpdateCustomer() {
-    final customerModel = CustomerModel(
-        // id: ,
-        firstName: firstName.text,
-        lastName: lastName.text,
-        email: email.text,
-        phone: phone.text,
-        taxId: taxId.text);
+    final customerModel = customer.state.customerModel!
+      ..firstName = firstName.text
+      ..lastName = lastName.text
+      ..email = email.text
+      ..phone = phone.text
+      ..taxId = taxId.text;
+
+    // CustomerModel(
+    //     // id: ,
+    //     firstName: firstName.text,
+    //     lastName: lastName.text,
+    //     email: email.text,
+    //     phone: phone.text,
+    //     taxId: taxId.text);
 
     UpdateCustomerBlocBloc bloc =
         BlocProvider.of<UpdateCustomerBlocBloc>(context);

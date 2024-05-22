@@ -29,7 +29,7 @@ class _BillingPageState extends State<BillingPage> {
     CustomerStoreAddressList? defaultAddress = bloc
         .state.customerModel?.customerStoreAddressList
         ?.firstWhere((element) => element.defaultBillingAddress == true,
-            orElse: () => const CustomerStoreAddressList());
+            orElse: () => CustomerStoreAddressList());
 
     if (defaultAddress != null) {
       setState(() {
