@@ -4,9 +4,11 @@ import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/Modes/MobileMode/MobileMode.dart';
 import 'package:monstersmoke/Modes/TabMode.dart';
 import 'package:monstersmoke/core/widgets/CustomHtmlViewer.dart';
+import 'package:monstersmoke/core/widgets/CustomLinkButton.dart';
 import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Products/data/models/updateCartModel.dart';
+import 'package:monstersmoke/features/sharedPrefsApi.dart';
 
 class PlatformBuilder extends StatelessWidget {
   const PlatformBuilder({super.key});
@@ -55,7 +57,7 @@ class PlatformBuilder extends StatelessWidget {
   Widget appDrawer({required BuildContext context}) {
     return Padding(
       padding:
-          const EdgeInsets.only(left: 5, bottom: 15.0, top: 35, right: 100.0),
+          const EdgeInsets.only(left: 5, bottom: 15.0, top: 35, right: 60.0),
       child: Drawer(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -63,19 +65,38 @@ class PlatformBuilder extends StatelessWidget {
         surfaceTintColor: Colors.transparent,
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(25.0),
             child: Column(
               children: [
                 userData(),
-                Decorations.height15,
+                Decorations.height10,
                 menus(context),
+                Decorations.height10,
+                logoutButton(context),
                 const Spacer(),
-                footer()
+                footer(),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget logoutButton(BuildContext context) {
+    return Row(
+      children: [
+        CustomLinkButton(
+          onTap: () => onLogout(context),
+          text: 'Log Out',
+          textColor: Colors.deepOrange,
+        ),
+        // Decorations.width5,
+        const Icon(
+          Icons.arrow_circle_right_outlined,
+          color: Colors.deepOrange,
+        )
+      ],
     );
   }
 
@@ -105,9 +126,9 @@ class PlatformBuilder extends StatelessWidget {
     ];
 
     return Material(
-      color: Colors.white,
-      elevation: 2.0,
-      borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+      color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+      borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+      clipBehavior: Clip.hardEdge,
       child: ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -115,7 +136,9 @@ class PlatformBuilder extends StatelessWidget {
           return list[index];
         },
         separatorBuilder: (BuildContext context, int index) {
-          return const Divider();
+          return const Divider(
+            height: 0.0,
+          );
         },
         itemCount: list.length,
       ),
@@ -141,9 +164,10 @@ class PlatformBuilder extends StatelessWidget {
           builder: ((context, customerState) {
         if (customerState is CustomerCompletedState) {
           return Material(
-              color: Colors.white,
-              elevation: 2.0,
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              // elevation: 5.0,
+              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+              clipBehavior: Clip.hardEdge,
               child: InkWell(
                 onTap: () {},
                 child: Padding(
@@ -227,5 +251,15 @@ class PlatformBuilder extends StatelessWidget {
         builder: ((context) => const HTMLViewer(
               title: 'faqs',
             ))));
+  }
+
+  onLogout(BuildContext context) async {
+    CustomerBloc bloc = BlocProvider.of(context);
+    bloc.add(CustomerInitialEvent());
+
+    final shared = SharedPrefsApi();
+    await shared.removeFromShared(key: 'login');
+
+    Navigator.of(context).pop();
   }
 }

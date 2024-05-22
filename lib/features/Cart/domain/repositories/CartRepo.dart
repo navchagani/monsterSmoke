@@ -4,7 +4,7 @@ import 'package:monstersmoke/features/Products/data/models/updateCartModel.dart'
 
 abstract class CartRepo {
   Future<DataStates<List<CartLineItemDtoList>>> addtoCart(
-      {required List<ProductModel> productModel, required String storeId});
+      {required List<Content> Content, required String storeId});
   Future<DataStates<UpdateCartModel>> getCart({required String storeId});
   Future<DataStates<List<CartLineItemDtoList>>> updateCart(
       {required List<CartLineItemDtoList> updateCartModel,

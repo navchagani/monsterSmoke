@@ -63,7 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
         }
       },
       child: Material(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(5.0),
         clipBehavior: Clip.hardEdge,
         child: Scaffold(
           body: body(),
@@ -92,7 +92,7 @@ class _SignUpPageState extends State<SignUpPage> {
               'Your Buisness',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
             ),
-            Decorations.height10,
+            Decorations.height5,
             Row(
               children: [
                 Expanded(
@@ -103,7 +103,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     onChanged: onBuisnessNameChanged,
                   ),
                 ),
-                Decorations.width10,
+                Decorations.width5,
                 Expanded(
                   child: CustomInputField(
                       labelText: 'Company',
@@ -113,7 +113,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ],
             ),
-            Decorations.height10,
+            Decorations.height5,
             CustomInputField(
               labelText: 'Tax',
               hintText: 'Tax Id',
@@ -133,7 +133,7 @@ class _SignUpPageState extends State<SignUpPage> {
               'Buisness Address',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
             ),
-            Decorations.height10,
+            Decorations.height5,
             Row(
               children: [
                 Expanded(
@@ -144,7 +144,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     onChanged: onBuisnessAddressChanged,
                   ),
                 ),
-                Decorations.width10,
+                Decorations.width5,
                 Expanded(
                   child: CustomInputField(
                       labelText: 'City',
@@ -154,11 +154,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ],
             ),
-            Decorations.height10,
+            Decorations.height5,
             CountryDropDown(onCountryChanged: onAddressChanged),
-            Decorations.height10,
+            Decorations.height5,
             StateDropDown(onStateChanged: onStateChanged),
-            Decorations.height10,
+            Decorations.height5,
             CustomInputField(
               labelText: 'Zip Code',
               hintText: 'Zip Code',
@@ -181,7 +181,7 @@ class _SignUpPageState extends State<SignUpPage> {
               'Your Profile',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
             ),
-            Decorations.height10,
+            Decorations.height5,
             Row(
               children: [
                 Expanded(
@@ -192,7 +192,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     onChanged: onfirstNameChanged,
                   ),
                 ),
-                Decorations.width10,
+                Decorations.width5,
                 Expanded(
                   child: CustomInputField(
                     labelText: 'Second Name',
@@ -203,7 +203,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ],
             ),
-            Decorations.height10,
+            Decorations.height5,
             Row(
               children: [
                 Expanded(
@@ -214,7 +214,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     onChanged: onEmailChanged,
                   ),
                 ),
-                Decorations.width10,
+                Decorations.width5,
                 Expanded(
                   child: CustomInputField(
                       labelText: 'Phone',

@@ -23,6 +23,13 @@ class _SearchPageState extends State<SearchPage> {
   final productBloc = getIt<ProductBloc>();
 
   @override
+  void dispose() {
+    productBloc.close();
+    searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),

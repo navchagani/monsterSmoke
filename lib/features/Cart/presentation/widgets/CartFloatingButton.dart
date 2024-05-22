@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Functions/FunctionsProduct.dart';
 import 'package:monstersmoke/cartPage.dart';
-import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/core/blocs/CartBloc.dart';
 import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
@@ -21,6 +20,13 @@ class CartFloatButton extends StatefulWidget {
 
 class _CartFloatButtonState extends State<CartFloatButton> {
   final cartBloc = getIt<CartBloc>();
+
+  @override
+  void dispose() {
+    cartBloc.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<LocalCartBloc>(context);
@@ -44,10 +50,10 @@ class _CartFloatButtonState extends State<CartFloatButton> {
         },
         builder: (context, cartState) {
           if (cartState is CartLoadingState) {
-            return const FloatingActionButton(
-                backgroundColor: Constants.monsterBlue,
+            return FloatingActionButton(
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 onPressed: null,
-                child: Padding(
+                child: const Padding(
                   padding: EdgeInsets.all(20.0),
                   child: CircularProgressIndicator(
                     strokeWidth: 5.0,
@@ -68,10 +74,11 @@ class _CartFloatButtonState extends State<CartFloatButton> {
                               productList: state.listProduct);
 
                       if (state is LocalCartLoadingState) {
-                        return const FloatingActionButton(
-                            backgroundColor: Constants.monsterBlue,
+                        return FloatingActionButton(
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
                             onPressed: null,
-                            child: Padding(
+                            child: const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: CircularProgressIndicator(
                                 strokeWidth: 3.0,
@@ -82,7 +89,8 @@ class _CartFloatButtonState extends State<CartFloatButton> {
 
                       if (state is LocalCartLoadedState && length > 0) {
                         return FloatingActionButton(
-                          backgroundColor: Constants.monsterBlue,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
                           onPressed: customerState.customerModel == null
                               ? () => navigateToAuthPage()
                               : () => onMovetoCart(
@@ -92,7 +100,8 @@ class _CartFloatButtonState extends State<CartFloatButton> {
                       }
 
                       return FloatingActionButton(
-                          backgroundColor: Constants.monsterBlue,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
                           onPressed: customerState.customerModel == null
                               ? () => navigateToAuthPage()
                               : () {
@@ -110,8 +119,8 @@ class _CartFloatButtonState extends State<CartFloatButton> {
   void onMovetoCart(
       {required BuildContext context,
       required List<MasterProductDetails> list}) {
-    List<ProductModel> productList = list
-        .map((e) => ProductModel(
+    List<Content> productList = list
+        .map((e) => Content(
             availableQuantity: e.availableQuantity,
             eta: e.eta,
             imageUrl: e.imageUrl,
@@ -127,7 +136,6 @@ class _CartFloatButtonState extends State<CartFloatButton> {
             quantity: e.quantity))
         .toList();
 
-    // CartBloc cartBloc = getIt<CartBloc>();
     cartBloc.add(AddToCartEvent(storeId: 2.toString(), list: productList));
   }
 

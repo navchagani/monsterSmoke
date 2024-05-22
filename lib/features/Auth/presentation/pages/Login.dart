@@ -28,6 +28,12 @@ class _LoginPageState extends State<LoginPage> {
   bool onSwitchFP = false;
 
   @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: bloc,
@@ -122,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
             controller: emailController,
             onChanged: onEmailChanged,
           ),
-          if (!onSwitchFP) Decorations.height10,
+          if (!onSwitchFP) Decorations.height5,
           if (!onSwitchFP)
             CustomInputField(
                 icon: IconButton(

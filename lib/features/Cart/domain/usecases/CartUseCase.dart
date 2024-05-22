@@ -11,9 +11,8 @@ class CaseAddToCart
   CaseAddToCart({required this.repo});
   @override
   Future<DataStates<List<CartLineItemDtoList>>> call(
-      {void params, List<ProductModel>? productModel, String? storeId}) {
-    return repo.addtoCart(
-        productModel: productModel!, storeId: storeId.toString());
+      {void params, List<Content>? Content, String? storeId}) {
+    return repo.addtoCart(Content: Content!, storeId: storeId.toString());
   }
 }
 
@@ -23,7 +22,7 @@ class CaseGetCart extends CaseFuture<DataStates<UpdateCartModel>, void> {
   CaseGetCart({required this.repo});
   @override
   Future<DataStates<UpdateCartModel>> call(
-      {void params, ProductModel? productModel, String? storeId}) {
+      {void params, Content? Content, String? storeId}) {
     return repo.getCart(storeId: storeId.toString());
   }
 }

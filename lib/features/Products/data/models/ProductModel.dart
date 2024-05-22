@@ -1,39 +1,308 @@
 class ProductModel {
-  int? productId;
-  dynamic sku;
-  String? upc;
-  String? productName;
-  String? alias;
-  int? availableQuantity;
-  String? eta;
-  String? imageUrl;
-  dynamic masterProductId;
-  dynamic masterProductName;
-  dynamic taxClassId;
-  double? standardPrice;
-  double? standardPriceWithoutDiscount;
-  int? sequenceNumber;
-  dynamic costPrice;
-  dynamic tags;
-  dynamic tagName;
-  dynamic tagId;
-  dynamic tagImageDtoList;
-  int? minQuantityToSale;
-  int? maxQuantityToSale;
-  int? quantityIncrement;
-  bool? hasChildProduct;
-  dynamic promotionType;
-  double? promotionValue;
-  dynamic promotionStartdate;
-  dynamic promotionEnddate;
-  dynamic promotionNotes;
-  dynamic weight;
-  dynamic height;
-  dynamic length;
-  dynamic width;
-  int? quantity = 1;
-  ProductModel(
-      {this.productId,
+  final List<Content>? content;
+  final Pageable? pageable;
+  final int? totalElements;
+  final int? totalPages;
+  final bool? last;
+  final bool? first;
+  final Sort? sort;
+  final int? size;
+  final int? number;
+  final int? numberOfElements;
+  final bool? empty;
+  const ProductModel(
+      {this.content,
+      this.pageable,
+      this.totalElements,
+      this.totalPages,
+      this.last,
+      this.first,
+      this.sort,
+      this.size,
+      this.number,
+      this.numberOfElements,
+      this.empty});
+  ProductModel copyWith(
+      {List<Content>? content,
+      Pageable? pageable,
+      int? totalElements,
+      int? totalPages,
+      bool? last,
+      bool? first,
+      Sort? sort,
+      int? size,
+      int? number,
+      int? numberOfElements,
+      bool? empty}) {
+    return ProductModel(
+        content: content ?? this.content,
+        pageable: pageable ?? this.pageable,
+        totalElements: totalElements ?? this.totalElements,
+        totalPages: totalPages ?? this.totalPages,
+        last: last ?? this.last,
+        first: first ?? this.first,
+        sort: sort ?? this.sort,
+        size: size ?? this.size,
+        number: number ?? this.number,
+        numberOfElements: numberOfElements ?? this.numberOfElements,
+        empty: empty ?? this.empty);
+  }
+
+  Map<String, Object?> toJson() {
+    return {
+      'content':
+          content?.map<Map<String, dynamic>>((data) => data.toJson()).toList(),
+      'pageable': pageable?.toJson(),
+      'totalElements': totalElements,
+      'totalPages': totalPages,
+      'last': last,
+      'first': first,
+      'sort': sort?.toJson(),
+      'size': size,
+      'number': number,
+      'numberOfElements': numberOfElements,
+      'empty': empty
+    };
+  }
+
+  static ProductModel fromJson(Map<String, Object?> json) {
+    return ProductModel(
+        content: json['content'] == null
+            ? null
+            : (json['content'] as List)
+                .map<Content>(
+                    (data) => Content.fromJson(data as Map<String, Object?>))
+                .toList(),
+        pageable: json['pageable'] == null
+            ? null
+            : Pageable.fromJson(json['pageable'] as Map<String, Object?>),
+        totalElements:
+            json['totalElements'] == null ? null : json['totalElements'] as int,
+        totalPages:
+            json['totalPages'] == null ? null : json['totalPages'] as int,
+        last: json['last'] == null ? null : json['last'] as bool,
+        first: json['first'] == null ? null : json['first'] as bool,
+        sort: json['sort'] == null
+            ? null
+            : Sort.fromJson(json['sort'] as Map<String, Object?>),
+        size: json['size'] == null ? null : json['size'] as int,
+        number: json['number'] == null ? null : json['number'] as int,
+        numberOfElements: json['numberOfElements'] == null
+            ? null
+            : json['numberOfElements'] as int,
+        empty: json['empty'] == null ? null : json['empty'] as bool);
+  }
+
+  @override
+  String toString() {
+    return '''Content(
+                content:${content.toString()},
+pageable:${pageable.toString()},
+totalElements:$totalElements,
+totalPages:$totalPages,
+last:$last,
+first:$first,
+sort:${sort.toString()},
+size:$size,
+number:$number,
+numberOfElements:$numberOfElements,
+empty:$empty
+    ) ''';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ProductModel &&
+        other.runtimeType == runtimeType &&
+        other.content == content &&
+        other.pageable == pageable &&
+        other.totalElements == totalElements &&
+        other.totalPages == totalPages &&
+        other.last == last &&
+        other.first == first &&
+        other.sort == sort &&
+        other.size == size &&
+        other.number == number &&
+        other.numberOfElements == numberOfElements &&
+        other.empty == empty;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(runtimeType, content, pageable, totalElements,
+        totalPages, last, first, sort, size, number, numberOfElements, empty);
+  }
+}
+
+class Pageable {
+  final Sort? sort;
+  final int? pageSize;
+  final int? pageNumber;
+  final int? offset;
+  final bool? unpaged;
+  final bool? paged;
+  const Pageable(
+      {this.sort,
+      this.pageSize,
+      this.pageNumber,
+      this.offset,
+      this.unpaged,
+      this.paged});
+  Pageable copyWith(
+      {Sort? sort,
+      int? pageSize,
+      int? pageNumber,
+      int? offset,
+      bool? unpaged,
+      bool? paged}) {
+    return Pageable(
+        sort: sort ?? this.sort,
+        pageSize: pageSize ?? this.pageSize,
+        pageNumber: pageNumber ?? this.pageNumber,
+        offset: offset ?? this.offset,
+        unpaged: unpaged ?? this.unpaged,
+        paged: paged ?? this.paged);
+  }
+
+  Map<String, Object?> toJson() {
+    return {
+      'sort': sort?.toJson(),
+      'pageSize': pageSize,
+      'pageNumber': pageNumber,
+      'offset': offset,
+      'unpaged': unpaged,
+      'paged': paged
+    };
+  }
+
+  static Pageable fromJson(Map<String, Object?> json) {
+    return Pageable(
+        sort: json['sort'] == null
+            ? null
+            : Sort.fromJson(json['sort'] as Map<String, Object?>),
+        pageSize: json['pageSize'] == null ? null : json['pageSize'] as int,
+        pageNumber:
+            json['pageNumber'] == null ? null : json['pageNumber'] as int,
+        offset: json['offset'] == null ? null : json['offset'] as int,
+        unpaged: json['unpaged'] == null ? null : json['unpaged'] as bool,
+        paged: json['paged'] == null ? null : json['paged'] as bool);
+  }
+
+  @override
+  String toString() {
+    return '''Pageable(
+                sort:${sort.toString()},
+pageSize:$pageSize,
+pageNumber:$pageNumber,
+offset:$offset,
+unpaged:$unpaged,
+paged:$paged
+    ) ''';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is Pageable &&
+        other.runtimeType == runtimeType &&
+        other.sort == sort &&
+        other.pageSize == pageSize &&
+        other.pageNumber == pageNumber &&
+        other.offset == offset &&
+        other.unpaged == unpaged &&
+        other.paged == paged;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+        runtimeType, sort, pageSize, pageNumber, offset, unpaged, paged);
+  }
+}
+
+class Sort {
+  final bool? sorted;
+  final bool? unsorted;
+  final bool? empty;
+  const Sort({this.sorted, this.unsorted, this.empty});
+  Sort copyWith({bool? sorted, bool? unsorted, bool? empty}) {
+    return Sort(
+        sorted: sorted ?? this.sorted,
+        unsorted: unsorted ?? this.unsorted,
+        empty: empty ?? this.empty);
+  }
+
+  Map<String, Object?> toJson() {
+    return {'sorted': sorted, 'unsorted': unsorted, 'empty': empty};
+  }
+
+  static Sort fromJson(Map<String, Object?> json) {
+    return Sort(
+        sorted: json['sorted'] == null ? null : json['sorted'] as bool,
+        unsorted: json['unsorted'] == null ? null : json['unsorted'] as bool,
+        empty: json['empty'] == null ? null : json['empty'] as bool);
+  }
+
+  @override
+  String toString() {
+    return '''Sort(
+                sorted:$sorted,
+unsorted:$unsorted,
+empty:$empty
+    ) ''';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is Sort &&
+        other.runtimeType == runtimeType &&
+        other.sorted == sorted &&
+        other.unsorted == unsorted &&
+        other.empty == empty;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(runtimeType, sorted, unsorted, empty);
+  }
+}
+
+class Content {
+  final int? productId;
+  final dynamic sku;
+  final String? upc;
+  final String? productName;
+  final String? alias;
+  final int? availableQuantity;
+  final String? eta;
+  final String? imageUrl;
+  final dynamic masterProductId;
+  final dynamic masterProductName;
+  final dynamic taxClassId;
+  final double? standardPrice;
+  final double? standardPriceWithoutDiscount;
+  final int? sequenceNumber;
+  final dynamic costPrice;
+  final dynamic tags;
+  final dynamic tagName;
+  final dynamic tagId;
+  final dynamic tagImageDtoList;
+  final int? minQuantityToSale;
+  final int? maxQuantityToSale;
+  final int? quantityIncrement;
+  final bool? hasChildProduct;
+  final dynamic promotionType;
+  final double? promotionValue;
+  final dynamic promotionStartdate;
+  final dynamic promotionEnddate;
+  final dynamic promotionNotes;
+  final dynamic weight;
+  final dynamic height;
+  final dynamic length;
+  final dynamic width;
+  final int? quantity;
+  const Content(
+      {this.quantity,
+      this.productId,
       this.sku,
       this.upc,
       this.productName,
@@ -64,9 +333,8 @@ class ProductModel {
       this.weight,
       this.height,
       this.length,
-      this.width,
-      this.quantity});
-  ProductModel copyWith(
+      this.width});
+  Content copyWith(
       {int? productId,
       dynamic sku,
       String? upc,
@@ -98,9 +366,8 @@ class ProductModel {
       dynamic weight,
       dynamic height,
       dynamic length,
-      dynamic width,
-      int? quantity = 1}) {
-    return ProductModel(
+      dynamic width}) {
+    return Content(
         productId: productId ?? this.productId,
         sku: sku ?? this.sku,
         upc: upc ?? this.upc,
@@ -133,8 +400,7 @@ class ProductModel {
         weight: weight ?? this.weight,
         height: height ?? this.height,
         length: length ?? this.length,
-        width: width ?? this.width,
-        quantity: quantity ?? this.quantity);
+        width: width ?? this.width);
   }
 
   Map<String, Object?> toJson() {
@@ -170,13 +436,12 @@ class ProductModel {
       'weight': weight,
       'height': height,
       'length': length,
-      'width': width,
-      'quantity': quantity
+      'width': width
     };
   }
 
-  static ProductModel fromJson(Map<String, Object?> json) {
-    return ProductModel(
+  static Content fromJson(Map<String, Object?> json) {
+    return Content(
         productId: json['productId'] == null ? null : json['productId'] as int,
         sku: json['sku'] as dynamic,
         upc: json['upc'] == null ? null : json['upc'] as String,
@@ -228,13 +493,12 @@ class ProductModel {
         weight: json['weight'] as dynamic,
         height: json['height'] as dynamic,
         length: json['length'] as dynamic,
-        width: json['width'] as dynamic,
-        quantity: json['quantity'] == null ? null : json['quantity'] as int);
+        width: json['width'] as dynamic);
   }
 
   @override
   String toString() {
-    return '''ProductModel(
+    return '''Content(
                 productId:$productId,
 sku:$sku,
 upc:$upc,
@@ -266,14 +530,13 @@ promotionNotes:$promotionNotes,
 weight:$weight,
 height:$height,
 length:$length,
-width:$width,
-quantity:$quantity
+width:$width
     ) ''';
   }
 
   @override
   bool operator ==(Object other) {
-    return other is ProductModel &&
+    return other is Content &&
         other.runtimeType == runtimeType &&
         other.productId == productId &&
         other.sku == sku &&
@@ -306,8 +569,7 @@ quantity:$quantity
         other.weight == weight &&
         other.height == height &&
         other.length == length &&
-        other.width == width &&
-        other.quantity == quantity;
+        other.width == width;
   }
 
   @override

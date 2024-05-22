@@ -31,10 +31,10 @@ class ProductCardWidget extends StatelessWidget {
             height: double.infinity,
             width: 360,
             child: Material(
-              // elevation: 4.0,
-              shadowColor:
-                  Theme.of(context).colorScheme.onBackground.withOpacity(0.8),
-              color: Colors.white,
+              // elevation: 5.0,
+              // shadowColor:
+              //     Theme.of(context).colorScheme.onBackground.withOpacity(0.8),
+              color: Colors.transparent,
               shape: RoundedRectangleBorder(
                 side: BorderSide(
                     color: Theme.of(context)
@@ -82,77 +82,85 @@ class ProductCardWidget extends StatelessWidget {
                             height: 2,
                           ),
                           Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          productName,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
+                            child: Material(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.1),
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            productName,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                overflow:
+                                                    TextOverflow.ellipsis),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Decorations.height5,
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                            child: Text(
+                                          isSignedIn
+                                              ? '\$$productPrice'
+                                              : 'Sign In For Price',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.green.shade600,
+                                              fontWeight: FontWeight.w900,
+                                              overflow: TextOverflow.ellipsis),
+                                        )),
+                                      ],
+                                    ),
+                                    const Spacer(),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                            child: Text(
+                                          quantity <= 0
+                                              ? 'Out of Stock'
+                                              : 'In Stock: ${quantity.toString()}',
                                           style: const TextStyle(
                                               fontSize: 14,
                                               color: Colors.black,
-                                              fontWeight: FontWeight.bold,
+                                              fontWeight: FontWeight.normal,
                                               overflow: TextOverflow.ellipsis),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Decorations.height5,
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                          child: Text(
-                                        isSignedIn
-                                            ? '\$$productPrice'
-                                            : 'Sign In For Price',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.green.shade600,
-                                            fontWeight: FontWeight.w900,
-                                            overflow: TextOverflow.ellipsis),
-                                      )),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                          child: Text(
-                                        quantity <= 0
-                                            ? 'Out of Stock'
-                                            : 'In Stock: ${quantity.toString()}',
-                                        style: const TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.normal,
-                                            overflow: TextOverflow.ellipsis),
-                                      )),
-                                      // if (quantity > 0)
-                                      //   IconButton(
-                                      //       onPressed: isSignedIn
-                                      //           ? onAddToCart
-                                      //           : () =>
-                                      //               showAuthRequiredDialog(
-                                      //                   context),
-                                      //       icon: const Icon(
-                                      //         Icons
-                                      //             .add_circle_outline_outlined,
-                                      //         size: 30,
-                                      //       )),
-                                    ],
-                                  ),
-                                ],
+                                        )),
+                                        // if (quantity > 0)
+                                        //   IconButton(
+                                        //       onPressed: isSignedIn
+                                        //           ? onAddToCart
+                                        //           : () =>
+                                        //               showAuthRequiredDialog(
+                                        //                   context),
+                                        //       icon: const Icon(
+                                        //         Icons
+                                        //             .add_circle_outline_outlined,
+                                        //         size: 30,
+                                        //       )),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

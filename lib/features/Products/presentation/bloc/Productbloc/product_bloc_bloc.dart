@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
@@ -7,6 +8,7 @@ import 'package:monstersmoke/config/DataStates.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductDetailsModel.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductSearchModel.dart';
+import 'package:monstersmoke/features/Products/data/models/TagProductModel.dart';
 import 'package:monstersmoke/features/Products/domain/usecases/UseCaseProducts.dart';
 
 part 'product_bloc_event.dart';
@@ -16,12 +18,17 @@ class ProductBloc extends Bloc<ProductBlocEvent, ProductBlocState> {
   final CaseGetProducts getProducts;
   final CaseGetProductDetails getProductDetails;
   final CaseSearchProduct searchProduct;
-  ProductBloc(this.getProducts, this.getProductDetails, this.searchProduct)
+  final CaseGetTags getTags;
+  final CaseGetTaggedProducts caseGetTaggedProducts;
+  ProductBloc(this.getProducts, this.getProductDetails, this.searchProduct,
+      this.getTags, this.caseGetTaggedProducts)
       : super(ProductBlocInitial()) {
     on<ProductInitialEvent>(initial);
     on<GetProductEvent>(getProductsFunc);
     on<GetProductDetailEvent>(getProductsDetailFunc);
     on<SearchProductEvent>(searchProducts);
+    on<GetTagsEvent>(getTagsEvents);
+    on<GetTagProductEvents>(getTaggedProducts);
   }
 
   Future<FutureOr<void>> getProductsFunc(
@@ -36,7 +43,7 @@ class ProductBloc extends Bloc<ProductBlocEvent, ProductBlocState> {
         storeIds: event.storeIds);
 
     if (data is SuccessState) {
-      emit(ProductCompletedState(listProducts: data.data!));
+      emit(ProductCompletedState(productModel: data.data!));
     }
 
     if (data is ErrorState) {
@@ -71,6 +78,41 @@ class ProductBloc extends Bloc<ProductBlocEvent, ProductBlocState> {
 
     if (data is SuccessState) {
       emit(SearchProductCompletedState(searchModel: data.data!));
+    }
+
+    if (data is ErrorState) {
+      emit(ProductErrorState(error: data.error!));
+    }
+  }
+
+  Future<FutureOr<void>> getTaggedProducts(
+      GetTagProductEvents event, Emitter<ProductBlocState> emit) async {
+    emit(ProductLoadingState());
+    final data = await caseGetTaggedProducts(
+        storeId: event.storeIds,
+        size: event.size,
+        page: event.size,
+        buisnessTypeId: event.buisnessTypeId,
+        tagId: event.tagId);
+
+    log('$data');
+
+    if (data is SuccessState) {
+      emit(ProductCompletedState(productModel: data.data!));
+    }
+
+    if (data is ErrorState) {
+      emit(ProductErrorState(error: data.error!));
+    }
+  }
+
+  Future<FutureOr<void>> getTagsEvents(
+      GetTagsEvent event, Emitter<ProductBlocState> emit) async {
+    emit(ProductLoadingState());
+    final data = await getTags();
+
+    if (data is SuccessState) {
+      emit(TagsLoadedState(tagsList: data.data!));
     }
 
     if (data is ErrorState) {

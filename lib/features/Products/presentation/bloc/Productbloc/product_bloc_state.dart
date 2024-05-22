@@ -12,9 +12,9 @@ final class ProductBlocInitial extends ProductBlocState {}
 class ProductLoadingState extends ProductBlocState {}
 
 class ProductCompletedState extends ProductBlocState {
-  final List<ProductModel> listProducts;
+  final ProductModel productModel;
 
-  const ProductCompletedState({required this.listProducts});
+  const ProductCompletedState({required this.productModel});
 }
 
 class ProductDetailCompletedState extends ProductBlocState {
@@ -28,6 +28,18 @@ class SearchProductCompletedState extends ProductBlocState {
 
   const SearchProductCompletedState({required this.searchModel});
 }
+
+class TagsLoadedState extends ProductBlocState {
+  final List<TagContent> tagsList;
+
+  const TagsLoadedState({required this.tagsList});
+}
+
+// class TagsProductsLoadedState extends ProductBlocState {
+//   final List<Content> tagsList;
+
+//   const TagsProductsLoadedState({required this.tagsList});
+// }
 
 class ProductErrorState extends ProductBlocState {
   final DioException error;

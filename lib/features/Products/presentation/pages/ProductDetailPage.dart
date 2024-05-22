@@ -11,7 +11,7 @@ import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
 import 'package:monstersmoke/features/Products/presentation/bloc/Productbloc/product_bloc_bloc.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  final ProductModel model;
+  final Content model;
   const ProductDetailPage({super.key, required this.model});
 
   @override
@@ -26,6 +26,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     bloc.add(GetProductDetailEvent('2', widget.model.productId.toString()));
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
   }
 
   @override

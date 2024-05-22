@@ -5,6 +5,6 @@ import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
 abstract class CatBrandRepo {
   Future<DataStates<List<CategoryModel>>> getCategories(
       {required String buissnessTypeId});
-  Future<DataStates<List<ProductModel>>> getBrands(
+  Future<DataStates<List<Content>>> getBrands(
       {required String storeIds, required String brandIdList});
 }

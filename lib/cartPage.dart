@@ -236,8 +236,8 @@ class CartTile extends StatelessWidget {
         final isSignedIn = customerState.customerModel != null;
 
         return Material(
-          elevation: 4.0,
-          color: Theme.of(context).colorScheme.background,
+          // elevation: 4.0,
+          color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
           shape: const RoundedRectangleBorder(
               side: BorderSide.none,
               borderRadius: BorderRadius.all(Radius.circular(10.0))),

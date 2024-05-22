@@ -18,7 +18,7 @@ class _ProductApi implements ProductApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<List<ProductModel>>> getProducts({
+  Future<HttpResponse<ProductModel>> getProducts({
     required int? categoryIdList,
     required int? page,
     required int? size,
@@ -30,7 +30,7 @@ class _ProductApi implements ProductApi {
     final queryParameters = <String, dynamic>{
       'categoryIdList': categoryIdList,
       'page': page ?? 0,
-      'size': size ?? 20,
+      'size': size ?? 10,
       'sort': sort ?? 'date',
       'sortDirection': sortDirection ?? 'DESC',
       'storeIds': storeIds,
@@ -39,7 +39,7 @@ class _ProductApi implements ProductApi {
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<List<ProductModel>>>(Options(
+        _setStreamType<HttpResponse<ProductModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -58,10 +58,8 @@ class _ProductApi implements ProductApi {
 
     final data = _result.data!['result'];
     // log('${data}');
-    List<dynamic> content = data['content'];
-    var value = content
-        .map((dynamic i) => ProductModel.fromJson(i as Map<String, dynamic>))
-        .toList();
+
+    var value = ProductModel.fromJson(data as Map<String, dynamic>);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
@@ -156,6 +154,89 @@ class _ProductApi implements ProductApi {
     // log('${data}');
 
     final value = ProductSearchModel.fromJson(data);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<List<TagContent>>> getTags() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<TagContent>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              Constants.options(_dio),
+              '/api/home/productTagList',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+
+    List<dynamic> data = _result.data!['result'];
+    var value = data
+        .map((dynamic i) => TagContent.fromJson(i as Map<String, dynamic>))
+        .toList();
+
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<ProductModel>> getTaggedProducts({
+    required int tagId,
+    int? page,
+    int? size,
+    int? storeId,
+    int? buisnessTypeId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      // r'tagId': tagId,
+      'page': 0,
+      'size': size ?? 10,
+      'businessTypeId': buisnessTypeId ?? 1,
+      'storeId': storeId ?? 2,
+    };
+    log('Your tagId $tagId');
+    log('$queryParameters');
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<ProductModel>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              Constants.options(_dio),
+              '/api/home/product/tagId/$tagId',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+
+    final data = _result.data!['result'];
+
+    log(_result.realUri.toString());
+
+    // log(data);
+
+    var value = ProductModel.fromJson(data as Map<String, dynamic>);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

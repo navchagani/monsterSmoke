@@ -15,15 +15,14 @@ class DashboardPathBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DashboardPathBloc, String?>(builder: ((context, path) {
-      return Scaffold(
-        key: globalDashboardKey,
-        drawer: const DashboardDrawer(),
-        appBar: AppBar(
+    return Scaffold(
+      key: globalDashboardKey,
+      drawer: const DashboardDrawer(),
+      appBar: AppBar(
           backgroundColor: const Color(0xff202b38),
-          title: Text(
-            path ?? "",
-            style: const TextStyle(
+          title: const Text(
+            'Dashboard',
+            style: TextStyle(
               fontSize: 17,
               color: Colors.white,
             ),
@@ -36,41 +35,31 @@ class DashboardPathBuilder extends StatelessWidget {
             onPressed: () {
               globalDashboardKey.currentState?.openDrawer();
             },
-          ),
-        ),
-        body: Builder(builder: (context) {
-          if (path == 'Dashboard') {
-            return const CustomerDashboard();
-          }
+          )),
+      body: BlocBuilder<DashboardPathBloc, String?>(builder: ((context, path) {
+        if (path == 'dashboard') {
+          return const CustomerDashboard();
+        }
 
-          if (path == 'Profile') {
-            return const UserProfile();
-          }
+        if (path == 'profile') {
+          return const UserProfile();
+        }
 
-          if (path == 'Addresses') {
-            return const UserAddresses();
-          }
+        if (path == 'address') {
+          return const UserAddresses();
+        }
 
-          if (path == 'Change Password') {
-            return const Changepassword();
-          }
-          if (path == 'Statement') {
-            return const UserStatement();
-          }
+        if (path == 'password') {
+          return const Changepassword();
+        }
 
-          return Container();
-        }),
-        // floatingActionButton: FloatingActionButton(
-        //   backgroundColor: const Color(0xff202b38),
-        //   foregroundColor: Colors.white,
-        //   onPressed: () {},
-        //   child: const Icon(
-        //     Icons.menu_open_rounded,
-        //     size: 35,
-        //   ),
-        // ),
-      );
-    }));
+        if (path == 'statement') {
+          return const UserStatement();
+        }
+
+        return Container();
+      })),
+    );
   }
 }
 

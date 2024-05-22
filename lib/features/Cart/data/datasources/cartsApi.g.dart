@@ -9,9 +9,7 @@ part of 'cartsApi.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
 class _CartApi implements CartApi {
-  _CartApi(
-    this._dio,
-    this.sharedPrefsApi) {
+  _CartApi(this._dio, this.sharedPrefsApi) {
     baseUrl ??= 'https://erp.monstersmokewholesale.com';
   }
 
@@ -21,7 +19,7 @@ class _CartApi implements CartApi {
 
   @override
   Future<HttpResponse<List<CartLineItemDtoList>>> addtoCart({
-    required List<ProductModel> productModel,
+    required List<Content> Content,
     required String storeId,
   }) async {
     final _extra = <String, dynamic>{};
@@ -30,8 +28,7 @@ class _CartApi implements CartApi {
       'Authorization':
           'Bearer ${await sharedPrefsApi.getFromShared(key: 'login')}'
     };
-    List<Map<String, dynamic>> _data =
-        productModel.map((e) => e.toJson()).toList();
+    List<Map<String, dynamic>> _data = Content.map((e) => e.toJson()).toList();
 
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<List<CartLineItemDtoList>>>(Options(

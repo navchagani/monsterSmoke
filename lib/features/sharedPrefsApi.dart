@@ -19,4 +19,10 @@ class SharedPrefsApi {
     final data = instance.getString(key ?? 'key');
     return data;
   }
+
+  Future<bool> removeFromShared({String? key}) async {
+    final instance = await SharedPreferences.getInstance();
+    final data = await instance.remove(key ?? 'key');
+    return data;
+  }
 }
