@@ -5,7 +5,7 @@ import 'package:monstersmoke/features/Products/data/models/ProductSearchModel.da
 import 'package:monstersmoke/features/Products/data/models/TagProductModel.dart';
 
 abstract class ProductsRepo {
-  Future<DataStates<List<ProductModel>>> getProducts(
+  Future<DataStates<ProductModel>> getProducts(
       {required int? categoryIdList,
       required int? page,
       required int? size,
@@ -16,8 +16,8 @@ abstract class ProductsRepo {
       {required String storeIds, required String productId});
   Future<DataStates<ProductSearchModel>> searchProducts(
       {required String searchString});
-  Future<DataStates<List<TagProductModel>>> getTags();
-  Future<DataStates<List<ProductModel>>> getTaggedProducts(
+  Future<DataStates<List<TagContent>>> getTags();
+  Future<DataStates<ProductModel>> getTaggedProducts(
       {required int tagId,
       required int? page,
       required int? size,

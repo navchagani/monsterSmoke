@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
@@ -14,7 +13,7 @@ abstract class CartApi {
 
   @POST('/api/cartLineItem')
   Future<HttpResponse<List<CartLineItemDtoList>>> addtoCart(
-      {required List<ProductModel> productModel,
+      {required List<Content> Content,
       @Query('storeId') required String storeId});
   @GET('/api/cartLineItem/search')
   Future<HttpResponse<UpdateCartModel>> getCart(

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductDetailsModel.dart';
@@ -13,7 +15,7 @@ abstract class ProductApi {
   factory ProductApi(Dio dio) = _ProductApi;
 
   @GET('/api/ecommerce/product/category')
-  Future<HttpResponse<List<ProductModel>>> getProducts(
+  Future<HttpResponse<ProductModel>> getProducts(
       {@Query('categoryIdList') required int? categoryIdList,
       @Query('page') required int? page,
       @Query('size') required int? size,
@@ -28,9 +30,9 @@ abstract class ProductApi {
       {@Query('searchInput') required String searchString});
 
   @GET('/api/home/productTagList')
-  Future<HttpResponse<List<TagProductModel>>> getTags();
+  Future<HttpResponse<List<TagContent>>> getTags();
   @GET('/api/home/product/tagId/2')
-  Future<HttpResponse<List<ProductModel>>> getTaggedProducts(
+  Future<HttpResponse<ProductModel>> getTaggedProducts(
       {required int tagId,
       required int? page,
       required int? size,

@@ -6,8 +6,9 @@ import 'package:monstersmoke/features/Products/data/datasources/ProductApi.dart'
 import 'package:monstersmoke/features/Products/data/models/ProductDetailsModel.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductSearchModel.dart';
-import 'package:monstersmoke/features/Products/data/models/TagProductModel.dart';
 import 'package:monstersmoke/features/Products/domain/repositories/ProductsRepo.dart';
+
+import '../models/TagProductModel.dart';
 
 class ProductRepoImp extends ProductsRepo {
   final ProductApi productApi;
@@ -35,7 +36,7 @@ class ProductRepoImp extends ProductsRepo {
   }
 
   @override
-  Future<DataStates<List<ProductModel>>> getProducts(
+  Future<DataStates<ProductModel>> getProducts(
       {required int? categoryIdList,
       required int? page,
       required int? size,
@@ -84,7 +85,7 @@ class ProductRepoImp extends ProductsRepo {
   }
 
   @override
-  Future<DataStates<List<ProductModel>>> getTaggedProducts(
+  Future<DataStates<ProductModel>> getTaggedProducts(
       {required int tagId,
       required int? page,
       required int? size,
@@ -112,7 +113,7 @@ class ProductRepoImp extends ProductsRepo {
   }
 
   @override
-  Future<DataStates<List<TagProductModel>>> getTags() async {
+  Future<DataStates<List<TagContent>>> getTags() async {
     try {
       final data = await productApi.getTags();
 

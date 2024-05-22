@@ -6,12 +6,12 @@ import 'package:monstersmoke/features/Products/data/models/ProductSearchModel.da
 import 'package:monstersmoke/features/Products/data/models/TagProductModel.dart';
 import 'package:monstersmoke/features/Products/domain/repositories/ProductsRepo.dart';
 
-class CaseGetProducts extends CaseFuture<DataStates<List<ProductModel>>, void> {
+class CaseGetProducts extends CaseFuture<DataStates<ProductModel>, void> {
   final ProductsRepo repo;
 
   CaseGetProducts({required this.repo});
   @override
-  Future<DataStates<List<ProductModel>>> call(
+  Future<DataStates<ProductModel>> call(
       {void params,
       int? categoryIdList,
       int? page,
@@ -54,23 +54,22 @@ class CaseSearchProduct
   }
 }
 
-class CaseGetTags extends CaseFuture<DataStates<List<TagProductModel>>, void> {
+class CaseGetTags extends CaseFuture<DataStates<List<TagContent>>, void> {
   final ProductsRepo repo;
 
   CaseGetTags({required this.repo});
   @override
-  Future<DataStates<List<TagProductModel>>> call({void params}) {
+  Future<DataStates<List<TagContent>>> call({void params}) {
     return repo.getTags();
   }
 }
 
-class CaseGetTaggedProducts
-    extends CaseFuture<DataStates<List<ProductModel>>, void> {
+class CaseGetTaggedProducts extends CaseFuture<DataStates<ProductModel>, void> {
   final ProductsRepo repo;
 
   CaseGetTaggedProducts({required this.repo});
   @override
-  Future<DataStates<List<ProductModel>>> call({
+  Future<DataStates<ProductModel>> call({
     void params,
     int? page,
     int? size,

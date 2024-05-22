@@ -44,7 +44,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   Future<FutureOr<void>> addToCart(
       AddToCartEvent event, Emitter<CartState> emit) async {
     final data =
-        await caseAddToCart(productModel: event.list, storeId: event.storeId);
+        await caseAddToCart(Content: event.list, storeId: event.storeId);
 
     if (data is SuccessState) {
       add(GetCartEvent(storeId: event.storeId));

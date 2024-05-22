@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
@@ -42,7 +43,7 @@ class ProductBloc extends Bloc<ProductBlocEvent, ProductBlocState> {
         storeIds: event.storeIds);
 
     if (data is SuccessState) {
-      emit(ProductCompletedState(listProducts: data.data!));
+      emit(ProductCompletedState(productModel: data.data!));
     }
 
     if (data is ErrorState) {
@@ -94,8 +95,10 @@ class ProductBloc extends Bloc<ProductBlocEvent, ProductBlocState> {
         buisnessTypeId: event.buisnessTypeId,
         tagId: event.tagId);
 
+    log('$data');
+
     if (data is SuccessState) {
-      emit(ProductCompletedState(listProducts: data.data!));
+      emit(ProductCompletedState(productModel: data.data!));
     }
 
     if (data is ErrorState) {

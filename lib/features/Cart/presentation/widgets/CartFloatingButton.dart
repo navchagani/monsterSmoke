@@ -119,8 +119,8 @@ class _CartFloatButtonState extends State<CartFloatButton> {
   void onMovetoCart(
       {required BuildContext context,
       required List<MasterProductDetails> list}) {
-    List<ProductModel> productList = list
-        .map((e) => ProductModel(
+    List<Content> productList = list
+        .map((e) => Content(
             availableQuantity: e.availableQuantity,
             eta: e.eta,
             imageUrl: e.imageUrl,

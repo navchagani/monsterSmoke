@@ -12,7 +12,7 @@ class CatBrandsRepoImp extends CatBrandRepo {
   CatBrandsRepoImp(this.catBrandApi);
 
   @override
-  Future<DataStates<List<ProductModel>>> getBrands(
+  Future<DataStates<List<Content>>> getBrands(
       {required String storeIds, required String brandIdList}) async {
     try {
       final data = await catBrandApi.getBrands(

@@ -14,11 +14,9 @@ class CartRepoImp extends CartRepo {
 
   @override
   Future<DataStates<List<CartLineItemDtoList>>> addtoCart(
-      {required List<ProductModel> productModel,
-      required String storeId}) async {
+      {required List<Content> Content, required String storeId}) async {
     try {
-      final data =
-          await cartApi.addtoCart(productModel: productModel, storeId: storeId);
+      final data = await cartApi.addtoCart(Content: Content, storeId: storeId);
 
       if (data.response.statusCode == HttpStatus.created) {
         return SuccessState(data: data.data);

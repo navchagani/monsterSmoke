@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/Modes/MobileMode/Widgets/AppBars.dart';
 import 'package:monstersmoke/Modes/MobileMode/Widgets/MainAppBar.dart';
 import 'package:monstersmoke/core/inject.dart';
@@ -7,6 +8,7 @@ import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
 import 'package:monstersmoke/core/widgets/CustomProductContainer.dart';
 import 'package:monstersmoke/features/Cart/presentation/widgets/CartBottomBar.dart';
 import 'package:monstersmoke/features/Cart/presentation/widgets/CartFloatingButton.dart';
+import 'package:monstersmoke/features/Products/data/models/TagProductModel.dart';
 import 'package:monstersmoke/features/Products/presentation/bloc/Productbloc/product_bloc_bloc.dart';
 import 'package:monstersmoke/features/Search/presentation/pages/SearchPage.dart';
 
@@ -26,8 +28,7 @@ class _MobileViewModeState extends State<MobileViewMode> {
 
   @override
   void initState() {
-    ProductBloc bloc = BlocProvider.of(context);
-    bloc.add(const GetTagsEvent());
+    getTagsBloc.add(const GetTagsEvent());
 
     scrollController = ScrollController();
     scrollController.addListener(() {
@@ -100,44 +101,62 @@ class _MobileViewModeState extends State<MobileViewMode> {
             )
           ];
         },
-        body: BlocBuilder<ProductBloc, ProductBlocState>(
-          builder: (context, productState) {
-            return Scaffold(
-              body: body(),
-              bottomNavigationBar: const CartBottomBar(),
-              floatingActionButton: const CartFloatButton(
-                fromHome: true,
-              ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.endDocked,
-            );
-            // if (productState is TagsLoadedState) {
-            //   for (var element in productState.tagsList) {
-            //     getTagsBloc.add(GetTagProductEvents(
-            //         tagId: element.id,
-            //         page: 0,
-            //         size: 10,
-            //         storeIds: 2,
-            //         buisnessTypeId: 1));
-            //   }
-            // }
-          },
+        body: Scaffold(
+          body: BlocProvider.value(
+            value: getTagsBloc,
+            child: BlocBuilder<ProductBloc, ProductBlocState>(
+              bloc: getTagsBloc,
+              builder: (context, productState) {
+                if (productState is ProductLoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                if (productState is TagsLoadedState) {
+                  return body(products: productState.tagsList);
+                }
+
+                return Container();
+              },
+            ),
+          ),
+          bottomNavigationBar: const CartBottomBar(),
+          floatingActionButton: const CartFloatButton(
+            fromHome: true,
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         ));
   }
 
-  Widget body() {
-    return ListView(
-      padding: const EdgeInsets.all(15.0),
-      children: const [
-        CustomProductContainer(
-          text: 'Featured',
+  Widget body({required List<TagContent> products}) {
+    return ListView.separated(
+      itemBuilder: (context, index) {
+        final tag = products[index];
+
+        return CustomProductContainer(
+          fromTags: true,
+          text: tag.name.toString(),
           isScrollable: false,
           showQuantity: 6,
-        ),
-        SliverBar1(
-          siderId: 94,
-        ),
-      ],
+          tagId: tag.id,
+          storeIds: 2,
+          categoryList: 1,
+        );
+      },
+      itemCount: products.length,
+      separatorBuilder: ((context, index) => Decorations.height15),
+      padding: const EdgeInsets.all(15.0),
+      // children: const [
+      //   CustomProductContainer(
+      //     text: 'Featured',
+      //     isScrollable: false,
+      //     showQuantity: 6,
+      //   ),
+      //   SliverBar1(
+      //     siderId: 94,
+      //   ),
+      // ],
     );
   }
 }

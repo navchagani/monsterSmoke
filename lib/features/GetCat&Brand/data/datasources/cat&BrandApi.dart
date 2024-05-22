@@ -15,7 +15,7 @@ abstract class CatBrandApi {
       {@Query('businessTypeId') required String buissnessTypeId});
 
   @GET('/api/ecommerce/product/brand')
-  Future<HttpResponse<List<ProductModel>>> getBrands(
+  Future<HttpResponse<List<Content>>> getBrands(
       {@Query('storeIds') required String storeIds,
       @Query('brandIdList') required String brandIdList});
 }

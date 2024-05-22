@@ -1,25 +1,25 @@
-class TagProductModel {
+class TagContent {
   final int? id;
   final String? name;
   final dynamic color;
   final int? sequenceNumber;
   final bool? ecommerce;
   final int? productTagId;
-  const TagProductModel(
+  const TagContent(
       {this.id,
       this.name,
       this.color,
       this.sequenceNumber,
       this.ecommerce,
       this.productTagId});
-  TagProductModel copyWith(
+  TagContent copyWith(
       {int? id,
       String? name,
       dynamic color,
       int? sequenceNumber,
       bool? ecommerce,
       int? productTagId}) {
-    return TagProductModel(
+    return TagContent(
         id: id ?? this.id,
         name: name ?? this.name,
         color: color ?? this.color,
@@ -39,8 +39,8 @@ class TagProductModel {
     };
   }
 
-  static TagProductModel fromJson(Map<String, Object?> json) {
-    return TagProductModel(
+  static TagContent fromJson(Map<String, Object?> json) {
+    return TagContent(
         id: json['id'] == null ? null : json['id'] as int,
         name: json['name'] == null ? null : json['name'] as String,
         color: json['color'] as dynamic,
@@ -54,7 +54,7 @@ class TagProductModel {
 
   @override
   String toString() {
-    return '''TagProductModel(
+    return '''TagContent(
                 id:$id,
 name:$name,
 color:$color,
@@ -66,7 +66,7 @@ productTagId:$productTagId
 
   @override
   bool operator ==(Object other) {
-    return other is TagProductModel &&
+    return other is TagContent &&
         other.runtimeType == runtimeType &&
         other.id == id &&
         other.name == name &&

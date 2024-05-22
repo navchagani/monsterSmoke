@@ -11,7 +11,7 @@ class CartInitialEvent extends CartEvent {}
 
 class AddToCartEvent extends CartEvent {
   final String storeId;
-  final List<ProductModel> list;
+  final List<Content> list;
 
   const AddToCartEvent({required this.storeId, required this.list});
 }
