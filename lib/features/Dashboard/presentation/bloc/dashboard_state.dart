@@ -1,7 +1,8 @@
 part of 'dashboard_bloc.dart';
 
 abstract class DashboardState extends Equatable {
-  const DashboardState();
+  final DashboardModel? dashboardModel;
+  const DashboardState({this.dashboardModel});
 
   @override
   List<Object> get props => [];

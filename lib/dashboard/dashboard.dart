@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/dashboard/recentOrders.dart';
+
+import '../features/Dashboard/presentation/bloc/dashboard_bloc.dart';
 
 class CustomerDashboard extends StatefulWidget {
   const CustomerDashboard({super.key});
@@ -17,11 +21,14 @@ class CustomerDashboardState extends State<CustomerDashboard> {
   TextEditingController fromDateController = TextEditingController();
   TextEditingController toDateController = TextEditingController();
 
+  final dashboardBloc = getIt<DashboardBloc>();
+
   @override
   void initState() {
-    super.initState();
+    dashboardBloc.add(GetDashboardEvent());
     fromDateController.text = fromDate != null ? _dateFormat(fromDate!) : '';
     toDateController.text = toDate != null ? _dateFormat(toDate!) : '';
+    super.initState();
   }
 
   String _dateFormat(DateTime date) {
@@ -115,46 +122,81 @@ class CustomerDashboardState extends State<CustomerDashboard> {
             ),
           ),
           Container(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              decoration: const BoxDecoration(
-                  borderRadius:
-                      BorderRadius.only(topLeft: Radius.circular(50))),
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  const Text(
-                    "Dashboard",
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 171, 29, 48),
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18),
-                    textAlign: TextAlign.left,
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(50))),
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                const Text(
+                  "Dashboard",
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 171, 29, 48),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18),
+                  textAlign: TextAlign.left,
+                ),
+                const SizedBox(height: 20),
+                BlocProvider.value(
+                  value: dashboardBloc,
+                  child: BlocBuilder<DashboardBloc, DashboardState>(
+                    bloc: dashboardBloc,
+                    builder: (context, dashboardState) {
+                      if (dashboardState is DashboardLoadingState) {
+                        return Container();
+                      }
+
+                      if (dashboardState is DashboardLoadedState) {
+                        return GridView.count(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20,
+                          children: [
+                            itemDashboard(
+                                'Total No of Orders',
+                                dashboardState
+                                        .dashboardModel?.totalNumberOfOrders
+                                        .toString() ??
+                                    '',
+                                CupertinoIcons.cube,
+                                const Color(0xff202b38),
+                                false),
+                            itemDashboard(
+                                'Tol Amount Spend',
+                                '\$783.47',
+                                Icons.inventory_rounded,
+                                const Color(0xff202b38),
+                                false),
+                            itemDashboard(
+                                'Due Amount',
+                                '\$783.47',
+                                Icons.attach_money_rounded,
+                                const Color(0xff202b38),
+                                false),
+                            itemDashboard('Store Credit', '\$0.00', Icons.store,
+                                const Color(0xff202b38), false),
+                            itemDashboard(
+                                'Rma Credit',
+                                '\$0.00',
+                                Icons.attach_money_rounded,
+                                const Color(0xff202b38),
+                                false),
+                            itemDashboard(
+                                'Buy Back Credit',
+                                '\$0.00',
+                                Icons.attach_money_rounded,
+                                const Color(0xff202b38),
+                                false),
+                          ],
+                        );
+                      }
+                      return Container();
+                    },
                   ),
-                  const SizedBox(height: 20),
-                  GridView.count(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20,
-                    children: [
-                      itemDashboard('Tol No of Orders', '07',
-                          CupertinoIcons.cube, const Color(0xff202b38)),
-                      itemDashboard('Tol Amount Spend', '\$783.47',
-                          Icons.inventory_rounded, const Color(0xff202b38)),
-                      itemDashboard('Due Amount', '\$783.47',
-                          Icons.attach_money_rounded, const Color(0xff202b38)),
-                      itemDashboard('Store Credit', '\$0.00', Icons.store,
-                          const Color(0xff202b38)),
-                      itemDashboard('Rma Credit', '\$0.00',
-                          Icons.attach_money_rounded, const Color(0xff202b38)),
-                      itemDashboard('Buy Back Credit', '\$0.00',
-                          Icons.attach_money_rounded, const Color(0xff202b38)),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 20),
@@ -169,7 +211,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
                     fontWeight: FontWeight.w600,
                     fontSize: 18),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
             ],
           ),
           Padding(
@@ -350,8 +392,8 @@ class CustomerDashboardState extends State<CustomerDashboard> {
     );
   }
 
-  itemDashboard(
-          String title, String subTitle, IconData iconData, Color background) =>
+  itemDashboard(String title, String subTitle, IconData iconData,
+          Color background, bool isLoading) =>
       Container(
         decoration: BoxDecoration(
             color: Colors.white,

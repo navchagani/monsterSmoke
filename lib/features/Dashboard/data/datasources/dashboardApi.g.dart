@@ -25,7 +25,7 @@ class _DashboardApi implements DashboardApi {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
-    final _headers = <String, dynamic>{r'Authorization': token};
+    final _headers = <String, dynamic>{r'Authorization': 'Bearer $token'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -35,7 +35,7 @@ class _DashboardApi implements DashboardApi {
       extra: _extra,
     )
             .compose(
-              _dio.options,
+              Constants.options(_dio),
               '/api/ecommerce/dashboard',
               queryParameters: queryParameters,
               data: _data,
@@ -72,7 +72,7 @@ class _DashboardApi implements DashboardApi {
       r'customerIds': customerIds,
     };
     queryParameters.removeWhere((k, v) => v == null);
-    final _headers = <String, dynamic>{r'Authorization': token};
+    final _headers = <String, dynamic>{r'Authorization': 'Bearer $token'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -82,7 +82,7 @@ class _DashboardApi implements DashboardApi {
       extra: _extra,
     )
             .compose(
-              _dio.options,
+              Constants.options(_dio),
               '/api/ecommerce/customer/report/statement',
               queryParameters: queryParameters,
               data: _data,

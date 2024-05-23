@@ -6,8 +6,8 @@ import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/core/widgets/CustomDialog.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
-import 'package:monstersmoke/features/Auth/data/models/CustomerModel.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
+import 'package:monstersmoke/features/Dashboard/presentation/bloc/dashboard_bloc.dart';
 
 import '../features/Customer/presentation/bloc/UpdateCustomerBloc/update_customer_bloc_bloc.dart';
 
@@ -241,14 +241,6 @@ class _UserProfileState extends State<UserProfile> {
       ..email = email.text
       ..phone = phone.text
       ..taxId = taxId.text;
-
-    // CustomerModel(
-    //     // id: ,
-    //     firstName: firstName.text,
-    //     lastName: lastName.text,
-    //     email: email.text,
-    //     phone: phone.text,
-    //     taxId: taxId.text);
 
     UpdateCustomerBlocBloc bloc =
         BlocProvider.of<UpdateCustomerBlocBloc>(context);

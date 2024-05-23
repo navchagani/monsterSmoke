@@ -2,9 +2,9 @@ class DashboardModel {
   final int? totalNumberOfOrders;
   final double? totalAmountSpend;
   final double? dueAmount;
-  final int? storeCredit;
-  final int? rmaCredit;
-  final int? buyBackCredit;
+  final double? storeCredit;
+  final double? rmaCredit;
+  final double? buyBackCredit;
   const DashboardModel(
       {this.totalNumberOfOrders,
       this.totalAmountSpend,
@@ -16,9 +16,9 @@ class DashboardModel {
       {int? totalNumberOfOrders,
       double? totalAmountSpend,
       double? dueAmount,
-      int? storeCredit,
-      int? rmaCredit,
-      int? buyBackCredit}) {
+      double? storeCredit,
+      double? rmaCredit,
+      double? buyBackCredit}) {
     return DashboardModel(
         totalNumberOfOrders: totalNumberOfOrders ?? this.totalNumberOfOrders,
         totalAmountSpend: totalAmountSpend ?? this.totalAmountSpend,
@@ -50,11 +50,12 @@ class DashboardModel {
         dueAmount:
             json['dueAmount'] == null ? null : json['dueAmount'] as double,
         storeCredit:
-            json['storeCredit'] == null ? null : json['storeCredit'] as int,
-        rmaCredit: json['rmaCredit'] == null ? null : json['rmaCredit'] as int,
+            json['storeCredit'] == null ? null : json['storeCredit'] as double,
+        rmaCredit:
+            json['rmaCredit'] == null ? null : json['rmaCredit'] as double,
         buyBackCredit: json['buyBackCredit'] == null
             ? null
-            : json['buyBackCredit'] as int);
+            : json['buyBackCredit'] as double);
   }
 
   @override
