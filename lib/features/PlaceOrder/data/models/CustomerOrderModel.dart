@@ -1,7 +1,7 @@
 class CustomerOrderModel {
   final int? orderId;
   final int? totalQuantity;
-  final int? discount;
+  final double? discount;
   final double? totalAmount;
   final double? dueBalance;
   final String? status;
@@ -27,7 +27,7 @@ class CustomerOrderModel {
   CustomerOrderModel copyWith(
       {int? orderId,
       int? totalQuantity,
-      int? discount,
+      double? discount,
       double? totalAmount,
       double? dueBalance,
       String? status,
@@ -74,7 +74,7 @@ class CustomerOrderModel {
         orderId: json['orderId'] == null ? null : json['orderId'] as int,
         totalQuantity:
             json['totalQuantity'] == null ? null : json['totalQuantity'] as int,
-        discount: json['discount'] == null ? null : json['discount'] as int,
+        discount: json['discount'] == null ? null : json['discount'] as double,
         totalAmount:
             json['totalAmount'] == null ? null : json['totalAmount'] as double,
         dueBalance:

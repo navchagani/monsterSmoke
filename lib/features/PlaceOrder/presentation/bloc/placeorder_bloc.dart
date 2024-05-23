@@ -69,8 +69,7 @@ class PlaceorderBloc extends Bloc<PlaceorderEvent, PlaceorderState> {
   Future<FutureOr<void>> customerOrderEvent(
       GetCustomerOrderEvent event, Emitter<PlaceorderState> emit) async {
     emit(PlaceOrderLoadingState());
-    final data = await getCustomerOrder(
-        page: event.page, token: event.token, size: event.size);
+    final data = await getCustomerOrder(page: event.page, size: event.size);
 
     if (data is SuccessState) {
       emit(CustomerOrderCompletedState(listCustomerModel: data.data!));

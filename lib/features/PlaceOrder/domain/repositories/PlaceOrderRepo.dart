@@ -9,7 +9,7 @@ abstract class PlaceOrderRepo {
       required String token,
       required String storeId});
   Future<DataStates<List<CustomerOrderModel>>> getCustomerOrder(
-      {required String token, required int page, required int size});
+      {required int page, required int size});
   Future<DataStates<String?>> getOrderDetails(
       {required String token,
       required String defaultStoreId,

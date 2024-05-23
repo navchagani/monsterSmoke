@@ -29,9 +29,8 @@ class CaseGetCustomerOrder
   CaseGetCustomerOrder({required this.repo});
   @override
   Future<DataStates<List<CustomerOrderModel>>> call(
-      {void params, String? token, int? page, int? size}) {
-    return repo.getCustomerOrder(
-        token: token.toString(), page: page ?? 0, size: size ?? 0);
+      {void params, int? page, int? size}) {
+    return repo.getCustomerOrder(page: page ?? 0, size: size ?? 0);
   }
 }
 

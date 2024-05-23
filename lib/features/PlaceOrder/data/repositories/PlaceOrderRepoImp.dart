@@ -18,7 +18,7 @@ class PlaceOrderRepoImp extends PlaceOrderRepo {
 
   @override
   Future<DataStates<List<CustomerOrderModel>>> getCustomerOrder(
-      {required String token, required int page, required int size}) async {
+      {required int page, required int size}) async {
     try {
       final token = await sharedPrefsApi.getFromShared(key: 'login');
 
