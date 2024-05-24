@@ -173,7 +173,7 @@ class _ChangepasswordState extends State<Changepassword> {
     });
   }
 
-  onCurrentPasswordChanged(String value) {}
-  onNewPasswordChanged(String value) {}
-  onConformPasswordChanged(String value) {}
+  onCurrentPasswordChanged(String value) => setState(() {});
+  onNewPasswordChanged(String value) => setState(() {});
+  onConformPasswordChanged(String value) => setState(() {});
 }

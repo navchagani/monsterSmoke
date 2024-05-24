@@ -154,6 +154,7 @@ class _AuthApi implements AuthApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
+    log('Status: ${_result.statusCode}');
     final httpResponse = HttpResponse(null, _result);
     return httpResponse;
   }
