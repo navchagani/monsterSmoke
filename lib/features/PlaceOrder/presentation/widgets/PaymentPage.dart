@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/Global/Widgets/DropDowns.dart';
 import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
+import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/CountryModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/PaymentsModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/StateModel.dart';
 import 'package:monstersmoke/features/GETAssets/presentation/bloc/PaymentBloc/payment_bloc_bloc.dart';
+import 'package:monstersmoke/features/GETAssets/presentation/bloc/StateBloc/state_bloc_bloc.dart';
 import 'package:monstersmoke/features/PlaceOrder/data/models/placeOrderModel.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -114,6 +116,14 @@ class _AddNewCustomerAddressPageState extends State<AddNewPaymentPage> {
 
   String? selectedContry, selectedCity;
 
+  final stateBloc = getIt<StateBloc>();
+
+  @override
+  void dispose() {
+    stateBloc.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return addNewAddress();
@@ -203,7 +213,10 @@ class _AddNewCustomerAddressPageState extends State<AddNewPaymentPage> {
             Decorations.height5,
             CountryDropDown(onCountryChanged: onCountryChanged),
             Decorations.height5,
-            StateDropDown(onStateChanged: onStateChanged),
+            StateDropDown(
+              onStateChanged: onStateChanged,
+              stateBloc: stateBloc,
+            ),
             Decorations.height5,
             Row(
               children: [
@@ -245,8 +258,10 @@ class _AddNewCustomerAddressPageState extends State<AddNewPaymentPage> {
   lastNameChanged(String value) => setState(() {});
 
   onCountryChanged(CountryModel? p1) {
+    stateBloc.add(GetStateEvent(stateId: p1!.id.toString()));
+
     setState(() {
-      selectedContry = p1?.name.toString();
+      selectedContry = p1.name.toString();
     });
   }
 

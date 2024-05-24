@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/Global/Widgets/DropDowns.dart';
 import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
+import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/core/widgets/CustomDialog.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
@@ -37,7 +38,15 @@ class _SignUpPageState extends State<SignUpPage> {
 
   final secondNameController = TextEditingController();
 
-  String? selectedCountry, selectedState;
+  int? selectedCountry, selectedState;
+
+  final StateBloc bloc = getIt<StateBloc>();
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +166,10 @@ class _SignUpPageState extends State<SignUpPage> {
             Decorations.height5,
             CountryDropDown(onCountryChanged: onAddressChanged),
             Decorations.height5,
-            StateDropDown(onStateChanged: onStateChanged),
+            StateDropDown(
+              onStateChanged: onStateChanged,
+              stateBloc: bloc,
+            ),
             Decorations.height5,
             CustomInputField(
               labelText: 'Zip Code',
@@ -289,17 +301,16 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void onAddressChanged(CountryModel? value) {
-    StateBloc bloc = BlocProvider.of<StateBloc>(context);
     bloc.add(GetStateEvent(stateId: value!.id.toString()));
 
     setState(() {
-      selectedCountry = value.id.toString();
+      selectedCountry = value.id;
     });
   }
 
   void onStateChanged(StateModel? value) {
     setState(() {
-      selectedState = value?.id.toString();
+      selectedState = value?.id;
     });
   }
 }

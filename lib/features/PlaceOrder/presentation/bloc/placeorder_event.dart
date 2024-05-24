@@ -10,11 +10,9 @@ abstract class PlaceorderEvent extends Equatable {
 class CustomerOrderInitialEvent extends PlaceorderEvent {}
 
 class GetCustomerOrderEvent extends PlaceorderEvent {
-  final String? token;
   final int? page, size;
 
-  const GetCustomerOrderEvent(
-      {required this.token, required this.page, required this.size});
+  const GetCustomerOrderEvent({required this.page, required this.size});
 }
 
 class GetCustomerOrderDetailsEvent extends PlaceorderEvent {

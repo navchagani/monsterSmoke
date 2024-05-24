@@ -9,7 +9,7 @@ import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Dashboard/presentation/bloc/dashboard_bloc.dart';
 
-import '../features/Customer/presentation/bloc/UpdateCustomerBloc/update_customer_bloc_bloc.dart';
+import '../../../Customer/presentation/bloc/UpdateCustomerBloc/update_customer_bloc_bloc.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
-import 'package:monstersmoke/dashboard/changepassword.dart';
-import 'package:monstersmoke/dashboard/dashboard.dart';
-import 'package:monstersmoke/dashboard/dashboardDrawer.dart';
-import 'package:monstersmoke/dashboard/statement.dart';
-import 'package:monstersmoke/dashboard/userAddress.dart';
-import 'package:monstersmoke/dashboard/userProfile.dart';
+import 'package:monstersmoke/features/Dashboard/presentation/pages/changepassword.dart';
+import 'package:monstersmoke/features/Dashboard/presentation/pages/dashboard.dart';
+import 'package:monstersmoke/features/Dashboard/presentation/pages/dashboardDrawer.dart';
+import 'package:monstersmoke/features/Dashboard/presentation/pages/statement.dart';
+import 'package:monstersmoke/features/Dashboard/presentation/pages/userAddress.dart';
+import 'package:monstersmoke/features/Dashboard/presentation/pages/userProfile.dart';
 
 GlobalKey<ScaffoldState> globalDashboardKey = GlobalKey<ScaffoldState>();
 

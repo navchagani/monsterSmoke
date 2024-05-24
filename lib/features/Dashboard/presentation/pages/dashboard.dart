@@ -2,9 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/core/inject.dart';
-import 'package:monstersmoke/dashboard/recentOrders.dart';
+import 'package:monstersmoke/features/Dashboard/presentation/pages/recentOrders.dart';
+import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
+import 'package:monstersmoke/features/PlaceOrder/data/models/CustomerOrderModel.dart';
+import 'package:monstersmoke/features/PlaceOrder/presentation/bloc/placeorder_bloc.dart';
 
-import '../features/Dashboard/presentation/bloc/dashboard_bloc.dart';
+import '../bloc/dashboard_bloc.dart';
 
 class CustomerDashboard extends StatefulWidget {
   const CustomerDashboard({super.key});
@@ -15,17 +18,18 @@ class CustomerDashboard extends StatefulWidget {
 
 class CustomerDashboardState extends State<CustomerDashboard> {
   List<dynamic> data = orderData;
-  final DataTableSource recentOrder = mydata();
   DateTime? fromDate;
   DateTime? toDate;
   TextEditingController fromDateController = TextEditingController();
   TextEditingController toDateController = TextEditingController();
 
   final dashboardBloc = getIt<DashboardBloc>();
+  final customerOrderBloc = getIt<PlaceorderBloc>();
 
   @override
   void initState() {
     dashboardBloc.add(GetDashboardEvent());
+    customerOrderBloc.add(const GetCustomerOrderEvent(page: 0, size: 10));
     fromDateController.text = fromDate != null ? _dateFormat(fromDate!) : '';
     toDateController.text = toDate != null ? _dateFormat(toDate!) : '';
     super.initState();
@@ -157,38 +161,44 @@ class CustomerDashboardState extends State<CustomerDashboard> {
                             itemDashboard(
                                 'Total No of Orders',
                                 dashboardState
-                                        .dashboardModel?.totalNumberOfOrders
-                                        .toString() ??
-                                    '',
+                                    .dashboardModel.totalNumberOfOrders
+                                    .toString(),
                                 CupertinoIcons.cube,
                                 const Color(0xff202b38),
                                 false),
                             itemDashboard(
                                 'Tol Amount Spend',
-                                '\$783.47',
+                                dashboardState.dashboardModel.totalAmountSpend
+                                    .toString(),
                                 Icons.inventory_rounded,
                                 const Color(0xff202b38),
                                 false),
                             itemDashboard(
                                 'Due Amount',
-                                '\$783.47',
-                                Icons.attach_money_rounded,
-                                const Color(0xff202b38),
-                                false),
-                            itemDashboard('Store Credit', '\$0.00', Icons.store,
-                                const Color(0xff202b38), false),
-                            itemDashboard(
-                                'Rma Credit',
-                                '\$0.00',
+                                dashboardState.dashboardModel.dueAmount
+                                    .toString(),
                                 Icons.attach_money_rounded,
                                 const Color(0xff202b38),
                                 false),
                             itemDashboard(
-                                'Buy Back Credit',
-                                '\$0.00',
-                                Icons.attach_money_rounded,
+                                'Store Credit',
+                                dashboardState.dashboardModel.storeCredit
+                                    .toString(),
+                                Icons.store,
                                 const Color(0xff202b38),
                                 false),
+                            // itemDashboard(
+                            //     'Rma Credit',
+                            //     '\$0.00',
+                            //     Icons.attach_money_rounded,
+                            //     const Color(0xff202b38),
+                            //     false),
+                            // itemDashboard(
+                            //     'Buy Back Credit',
+                            //     '\$0.00',
+                            //     Icons.attach_money_rounded,
+                            //     const Color(0xff202b38),
+                            //     false),
                           ],
                         );
                       }
@@ -203,7 +213,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
               Text(
                 "Recent Orders",
                 style: TextStyle(
@@ -296,96 +306,120 @@ class CustomerDashboardState extends State<CustomerDashboard> {
               ),
             ),
           ),
-          PaginatedDataTable(
-            columns: const <DataColumn>[
-              DataColumn(
-                label: Text(
-                  '#',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              DataColumn(
-                label: Text(
-                  'Product Name',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              DataColumn(
-                label: Text(
-                  'Unit Price',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              DataColumn(
-                label: Text(
-                  'Sell Quantity',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              DataColumn(
-                label: Text(
-                  'Returned',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              DataColumn(
-                label: Text(
-                  'Return Quantity',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              DataColumn(
-                label: Text(
-                  'Return Subtotal',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-            source: recentOrder,
-            header: const Center(
-              child: Text(
-                "Recent Orders",
-                style: TextStyle(
-                    color: Color.fromARGB(255, 171, 29, 48),
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18),
-              ),
+          BlocProvider.value(
+            value: customerOrderBloc,
+            child: BlocBuilder<PlaceorderBloc, PlaceorderState>(
+              bloc: customerOrderBloc,
+              builder: (context, placeOrderState) {
+                if (placeOrderState is PlaceOrderLoadingState) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (placeOrderState is CustomerOrderCompletedState) {
+                  return PaginatedDataTable(
+                    columns: const <DataColumn>[
+                      DataColumn(
+                        label: Text(
+                          'Order No',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Date',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Ship To',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Total Amount',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Total Due',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Status',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Tracking No',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Actions',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                    source: MyData(placeOrderState.listCustomerModel),
+                    header: const Center(
+                      child: Text(
+                        "Recent Orders",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 171, 29, 48),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18),
+                      ),
+                    ),
+                    columnSpacing: 20,
+                    horizontalMargin: 20,
+                    showFirstLastButtons: true,
+                    rowsPerPage: 5,
+                    onPageChanged: (index) {
+                      // Handle page change
+                    },
+                    actions: [
+                      IconButton(
+                        onPressed: () {
+                          customerOrderBloc.add(
+                              const GetCustomerOrderEvent(page: 0, size: 10));
+                        },
+                        icon: const Icon(Icons.refresh),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          // Handle action
+                        },
+                        icon: const Icon(Icons.search),
+                      ),
+                    ],
+                  );
+                }
+                return Container();
+              },
             ),
-            columnSpacing: 20,
-            horizontalMargin: 20,
-            showFirstLastButtons: true,
-            rowsPerPage: 5,
-            onPageChanged: (index) {
-              // Handle page change
-            },
-            actions: [
-              IconButton(
-                onPressed: () {
-                  // Handle action
-                },
-                icon: const Icon(Icons.refresh),
-              ),
-              IconButton(
-                onPressed: () {
-                  // Handle action
-                },
-                icon: const Icon(Icons.search),
-              ),
-            ],
           ),
         ],
       ),
@@ -438,18 +472,26 @@ class CustomerDashboardState extends State<CustomerDashboard> {
       );
 }
 
-class mydata extends DataTableSource {
-  List<dynamic> data = orderData;
+class MyData extends DataTableSource {
+  final List<CustomerOrderModel> data;
+
+  MyData(this.data);
+
   @override
   DataRow? getRow(int index) {
     return DataRow(cells: [
-      DataCell(Text(data[index]['id'])),
-      DataCell(Text(data[index]['Product Name'])),
-      DataCell(Text(data[index]['Unit Price'])),
-      DataCell(Text(data[index]['Sell Qunatity'])),
-      DataCell(Text(data[index]['Returned'])),
-      DataCell(Text(data[index]['Return Quantity'])),
-      DataCell(Text(data[index]['Return Subtotal'])),
+      DataCell(Text(data[index].orderId.toString())),
+      DataCell(Text(data[index].insertedTimestamp.toString())),
+      const DataCell(Text('')),
+      DataCell(Text(data[index].totalAmount.toString())),
+      DataCell(Text(data[index].dueBalance.toString())),
+      DataCell(Text(data[index].status.toString())),
+      DataCell(Text(data[index].trackingNumber.toString())),
+      DataCell(Row(
+        children: [
+          IconButton(onPressed: onDownload, icon: const Icon(Icons.download))
+        ],
+      )),
     ]);
   }
 
@@ -461,4 +503,8 @@ class mydata extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
+
+  void onEyePressed() {}
+
+  void onDownload() {}
 }
