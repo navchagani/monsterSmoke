@@ -123,15 +123,15 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<HttpResponse<void>> changePassword({
-    String? oldPassword,
-    String? password,
-    String? newPassword,
-  }) async {
+  Future<HttpResponse<void>> changePassword(
+      {String? oldPassword,
+      String? password,
+      String? newPassword,
+      String? token}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{'Authorization': 'Bearer $token'};
     final _data = {
       "oldPassword": oldPassword,
       "password": password,

@@ -64,10 +64,13 @@ class AuthRepoImp extends AuthRepo {
       required String? password,
       required String? newPassword}) async {
     try {
+      final token = await sharedPrefsApi.getFromShared(key: 'login');
+
       final data = await authApi.changePassword(
           oldPassword: oldPassword,
           password: password,
-          newPassword: newPassword);
+          newPassword: newPassword,
+          token: token);
 
       if (data.response.statusCode == HttpStatus.noContent) {
         return SuccessState(data: null);

@@ -7,6 +7,7 @@ import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/features/Auth/data/models/CreateCustomerModel.dart';
 import 'package:monstersmoke/features/Auth/data/models/CustomerModel.dart'
     as customerModel;
+import 'package:retrofit/http.dart';
 
 import 'package:retrofit/retrofit.dart';
 
@@ -31,7 +32,8 @@ abstract class AuthApi {
   Future<HttpResponse<void>> changePassword(
       {@Body() required String? oldPassword,
       @Body() required String? password,
-      @Body() required String? newPassword});
+      @Body() required String? newPassword,
+      @Header('Authorization') String? token});
 
   @POST('/api/ecommerce/customer/sendForgotPasswordEmail?email=email')
   Future<HttpResponse<void>> forgotPassword({required String? email});

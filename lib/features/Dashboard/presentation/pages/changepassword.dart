@@ -28,6 +28,7 @@ class _ChangepasswordState extends State<Changepassword> {
     return BlocProvider.value(
         value: changePasswordBloc,
         child: BlocListener<ChangePasswordBloc, ChangePasswordBlocState>(
+          bloc: changePasswordBloc,
           listener: (context, changePasswordstate) {
             if (changePasswordstate is ChangePasswordLoadingState) {
               CustomDialog(
@@ -36,6 +37,7 @@ class _ChangepasswordState extends State<Changepassword> {
               ).showLoadingDialog();
             }
             if (changePasswordstate is PasswordChangedState) {
+              Navigator.of(context).pop();
               CustomDialog(
                   context: context,
                   text: 'Password Changed Succesfully ..',
