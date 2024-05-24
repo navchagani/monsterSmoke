@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/Global/Widgets/DropDowns.dart';
+import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/core/widgets/CustomDialog.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
@@ -28,6 +29,14 @@ class _AddNewCustomerAddressPageState extends State<AddNewCustomerAddressPage> {
   final phoneController = TextEditingController();
 
   int? selectedCountry, selectedState;
+
+  final stateBloc = getIt<StateBloc>();
+
+  @override
+  void dispose() {
+    stateBloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +103,10 @@ class _AddNewCustomerAddressPageState extends State<AddNewCustomerAddressPage> {
                 Decorations.height5,
                 CountryDropDown(onCountryChanged: onCountryChanged),
                 Decorations.height5,
-                StateDropDown(onStateChanged: onStateChanged),
+                StateDropDown(
+                  onStateChanged: onStateChanged,
+                  stateBloc: stateBloc,
+                ),
                 Decorations.height5,
                 Row(
                   children: [
@@ -159,8 +171,7 @@ class _AddNewCustomerAddressPageState extends State<AddNewCustomerAddressPage> {
       selectedCountry = p1?.id;
     });
 
-    StateBloc bloc = BlocProvider.of<StateBloc>(context);
-    bloc.add(GetStateEvent(stateId: p1!.id.toString()));
+    stateBloc.add(GetStateEvent(stateId: p1!.id.toString()));
   }
 
   onStateChanged(StateModel? p1) {

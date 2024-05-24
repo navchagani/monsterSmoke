@@ -7,7 +7,7 @@ class CustomDialog {
 
   CustomDialog({required this.context, this.text});
 
-  void showLoadingDialog({required}) {
+  void showLoadingDialog() {
     showDialog(
         context: context,
         builder: (context) {

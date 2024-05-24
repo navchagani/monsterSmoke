@@ -1,10 +1,15 @@
+import 'dart:math';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/features/Auth/data/models/CustomerModel.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/AddCustomerBloc/add_customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
+import 'package:monstersmoke/features/Dashboard/presentation/pages/addAddress.dart';
 
 class UserAddresses extends StatefulWidget {
   const UserAddresses({super.key});
@@ -45,15 +50,17 @@ class _UserAddressesState extends State<UserAddresses> {
             const SizedBox(
               height: 30,
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 CustomButton(
+                  onTap: onMoveToAddAddress,
                   text: 'Add Address',
+                  enabled: true,
                   textColor: Colors.white,
                   iconData: Icons.add,
                   iconColor: Colors.white,
-                  backgroundColor: Color(0xff202b38),
+                  backgroundColor: const Color(0xff202b38),
                 )
               ],
             ),
@@ -74,6 +81,11 @@ class _UserAddressesState extends State<UserAddresses> {
         ),
       ),
     );
+  }
+
+  onMoveToAddAddress() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const AddAddress()));
   }
 }
 
@@ -97,16 +109,20 @@ class AddressCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    model.address1.toString(),
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
+                  Expanded(
+                    child: Text(
+                      model.address1.toString(),
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis),
+                    ),
                   ),
-                  const Icon(
-                    Icons.edit_location_alt,
-                    color: Color(0xff202b38),
+                  IconButton(
+                    icon: const Icon(Icons.edit_location_alt),
+                    onPressed: () => onEditAddress(context, model),
+                    color: const Color(0xff202b38),
                   )
                 ],
               ),
@@ -144,13 +160,10 @@ class AddressCard extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  Column(
-                    children: [
-                      Text(
-                        model.address1.toString(),
+                  Expanded(
+                    child: Text(model.address1.toString(),
                         style: const TextStyle(fontSize: 14),
-                      )
-                    ],
+                        overflow: TextOverflow.ellipsis),
                   ),
                 ],
               ),
@@ -221,5 +234,14 @@ class AddressCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void onEditAddress(
+      BuildContext context, CustomerStoreAddressList addressList) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => AddAddress(
+              forUpdate: true,
+              addressList: addressList,
+            )));
   }
 }
