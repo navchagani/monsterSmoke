@@ -71,6 +71,7 @@ class _DashboardApi implements DashboardApi {
       r'endDate': endDate,
       r'customerIds': customerIds,
     };
+    log('${queryParameters}');
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{r'Authorization': 'Bearer $token'};
     _headers.removeWhere((k, v) => v == null);

@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/core/inject.dart';
-import 'package:monstersmoke/dashboard/recentOrders.dart';
+import 'package:monstersmoke/features/Dashboard/presentation/pages/recentOrders.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
+import 'package:monstersmoke/features/PlaceOrder/data/models/CustomerOrderModel.dart';
 import 'package:monstersmoke/features/PlaceOrder/presentation/bloc/placeorder_bloc.dart';
 
-import '../features/Dashboard/presentation/bloc/dashboard_bloc.dart';
+import '../bloc/dashboard_bloc.dart';
 
 class CustomerDashboard extends StatefulWidget {
   const CustomerDashboard({super.key});
@@ -17,7 +18,6 @@ class CustomerDashboard extends StatefulWidget {
 
 class CustomerDashboardState extends State<CustomerDashboard> {
   List<dynamic> data = orderData;
-  final DataTableSource recentOrder = mydata();
   DateTime? fromDate;
   DateTime? toDate;
   TextEditingController fromDateController = TextEditingController();
@@ -213,7 +213,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
               Text(
                 "Recent Orders",
                 style: TextStyle(
@@ -320,7 +320,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
                     columns: const <DataColumn>[
                       DataColumn(
                         label: Text(
-                          '#',
+                          'Order No',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -328,7 +328,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
                       ),
                       DataColumn(
                         label: Text(
-                          'Product Name',
+                          'Date',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -336,7 +336,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
                       ),
                       DataColumn(
                         label: Text(
-                          'Unit Price',
+                          'Ship To',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -344,7 +344,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
                       ),
                       DataColumn(
                         label: Text(
-                          'Sell Quantity',
+                          'Total Amount',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -352,7 +352,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
                       ),
                       DataColumn(
                         label: Text(
-                          'Returned',
+                          'Total Due',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -360,7 +360,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
                       ),
                       DataColumn(
                         label: Text(
-                          'Return Quantity',
+                          'Status',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -368,14 +368,22 @@ class CustomerDashboardState extends State<CustomerDashboard> {
                       ),
                       DataColumn(
                         label: Text(
-                          'Return Subtotal',
+                          'Tracking No',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Actions',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ],
-                    source: recentOrder,
+                    source: MyData(placeOrderState.listCustomerModel),
                     header: const Center(
                       child: Text(
                         "Recent Orders",
@@ -395,7 +403,8 @@ class CustomerDashboardState extends State<CustomerDashboard> {
                     actions: [
                       IconButton(
                         onPressed: () {
-                          // Handle action
+                          customerOrderBloc.add(
+                              const GetCustomerOrderEvent(page: 0, size: 10));
                         },
                         icon: const Icon(Icons.refresh),
                       ),
@@ -463,18 +472,26 @@ class CustomerDashboardState extends State<CustomerDashboard> {
       );
 }
 
-class mydata extends DataTableSource {
-  List<dynamic> data = orderData;
+class MyData extends DataTableSource {
+  final List<CustomerOrderModel> data;
+
+  MyData(this.data);
+
   @override
   DataRow? getRow(int index) {
     return DataRow(cells: [
-      DataCell(Text(data[index]['id'])),
-      DataCell(Text(data[index]['Product Name'])),
-      DataCell(Text(data[index]['Unit Price'])),
-      DataCell(Text(data[index]['Sell Qunatity'])),
-      DataCell(Text(data[index]['Returned'])),
-      DataCell(Text(data[index]['Return Quantity'])),
-      DataCell(Text(data[index]['Return Subtotal'])),
+      DataCell(Text(data[index].orderId.toString())),
+      DataCell(Text(data[index].insertedTimestamp.toString())),
+      const DataCell(Text('')),
+      DataCell(Text(data[index].totalAmount.toString())),
+      DataCell(Text(data[index].dueBalance.toString())),
+      DataCell(Text(data[index].status.toString())),
+      DataCell(Text(data[index].trackingNumber.toString())),
+      DataCell(Row(
+        children: [
+          IconButton(onPressed: onDownload, icon: const Icon(Icons.download))
+        ],
+      )),
     ]);
   }
 
@@ -486,4 +503,8 @@ class mydata extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
+
+  void onEyePressed() {}
+
+  void onDownload() {}
 }

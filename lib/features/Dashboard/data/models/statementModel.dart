@@ -72,11 +72,11 @@ class CustomerDetailedStatementReportDtoList {
   final String? id;
   final dynamic type;
   final String? description;
-  final int? creditAmount;
-  final int? debitAmount;
-  final int? dueInvoiceAmount;
-  final int? excessAmount;
-  final int? balance;
+  final double? creditAmount;
+  final double? debitAmount;
+  final double? dueInvoiceAmount;
+  final double? excessAmount;
+  final double? balance;
   final dynamic transactionId;
   final dynamic notes;
   final dynamic vendorBillNo;
@@ -100,11 +100,11 @@ class CustomerDetailedStatementReportDtoList {
       String? id,
       dynamic type,
       String? description,
-      int? creditAmount,
-      int? debitAmount,
-      int? dueInvoiceAmount,
-      int? excessAmount,
-      int? balance,
+      double? creditAmount,
+      double? debitAmount,
+      double? dueInvoiceAmount,
+      double? excessAmount,
+      double? balance,
       dynamic transactionId,
       dynamic notes,
       dynamic vendorBillNo,
@@ -151,16 +151,18 @@ class CustomerDetailedStatementReportDtoList {
         type: json['type'] as dynamic,
         description:
             json['description'] == null ? null : json['description'] as String,
-        creditAmount:
-            json['creditAmount'] == null ? null : json['creditAmount'] as int,
+        creditAmount: json['creditAmount'] == null
+            ? null
+            : json['creditAmount'] as double,
         debitAmount:
-            json['debitAmount'] == null ? null : json['debitAmount'] as int,
+            json['debitAmount'] == null ? null : json['debitAmount'] as double,
         dueInvoiceAmount: json['dueInvoiceAmount'] == null
             ? null
-            : json['dueInvoiceAmount'] as int,
-        excessAmount:
-            json['excessAmount'] == null ? null : json['excessAmount'] as int,
-        balance: json['balance'] == null ? null : json['balance'] as int,
+            : json['dueInvoiceAmount'] as double,
+        excessAmount: json['excessAmount'] == null
+            ? null
+            : json['excessAmount'] as double,
+        balance: json['balance'] == null ? null : json['balance'] as double,
         transactionId: json['transactionId'] as dynamic,
         notes: json['notes'] as dynamic,
         vendorBillNo: json['vendorBillNo'] as dynamic,
@@ -226,9 +228,9 @@ vendorInvoiceNumber:$vendorInvoiceNumber
 }
 
 class CustomerStatementSummaryDto {
-  final int? openingBalance;
+  final double? openingBalance;
   final double? invoicedAmount;
-  final int? amountReceived;
+  final double? amountReceived;
   final double? totalDueBalance;
   const CustomerStatementSummaryDto(
       {this.openingBalance,
@@ -236,9 +238,9 @@ class CustomerStatementSummaryDto {
       this.amountReceived,
       this.totalDueBalance});
   CustomerStatementSummaryDto copyWith(
-      {int? openingBalance,
+      {double? openingBalance,
       double? invoicedAmount,
-      int? amountReceived,
+      double? amountReceived,
       double? totalDueBalance}) {
     return CustomerStatementSummaryDto(
         openingBalance: openingBalance ?? this.openingBalance,
@@ -260,13 +262,13 @@ class CustomerStatementSummaryDto {
     return CustomerStatementSummaryDto(
         openingBalance: json['openingBalance'] == null
             ? null
-            : json['openingBalance'] as int,
+            : json['openingBalance'] as double,
         invoicedAmount: json['invoicedAmount'] == null
             ? null
             : json['invoicedAmount'] as double,
         amountReceived: json['amountReceived'] == null
             ? null
-            : json['amountReceived'] as int,
+            : json['amountReceived'] as double,
         totalDueBalance: json['totalDueBalance'] == null
             ? null
             : json['totalDueBalance'] as double);
