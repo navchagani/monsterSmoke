@@ -90,7 +90,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                     title: 'Change Password',
                     icon: Icons.lock,
                     isActive: path == 'Change Password',
-                    onTap: () => changePath(context, 'Change Password'),
+                    onTap: () => changePath(context, 'Password'),
                   ),
                   _buildListTile(
                     context: context,
