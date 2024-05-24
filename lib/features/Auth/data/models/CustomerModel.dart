@@ -991,8 +991,8 @@ class CustomerStoreAddressList {
       'country': country,
       'zip': zip,
       'phone': phone,
-      'defaultBillingAddress': defaultBillingAddress,
-      'defaultShippingAddress': defaultShippingAddress,
+      'billingAddress': defaultBillingAddress,
+      'shippingAddress': defaultShippingAddress,
       'active': active
     };
   }
@@ -1012,12 +1012,12 @@ class CustomerStoreAddressList {
         country: json['country'] == null ? null : json['country'] as String,
         zip: json['zip'] == null ? null : json['zip'] as String,
         phone: json['phone'] as String?,
-        defaultBillingAddress: json['defaultBillingAddress'] == null
+        defaultBillingAddress: json['billingAddress'] == null
             ? null
-            : json['defaultBillingAddress'] as bool,
-        defaultShippingAddress: json['defaultShippingAddress'] == null
+            : json['billingAddress'] as bool,
+        defaultShippingAddress: json['shippingAddress'] == null
             ? null
-            : json['defaultShippingAddress'] as bool,
+            : json['shippingAddress'] as bool,
         active: json['active'] == null ? null : json['active'] as bool);
   }
 

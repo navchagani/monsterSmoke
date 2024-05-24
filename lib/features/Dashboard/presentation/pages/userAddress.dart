@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -95,6 +95,9 @@ class AddressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(model.defaultBillingAddress.toString());
+    log(model.defaultShippingAddress.toString());
+
     return Center(
       child: Card(
         elevation: 8,
@@ -203,30 +206,24 @@ class AddressCard extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const Row(
+              Row(
                 children: [
-                  Expanded(
-                      child: Column(
-                    children: [
-                      Text(
-                        "Default shipping address",
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: Color.fromARGB(255, 173, 32, 22)),
-                      )
-                    ],
-                  )),
-                  Expanded(
-                      child: Column(
-                    children: [
-                      Text(
-                        "Default shipping address",
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: Color.fromARGB(255, 173, 32, 22)),
-                      )
-                    ],
-                  ))
+                  if (model.defaultShippingAddress ?? false)
+                    const Expanded(
+                        child: Text(
+                      "Default shipping address",
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Color.fromARGB(255, 173, 32, 22)),
+                    )),
+                  if (model.defaultBillingAddress ?? false)
+                    const Expanded(
+                        child: Text(
+                      "Default billing address",
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Color.fromARGB(255, 173, 32, 22)),
+                    ))
                 ],
               ),
             ],
