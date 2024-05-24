@@ -54,7 +54,7 @@ class CustomerRepoImp extends CustomerRepository {
   }
 
   @override
-  Future<DataStates<CustomerModel>> updateCustomer(
+  Future<DataStates<bool>> updateCustomer(
       {required CustomerModel customerModel}) async {
     try {
       final token = await sharedPrefsApi.getFromShared(key: 'login');
@@ -62,8 +62,8 @@ class CustomerRepoImp extends CustomerRepository {
       final data = await customerApi.updateCustomer(
           token: token.toString(), customerModel: customerModel);
 
-      if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
+      if (data.response.statusCode == HttpStatus.created) {
+        return SuccessState(data: true);
       } else {
         return ErrorState(
             dioException: DioException(

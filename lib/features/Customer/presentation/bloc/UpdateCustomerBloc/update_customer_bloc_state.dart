@@ -13,10 +13,9 @@ final class UpdateCustomerBlocInitial extends UpdateCustomerBlocState {}
 class UpdateCustomerLoadingState extends UpdateCustomerBlocState {}
 
 class UpdateCustomerCompletedState extends UpdateCustomerBlocState {
-  final CustomerModel customerModel;
+  final bool? isCompleted;
 
-  const UpdateCustomerCompletedState({required this.customerModel})
-      : super(customerModel: customerModel);
+  const UpdateCustomerCompletedState({required this.isCompleted});
 }
 
 class UpdateCustomerErrorState extends UpdateCustomerBlocState {

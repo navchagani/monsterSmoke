@@ -27,15 +27,13 @@ class CaseAddCustomerAddress
   }
 }
 
-class CaseUpdateCustomerData
-    extends CaseFuture<DataStates<CustomerModel?>, void> {
+class CaseUpdateCustomerData extends CaseFuture<DataStates<bool?>, void> {
   final CustomerRepository repo;
 
   CaseUpdateCustomerData({required this.repo});
 
   @override
-  Future<DataStates<CustomerModel?>> call(
-      {void params, CustomerModel? customerModel}) {
+  Future<DataStates<bool?>> call({void params, CustomerModel? customerModel}) {
     return repo.updateCustomer(customerModel: customerModel!);
   }
 }

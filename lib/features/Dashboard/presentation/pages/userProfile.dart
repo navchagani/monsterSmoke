@@ -51,7 +51,7 @@ class _UserProfileState extends State<UserProfile> {
       }
       if (updateCustomer is UpdateCustomerCompletedState) {
         Navigator.of(context).pop();
-        CustomDialog(context: context, text: 'Customer Update Successfully..')
+        CustomDialog(context: context, text: 'Customer Updated Successfully..')
             .showCompletedDialog();
       }
       if (updateCustomer is UpdateCustomerErrorState) {

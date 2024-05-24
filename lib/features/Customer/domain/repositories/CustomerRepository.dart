@@ -6,7 +6,7 @@ abstract class CustomerRepository {
       {required CustomerStoreAddressList addressList});
   Future<DataStates<CustomerStoreAddressList>> updateCustomerAddress(
       {required CustomerStoreAddressList addressList});
-  Future<DataStates<CustomerModel>> updateCustomer(
+  Future<DataStates<bool>> updateCustomer(
       {required CustomerModel customerModel});
   Future<DataStates<CustomerModel>> getCustomer({required String token});
 }

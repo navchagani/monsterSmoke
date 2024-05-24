@@ -89,17 +89,18 @@ class _CustomerApi implements CustomerApi {
   }
 
   @override
-  Future<HttpResponse<CustomerModel>> updateCustomer({
+  Future<HttpResponse<void>> updateCustomer({
     required String token,
     required CustomerModel customerModel,
   }) async {
-    log("Customer Data ${customerModel.toJson()}");
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': 'Bearer $token'};
+    final _headers = <String, dynamic>{
+      r'Authorization': 'Bearer $token',
+    };
     _headers.removeWhere((k, v) => v == null);
-    final _data = customerModel.toJson();
-    _data.addAll(customerModel.toJson());
+    final _data = {'customerDto': customerModel.toJson()};
+
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<CustomerModel>>(Options(
       method: 'PUT',
@@ -118,9 +119,10 @@ class _CustomerApi implements CustomerApi {
               baseUrl,
             ))));
 
-    final result = _result.data!['result'];
-    final value = CustomerModel.fromJson(result);
-    final httpResponse = HttpResponse(value, _result);
+    log(_result.statusCode.toString());
+
+    final isCompleted = _result.statusCode == 201 ? true : false;
+    final httpResponse = HttpResponse(isCompleted, _result);
     return httpResponse;
   }
 

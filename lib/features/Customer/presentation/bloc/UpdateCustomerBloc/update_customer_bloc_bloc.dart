@@ -24,7 +24,7 @@ class UpdateCustomerBlocBloc
     final data = await customerData.call(customerModel: event.customerModel);
 
     if (data is SuccessState) {
-      emit(UpdateCustomerCompletedState(customerModel: data.data!));
+      emit(UpdateCustomerCompletedState(isCompleted: data.data!));
     }
 
     if (data is ErrorState) {

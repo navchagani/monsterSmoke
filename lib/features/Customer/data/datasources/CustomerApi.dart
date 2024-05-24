@@ -22,7 +22,7 @@ abstract class CustomerApi {
       @Body() required CustomerStoreAddressList addressList});
 
   @PUT('/api/ecommerce/customer')
-  Future<HttpResponse<CustomerModel>> updateCustomer(
+  Future<HttpResponse<void>> updateCustomer(
       {@Header('Authorization') required String token,
       @Body() required CustomerModel customerModel});
 
