@@ -41,6 +41,7 @@ class _SignUpPageState extends State<SignUpPage> {
   int? selectedCountry, selectedState;
 
   final StateBloc bloc = getIt<StateBloc>();
+  final SignUpBloc signUpBloc = getIt<SignUpBloc>();
 
   @override
   void dispose() {
@@ -50,32 +51,36 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SignUpBloc, SignUpBlocState>(
-      listener: (context, signUpState) {
-        if (signUpState is SignUpLoadingState) {
-          CustomDialog(context: context, text: 'Signing Up..')
-              .showLoadingDialog();
-        }
+    return BlocProvider.value(
+      value: signUpBloc,
+      child: BlocListener<SignUpBloc, SignUpBlocState>(
+        bloc: signUpBloc,
+        listener: (context, signUpState) {
+          if (signUpState is SignUpLoadingState) {
+            CustomDialog(context: context, text: 'Signing Up..')
+                .showLoadingDialog();
+          }
 
-        if (signUpState is SignUpCompletedState) {
-          Navigator.of(context).pop();
-          CustomDialog(context: context, text: 'Signed Up Successfully..')
-              .showCompletedDialog();
-        }
+          if (signUpState is SignUpCompletedState) {
+            Navigator.of(context).pop();
+            CustomDialog(context: context, text: 'Signed Up Successfully..')
+                .showCompletedDialog();
+          }
 
-        if (signUpState is SignUpErrorState) {
-          log('In Error State');
+          if (signUpState is SignUpErrorState) {
+            log('In Error State');
 
-          Navigator.of(context).pop();
-          CustomDialog(context: context, text: signUpState.error.message)
-              .showErrorDialog();
-        }
-      },
-      child: Material(
-        borderRadius: BorderRadius.circular(5.0),
-        clipBehavior: Clip.hardEdge,
-        child: Scaffold(
-          body: body(),
+            Navigator.of(context).pop();
+            CustomDialog(context: context, text: signUpState.error.message)
+                .showErrorDialog();
+          }
+        },
+        child: Material(
+          borderRadius: BorderRadius.circular(5.0),
+          clipBehavior: Clip.hardEdge,
+          child: Scaffold(
+            body: body(),
+          ),
         ),
       ),
     );
@@ -296,8 +301,7 @@ class _SignUpPageState extends State<SignUpPage> {
         email: emailController.text,
         customerStoreAddressList: [customAddress]);
 
-    SignUpBloc bloc = BlocProvider.of<SignUpBloc>(context);
-    bloc.add(SignUpEvent(customerModel: customerModel));
+    signUpBloc.add(SignUpEvent(customerModel: customerModel));
   }
 
   void onAddressChanged(CountryModel? value) {
