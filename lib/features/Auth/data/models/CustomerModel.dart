@@ -621,10 +621,13 @@ class CustomerModel {
         paymentMethodNonce: json['paymentMethodNonce'] as String?,
         billingAddress: json['billingAddress'] as String?,
         shippingAddress: json['shippingAddress'] as String?,
-        customerStoreAddressList: (json['customerStoreAddressList'] as List)
-            .map<CustomerStoreAddressList>((data) =>
-                CustomerStoreAddressList.fromJson(data as Map<String, dynamic>))
-            .toList(),
+        customerStoreAddressList: json['customerStoreAddressList'] == null
+            ? <CustomerStoreAddressList>[]
+            : (json['customerStoreAddressList'] as List)
+                .map<CustomerStoreAddressList>((data) =>
+                    CustomerStoreAddressList.fromJson(
+                        data as Map<String, dynamic>))
+                .toList(),
         quickbooksCustomerId: json['quickbooksCustomerId'] as String?,
         customerGroupId: json['customerGroupId'] as String?,
         customerGroupName: json['customerGroupName'] as String?,
