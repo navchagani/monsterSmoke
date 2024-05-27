@@ -12,20 +12,20 @@ abstract class PlaceOrderApi {
   factory PlaceOrderApi(Dio dio) = _PlaceOrderApi;
 
   @POST('/api/ecommerce/order?storeId=2')
-  Future<HttpResponse<PlaceOrderResModel>> placeOrder(
+  Future<HttpResponse> placeOrder(
       {@Body() required PlaceOrderModel placeOrderModel,
       @Header('token') required String token,
       @Header('storeId') required String storeId});
 
   @GET('/api/ecommerce/dashboard/orderTable?page=0&size=20')
-  Future<HttpResponse<List<CustomerOrderModel>>> getCustomerOrder(
+  Future<HttpResponse> getCustomerOrder(
       {@Header('token') required String token,
       @Header('token') required int page,
       @Header('token') required int size});
 
   @GET(
       '/services/pdf/sales-order/invoice/17867?token=token&defaultStoreId=2&storeIdList=1,2&isEcommerce=true')
-  Future<HttpResponse<String?>> getOrderDetails(
+  Future<HttpResponse> getOrderDetails(
       {@Header('token') @Header('Authorization') required String token,
       @Header('defaultStoreId') required String defaultStoreId,
       @Header('storeIdList') required String storeIdList,

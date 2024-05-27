@@ -17,14 +17,25 @@ class DashboardRepoImp extends DashboardRepository {
   Future<DataStates<DashboardModel>> getDashboard() async {
     try {
       final token = await prefsApi.getFromShared(key: 'login');
-      final data = await dashboardApi.getDashboard(token: token);
+      final result = await dashboardApi.getDashboard(token: token);
 
-      if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
+      if (result.response.statusCode == HttpStatus.ok) {
+        final data = result.data!['result'];
+        final value = DashboardModel.fromJson(data);
+        return SuccessState(data: value);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Cannot Get Customer Data'));
       }
     } on DioException catch (e) {
@@ -43,7 +54,7 @@ class DashboardRepoImp extends DashboardRepository {
       required String? token}) async {
     try {
       final token = await prefsApi.getFromShared(key: 'login');
-      final data = await dashboardApi.getStatement(
+      final result = await dashboardApi.getStatement(
           storeIds: storeIds,
           page: page,
           size: size,
@@ -52,12 +63,23 @@ class DashboardRepoImp extends DashboardRepository {
           customerIds: customerIds,
           token: token);
 
-      if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
+      if (result.response.statusCode == HttpStatus.ok) {
+        final data = result.data!['result'];
+        final value = StatementModel.fromJson(data);
+        return SuccessState(data: value);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Cannot Get Statement Data'));
       }
     } on DioException catch (e) {

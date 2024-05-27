@@ -18,7 +18,7 @@ class _PlaceOrderApi implements PlaceOrderApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<PlaceOrderResModel>> placeOrder(
+  Future<HttpResponse> placeOrder(
       {required PlaceOrderModel placeOrderModel,
       required String token,
       required String storeId}) async {
@@ -46,15 +46,12 @@ class _PlaceOrderApi implements PlaceOrderApi {
               baseUrl,
             ))));
 
-    final data = _result.data!['result'];
-
-    final value = PlaceOrderResModel.fromJson(data);
-    final httpResponse = HttpResponse(value, _result);
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<List<CustomerOrderModel>>> getCustomerOrder({
+  Future<HttpResponse> getCustomerOrder({
     required String token,
     required int page,
     required int size,
@@ -82,19 +79,12 @@ class _PlaceOrderApi implements PlaceOrderApi {
               baseUrl,
             ))));
 
-    final data = _result.data!['result'];
-    List<dynamic> content = data!['content'];
-
-    var value = content
-        .map((dynamic i) =>
-            CustomerOrderModel.fromJson(i as Map<String, dynamic>))
-        .toList();
-    final httpResponse = HttpResponse(value, _result);
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<String?>> getOrderDetails(
+  Future<HttpResponse> getOrderDetails(
       {required String token,
       required String defaultStoreId,
       required String storeIdList,

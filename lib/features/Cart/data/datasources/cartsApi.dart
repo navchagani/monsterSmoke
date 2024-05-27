@@ -12,18 +12,17 @@ abstract class CartApi {
   factory CartApi(Dio dio, SharedPrefsApi sharedPrefsApi) = _CartApi;
 
   @POST('/api/cartLineItem')
-  Future<HttpResponse<List<CartLineItemDtoList>>> addtoCart(
+  Future<HttpResponse> addtoCart(
       {required List<Content> Content,
       @Query('storeId') required String storeId});
   @GET('/api/cartLineItem/search')
-  Future<HttpResponse<UpdateCartModel>> getCart(
-      {@Query('storeId') required String storeId});
+  Future<HttpResponse> getCart({@Query('storeId') required String storeId});
   @PUT('/api/cartLineItem/updateAll')
-  Future<HttpResponse<List<CartLineItemDtoList>>> updateCart(
+  Future<HttpResponse> updateCart(
       {required List<CartLineItemDtoList> updateCartModel,
       @Query('storeId') required String storeId});
   @DELETE('/api/cartLineItem/clearSelected')
-  Future<HttpResponse<bool>> deleteFromCart(
+  Future<HttpResponse> deleteFromCart(
       {required List<CartLineItemDtoList> updateCartModel,
       @Query('storeId') required String storeId});
 }

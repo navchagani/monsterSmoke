@@ -15,21 +15,20 @@ abstract class AssetsApi {
   factory AssetsApi(Dio dio) = _AssetsApi;
 
   @GET('/api/country/all')
-  Future<HttpResponse<List<CountryModel>>> getCountries();
+  Future<HttpResponse> getCountries();
   @GET('/api/country/stateid/allState')
-  Future<HttpResponse<List<StateModel>>> getStates({required String stateId});
+  Future<HttpResponse> getStates({required String stateId});
   @GET('/api/home/sliderImages')
-  Future<HttpResponse<List<SliderModel>>> getSliders(
+  Future<HttpResponse> getSliders(
       {@Query('sliderTypeId') required String sliderId,
       @Query('businessTypeId') required String buisnessId});
 
   @GET('/api/store/paymentMode')
-  Future<HttpResponse<List<PaymentsModel>>> getPaymentMethods();
+  Future<HttpResponse> getPaymentMethods();
 
   @GET('/api/shipping/options')
-  Future<HttpResponse<List<ShippingAddressModel>>> getShippingAddress();
+  Future<HttpResponse> getShippingAddress();
 
   @GET('/api/ecommerce/staticPage')
-  Future<HttpResponse<HtmlModel>> getPage(
-      {@Query('alias') required String alias});
+  Future<HttpResponse> getPage({@Query('alias') required String alias});
 }

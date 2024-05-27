@@ -12,10 +12,10 @@ abstract class DashboardApi {
   factory DashboardApi(Dio dio) = _DashboardApi;
 
   @GET('/api/ecommerce/dashboard')
-  Future<HttpResponse<DashboardModel>> getDashboard(
+  Future<HttpResponse> getDashboard(
       {@Header('Authorization') required String? token});
   @GET('/api/ecommerce/customer/report/statement')
-  Future<HttpResponse<StatementModel>> getStatement(
+  Future<HttpResponse> getStatement(
       {@Query('storeIds') required String? storeIds,
       @Query('page') required int? page,
       @Query('size') required int? size,

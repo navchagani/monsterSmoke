@@ -15,7 +15,7 @@ abstract class ProductApi {
   factory ProductApi(Dio dio) = _ProductApi;
 
   @GET('/api/ecommerce/product/category')
-  Future<HttpResponse<ProductModel>> getProducts(
+  Future<HttpResponse> getProducts(
       {@Query('categoryIdList') required int? categoryIdList,
       @Query('page') required int? page,
       @Query('size') required int? size,
@@ -23,16 +23,16 @@ abstract class ProductApi {
       @Query('sortDirection') required String? sortDirection,
       @Query('storeIds') required int? storeIds});
   @GET('/api/ecommerce/product/27066')
-  Future<HttpResponse<ProductDetailModel>> getProductDetails(
+  Future<HttpResponse> getProductDetails(
       {@Query('storeIds') required String storeIds, required String productId});
   @GET('/api/ecommerce/product/searchByProductOrCategory')
-  Future<HttpResponse<ProductSearchModel>> searchProducts(
+  Future<HttpResponse> searchProducts(
       {@Query('searchInput') required String searchString});
 
   @GET('/api/home/productTagList')
-  Future<HttpResponse<List<TagContent>>> getTags();
+  Future<HttpResponse> getTags();
   @GET('/api/home/product/tagId/2')
-  Future<HttpResponse<ProductModel>> getTaggedProducts(
+  Future<HttpResponse> getTaggedProducts(
       {required int tagId,
       required int? page,
       required int? size,

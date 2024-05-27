@@ -58,13 +58,9 @@ class _AuthApi implements AuthApi {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    // print(jsonEncode(customerModel.toJson()));
     final _data = dio.FormData.fromMap(
         {'customerObj': jsonEncode(createCustomerModel.toJson())});
 
-    print('${_data}');
-
-    // _data.addAll(customerModel.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<bool>>(dio.Options(
       method: 'POST',

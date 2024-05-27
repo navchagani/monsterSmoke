@@ -22,15 +22,31 @@ class PlaceOrderRepoImp extends PlaceOrderRepo {
     try {
       final token = await sharedPrefsApi.getFromShared(key: 'login');
 
-      final data = await placeOrderApi.getCustomerOrder(
+      final result = await placeOrderApi.getCustomerOrder(
           token: token.toString(), page: page, size: size);
 
-      if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
+      if (result.response.statusCode == HttpStatus.ok) {
+        final data = result.data!['result'];
+        List<dynamic> content = data!['content'];
+
+        var value = content
+            .map((dynamic i) =>
+                CustomerOrderModel.fromJson(i as Map<String, dynamic>))
+            .toList();
+        return SuccessState(data: value);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Error Signing In'));
       }
     } on DioException catch (e) {
@@ -48,20 +64,29 @@ class PlaceOrderRepoImp extends PlaceOrderRepo {
     try {
       final token = await sharedPrefsApi.getFromShared(key: 'login');
 
-      final data = await placeOrderApi.getOrderDetails(
+      final result = await placeOrderApi.getOrderDetails(
           token: token.toString(),
           defaultStoreId: defaultStoreId,
           storeIdList: storeIdList,
           isEcommerce: isEcommerce,
           orderNumber: orderNumber);
 
-      if (data.response.statusCode == HttpStatus.ok) {
-        log('${data.data}');
-        return SuccessState(data: data.data);
+      if (result.response.statusCode == HttpStatus.ok) {
+        log('${result.data}');
+        return SuccessState(data: result.data);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Error Signing In'));
       }
     } on DioException catch (e) {
@@ -77,18 +102,30 @@ class PlaceOrderRepoImp extends PlaceOrderRepo {
     try {
       final token = await sharedPrefsApi.getFromShared(key: 'login');
 
-      final data = await placeOrderApi.placeOrder(
+      final result = await placeOrderApi.placeOrder(
           placeOrderModel: placeOrderModel,
           token: token.toString(),
           storeId: storeId);
 
-      if (data.response.statusCode == HttpStatus.created) {
+      if (result.response.statusCode == HttpStatus.created) {
+        final data = result.data!['result'];
+
+        final value = PlaceOrderResModel.fromJson(data);
         // log('${data.data.toJson()}');
-        return SuccessState(data: data.data);
+        return SuccessState(data: value);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Error Signing In'));
       }
     } on DioException catch (e) {

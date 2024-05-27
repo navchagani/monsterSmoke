@@ -15,15 +15,28 @@ class CatBrandsRepoImp extends CatBrandRepo {
   Future<DataStates<List<Content>>> getBrands(
       {required String storeIds, required String brandIdList}) async {
     try {
-      final data = await catBrandApi.getBrands(
+      final result = await catBrandApi.getBrands(
           storeIds: storeIds, brandIdList: brandIdList);
 
-      if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
+      if (result.response.statusCode == HttpStatus.ok) {
+        List<dynamic> content = result.data!['result'];
+        var value = content
+            .map((dynamic i) => Content.fromJson(i as Map<String, dynamic>))
+            .toList();
+        return SuccessState(data: value);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Cannot Get Customer Data'));
       }
     } on DioException catch (e) {
@@ -35,15 +48,30 @@ class CatBrandsRepoImp extends CatBrandRepo {
   Future<DataStates<List<CategoryModel>>> getCategories(
       {required String buissnessTypeId}) async {
     try {
-      final data =
+      final result =
           await catBrandApi.getCategories(buissnessTypeId: buissnessTypeId);
 
-      if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
+      if (result.response.statusCode == HttpStatus.ok) {
+        List<dynamic> value = result.data!['result'];
+
+        var data = value
+            .map((dynamic i) =>
+                CategoryModel.fromJson(i as Map<String, dynamic>))
+            .toList();
+        return SuccessState(data: data);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Cannot Get Customer Data'));
       }
     } on DioException catch (e) {

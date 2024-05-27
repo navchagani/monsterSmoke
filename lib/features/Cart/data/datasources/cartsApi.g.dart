@@ -18,7 +18,7 @@ class _CartApi implements CartApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<List<CartLineItemDtoList>>> addtoCart({
+  Future<HttpResponse> addtoCart({
     required List<Content> Content,
     required String storeId,
   }) async {
@@ -48,18 +48,12 @@ class _CartApi implements CartApi {
               baseUrl,
             ))));
 
-    List<dynamic> data = _result.data!['result'];
-    var value = data
-        .map((dynamic i) =>
-            CartLineItemDtoList.fromJson(i as Map<String, dynamic>))
-        .toList();
-    final httpResponse = HttpResponse(value, _result);
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<UpdateCartModel>> getCart(
-      {required String storeId}) async {
+  Future<HttpResponse> getCart({required String storeId}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'storeId': storeId};
     final _headers = <String, dynamic>{
@@ -85,13 +79,12 @@ class _CartApi implements CartApi {
               baseUrl,
             ))));
 
-    final value = UpdateCartModel.fromJson(_result.data!['result']);
-    final httpResponse = HttpResponse(value, _result);
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<List<CartLineItemDtoList>>> updateCart({
+  Future<HttpResponse> updateCart({
     required List<CartLineItemDtoList> updateCartModel,
     required String storeId,
   }) async {
@@ -121,18 +114,12 @@ class _CartApi implements CartApi {
               baseUrl,
             ))));
 
-    List<dynamic> data = _result.data!['result'];
-
-    var value = data
-        .map((dynamic i) =>
-            CartLineItemDtoList.fromJson(i as Map<String, dynamic>))
-        .toList();
-    final httpResponse = HttpResponse(value, _result);
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<bool>> deleteFromCart({
+  Future<HttpResponse> deleteFromCart({
     required List<CartLineItemDtoList> updateCartModel,
     required String storeId,
   }) async {
@@ -161,8 +148,8 @@ class _CartApi implements CartApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = _result.statusCode == 204 ? true : false;
-    final httpResponse = HttpResponse(value, _result);
+
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 

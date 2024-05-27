@@ -16,14 +16,29 @@ class CartRepoImp extends CartRepo {
   Future<DataStates<List<CartLineItemDtoList>>> addtoCart(
       {required List<Content> Content, required String storeId}) async {
     try {
-      final data = await cartApi.addtoCart(Content: Content, storeId: storeId);
+      final result =
+          await cartApi.addtoCart(Content: Content, storeId: storeId);
 
-      if (data.response.statusCode == HttpStatus.created) {
-        return SuccessState(data: data.data);
+      if (result.response.statusCode == HttpStatus.created) {
+        List<dynamic> data = result.data!['result'];
+        var value = data
+            .map((dynamic i) =>
+                CartLineItemDtoList.fromJson(i as Map<String, dynamic>))
+            .toList();
+        return SuccessState(data: value);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Cannot Get Customer Data'));
       }
     } on DioException catch (e) {
@@ -40,7 +55,15 @@ class CartRepoImp extends CartRepo {
           updateCartModel: updateCartModel, storeId: storeId);
 
       if (data.response.statusCode == HttpStatus.noContent) {
-        return SuccessState(data: data.data);
+        return SuccessState(data: true);
+      } else if (data.response.statusCode == HttpStatus.forbidden ||
+          data.response.statusCode == HttpStatus.badRequest ||
+          data.response.statusCode == HttpStatus.badGateway) {
+        final error = data.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: data.response.requestOptions, message: error));
       } else {
         return ErrorState(
             dioException: DioException(
@@ -58,7 +81,16 @@ class CartRepoImp extends CartRepo {
       final data = await cartApi.getCart(storeId: storeId);
 
       if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
+        final value = UpdateCartModel.fromJson(data.data!['result']);
+        return SuccessState(data: value);
+      } else if (data.response.statusCode == HttpStatus.forbidden ||
+          data.response.statusCode == HttpStatus.badRequest ||
+          data.response.statusCode == HttpStatus.badGateway) {
+        final error = data.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: data.response.requestOptions, message: error));
       } else {
         return ErrorState(
             dioException: DioException(
@@ -75,15 +107,30 @@ class CartRepoImp extends CartRepo {
       {required List<CartLineItemDtoList> updateCartModel,
       required String storeId}) async {
     try {
-      final data = await cartApi.updateCart(
+      final result = await cartApi.updateCart(
           updateCartModel: updateCartModel, storeId: storeId);
 
-      if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
+      if (result.response.statusCode == HttpStatus.ok) {
+        List<dynamic> data = result.data!['result'];
+
+        var value = data
+            .map((dynamic i) =>
+                CartLineItemDtoList.fromJson(i as Map<String, dynamic>))
+            .toList();
+        return SuccessState(data: value);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Cannot Get Customer Data'));
       }
     } on DioException catch (e) {

@@ -19,14 +19,28 @@ class AssetsRepoImp extends AssetsRepo {
   @override
   Future<DataStates<List<CountryModel>>> getCountries() async {
     try {
-      final data = await assetsApi.getCountries();
+      final result = await assetsApi.getCountries();
 
-      if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
+      if (result.response.statusCode == HttpStatus.ok) {
+        List<dynamic> data = result.data!['result'];
+        var value = data
+            .map(
+                (dynamic i) => CountryModel.fromJson(i as Map<String, dynamic>))
+            .toList();
+        return SuccessState(data: value);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Cannot Get Customer Data'));
       }
     } on DioException catch (e) {
@@ -38,15 +52,29 @@ class AssetsRepoImp extends AssetsRepo {
   Future<DataStates<List<SliderModel>>> getSliders(
       {required String sliderId, required String buisnessId}) async {
     try {
-      final data = await assetsApi.getSliders(
+      final result = await assetsApi.getSliders(
           sliderId: sliderId, buisnessId: buisnessId);
 
-      if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
+      if (result.response.statusCode == HttpStatus.ok) {
+        Map<String, dynamic> data = result.data!['result'];
+        List<dynamic> slides = data['sliderImageList'];
+        var value = slides
+            .map((dynamic i) => SliderModel.fromJson(i as Map<String, dynamic>))
+            .toList();
+        return SuccessState(data: value);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Cannot Get Customer Data'));
       }
     } on DioException catch (e) {
@@ -58,14 +86,27 @@ class AssetsRepoImp extends AssetsRepo {
   Future<DataStates<List<StateModel>>> getStates(
       {required String stateId}) async {
     try {
-      final data = await assetsApi.getStates(stateId: stateId);
+      final result = await assetsApi.getStates(stateId: stateId);
 
-      if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
+      if (result.response.statusCode == HttpStatus.ok) {
+        List<dynamic> data = result.data!['result'];
+        var value = data
+            .map((dynamic i) => StateModel.fromJson(i as Map<String, dynamic>))
+            .toList();
+        return SuccessState(data: value);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Cannot Get Customer Data'));
       }
     } on DioException catch (e) {
@@ -76,14 +117,28 @@ class AssetsRepoImp extends AssetsRepo {
   @override
   Future<DataStates<List<PaymentsModel>>> getPaymentMethods() async {
     try {
-      final data = await assetsApi.getPaymentMethods();
+      final result = await assetsApi.getPaymentMethods();
 
-      if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
+      if (result.response.statusCode == HttpStatus.ok) {
+        List<dynamic> data = result.data!['result'];
+        var value = data
+            .map((dynamic i) =>
+                PaymentsModel.fromJson(i as Map<String, dynamic>))
+            .toList();
+        return SuccessState(data: value);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Cannot Get Customer Data'));
       }
     } on DioException catch (e) {
@@ -94,14 +149,28 @@ class AssetsRepoImp extends AssetsRepo {
   @override
   Future<DataStates<List<ShippingAddressModel>>> getShippingAddress() async {
     try {
-      final data = await assetsApi.getShippingAddress();
+      final result = await assetsApi.getShippingAddress();
 
-      if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
+      if (result.response.statusCode == HttpStatus.ok) {
+        List<dynamic> data = result.data!['result'];
+        var value = data
+            .map((dynamic i) =>
+                ShippingAddressModel.fromJson(i as Map<String, dynamic>))
+            .toList();
+        return SuccessState(data: value);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Cannot Get Customer Data'));
       }
     } on DioException catch (e) {
@@ -112,14 +181,25 @@ class AssetsRepoImp extends AssetsRepo {
   @override
   Future<DataStates<HtmlModel>> getPage({required String alias}) async {
     try {
-      final data = await assetsApi.getPage(alias: alias);
+      final result = await assetsApi.getPage(alias: alias);
 
-      if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
+      if (result.response.statusCode == HttpStatus.ok) {
+        Map<String, dynamic> data = result.data!['result'];
+        var value = HtmlModel.fromJson(data);
+        return SuccessState(data: value);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Cannot Get Customer Data'));
       }
     } on DioException catch (e) {

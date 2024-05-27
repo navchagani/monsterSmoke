@@ -21,7 +21,7 @@ class _DashboardApi implements DashboardApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<DashboardModel>> getDashboard({String? token}) async {
+  Future<HttpResponse> getDashboard({String? token}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -46,14 +46,12 @@ class _DashboardApi implements DashboardApi {
               baseUrl,
             ))));
 
-    final data = _result.data!['result'];
-    final value = DashboardModel.fromJson(data);
-    final httpResponse = HttpResponse(value, _result);
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<StatementModel>> getStatement({
+  Future<HttpResponse> getStatement({
     String? storeIds,
     int? page,
     int? size,
@@ -94,9 +92,7 @@ class _DashboardApi implements DashboardApi {
               baseUrl,
             ))));
 
-    final data = _result.data!['result'];
-    final value = StatementModel.fromJson(data);
-    final httpResponse = HttpResponse(value, _result);
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 

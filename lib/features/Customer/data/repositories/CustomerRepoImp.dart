@@ -19,15 +19,26 @@ class CustomerRepoImp extends CustomerRepository {
     try {
       final token = await sharedPrefsApi.getFromShared(key: 'login');
 
-      final data = await customerApi.addCustomerAddress(
+      final result = await customerApi.addCustomerAddress(
           token: token.toString(), addressList: addressList);
 
-      if (data.response.statusCode == HttpStatus.created) {
-        return SuccessState(data: data.data);
+      if (result.response.statusCode == HttpStatus.created) {
+        final data = result.data!['result'];
+        final value = CustomerStoreAddressList.fromJson(data);
+        return SuccessState(data: value);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Error Signing In'));
       }
     } on DioException catch (e) {
@@ -38,14 +49,28 @@ class CustomerRepoImp extends CustomerRepository {
   @override
   Future<DataStates<CustomerModel>> getCustomer({required String token}) async {
     try {
-      final data = await customerApi.getCustomer(token: token);
+      final result = await customerApi.getCustomer(token: token);
 
-      if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
+      if (result.response.statusCode == HttpStatus.ok) {
+        final value = result.data!['result'];
+        final customerData = value['customerDto'];
+        final model =
+            result.data == null ? null : CustomerModel.fromJson(customerData!);
+        log('getcustomer data : ${model}');
+        return SuccessState(data: model);
+      } else if (result.response.statusCode == HttpStatus.forbidden ||
+          result.response.statusCode == HttpStatus.badRequest ||
+          result.response.statusCode == HttpStatus.badGateway) {
+        final error = result.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: result.response.requestOptions,
+                message: error));
       } else {
         return ErrorState(
             dioException: DioException(
-                requestOptions: data.response.requestOptions,
+                requestOptions: result.response.requestOptions,
                 message: 'Error Signing In'));
       }
     } on DioException catch (e) {
@@ -64,6 +89,14 @@ class CustomerRepoImp extends CustomerRepository {
 
       if (data.response.statusCode == HttpStatus.created) {
         return SuccessState(data: true);
+      } else if (data.response.statusCode == HttpStatus.forbidden ||
+          data.response.statusCode == HttpStatus.badRequest ||
+          data.response.statusCode == HttpStatus.badGateway) {
+        final error = data.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: data.response.requestOptions, message: error));
       } else {
         return ErrorState(
             dioException: DioException(
@@ -85,7 +118,17 @@ class CustomerRepoImp extends CustomerRepository {
           token: token.toString(), addressList: addressList);
 
       if (data.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: data.data);
+        final result = data.data!['result'];
+        final value = CustomerStoreAddressList.fromJson(result);
+        return SuccessState(data: value);
+      } else if (data.response.statusCode == HttpStatus.forbidden ||
+          data.response.statusCode == HttpStatus.badRequest ||
+          data.response.statusCode == HttpStatus.badGateway) {
+        final error = data.data['error']['message'];
+
+        return ErrorState(
+            dioException: DioException(
+                requestOptions: data.response.requestOptions, message: error));
       } else {
         return ErrorState(
             dioException: DioException(

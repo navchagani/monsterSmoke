@@ -11,11 +11,11 @@ abstract class CatBrandApi {
   factory CatBrandApi(Dio dio) = _CatBrandApi;
 
   @GET('/api/menu')
-  Future<HttpResponse<List<CategoryModel>>> getCategories(
+  Future<HttpResponse> getCategories(
       {@Query('businessTypeId') required String buissnessTypeId});
 
   @GET('/api/ecommerce/product/brand')
-  Future<HttpResponse<List<Content>>> getBrands(
+  Future<HttpResponse> getBrands(
       {@Query('storeIds') required String storeIds,
       @Query('brandIdList') required String brandIdList});
 }

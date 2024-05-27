@@ -18,7 +18,7 @@ class _AssetsApi implements AssetsApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<List<CountryModel>>> getCountries() async {
+  Future<HttpResponse> getCountries() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -40,17 +40,13 @@ class _AssetsApi implements AssetsApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    List<dynamic> data = _result.data!['result'];
-    var value = data
-        .map((dynamic i) => CountryModel.fromJson(i as Map<String, dynamic>))
-        .toList();
-    final httpResponse = HttpResponse(value, _result);
+
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<List<StateModel>>> getStates(
-      {required String stateId}) async {
+  Future<HttpResponse> getStates({required String stateId}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -72,16 +68,13 @@ class _AssetsApi implements AssetsApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    List<dynamic> data = _result.data!['result'];
-    var value = data
-        .map((dynamic i) => StateModel.fromJson(i as Map<String, dynamic>))
-        .toList();
-    final httpResponse = HttpResponse(value, _result);
+
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<List<SliderModel>>> getSliders({
+  Future<HttpResponse> getSliders({
     required String sliderId,
     required String buisnessId,
   }) async {
@@ -109,18 +102,13 @@ class _AssetsApi implements AssetsApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    Map<String, dynamic> data = _result.data!['result'];
-    List<dynamic> slides = data['sliderImageList'];
-    var value = slides
-        .map((dynamic i) => SliderModel.fromJson(i as Map<String, dynamic>))
-        .toList();
 
-    final httpResponse = HttpResponse(value, _result);
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<List<PaymentsModel>>> getPaymentMethods() async {
+  Future<HttpResponse> getPaymentMethods() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -142,16 +130,13 @@ class _AssetsApi implements AssetsApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    List<dynamic> data = _result.data!['result'];
-    var value = data
-        .map((dynamic i) => PaymentsModel.fromJson(i as Map<String, dynamic>))
-        .toList();
-    final httpResponse = HttpResponse(value, _result);
+
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<List<ShippingAddressModel>>> getShippingAddress() async {
+  Future<HttpResponse> getShippingAddress() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -173,17 +158,13 @@ class _AssetsApi implements AssetsApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    List<dynamic> data = _result.data!['result'];
-    var value = data
-        .map((dynamic i) =>
-            ShippingAddressModel.fromJson(i as Map<String, dynamic>))
-        .toList();
-    final httpResponse = HttpResponse(value, _result);
+
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<HtmlModel>> getPage({required String alias}) async {
+  Future<HttpResponse> getPage({required String alias}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{"alias": alias};
     final _headers = <String, dynamic>{};
@@ -205,9 +186,8 @@ class _AssetsApi implements AssetsApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    Map<String, dynamic> data = _result.data!['result'];
-    var value = HtmlModel.fromJson(data);
-    final httpResponse = HttpResponse(value, _result);
+
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 

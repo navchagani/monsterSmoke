@@ -18,7 +18,7 @@ class _ProductApi implements ProductApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<ProductModel>> getProducts({
+  Future<HttpResponse> getProducts({
     required int? categoryIdList,
     required int? page,
     required int? size,
@@ -56,16 +56,12 @@ class _ProductApi implements ProductApi {
               baseUrl,
             ))));
 
-    final data = _result.data!['result'];
-    // log('${data}');
-
-    var value = ProductModel.fromJson(data as Map<String, dynamic>);
-    final httpResponse = HttpResponse(value, _result);
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<ProductDetailModel>> getProductDetails({
+  Future<HttpResponse> getProductDetails({
     required String storeIds,
     required String productId,
   }) async {
@@ -90,9 +86,8 @@ class _ProductApi implements ProductApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final data = _result.data!['result'];
-    final value = ProductDetailModel.fromJson(data);
-    final httpResponse = HttpResponse(value, _result);
+
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
@@ -127,8 +122,7 @@ class _ProductApi implements ProductApi {
   }
 
   @override
-  Future<HttpResponse<ProductSearchModel>> searchProducts(
-      {required String searchString}) async {
+  Future<HttpResponse> searchProducts({required String searchString}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'searchInput': searchString};
     final _headers = <String, dynamic>{};
@@ -150,16 +144,13 @@ class _ProductApi implements ProductApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final data = _result.data!['result'];
-    // log('${data}');
 
-    final value = ProductSearchModel.fromJson(data);
-    final httpResponse = HttpResponse(value, _result);
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<List<TagContent>>> getTags() async {
+  Future<HttpResponse> getTags() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -182,17 +173,12 @@ class _ProductApi implements ProductApi {
               baseUrl,
             ))));
 
-    List<dynamic> data = _result.data!['result'];
-    var value = data
-        .map((dynamic i) => TagContent.fromJson(i as Map<String, dynamic>))
-        .toList();
-
-    final httpResponse = HttpResponse(value, _result);
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<ProductModel>> getTaggedProducts({
+  Future<HttpResponse> getTaggedProducts({
     required int tagId,
     int? page,
     int? size,
@@ -230,14 +216,7 @@ class _ProductApi implements ProductApi {
               baseUrl,
             ))));
 
-    final data = _result.data!['result'];
-
-    log(_result.realUri.toString());
-
-    // log(data);
-
-    var value = ProductModel.fromJson(data as Map<String, dynamic>);
-    final httpResponse = HttpResponse(value, _result);
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 }

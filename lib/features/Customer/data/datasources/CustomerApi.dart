@@ -12,21 +12,21 @@ abstract class CustomerApi {
   factory CustomerApi(Dio dio) = _CustomerApi;
 
   @POST('/api/ecommerce/customer/1863/address')
-  Future<HttpResponse<CustomerStoreAddressList>> addCustomerAddress(
+  Future<HttpResponse> addCustomerAddress(
       {@Header('Authorization') required String token,
       @Body() required CustomerStoreAddressList addressList});
 
   @PUT('/api/ecommerce/customer/1795/address')
-  Future<HttpResponse<CustomerStoreAddressList>> updateCustomerAddress(
+  Future<HttpResponse> updateCustomerAddress(
       {@Header('Authorization') required String token,
       @Body() required CustomerStoreAddressList addressList});
 
   @PUT('/api/ecommerce/customer')
-  Future<HttpResponse<void>> updateCustomer(
+  Future<HttpResponse> updateCustomer(
       {@Header('Authorization') required String token,
       @Body() required CustomerModel customerModel});
 
   @GET('/api/ecommerce/customer')
-  Future<HttpResponse<CustomerModel?>> getCustomer(
+  Future<HttpResponse> getCustomer(
       {@Header('Authorization') required String token});
 }

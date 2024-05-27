@@ -21,7 +21,7 @@ class _CustomerApi implements CustomerApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<CustomerStoreAddressList>> addCustomerAddress({
+  Future<HttpResponse> addCustomerAddress({
     required String token,
     required CustomerStoreAddressList addressList,
   }) async {
@@ -48,14 +48,13 @@ class _CustomerApi implements CustomerApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final result = _result.data!['result'];
-    final value = CustomerStoreAddressList.fromJson(result);
-    final httpResponse = HttpResponse(value, _result);
+
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<CustomerStoreAddressList>> updateCustomerAddress({
+  Future<HttpResponse> updateCustomerAddress({
     required String token,
     required CustomerStoreAddressList addressList,
   }) async {
@@ -82,14 +81,13 @@ class _CustomerApi implements CustomerApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final result = _result.data!['result'];
-    final value = CustomerStoreAddressList.fromJson(result);
-    final httpResponse = HttpResponse(value, _result);
+
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<void>> updateCustomer({
+  Future<HttpResponse> updateCustomer({
     required String token,
     required CustomerModel customerModel,
   }) async {
@@ -121,14 +119,12 @@ class _CustomerApi implements CustomerApi {
 
     log(_result.statusCode.toString());
 
-    final isCompleted = _result.statusCode == 201 ? true : false;
-    final httpResponse = HttpResponse(isCompleted, _result);
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<CustomerModel?>> getCustomer(
-      {required String token}) async {
+  Future<HttpResponse> getCustomer({required String token}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': 'Bearer $token'};
@@ -152,13 +148,7 @@ class _CustomerApi implements CustomerApi {
               baseUrl,
             ))));
 
-    final value = _result.data!['result'];
-    final customerData = value['customerDto'];
-    final model =
-        _result.data == null ? null : CustomerModel.fromJson(customerData!);
-    log('getcustomer data : ${_result.data}');
-
-    final httpResponse = HttpResponse(model, _result);
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
