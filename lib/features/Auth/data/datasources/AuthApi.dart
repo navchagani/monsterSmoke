@@ -18,23 +18,23 @@ abstract class AuthApi {
   factory AuthApi(dio.Dio dio) = _AuthApi;
 
   @POST('/api/authenticate')
-  Future<HttpResponse<String?>> signIn(
+  Future<HttpResponse> signIn(
       {@Body() required String email, @Body() required String password});
   @POST('/api/ecommerce/customer/withDocuments')
-  Future<HttpResponse<customerModel.CustomerModel?>> signUp(
+  Future<HttpResponse> signUp(
       {@Body() required CreateCustomerModel createCustomerModel});
 
   @POST('/api/ecommerce/customer/resetPassword?email=email&token=token')
-  Future<HttpResponse<void>> resetPassword(
+  Future<HttpResponse> resetPassword(
       {@Query('email') required String? email,
       @Query('token') required String? token});
   @POST('/api/ecommerce/customer/changePassword')
-  Future<HttpResponse<void>> changePassword(
+  Future<HttpResponse> changePassword(
       {@Body() required String? oldPassword,
       @Body() required String? password,
       @Body() required String? newPassword,
       @Header('Authorization') String? token});
 
   @POST('/api/ecommerce/customer/sendForgotPasswordEmail?email=email')
-  Future<HttpResponse<void>> forgotPassword({required String? email});
+  Future<HttpResponse> forgotPassword({required String? email});
 }

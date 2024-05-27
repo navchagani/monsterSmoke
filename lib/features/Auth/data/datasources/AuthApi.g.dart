@@ -18,7 +18,7 @@ class _AuthApi implements AuthApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<String?>> signIn({
+  Future<HttpResponse> signIn({
     required String email,
     required String password,
   }) async {
@@ -44,16 +44,12 @@ class _AuthApi implements AuthApi {
               baseUrl,
             ))));
 
-    final value = _result.data!['result'];
-    final token = value['access'];
-    final refresh = value['refresh'];
-
-    final httpResponse = HttpResponse(token as String, _result);
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<customerModel.CustomerModel?>> signUp(
+  Future<HttpResponse> signUp(
       {required CreateCustomerModel createCustomerModel}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -78,14 +74,13 @@ class _AuthApi implements AuthApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = customerModel.CustomerModel.fromJson(_result.data!['result']);
 
-    final httpResponse = HttpResponse(value, _result);
+    final httpResponse = HttpResponse(_result.data, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<void>> resetPassword({
+  Future<HttpResponse> resetPassword({
     String? email,
     String? token,
   }) async {
@@ -119,7 +114,7 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<HttpResponse<void>> changePassword(
+  Future<HttpResponse> changePassword(
       {String? oldPassword,
       String? password,
       String? newPassword,
@@ -156,7 +151,7 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<HttpResponse<void>> forgotPassword({required String? email}) async {
+  Future<HttpResponse> forgotPassword({required String? email}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{"email": email.toString()};
     queryParameters.removeWhere((k, v) => v == null);
