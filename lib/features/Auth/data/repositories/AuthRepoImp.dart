@@ -28,8 +28,7 @@ class AuthRepoImp extends AuthRepo {
         final token = value['access'] as String;
         final refresh = value['refresh'] as String;
 
-        await sharedPrefsApi.saveToShared(
-            value: result.data.toString(), key: 'login');
+        await sharedPrefsApi.saveToShared(value: token, key: 'login');
         return SuccessState(data: token);
       } else if (result.response.statusCode == HttpStatus.forbidden ||
           result.response.statusCode == HttpStatus.badRequest ||
