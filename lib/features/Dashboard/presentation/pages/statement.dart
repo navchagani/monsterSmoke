@@ -1,13 +1,18 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:intl/intl.dart';
+import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/features/Dashboard/presentation/pages/recentOrders.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/Dashboard/data/models/statementModel.dart';
 import 'package:monstersmoke/features/Dashboard/presentation/bloc/dashboard_bloc.dart';
+import 'package:monstersmoke/features/sharedPrefsApi.dart';
 
 class UserStatement extends StatefulWidget {
   const UserStatement({super.key});
@@ -217,7 +222,7 @@ class UserStatementState extends State<UserStatement> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: CustomButton(
-                            onTap: () {},
+                            onTap: () async => await download(),
                             text: 'Print',
                             backgroundColor: const Color(0xff202b38),
                             textColor: Colors.white,
@@ -421,7 +426,17 @@ class UserStatementState extends State<UserStatement> {
                     actions: [
                       IconButton(
                         onPressed: () {
+                          CustomerBloc bloc =
+                              BlocProvider.of<CustomerBloc>(context);
                           // Handle action
+                          statementBloc.add(GetStatementEvent(
+                              storeIds: '1,2',
+                              startDate: fromDateController.text,
+                              customerIds:
+                                  bloc.state.customerModel?.id.toString(),
+                              endDate: toDateController.text,
+                              page: 0,
+                              size: 10));
                         },
                         icon: const Icon(Icons.refresh),
                       ),
@@ -442,6 +457,24 @@ class UserStatementState extends State<UserStatement> {
         },
       ),
     );
+  }
+
+  download() async {
+    final token = await SharedPrefsApi.instance.getFromShared(key: 'login');
+    CustomerBloc bloc = BlocProvider.of<CustomerBloc>(context);
+
+    final url =
+        '${Constants.baseUrl}/services/pdf/cusomter/statement?token=$token&startDate=${fromDateController.text}&endDate=${toDateController.text}&customerIds=${bloc.state.customerModel?.id}&storeIdList=1,2&defaultStoreId=2';
+
+    log(url);
+
+    final browser = ChromeSafariBrowser();
+
+    await browser.open(
+        url: WebUri(url),
+        settings: ChromeSafariBrowserSettings(
+            shareState: CustomTabsShareState.SHARE_STATE_OFF,
+            barCollapsingEnabled: true));
   }
 
   itemDashboard(

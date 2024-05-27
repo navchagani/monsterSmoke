@@ -1,11 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/features/Dashboard/presentation/pages/recentOrders.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 import 'package:monstersmoke/features/PlaceOrder/data/models/CustomerOrderModel.dart';
 import 'package:monstersmoke/features/PlaceOrder/presentation/bloc/placeorder_bloc.dart';
+import 'package:monstersmoke/features/sharedPrefsApi.dart';
 
 import '../bloc/dashboard_bloc.dart';
 
@@ -489,7 +494,10 @@ class MyData extends DataTableSource {
       DataCell(Text(data[index].trackingNumber.toString())),
       DataCell(Row(
         children: [
-          IconButton(onPressed: onDownload, icon: const Icon(Icons.download))
+          IconButton(
+              onPressed: () =>
+                  download(invoiceNumber: data[index].orderId.toString()),
+              icon: const Icon(Icons.download))
         ],
       )),
     ]);
@@ -506,5 +514,20 @@ class MyData extends DataTableSource {
 
   void onEyePressed() {}
 
-  void onDownload() {}
+  download({required String invoiceNumber}) async {
+    final token = await SharedPrefsApi.instance.getFromShared(key: 'login');
+
+    final url =
+        '${Constants.baseUrl}/services/pdf/sales-order/invoice/$invoiceNumber?token=$token&defaultStoreId=${2}&storeIdList=${'1,2'}&isEcommerce=${true}';
+
+    log(url);
+
+    final browser = ChromeSafariBrowser();
+
+    await browser.open(
+        url: WebUri(url),
+        settings: ChromeSafariBrowserSettings(
+            shareState: CustomTabsShareState.SHARE_STATE_OFF,
+            barCollapsingEnabled: true));
+  }
 }
