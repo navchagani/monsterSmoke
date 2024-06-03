@@ -10,7 +10,7 @@ class MonsterThemes {
       appBarTheme: AppBarTheme(
           toolbarHeight: 80,
           surfaceTintColor: Colors.transparent,
-          backgroundColor: Colors.transparent,
+          backgroundColor: Color.fromARGB(255, 241, 239, 239),
           actionsIconTheme: const IconThemeData(color: Colors.black38),
           titleTextStyle: const TextStyle(
             fontSize: 20,

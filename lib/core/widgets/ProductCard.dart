@@ -28,20 +28,20 @@ class ProductCardWidget extends StatelessWidget {
 
         return BlocBuilder<IsMobile, bool>(builder: (context, isMobile) {
           return SizedBox(
-            height: double.infinity,
+            height: 200,
             width: 360,
             child: Material(
               // elevation: 5.0,
               // shadowColor:
               //     Theme.of(context).colorScheme.onBackground.withOpacity(0.8),
-              color: Colors.transparent,
+              color: Colors.white,
               shape: RoundedRectangleBorder(
                 side: BorderSide(
                     color: Theme.of(context)
                         .colorScheme
                         .onBackground
                         .withOpacity(0.2)),
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(30.0),
               ),
               clipBehavior: Clip.hardEdge,
               child: InkWell(
@@ -51,72 +51,84 @@ class ProductCardWidget extends StatelessWidget {
                     if (!isMobile) {
                       return Column(
                         children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 10),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    productName,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        overflow: TextOverflow.ellipsis),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: SizedBox(
-                                  height: 90,
-                                  width: 90,
-                                  child: Image(
-                                    image:
-                                        NetworkImage(productImage.toString()),
-                                    fit: BoxFit.cover,
-                                    errorBuilder: ((context, error,
-                                            stackTrace) =>
-                                        const Image(
-                                            image: NetworkImage(
-                                                'https://monstersmokeoutlet.com/asset/img/place-holder.png'))),
-                                  ),
+                              SizedBox(
+                                height: 150,
+                                width: 150,
+                                child: Image(
+                                  image: NetworkImage(productImage.toString()),
+                                  fit: BoxFit.cover,
+                                  errorBuilder: ((context, error, stackTrace) =>
+                                      const Image(
+                                          image: NetworkImage(
+                                              'https://monstersmokeoutlet.com/asset/img/place-holder.png'))),
                                 ),
                               ),
                             ],
                           ),
-                          Divider(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onBackground
-                                .withOpacity(0.3),
-                            height: 2,
-                          ),
+                          // Divider(
+                          //   color: Theme.of(context)
+                          //       .colorScheme
+                          //       .onBackground
+                          //       .withOpacity(0.3),
+                          //   height: 2,
+                          // ),
                           Expanded(
                             child: Material(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withOpacity(0.1),
+                              color: Colors.white,
                               child: Padding(
-                                padding: const EdgeInsets.all(15.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0),
                                 child: Column(
                                   children: [
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            productName,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                overflow:
-                                                    TextOverflow.ellipsis),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Decorations.height5,
+                                    // // Row(
+                                    // //   children: [
+                                    // //     Expanded(
+                                    // //       child: Text(
+                                    // //         productName,
+                                    // //         maxLines: 2,
+                                    // //         overflow: TextOverflow.ellipsis,
+                                    // //         style: const TextStyle(
+                                    // //             fontSize: 14,
+                                    // //             color: Colors.black,
+                                    // //             fontWeight: FontWeight.bold,
+                                    // //             overflow:
+                                    // //                 TextOverflow.ellipsis),
+                                    // //       ),
+                                    // //     ),
+                                    // //   ],
+                                    // // ),
+                                    // Decorations.height5,
                                     Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                          MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.center,
                                       children: [
-                                        Expanded(
-                                            child: Text(
+                                        Text(
                                           isSignedIn
                                               ? '\$$productPrice'
                                               : 'Sign In For Price',
@@ -125,40 +137,31 @@ class ProductCardWidget extends StatelessWidget {
                                               color: Colors.green.shade600,
                                               fontWeight: FontWeight.w900,
                                               overflow: TextOverflow.ellipsis),
-                                        )),
+                                        ),
+                                        Icon(quantity <= 0
+                                            ? Icons.remove_shopping_cart
+                                            : Icons.shopping_cart),
                                       ],
                                     ),
-                                    const Spacer(),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                            child: Text(
-                                          quantity <= 0
-                                              ? 'Out of Stock'
-                                              : 'In Stock: ${quantity.toString()}',
-                                          style: const TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.normal,
-                                              overflow: TextOverflow.ellipsis),
-                                        )),
-                                        // if (quantity > 0)
-                                        //   IconButton(
-                                        //       onPressed: isSignedIn
-                                        //           ? onAddToCart
-                                        //           : () =>
-                                        //               showAuthRequiredDialog(
-                                        //                   context),
-                                        //       icon: const Icon(
-                                        //         Icons
-                                        //             .add_circle_outline_outlined,
-                                        //         size: 30,
-                                        //       )),
-                                      ],
-                                    ),
+                                    // Row(
+                                    //   mainAxisAlignment: MainAxisAlignment.end,
+                                    //   crossAxisAlignment:
+                                    //       CrossAxisAlignment.center,
+                                    //   children: [
+                                    //     // if (quantity > 0)
+                                    //     //   IconButton(
+                                    //     //       onPressed: isSignedIn
+                                    //     //           ? onAddToCart
+                                    //     //           : () =>
+                                    //     //               showAuthRequiredDialog(
+                                    //     //                   context),
+                                    //     //       icon: const Icon(
+                                    //     //         Icons
+                                    //     //             .add_circle_outline_outlined,
+                                    //     //         size: 30,
+                                    //     //       )),
+                                    //   ],
+                                    // ),
                                   ],
                                 ),
                               ),

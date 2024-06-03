@@ -92,6 +92,7 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
           width: MediaQuery.of(context).size.width,
           // width: double.infinity,
           child: Scaffold(
+            backgroundColor: Color.fromARGB(255, 241, 239, 239),
             appBar: AppBar(
               primary: false,
               automaticallyImplyLeading: false,
@@ -131,7 +132,7 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
                             : const NeverScrollableScrollPhysics(),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                                mainAxisExtent: 260,
+                                mainAxisExtent: 230,
                                 crossAxisCount: 2,
                                 mainAxisSpacing: 8.0,
                                 crossAxisSpacing: 6.0),

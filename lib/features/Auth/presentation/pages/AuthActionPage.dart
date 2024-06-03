@@ -14,6 +14,7 @@ class AuthActionPage extends StatelessWidget {
       builder: (context, isSignUp) {
         return Scaffold(
             appBar: AppBar(
+              backgroundColor: Colors.white,
               title: buildTitle(isSignUp: isSignUp),
               actions: [buildAction(isSignUp: isSignUp)],
             ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/DashboardPathBuilder.dart';
-import 'package:monstersmoke/Modes/MobileMode/MobileMode.dart';
 import 'package:monstersmoke/core/blocs/CustomBlocs.dart';
+import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
 
 class DashboardDrawer extends StatefulWidget {
   const DashboardDrawer({super.key});
@@ -14,11 +14,13 @@ class DashboardDrawer extends StatefulWidget {
 class _DashboardDrawerState extends State<DashboardDrawer> {
   @override
   Widget build(BuildContext context) {
+    CustomerBloc customer = BlocProvider.of<CustomerBloc>(context);
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          const SizedBox(
+          SizedBox(
             height: 250,
             child: DrawerHeader(
               decoration: BoxDecoration(
@@ -35,14 +37,14 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      'User Name',
+                      customer.state.customerModel!.name ?? "No Name",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
                       ),
                     ),
                     Text(
-                      'user@example.com',
+                      customer.state.customerModel!.email ?? "No Email",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
@@ -90,7 +92,7 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                     title: 'Change Password',
                     icon: Icons.lock,
                     isActive: path == 'Change Password',
-                    onTap: () => changePath(context, 'Password'),
+                    onTap: () => changePath(context, 'Change Password'),
                   ),
                   _buildListTile(
                     context: context,

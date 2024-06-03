@@ -19,23 +19,28 @@ class DashboardPathBuilder extends StatelessWidget {
       key: globalDashboardKey,
       drawer: const DashboardDrawer(),
       appBar: AppBar(
-          backgroundColor: const Color(0xff202b38),
-          title: const Text(
-            'Dashboard',
-            style: TextStyle(
-              fontSize: 17,
-              color: Colors.white,
-            ),
+        backgroundColor: const Color(0xff202b38),
+        title: BlocBuilder<DashboardPathBloc, String?>(
+          builder: (context, path) {
+            return Text(
+              path ?? 'Dashboard',
+              style: const TextStyle(
+                fontSize: 17,
+                color: Colors.white,
+              ),
+            );
+          },
+        ),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.menu,
+            color: Colors.white,
           ),
-          leading: IconButton(
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              globalDashboardKey.currentState?.openDrawer();
-            },
-          )),
+          onPressed: () {
+            globalDashboardKey.currentState?.openDrawer();
+          },
+        ),
+      ),
       body: BlocBuilder<DashboardPathBloc, String?>(builder: ((context, path) {
         if (path == 'Dashboard') {
           return const CustomerDashboard();
@@ -49,7 +54,7 @@ class DashboardPathBuilder extends StatelessWidget {
           return const UserAddresses();
         }
 
-        if (path == 'Password') {
+        if (path == 'Change Password') {
           return const Changepassword();
         }
 
@@ -66,5 +71,7 @@ class DashboardPathBuilder extends StatelessWidget {
 void changePath(BuildContext context, String path) {
   Navigator.of(context).pop();
   DashboardPathBloc bloc = BlocProvider.of(context);
-  bloc.add(path);
+  bloc.add(
+    path,
+  );
 }

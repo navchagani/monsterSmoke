@@ -27,7 +27,7 @@ class _MainAppBarState extends State<MainAppBar> {
   Widget build(BuildContext context) {
     return SliverAppBar(
       pinned: false,
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Color.fromARGB(255, 241, 239, 239),
       centerTitle: true,
       toolbarHeight: 80,
       leading: IconButton(onPressed: onMenu, icon: const Icon(Icons.menu)),

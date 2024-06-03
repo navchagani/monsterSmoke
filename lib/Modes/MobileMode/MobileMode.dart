@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
+import 'package:monstersmoke/Modes/MobileMode/Widgets/AppBars.dart';
 import 'package:monstersmoke/Modes/MobileMode/Widgets/MainAppBar.dart';
 import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
@@ -21,6 +22,14 @@ class MobileViewMode extends StatefulWidget {
 }
 
 class _MobileViewModeState extends State<MobileViewMode> {
+  bool _isMenuOpened = false;
+
+  void _toggleMenu() {
+    setState(() {
+      _isMenuOpened = !_isMenuOpened;
+    });
+  }
+
   late ScrollController scrollController;
   bool showPrimary = false;
   final getTagsBloc = getIt<ProductBloc>();
@@ -58,20 +67,18 @@ class _MobileViewModeState extends State<MobileViewMode> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
             const MainAppBar(),
-            // const SliverAppBar(
-            //   automaticallyImplyLeading: false,
-            //   toolbarHeight: 140,
-            //   flexibleSpace: FlexibleSpaceBar(
-            //       background: SliverBar1(
-            //     axis: Axis.vertical,
-            //     siderId: 86,
-            //   )),
-            // ),
+            const SliverAppBar(
+              automaticallyImplyLeading: false,
+              toolbarHeight: 140,
+              flexibleSpace: FlexibleSpaceBar(
+                  background: SliverBar1(
+                axis: Axis.vertical,
+                siderId: 86,
+              )),
+            ),
             SliverAppBar(
               automaticallyImplyLeading: false,
-              backgroundColor: showPrimary
-                  ? Theme.of(context).colorScheme.background
-                  : Theme.of(context).scaffoldBackgroundColor,
+              backgroundColor: const Color.fromARGB(255, 241, 239, 239),
               shadowColor: Colors.black,
               pinned: true,
               primary: showPrimary,
@@ -101,6 +108,7 @@ class _MobileViewModeState extends State<MobileViewMode> {
           ];
         },
         body: Scaffold(
+          backgroundColor: const Color.fromARGB(255, 241, 239, 239),
           body: BlocProvider.value(
             value: getTagsBloc,
             child: BlocBuilder<ProductBloc, ProductBlocState>(
@@ -120,42 +128,105 @@ class _MobileViewModeState extends State<MobileViewMode> {
               },
             ),
           ),
-          bottomNavigationBar: const CartBottomBar(),
-          floatingActionButton: const CartFloatButton(
-            fromHome: true,
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+          // bottomNavigationBar: const CartBottomBar(),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: _isMenuOpened
+              ? Container()
+              : Padding(
+                  padding: const EdgeInsets.only(bottom: 30.0),
+                  child: FloatingActionButton(
+                    onPressed: _toggleMenu,
+                    backgroundColor: Colors.black,
+                    child: Icon(
+                      Icons.grid_view, // Update this to match the design
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                ),
+          bottomNavigationBar:
+              _isMenuOpened ? _buildStaticBottomBar() : SizedBox.shrink(),
         ));
   }
 
-  Widget body({required List<TagContent> products}) {
-    return ListView.separated(
-      itemBuilder: (context, index) {
-        final tag = products[index];
-
-        return CustomProductContainer(
-          fromTags: true,
-          text: tag.name.toString(),
-          isScrollable: false,
-          showQuantity: 6,
-          tagId: tag.id,
-          storeIds: 2,
-          categoryList: 1,
-        );
-      },
-      itemCount: products.length,
-      separatorBuilder: ((context, index) => Decorations.height15),
-      padding: const EdgeInsets.all(15.0),
-      // children: const [
-      //   CustomProductContainer(
-      //     text: 'Featured',
-      //     isScrollable: false,
-      //     showQuantity: 6,
-      //   ),
-      //   SliverBar1(
-      //     siderId: 94,
-      //   ),
-      // ],
+  Widget _buildStaticBottomBar() {
+    return Material(
+      color: Colors.transparent,
+      // shape: CircularNotchedRectangle(),
+      // surfaceTintColor: Colors.transparent,
+      // notchMargin: 6.0,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        child: Container(
+          height: 70,
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          decoration: BoxDecoration(
+            color: Colors.grey[850],
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.grid_view, color: Colors.white),
+                onPressed: _toggleMenu,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.home, color: Colors.white),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.shopping_bag, color: Colors.white),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.favorite, color: Colors.white),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
+}
+
+Widget body({required List<TagContent> products}) {
+  return ListView.separated(
+    itemBuilder: (context, index) {
+      final tag = products[index];
+
+      return CustomProductContainer(
+        fromTags: true,
+        text: tag.name.toString(),
+        isScrollable: false,
+        showQuantity: 6,
+        tagId: tag.id,
+        storeIds: 2,
+        categoryList: 1,
+      );
+    },
+    itemCount: products.length,
+    separatorBuilder: ((context, index) => Decorations.height15),
+    padding: const EdgeInsets.all(15.0),
+    // children: const [
+    //   CustomProductContainer(
+    //     text: 'Featured',
+    //     isScrollable: false,
+    //     showQuantity: 6,
+    //   ),
+    //   SliverBar1(
+    //     siderId: 94,
+    //   ),
+    // ],
+  );
 }

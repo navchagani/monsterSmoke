@@ -16,6 +16,7 @@ class PlatformBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey,
       key: globalKey,
       drawer: appDrawer(context: context),
       body: LayoutBuilder(builder: (context, constraints) {

@@ -54,6 +54,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   productState.productDetailModel.masterProductDetails;
               return NestedScrollView(
                 body: Scaffold(
+                  backgroundColor: const Color.fromARGB(255, 241, 239, 239),
                   body: body(),
                   bottomNavigationBar: const CartBottomBar(),
                   floatingActionButton: const CartFloatButton(),
@@ -65,7 +66,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   return [
                     sliverAppBar(model: product!),
                     sliverAppBar1(product: productState.productDetailModel),
-                    sliverAppBar2()
+                    // sliverAppBar2()
                   ];
                 },
               );
@@ -87,31 +88,39 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             leadingWidth: 0.0,
             primary: false,
             pinned: false,
-            toolbarHeight: 140,
+            toolbarHeight: 170,
+            backgroundColor: Colors.white,
             automaticallyImplyLeading: false,
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             flexibleSpace: FlexibleSpaceBar(
-              background: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 15.0, vertical: 15.0),
-                child: CartTile(
-                  isCart: false,
-                  onIncrement: () {
-                    bloc.add(LocalCartAddProductEvent(
-                        product.masterProductDetails!..quantity = newQ));
-                  },
-                  onDecrement: () {
-                    bloc.add(LocalCartOndecrementEvent(
-                        product.masterProductDetails!));
-                  },
-                  name: product.masterProductDetails?.productName.toString(),
-                  subSku:
-                      'SubSku: ${product.masterProductDetails?.sku.toString()}',
-                  image: product.productImageList!.first.toString(),
-                  price: product.masterProductDetails?.standardPrice.toString(),
-                  quantity: product.masterProductDetails?.quantity,
-                  availableQuantity:
-                      product.masterProductDetails?.availableQuantity ?? 0,
+              background: Container(
+                decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 241, 239, 239),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(50),
+                        topRight: Radius.circular(50))),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 30.0, vertical: 15.0),
+                  child: CartTile(
+                    isCart: false,
+                    onIncrement: () {
+                      bloc.add(LocalCartAddProductEvent(
+                          product.masterProductDetails!..quantity = newQ));
+                    },
+                    onDecrement: () {
+                      bloc.add(LocalCartOndecrementEvent(
+                          product.masterProductDetails!));
+                    },
+                    name: product.masterProductDetails?.productName.toString(),
+                    subSku:
+                        'SubSku: ${product.masterProductDetails?.sku.toString()}',
+                    image: product.productImageList!.first.toString(),
+                    price:
+                        product.masterProductDetails?.standardPrice.toString(),
+                    quantity: product.masterProductDetails?.quantity,
+                    availableQuantity:
+                        product.masterProductDetails?.availableQuantity ?? 0,
+                  ),
                 ),
               ),
             ));
@@ -120,15 +129,27 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   Widget sliverAppBar({required MasterProductDetails model}) => SliverAppBar(
+        // automaticallyImplyLeading: false,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.grey, borderRadius: BorderRadius.circular(50)),
+              child: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.white,
+                  ))),
+        ),
         pinned: true,
-        toolbarHeight: 70,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        expandedHeight: 380,
+        toolbarHeight: 55,
+        expandedHeight: 400,
+        backgroundColor: Colors.white,
         flexibleSpace: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.only(bottom: 15.0),
           child: Material(
             clipBehavior: Clip.hardEdge,
-            borderRadius: BorderRadius.circular(30.0),
             child: FlexibleSpaceBar(
                 background: Image(
               image: NetworkImage(widget.model.imageUrl.toString()),
@@ -141,23 +162,19 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             )),
           ),
         ),
-        title: Text(
-          widget.model.productName.toString(),
-          overflow: TextOverflow.ellipsis,
-        ),
+        // title: Text(
+        //   widget.model.productName.toString(),
+        //   overflow: TextOverflow.ellipsis,
+        // ),
       );
 
-  Widget sliverAppBar2() => SliverAppBar(
-        automaticallyImplyLeading: false,
-        pinned: true,
-        primary: false,
-        toolbarHeight: 40,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: const Text(
-          'Product Variations',
-          overflow: TextOverflow.ellipsis,
-        ),
-      );
+  // Widget sliverAppBar2() => SliverAppBar(
+  //       automaticallyImplyLeading: false,
+  //       pinned: true,
+  //       primary: false,
+  //       toolbarHeight: 40,
+  //       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+  //     );
 
   Widget body() => BlocProvider.value(
         value: bloc,
@@ -165,11 +182,31 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           bloc: bloc,
           builder: (context, productState) {
             if (productState is ProductDetailCompletedState) {
+              final variationProduct =
+                  productState.productDetailModel.body?.content!;
+
               return Column(
                 children: [
+                  if (variationProduct!.isNotEmpty)
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30.0, vertical: 15.0),
+                        child: Text(
+                          'Product Variations',
+                          style: const TextStyle(
+                              fontSize: 20,
+                              // color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
                   Expanded(
                       child: ListView.separated(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30.0, vertical: 15.0),
                     itemBuilder: ((context, index) {
                       LocalCartBloc bloc = BlocProvider.of(context);
 

@@ -60,7 +60,7 @@ class _SliverBar1State extends State<SliverBar1> {
             }
 
             return Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
+              color: Color.fromARGB(255, 241, 239, 239),
             );
           },
         ));

@@ -112,6 +112,7 @@ class UserStatementState extends State<UserStatement> {
 
   @override
   Widget build(BuildContext context) {
+    CustomerBloc customer = BlocProvider.of<CustomerBloc>(context);
     return BlocProvider.value(
       value: statementBloc,
       child: BlocBuilder<DashboardBloc, DashboardState>(
@@ -134,6 +135,7 @@ class UserStatementState extends State<UserStatement> {
                       color: Color(0xff202b38),
                       borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(50),
+                        bottomLeft: Radius.circular(50),
                       ),
                     ),
                     child: Column(
@@ -143,10 +145,11 @@ class UserStatementState extends State<UserStatement> {
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 30),
                           title: const Text(
-                            'Monster Smoke ',
-                            style: TextStyle(color: Colors.white),
+                            'WELCOME',
+                            style: TextStyle(color: Colors.white, fontSize: 25),
                           ),
-                          subtitle: Text('Good Morning',
+                          subtitle: Text(
+                              customer.state.customerModel!.name ?? "No Name  ",
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
@@ -157,81 +160,194 @@ class UserStatementState extends State<UserStatement> {
                                 'https://img.freepik.com/premium-vector/anonymous-user-circle-icon-vector-illustration-flat-style-with-long-shadow_520826-1931.jpg'),
                           ),
                         ),
-                        const SizedBox(height: 30)
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
-                    decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.only(topLeft: Radius.circular(50))),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 10),
-                        const Text(
-                          "Statement",
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 171, 29, 48),
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18),
-                          textAlign: TextAlign.left,
-                        ),
-                        const SizedBox(height: 20),
-                        GridView.count(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 20,
-                          mainAxisSpacing: 20,
-                          children: [
-                            itemDashboard(
-                                'Opening Balance',
-                                model
-                                    .customerStatementSummaryDto!.openingBalance
-                                    .toString(),
-                                CupertinoIcons.cube,
-                                const Color(0xff202b38)),
-                            itemDashboard(
-                                'Invoiced Amount',
-                                model
-                                    .customerStatementSummaryDto!.invoicedAmount
-                                    .toString(),
-                                Icons.inventory_rounded,
-                                const Color(0xff202b38)),
-                            itemDashboard(
-                                'Amount Received',
-                                model
-                                    .customerStatementSummaryDto!.amountReceived
-                                    .toString(),
-                                Icons.attach_money_rounded,
-                                const Color(0xff202b38)),
-                            itemDashboard(
-                                'Total Due Balance',
-                                model.customerStatementSummaryDto!
-                                    .totalDueBalance
-                                    .toString(),
-                                Icons.store,
-                                const Color(0xff202b38)),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: CustomButton(
-                            onTap: () async => await download(),
-                            text: 'Print',
-                            backgroundColor: const Color(0xff202b38),
-                            textColor: Colors.white,
-                            enabled: true,
+                        const SizedBox(height: 15),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 40, left: 40),
+                          child: Container(
+                            height: 90,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(50)),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 20, left: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'Orders',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 171, 29, 48),
+                                        ),
+                                      ),
+                                      Text(
+                                        model.customerStatementSummaryDto!
+                                            .openingBalance
+                                            .toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'Spend',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 171, 29, 48),
+                                        ),
+                                      ),
+                                      Text(
+                                        model.customerStatementSummaryDto!
+                                            .invoicedAmount
+                                            .toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'Due',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 171, 29, 48),
+                                        ),
+                                      ),
+                                      Text(
+                                        model.customerStatementSummaryDto!
+                                            .amountReceived
+                                            .toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'Credit',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 171, 29, 48),
+                                        ),
+                                      ),
+                                      Text(
+                                        model.customerStatementSummaryDto!
+                                            .totalDueBalance
+                                            .toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
+                        const SizedBox(height: 30),
                       ],
                     ),
                   ),
+                  // Container(
+                  //   padding: const EdgeInsets.symmetric(
+                  //       horizontal: 10, vertical: 10),
+                  //   decoration: const BoxDecoration(
+                  //       borderRadius:
+                  //           BorderRadius.only(topLeft: Radius.circular(50))),
+                  //   child: Column(
+                  //     children: [
+                  //       const SizedBox(height: 10),
+                  //       const Text(
+                  //         "Statement",
+                  //         style: TextStyle(
+                  //             color: Color.fromARGB(255, 171, 29, 48),
+                  //             fontWeight: FontWeight.w600,
+                  //             fontSize: 18),
+                  //         textAlign: TextAlign.left,
+                  //       ),
+                  //       const SizedBox(height: 20),
+                  //       GridView.count(
+                  //         shrinkWrap: true,
+                  //         physics: const NeverScrollableScrollPhysics(),
+                  //         crossAxisCount: 2,
+                  //         crossAxisSpacing: 20,
+                  //         mainAxisSpacing: 20,
+                  //         children: [
+                  //           itemDashboard(
+                  //               'Opening Balance',
+
+                  //                   .toString(),
+                  //               CupertinoIcons.cube,
+                  //               const Color(0xff202b38)),
+                  //           itemDashboard(
+                  //               'Invoiced Amount',
+
+                  //                   .toString(),
+                  //               Icons.inventory_rounded,
+                  //               const Color(0xff202b38)),
+                  //           itemDashboard(
+                  //               'Amount Received',
+
+                  //                   .toString(),
+                  //               Icons.attach_money_rounded,
+                  //               const Color(0xff202b38)),
+                  //           itemDashboard(
+                  //               'Total Due Balance',
+
+                  //                   .toString(),
+                  //               Icons.store,
+                  //               const Color(0xff202b38)),
+                  //         ],
+                  //       ),
+                  //       const SizedBox(
+                  //         height: 20,
+                  //       ),
+                  //       Align(
+                  //         alignment: Alignment.centerRight,
+                  //         child: CustomButton(
+                  //           onTap: () async => await download(),
+                  //           text: 'Print',
+                  //           backgroundColor: const Color(0xff202b38),
+                  //           textColor: Colors.white,
+                  //           enabled: true,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   const SizedBox(height: 20),
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -249,7 +365,8 @@ class UserStatementState extends State<UserStatement> {
                   const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                      horizontal: 15,
+                    ),
                     child: Container(
                       width: MediaQuery.of(context).size.width - 40,
                       decoration: BoxDecoration(

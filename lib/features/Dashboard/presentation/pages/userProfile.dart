@@ -2,13 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/widgets/CustomButton.dart';
 import 'package:monstersmoke/core/widgets/CustomDialog.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
 import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
-import 'package:monstersmoke/features/Dashboard/presentation/bloc/dashboard_bloc.dart';
-
 import '../../../Customer/presentation/bloc/UpdateCustomerBloc/update_customer_bloc_bloc.dart';
 
 class UserProfile extends StatefulWidget {

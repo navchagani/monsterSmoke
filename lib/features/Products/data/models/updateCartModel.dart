@@ -95,7 +95,7 @@ class CartLineItemDtoList {
   String? productName;
   dynamic sku;
   String? upc;
-  int? quantity;
+  int? quantity = 1;
   dynamic status;
   double? costPrice;
   double? standardPrice;
@@ -181,7 +181,7 @@ class CartLineItemDtoList {
       String? productName,
       dynamic sku,
       String? upc,
-      int? quantity,
+      int? quantity = 1,
       dynamic status,
       double? costPrice,
       double? standardPrice,
@@ -321,7 +321,7 @@ class CartLineItemDtoList {
             json['productName'] == null ? null : json['productName'] as String,
         sku: json['sku'] as dynamic,
         upc: json['upc'] == null ? null : json['upc'] as String,
-        quantity: json['quantity'] == null ? null : json['quantity'] as int,
+        quantity: json['quantity'] == null ? 1 : json['quantity'] as int,
         status: json['status'] as dynamic,
         costPrice:
             json['costPrice'] == null ? null : json['costPrice'] as double,
