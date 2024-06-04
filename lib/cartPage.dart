@@ -132,7 +132,7 @@ class _CartPageState extends State<CartPage> {
                         ListTile(
                           dense: true,
                           title: const Text('Total Cart Quantity',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white,
                               )),
                           trailing: Text(
@@ -147,7 +147,7 @@ class _CartPageState extends State<CartPage> {
                         ListTile(
                           dense: true,
                           title: const Text('Cart SubTotal',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white,
                               )),
                           trailing: Text(
@@ -161,7 +161,7 @@ class _CartPageState extends State<CartPage> {
                         ListTile(
                           dense: true,
                           title: const Text('Cart Discount',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white,
                               )),
                           trailing: Text(
