@@ -88,7 +88,7 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
       SizedBox(
           height: widget.isScrollable ?? true
               ? MediaQuery.of(context).size.height
-              : 900,
+              : 780,
           width: MediaQuery.of(context).size.width,
           // width: double.infinity,
           child: Scaffold(
@@ -96,7 +96,7 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
             appBar: AppBar(
               primary: false,
               automaticallyImplyLeading: false,
-              toolbarHeight: widget.fromTags ?? false ? 50.0 : 50.0,
+              toolbarHeight: widget.fromTags ?? false ? 30.0 : 30.0,
               title: widget.fromTags ?? false
                   ? Text(widget.text.toString())
                   : CustomToggleButton(
