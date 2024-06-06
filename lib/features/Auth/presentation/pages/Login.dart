@@ -126,6 +126,7 @@ class _LoginPageState extends State<LoginPage> {
             labelText: 'Email',
             hintText: 'Enter Email',
             controller: emailController,
+            inputType: TextInputType.emailAddress,
             onChanged: onEmailChanged,
           ),
           if (!onSwitchFP) Decorations.height5,
@@ -140,6 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                 labelText: 'Password',
                 hintText: 'Enter Password',
                 controller: passwordController,
+                inputType: TextInputType.text,
                 onChanged: onPasswordChanged),
           Builder(builder: (context) {
             if (onSwitchFP) {

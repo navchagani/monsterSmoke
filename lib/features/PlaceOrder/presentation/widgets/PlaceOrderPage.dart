@@ -188,6 +188,7 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
                                     Decorations.height15,
                                     CustomInputField(
                                         controller: commentController,
+                                        inputType: TextInputType.text,
                                         onChanged: onCommentChanged,
                                         labelText: 'Comment',
                                         hintText: 'Leave A Comment'),

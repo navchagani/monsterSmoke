@@ -108,6 +108,7 @@ class _ChangepasswordState extends State<Changepassword> {
                       toHide: showPass,
                       labelText: 'Current Password',
                       hintText: "Current Password",
+                      inputType: TextInputType.text,
                       controller: currentPassword,
                       onChanged: onCurrentPasswordChanged,
                     ),
@@ -126,6 +127,7 @@ class _ChangepasswordState extends State<Changepassword> {
                       labelText: 'New Password',
                       controller: newPassword,
                       hintText: "New Password",
+                      inputType: TextInputType.text,
                       onChanged: onNewPasswordChanged,
                     ),
                   const SizedBox(
@@ -143,6 +145,7 @@ class _ChangepasswordState extends State<Changepassword> {
                       controller: conformPassword,
                       labelText: 'Conform Your Password',
                       hintText: "Conform Your Password",
+                      inputType: TextInputType.text,
                       onChanged: onConformPasswordChanged,
                     ),
                   const SizedBox(

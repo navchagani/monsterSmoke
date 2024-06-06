@@ -114,6 +114,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     labelText: 'Buisness Name',
                     hintText: 'Buisness Name',
                     controller: buisnessNameController,
+                    inputType: TextInputType.text,
                     onChanged: onBuisnessNameChanged,
                   ),
                 ),
@@ -123,6 +124,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       labelText: 'Company',
                       hintText: 'Company Name',
                       controller: companyController,
+                      inputType: TextInputType.text,
                       onChanged: onCompanyChanged),
                 ),
               ],
@@ -132,6 +134,7 @@ class _SignUpPageState extends State<SignUpPage> {
               labelText: 'Tax',
               hintText: 'Tax Id',
               controller: taxController,
+              inputType: TextInputType.number,
               onChanged: onTaxChanged,
             ),
           ],
@@ -154,6 +157,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: CustomInputField(
                     labelText: 'StoreFront Buisness Address',
                     hintText: 'Buisness Address',
+                    inputType: TextInputType.text,
                     controller: buisnessAddressController,
                     onChanged: onBuisnessAddressChanged,
                   ),
@@ -163,6 +167,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: CustomInputField(
                       labelText: 'City',
                       hintText: 'City',
+                      inputType: TextInputType.text,
                       controller: cityController,
                       onChanged: onCityChanged),
                 ),
@@ -179,6 +184,7 @@ class _SignUpPageState extends State<SignUpPage> {
             CustomInputField(
               labelText: 'Zip Code',
               hintText: 'Zip Code',
+              inputType: TextInputType.number,
               controller: zipCodeController,
               onChanged: onzipCodeChanged,
             ),
@@ -205,6 +211,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: CustomInputField(
                     labelText: 'First Name',
                     hintText: 'First Name',
+                    inputType: TextInputType.text,
                     controller: firstNameController,
                     onChanged: onfirstNameChanged,
                   ),
@@ -214,6 +221,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: CustomInputField(
                     labelText: 'Second Name',
                     hintText: 'Second Name',
+                    inputType: TextInputType.text,
                     controller: secondNameController,
                     onChanged: onSecondNameChanged,
                   ),
@@ -227,6 +235,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: CustomInputField(
                     labelText: 'Email',
                     hintText: 'Enter Email',
+                    inputType: TextInputType.text,
                     controller: emailController,
                     onChanged: onEmailChanged,
                   ),
@@ -236,6 +245,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: CustomInputField(
                       labelText: 'Phone',
                       hintText: 'Phone',
+                      inputType: TextInputType.text,
                       controller: phoneController,
                       onChanged: onPhoneChanged),
                 ),

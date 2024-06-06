@@ -92,12 +92,14 @@ class _AddNewCustomerAddressPageState extends State<AddNewCustomerAddressPage> {
                 CustomInputField(
                     labelText: 'Address line 1',
                     hintText: 'Address line 1',
+                    inputType: TextInputType.text,
                     controller: address1Controller,
                     onChanged: address1Changed),
                 Decorations.height5,
                 CustomInputField(
                     labelText: 'Address Line 2',
                     hintText: 'Address Line 2',
+                    inputType: TextInputType.text,
                     controller: address2Controller,
                     onChanged: address2Changed),
                 Decorations.height5,
@@ -114,6 +116,7 @@ class _AddNewCustomerAddressPageState extends State<AddNewCustomerAddressPage> {
                       child: CustomInputField(
                           labelText: 'City',
                           hintText: 'City',
+                          inputType: TextInputType.text,
                           controller: cityController,
                           onChanged: onCityChanged),
                     ),
@@ -122,6 +125,7 @@ class _AddNewCustomerAddressPageState extends State<AddNewCustomerAddressPage> {
                       child: CustomInputField(
                         labelText: 'Zip Code',
                         hintText: 'Zip Code',
+                        inputType: TextInputType.text,
                         controller: zipCodeController,
                         onChanged: onzipCodeChanged,
                       ),
@@ -132,6 +136,7 @@ class _AddNewCustomerAddressPageState extends State<AddNewCustomerAddressPage> {
                 CustomInputField(
                     labelText: 'Phone',
                     hintText: 'Phone',
+                    inputType: TextInputType.number,
                     controller: phoneController,
                     onChanged: onPhoneChanged),
                 Decorations.height30,

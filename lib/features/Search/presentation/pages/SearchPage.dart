@@ -53,6 +53,7 @@ class _SearchPageState extends State<SearchPage> {
               labelText: 'Search Products',
               hintText: 'Search Products',
               onChanged: onSearchChanged,
+              inputType: TextInputType.text,
             ),
           ),
         ),

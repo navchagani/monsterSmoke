@@ -119,6 +119,7 @@ class _UserProfileState extends State<UserProfile> {
                     labelText: "First name",
                     hintText: "First Name",
                     controller: firstName,
+                    inputType: TextInputType.text,
                     onChanged: onFirstNameChanged,
                   ),
                   const SizedBox(
@@ -139,6 +140,7 @@ class _UserProfileState extends State<UserProfile> {
                     labelText: "Last name",
                     hintText: "Last Name",
                     controller: lastName,
+                    inputType: TextInputType.text,
                     onChanged: onLastNameChanged,
                   ),
                   const SizedBox(
@@ -159,6 +161,7 @@ class _UserProfileState extends State<UserProfile> {
                     labelText: "Email Addresss",
                     hintText: "Email Addresss",
                     controller: email,
+                    inputType: TextInputType.text,
                     onChanged: onEmailChanged,
                   ),
                   const SizedBox(
@@ -179,6 +182,7 @@ class _UserProfileState extends State<UserProfile> {
                     labelText: "Phone No",
                     hintText: "Phone No",
                     controller: phone,
+                    inputType: TextInputType.number,
                     onChanged: onPhoneChanged,
                   ),
                   const SizedBox(
@@ -199,6 +203,7 @@ class _UserProfileState extends State<UserProfile> {
                     labelText: "Tax Id",
                     hintText: "Tax Id",
                     controller: taxId,
+                    inputType: TextInputType.number,
                     onChanged: onTaxIdChanged,
                   ),
                   const SizedBox(

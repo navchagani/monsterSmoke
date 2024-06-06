@@ -103,6 +103,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 CustomInputField(
                     controller: address1,
+                    inputType: TextInputType.text,
                     onChanged: onAddress1Changed,
                     labelText: 'Address 1',
                     hintText: 'Address 1'),
@@ -111,6 +112,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 CustomInputField(
                     controller: address2,
+                    inputType: TextInputType.text,
                     onChanged: onAddress2Changed,
                     labelText: 'Address 2',
                     hintText: 'Address 2'),
@@ -136,6 +138,7 @@ class _AddAddressState extends State<AddAddress> {
                 CustomInputField(
                     controller: city,
                     onChanged: onCityChanged,
+                    inputType: TextInputType.text,
                     labelText: 'City',
                     hintText: 'City'),
                 const SizedBox(
@@ -144,6 +147,7 @@ class _AddAddressState extends State<AddAddress> {
                 CustomInputField(
                     controller: zipCode,
                     onChanged: onZipCodeChanged,
+                    inputType: TextInputType.text,
                     labelText: 'Zip/Postal Code',
                     hintText: 'Zip/Postal Code'),
                 const SizedBox(
@@ -151,6 +155,7 @@ class _AddAddressState extends State<AddAddress> {
                 ),
                 CustomInputField(
                     controller: phonne,
+                    inputType: TextInputType.number,
                     onChanged: onPhoneChanged,
                     labelText: 'Phone',
                     hintText: 'Phone'),
