@@ -25,25 +25,43 @@ class _MainAppBarState extends State<MainAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      pinned: false,
-      backgroundColor: Color.fromARGB(255, 241, 239, 239),
-      centerTitle: true,
-      toolbarHeight: 80,
-      leading: IconButton(onPressed: onMenu, icon: const Icon(Icons.menu)),
-      title: const Image(
-          width: 100,
-          height: 100,
-          image: AssetImage('images/monsterimage.jpg')),
-      // bottom: const PreferredSize(
-      //     preferredSize: Size(double.infinity, 40),
-      //     child: CustomInputField(labelText: 'Search', hintText: 'Search')),
-      actions: [
-        IconButton(
-            onPressed: () => _onMoveToAuthPage(context),
-            icon: const Icon(Icons.person))
-      ],
-    );
+    return BlocBuilder<CustomerBloc, CustomerBlocState>(
+        builder: (context, customerState) {
+      return SliverAppBar(
+        pinned: false,
+        backgroundColor: Color.fromARGB(255, 241, 239, 239),
+        centerTitle: true,
+        toolbarHeight: 80,
+        leading: IconButton(onPressed: onMenu, icon: const Icon(Icons.menu)),
+        title: const Image(
+            width: 100,
+            height: 100,
+            image: AssetImage('images/monsterimage.jpg')),
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: customerState.customerModel != null
+                  ? () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DashboardPathBuilder()))
+                  : () => showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) => Dialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: Container(
+                            height: 600,
+                            width: 600,
+                            child: const Card(child: AuthActionPage()),
+                          ),
+                        ),
+                      )),
+        ],
+      );
+    });
   }
 
   void onMenu() {
