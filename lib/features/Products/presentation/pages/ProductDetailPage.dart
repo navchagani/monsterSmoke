@@ -81,9 +81,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
     return BlocBuilder<LocalCartBloc, LocalCartState>(
       builder: (context, cartState) {
-        int newQ = cartState.listProduct.contains(product.masterProductDetails)
-            ? product.masterProductDetails?.quantity ?? 0
-            : 0;
+        // int newQ = cartState.listProduct.contains(product.masterProductDetails)
+        //     ? product.masterProductDetails?.quantity ?? 1
+        //     : 1;
         return SliverAppBar(
             leadingWidth: 0.0,
             primary: false,
@@ -105,7 +105,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     isCart: false,
                     onIncrement: () {
                       bloc.add(LocalCartAddProductEvent(
-                          product.masterProductDetails!..quantity = newQ));
+                          product.masterProductDetails!));
                     },
                     onDecrement: () {
                       bloc.add(LocalCartOndecrementEvent(
