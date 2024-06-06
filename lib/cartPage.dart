@@ -330,17 +330,17 @@ class CartTile extends StatelessWidget {
                               )),
                             ],
                           ),
-                          if (isCart == true)
-                            Text("Qty: ${quantity.toString()}"),
 
-                          if (subSku != null)
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text("Qty: ${quantity.toString()}"),
-                                ),
-                              ],
-                            ),
+                          Text("Qty: ${quantity.toString()}"),
+
+                          // if (subSku != null)
+                          //   Row(
+                          //     children: [
+                          //       Expanded(
+                          //         child: Text("Qty: ${quantity.toString()}"),
+                          //       ),
+                          //     ],
+                          //   ),
                           Row(
                             children: [
                               Expanded(

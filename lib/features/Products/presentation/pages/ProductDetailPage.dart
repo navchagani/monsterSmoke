@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
@@ -81,6 +83,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
     return BlocBuilder<LocalCartBloc, LocalCartState>(
       builder: (context, cartState) {
+        MasterProductDetails listProductIds = cartState.listProduct.firstWhere(
+            (product1) =>
+                product1.productId == product.masterProductDetails?.productId,
+            orElse: () => product.masterProductDetails!);
+
+        // log('${listProductIds.toJson()}');
+
+        int newQ = listProductIds.quantity ?? 1;
         // int newQ = cartState.listProduct.contains(product.masterProductDetails)
         //     ? product.masterProductDetails?.quantity ?? 1
         //     : 1;
@@ -117,7 +127,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     image: product.productImageList!.first.toString(),
                     price:
                         product.masterProductDetails?.standardPrice.toString(),
-                    quantity: product.masterProductDetails?.quantity,
+                    quantity: newQ,
                     availableQuantity:
                         product.masterProductDetails?.availableQuantity ?? 0,
                   ),
@@ -194,11 +204,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                             horizontal: 30.0, vertical: 15.0),
                         child: Text(
                           'Product Variations',
-                          style: const TextStyle(
+                          style: TextStyle(
                               fontSize: 20,
                               // color: Colors.black,
                               fontWeight: FontWeight.bold),
@@ -218,10 +228,16 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
                       return BlocBuilder<LocalCartBloc, LocalCartState>(
                         builder: (context, cartState) {
-                          int newQ =
-                              cartState.listProduct.contains(variationProduct)
-                                  ? variationProduct?.quantity ?? 0
-                                  : 0;
+                          MasterProductDetails listProductIds =
+                              cartState.listProduct.firstWhere(
+                                  (product1) =>
+                                      product1.productId ==
+                                      variationProduct?.productId,
+                                  orElse: () => variationProduct!);
+
+                          log('${listProductIds.toJson()}');
+
+                          int newQ = listProductIds.quantity ?? 0;
 
                           return CartTile(
                             isCart: false,
@@ -235,7 +251,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             },
                             name: variationProduct?.productName.toString(),
                             price: variationProduct?.standardPrice.toString(),
-                            quantity: variationProduct?.quantity ?? 0,
+                            quantity: newQ,
                             image: variationProduct?.imageUrl.toString(),
                             availableQuantity:
                                 variationProduct?.availableQuantity,

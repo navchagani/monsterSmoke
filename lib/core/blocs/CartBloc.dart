@@ -25,6 +25,8 @@ class LocalCartBloc extends Bloc<LocalCartEvents, LocalCartState> {
       final isSame = productIdList.contains(event.product.productId);
       // log('add cart triggered');
 
+      // log('product add ${event.product.toJson()}');
+
       if (!isSame) {
         // log('not found');
         final available = event.product.availableQuantity ?? 0;
@@ -70,7 +72,7 @@ class LocalCartBloc extends Bloc<LocalCartEvents, LocalCartState> {
     final product = productList
         .firstWhere((element) => element.productId == event.product.productId);
 
-    log('quantity ${product.quantity}');
+    log('product add ${product.toJson()}');
     if (product.availableQuantity! >= product.quantity!) {
       product.quantity = product.quantity ?? 0 + 1;
     }
