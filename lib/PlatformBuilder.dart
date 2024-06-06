@@ -25,7 +25,7 @@ class PlatformBuilder extends StatelessWidget {
           return const MobileViewMode();
         }
 
-        return const TabMode();
+        return const TabViewMode();
       }),
     );
   }

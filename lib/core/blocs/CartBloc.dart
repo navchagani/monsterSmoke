@@ -42,7 +42,7 @@ class LocalCartBloc extends Bloc<LocalCartEvents, LocalCartState> {
         if (availableQty > qty) {
           prod.quantity = qty + 1;
           log(prod.availableQuantity.toString());
-          log(prod.quantity.toString());
+          log("prdocut quatity${prod.quantity.toString()}");
           // log('${prod.toJson()}');
         }
       }

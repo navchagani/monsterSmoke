@@ -62,41 +62,51 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-        value: bloc,
-        child: BlocBuilder(
-            bloc: bloc,
-            builder: (context, productState) {
-              if (productState is ProductCompletedState) {
-                if (productState.productModel.content!.isEmpty) {
-                  return Container();
+    return LayoutBuilder(builder: (context, constraints) {
+      final mobile = constraints.maxWidth > 600 ? false : true;
+
+      return BlocProvider.value(
+          value: bloc,
+          child: BlocBuilder(
+              bloc: bloc,
+              builder: (context, productState) {
+                if (productState is ProductCompletedState) {
+                  if (productState.productModel.content!.isEmpty) {
+                    return Container();
+                  }
+
+                  return buildProductListView(
+                      productState,
+                      productState.productModel.content ?? [],
+                      mobile,
+                      productState.productModel.totalPages ?? 0,
+                      productState.productModel.number ?? 0);
                 }
 
-                return buildProductListView(
-                    productState,
-                    productState.productModel.content ?? [],
-                    productState.productModel.totalPages ?? 0,
-                    productState.productModel.number ?? 0);
-              }
-
-              return Container();
-            }));
+                return Container();
+              }));
+    });
   }
 
   Widget buildProductListView(Object productState, List<Content> listProduct,
-          int totalPage, int currentPage) =>
+          bool mobile, int totalPage, int currentPage) =>
       SizedBox(
           height: widget.isScrollable ?? true
               ? MediaQuery.of(context).size.height
-              : 780,
+              : mobile
+                  ? 780
+                  : 600,
           width: MediaQuery.of(context).size.width,
-          // width: double.infinity,
           child: Scaffold(
-            backgroundColor: Color.fromARGB(255, 241, 239, 239),
+            backgroundColor: const Color.fromARGB(255, 241, 239, 239),
             appBar: AppBar(
               primary: false,
               automaticallyImplyLeading: false,
-              toolbarHeight: widget.fromTags ?? false ? 30.0 : 30.0,
+              toolbarHeight: widget.fromTags ?? false
+                  ? mobile
+                      ? 30.0
+                      : 100.0
+                  : 30.0,
               title: widget.fromTags ?? false
                   ? Text(widget.text.toString())
                   : CustomToggleButton(
@@ -104,82 +114,84 @@ class _CustomProductContainerState extends State<CustomProductContainer> {
                       onCountPressed: onCountPressed,
                       currentIndex: currentPage),
             ),
-            body: SizedBox(child: Builder(builder: (context) {
-              if (productState is ProductLoadingState &&
-                      widget.fromTags == false ||
-                  productState is ProductLoadingState &&
-                      widget.fromTags == null) {
-                return const Center(child: CircularProgressIndicator());
-              }
-
-              if (productState is ProductCompletedState) {
-                if (productState.productModel.content!.isEmpty) {
-                  return Container();
+            body: Center(
+              child: SizedBox(child: Builder(builder: (context) {
+                if (productState is ProductLoadingState &&
+                        widget.fromTags == false ||
+                    productState is ProductLoadingState &&
+                        widget.fromTags == null) {
+                  return const Center(child: CircularProgressIndicator());
                 }
 
-                final productList = listProduct;
-                final showQuantity = productList.length > 6
-                    ? widget.showQuantity ?? 6
-                    : productList.length;
+                if (productState is ProductCompletedState) {
+                  if (productState.productModel.content!.isEmpty) {
+                    return Container();
+                  }
 
-                return BlocBuilder<IsMobile, bool>(
-                  builder: (context, isMobile) {
-                    if (!isMobile) {
-                      return GridView.builder(
-                        shrinkWrap: true,
-                        physics: widget.isScrollable ?? true
-                            ? const AlwaysScrollableScrollPhysics()
-                            : const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                mainAxisExtent: 230,
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 8.0,
-                                crossAxisSpacing: 6.0),
-                        itemBuilder: ((context, index) {
-                          final product = productList[index];
+                  final productList = listProduct;
+                  final showQuantity = productList.length > 6
+                      ? widget.showQuantity ?? 6
+                      : productList.length;
 
-                          return ProductCardWidget(
-                            productImage: product.imageUrl.toString(),
-                            productName: product.productName.toString(),
-                            productPrice: product.standardPrice.toString(),
-                            productQuantity:
-                                product.availableQuantity.toString(),
-                            onTap: () => onProductTap(model: product),
-                            onAddToCart: () => addProductToCart(product),
-                          );
-                        }),
-                        itemCount: widget.isScrollable ?? true
-                            ? productList.length
-                            : showQuantity,
-                      );
-                    }
-
-                    return SizedBox(
-                      height: 220,
-                      width: double.infinity,
-                      child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.all(15.0),
+                  return BlocBuilder<IsMobile, bool>(
+                    builder: (context, isMobile) {
+                      if (!isMobile) {
+                        return GridView.builder(
+                          shrinkWrap: true,
+                          physics: widget.isScrollable ?? true
+                              ? const AlwaysScrollableScrollPhysics()
+                              : const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  mainAxisExtent: 230,
+                                  crossAxisCount: mobile ? 2 : 3,
+                                  mainAxisSpacing: 8.0,
+                                  crossAxisSpacing: 6.0),
                           itemBuilder: ((context, index) {
                             final product = productList[index];
 
                             return ProductCardWidget(
-                                productImage: product.imageUrl.toString(),
-                                productName: product.productName.toString(),
-                                productPrice: product.costPrice,
-                                productQuantity:
-                                    product.availableQuantity.toString());
+                              productImage: product.imageUrl.toString(),
+                              productName: product.productName.toString(),
+                              productPrice: product.standardPrice.toString(),
+                              productQuantity:
+                                  product.availableQuantity.toString(),
+                              onTap: () => onProductTap(model: product),
+                              onAddToCart: () => addProductToCart(product),
+                            );
                           }),
-                          separatorBuilder: ((context, index) =>
-                              Decorations.width10),
-                          itemCount: productList.length),
-                    );
-                  },
-                );
-              }
-              return Container();
-            })),
+                          itemCount: widget.isScrollable ?? true
+                              ? productList.length
+                              : showQuantity,
+                        );
+                      }
+
+                      return SizedBox(
+                        height: 220,
+                        width: double.infinity,
+                        child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.all(15.0),
+                            itemBuilder: ((context, index) {
+                              final product = productList[index];
+
+                              return ProductCardWidget(
+                                  productImage: product.imageUrl.toString(),
+                                  productName: product.productName.toString(),
+                                  productPrice: product.costPrice,
+                                  productQuantity:
+                                      product.availableQuantity.toString());
+                            }),
+                            separatorBuilder: ((context, index) =>
+                                Decorations.width10),
+                            itemCount: productList.length),
+                      );
+                    },
+                  );
+                }
+                return Container();
+              })),
+            ),
           ));
 
   onProductTap({required Content model}) {

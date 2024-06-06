@@ -1,166 +1,286 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:monstersmoke/DashboardPathBuilder.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
+import 'package:monstersmoke/Modes/MobileMode/MobileMode.dart';
+import 'package:monstersmoke/cartPage.dart';
+import 'package:monstersmoke/core/blocs/CartBloc.dart';
+import 'package:monstersmoke/core/inject.dart';
 import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
 import 'package:monstersmoke/core/widgets/CustomProductContainer.dart';
 import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
+import 'package:monstersmoke/features/Cart/presentation/bloc/cart_bloc.dart';
+import 'package:monstersmoke/features/Customer/presentation/bloc/GetCustomerBloc/customer_bloc_bloc.dart';
+import 'package:monstersmoke/features/Products/data/models/TagProductModel.dart';
+import 'package:monstersmoke/features/Products/presentation/bloc/Productbloc/product_bloc_bloc.dart';
 import 'package:monstersmoke/features/Search/presentation/pages/SearchPage.dart';
 
-class TabMode extends StatefulWidget {
-  const TabMode({super.key});
+class TabViewMode extends StatefulWidget {
+  const TabViewMode({super.key});
 
   @override
-  State<TabMode> createState() => _TabModeState();
+  State<TabViewMode> createState() => _TabViewModeState();
 }
 
-class _TabModeState extends State<TabMode> {
+class _TabViewModeState extends State<TabViewMode> {
   GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
   bool showFilter = false;
+  late ScrollController scrollController;
+  bool showPrimary = false;
+  final getTagsBloc = getIt<ProductBloc>();
+  bool _isMenuOpened = false;
+
+  void _toggleMenu() {
+    setState(() {
+      _isMenuOpened = !_isMenuOpened;
+    });
+  }
+
+  @override
+  void initState() {
+    getTagsBloc.add(const GetTagsEvent());
+
+    scrollController = ScrollController();
+    scrollController.addListener(() {
+      if (scrollController.offset > 0) {
+        setState(() {
+          showPrimary = true;
+        });
+      } else {
+        setState(() {
+          showPrimary = false;
+        });
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    getTagsBloc.close();
+    scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldState,
-      drawer: appDrawer(),
-      appBar: appBar(),
-      body: body(),
-    );
-  }
+    return BlocBuilder<CustomerBloc, CustomerBlocState>(
+        builder: (context, customerState) {
+      final isSignedIn = customerState.customerModel != null;
 
-  final list = [
-    "https://via.placeholder.com/1200x600.png?text=Product+1",
-    "https://via.placeholder.com/1200x600.png?text=Product+2",
-    "https://via.placeholder.com/1200x600.png?text=Product+3",
-    "https://via.placeholder.com/1200x600.png?text=Product+4"
-  ];
+      return LayoutBuilder(builder: (context, constraints) {
+        final mobile = constraints.maxWidth > 600 ? false : true;
 
-  Widget body() => Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Column(
-                  children: [
-                    const SizedBox(
-                      height: 100,
+        return Scaffold(
+          backgroundColor: const Color.fromARGB(255, 241, 239, 239),
+          key: scaffoldState,
+          appBar: appBar(isSignedIn),
+          body: BlocProvider.value(
+            value: getTagsBloc,
+            child: BlocBuilder<ProductBloc, ProductBlocState>(
+              bloc: getTagsBloc,
+              builder: (context, productState) {
+                if (productState is ProductLoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                if (productState is TagsLoadedState) {
+                  return body(products: productState.tagsList);
+                }
+
+                return Container();
+              },
+            ),
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: _isMenuOpened
+              ? Container()
+              : Padding(
+                  padding: EdgeInsets.only(bottom: mobile ? 30 : 50),
+                  child: FloatingActionButton(
+                    onPressed: _toggleMenu,
+                    backgroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: ListView(
-                              shrinkWrap: true,
-                              children: const [
-                                // CustomSlider(images: list),
-                                SizedBox(
-                                  height: 25.0,
-                                ),
-                                CustomProductContainer(text: 'Whats New'),
-                                CustomProductContainer(
-                                    text: 'Featured Product'),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Decorations.height15,
-                PreferredSize(
-                  preferredSize: const Size(double.infinity, 70),
-                  child: Hero(
-                    tag: 'search',
-                    child: SizedBox(
-                      width: 500,
-                      child: CustomInputField(
-                        elevation: 10.0,
-                        enabled: true,
-                        inputType: TextInputType.none,
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: ((context) => const SearchPage())));
-                        },
-                        icon: const Icon(Icons.search),
-                        labelText: 'Search Products',
-                        hintText: 'Search Products',
-                      ),
+                    child: Icon(
+                      Icons.grid_view,
+                      color: Colors.white,
+                      size: mobile ? 30 : 40,
                     ),
                   ),
                 ),
-                // Row(
-                //   children: [
-                //     Material(
-                //       color: !showFilter ? Colors.grey.shade200 : null,
-                //       elevation: showFilter ? 30.0 : 0.0,
-                //       child: InkWell(
-                //         onTap: () {
-                //           setState(() {
-                //             showFilter = !showFilter;
-                //           });
-                //         },
-                //         child: Padding(
-                //           padding: const EdgeInsets.all(10.0),
-                //           child: AnimatedContainer(
-                //             duration: const Duration(seconds: 1),
-                //             child: Center(
-                //               child: Icon(showFilter
-                //                   ? Icons.keyboard_arrow_left
-                //                   : Icons.keyboard_arrow_right),
-                //             ),
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //     // if (showFilter)
-                //     //   SizedBox(
-                //     //     width: 250,
-                //     //     child: Material(
-                //     //       elevation: 20.0,
-                //     //       child: Column(
-                //     //         children: [
-                //     //           ListTile(
-                //     //             onTap: () {
-                //     //               setState(() {
-                //     //                 showFilter = false;
-                //     //               });
-                //     //             },
-                //     //             title: const Text('Vapour'),
-                //     //           )
-                //     //         ],
-                //     //       ),
-                //     //     ),
-                //     //   ),
-                //     // if (showFilter)
-                //     //   SizedBox(
-                //     //     width: 250,
-                //     //     child: Material(
-                //     //       elevation: 20.0,
-                //     //       child: Column(
-                //     //         children: [
-                //     //           ListTile(
-                //     //             onTap: () {
-                //     //               setState(() {
-                //     //                 showFilter = false;
-                //     //               });
-                //     //             },
-                //     //             title: const Text('Vapour'),
-                //     //           )
-                //     //         ],
-                //     //       ),
-                //     //     ),
-                //     //   )
-                //   ],
-                // )
-              ],
-            ),
+          bottomNavigationBar:
+              _isMenuOpened ? _buildStaticBottomBar() : const SizedBox.shrink(),
+        );
+      });
+    });
+  }
+
+  Widget _buildStaticBottomBar() {
+    final bloc = BlocProvider.of<LocalCartBloc>(context);
+
+    return LayoutBuilder(builder: (context, constraints) {
+      final mobile = constraints.maxWidth > 600 ? false : true;
+
+      return BlocBuilder<CustomerBloc, CustomerBlocState>(
+          builder: (context, customerState) {
+        return BlocBuilder<LocalCartBloc, LocalCartState>(
+            bloc: bloc,
+            builder: (context, state) {
+              return Material(
+                color: Colors.transparent,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: mobile ? 30 : 80),
+                  child: Container(
+                    height: mobile ? 70 : 80,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: mobile ? 20 : 100),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[850],
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(
+                            Icons.home,
+                            color: Colors.white,
+                            size: mobile ? 20 : 30,
+                          ),
+                          onPressed: _toggleMenu,
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.search_rounded,
+                            size: mobile ? 20 : 30,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: ((context) => const SearchPage())));
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.shopping_bag,
+                            size: mobile ? 20 : 30,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            if (customerState.customerModel == null) {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) => Dialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  child: Container(
+                                    height: 600, // Adjust the height as needed
+                                    width: 600, // Adjust the width as needed
+                                    child: const Card(child: AuthActionPage()),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              final cartBloc = getIt<CartBloc>();
+                              cartBloc.add(const GetCartEvent(storeId: '2'));
+                              cartBloc.stream.listen((cartState) {
+                                if (cartState is CartLoadedState) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => const CartPage()));
+                                  BlocProvider.of<LocalCartBloc>(context)
+                                      .add(LocalCartClearProductEvent());
+                                }
+                              });
+                            }
+                          },
+                        ),
+                        IconButton(
+                            icon: Icon(
+                              Icons.person_2_rounded,
+                              size: mobile ? 20 : 30,
+                              color: Colors.white,
+                            ),
+                            onPressed: customerState.customerModel != null
+                                ? () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const DashboardPathBuilder()))
+                                : () => showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (context) => Dialog(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
+                                        ),
+                                        child: Container(
+                                          height:
+                                              600, // Adjust the height as needed
+                                          width:
+                                              600, // Adjust the width as needed
+                                          child: const Card(
+                                              child: AuthActionPage()),
+                                        ),
+                                      ),
+                                    )),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            });
+      });
+    });
+  }
+
+  Widget body({required List<TagContent> products}) {
+    return Column(
+      children: [
+        // SizedBox(
+        //   height: 100,
+        //   child: CustomInputField(
+        //     elevation: 10.0,
+        //     enabled: true,
+        //     inputType: TextInputType.none,
+        //     onTap: () {
+        //       Navigator.of(context).push(MaterialPageRoute(
+        //           builder: ((context) => const SearchPage())));
+        //     },
+        //     icon: const Icon(Icons.search),
+        //     labelText: 'Search Products',
+        //     hintText: 'Search Products',
+        //   ),
+        // ),
+        Expanded(
+          child: ListView.separated(
+            itemBuilder: (context, index) {
+              final tag = products[index];
+              return CustomProductContainer(
+                fromTags: true,
+                text: tag.name.toString(),
+                isScrollable: false,
+                showQuantity: 6,
+                tagId: tag.id,
+                storeIds: 2,
+                categoryList: 1,
+              );
+            },
+            itemCount: products.length,
+            separatorBuilder: (context, index) => Decorations.height15,
+            padding: const EdgeInsets.all(15.0),
           ),
-        ],
-      );
+        ),
+      ],
+    );
+  }
 
   Widget appDrawer() => const Drawer(
         child: Column(
@@ -168,14 +288,14 @@ class _TabModeState extends State<TabMode> {
         ),
       );
 
-  AppBar appBar() => AppBar(
+  AppBar appBar(bool signedIn) => AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         centerTitle: true,
         toolbarHeight: 100,
         leading: IconButton(
             onPressed: () {
-              scaffoldState.currentState?.openDrawer();
+              globalKey.currentState?.openDrawer();
             },
             icon: const Icon(Icons.menu)),
         title: const Padding(
@@ -189,25 +309,69 @@ class _TabModeState extends State<TabMode> {
           Wrap(
             children: [
               IconButton(
-                  onPressed: onCart, icon: const Icon(Icons.shopping_cart)),
-              IconButton(
-                  onPressed: onSignUp,
-                  icon: const Icon(Icons.person_3_rounded)),
+                  icon: const Icon(
+                    Icons.person_2_rounded,
+                  ),
+                  onPressed: signedIn
+                      ? () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const DashboardPathBuilder()))
+                      : () => showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) => Dialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Container(
+                                height: 600, // Adjust the height as needed
+                                width: 600, // Adjust the width as needed
+                                child: const Card(child: AuthActionPage()),
+                              ),
+                            ),
+                          )),
             ],
           )
         ],
       );
-
   void onSignUp() {
     showDialog(
-        context: context,
-        builder: ((context) => const Dialog(child: AuthActionPage())));
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Container(
+          height: 600, // Adjust the height as needed
+          width: 600, // Adjust the width as needed
+          child: const Card(child: AuthActionPage()),
+        ),
+      ),
+    );
   }
 
+  // void _onMoveToAuthPage(BuildContext context) {
+  //   Navigator.of(context).push(
+  //     MaterialPageRoute(
+  //       builder: (context) {
+  //         return BlocBuilder<CustomerBloc, CustomerBlocState>(
+  //           builder: (context, customerState) {
+  //             if (customerState is CustomerCompletedState) {
+  //               return const DashboardPathBuilder();
+  //             } else {
+  //              return onSignUp();
+  //             }
+  //           },
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
+
   void onCart() {
-    // Navigator.of(context).push(MaterialPageRoute(
-    //     builder: ((context) => const CartPage(
-    //           model: null,
-    //         ))));
+    // Implement navigation to cart page if needed
   }
 }

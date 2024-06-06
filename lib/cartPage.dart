@@ -99,6 +99,9 @@ class _CartPageState extends State<CartPage> {
                                 if (product.quantity! > 0) {
                                   cartBloc.add(UpdateCartEvent(
                                       storeId: 2.toString(), list: [product]));
+                                } else {
+                                  onRemoveProduct(
+                                      context: context, list: [product]);
                                 }
                               },
                               onRemove: () => onRemoveProduct(
@@ -341,7 +344,9 @@ class CartTile extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                  child: Text('price \$${price.toString()}')),
+                                  child: Text(
+                                isSignedIn ? '\$$price' : 'Sign In For Price',
+                              )),
                             ],
                           ),
                           if (isView ?? false)
@@ -504,8 +509,20 @@ class CartTile extends StatelessWidget {
   }
 
   showAuthRequiredDialog(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const AuthActionPage()));
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: const SizedBox(
+          height: 600,
+          width: 600,
+          child: Card(child: AuthActionPage()),
+        ),
+      ),
+    );
   }
 
   void onAddQuantity() {}

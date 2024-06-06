@@ -93,8 +93,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             automaticallyImplyLeading: false,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
-                decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 241, 239, 239),
+                decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 241, 239, 239),
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(50),
                         topRight: Radius.circular(50))),
@@ -146,9 +146,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         toolbarHeight: 55,
         expandedHeight: 400,
         backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
         flexibleSpace: Padding(
           padding: const EdgeInsets.only(bottom: 15.0),
           child: Material(
+            color: Colors.white,
+            surfaceTintColor: Colors.white,
             clipBehavior: Clip.hardEdge,
             child: FlexibleSpaceBar(
                 background: Image(

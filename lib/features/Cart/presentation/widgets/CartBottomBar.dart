@@ -11,7 +11,7 @@ class CartBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(
-      builder: (context, carttate) {
+      builder: (context, cartstate) {
         return BlocBuilder<LocalCartBloc, LocalCartState>(
             builder: (context, state) {
           final length =
@@ -19,7 +19,7 @@ class CartBottomBar extends StatelessWidget {
                   productList: state.listProduct);
 
           final newlength = length == 0
-              ? carttate.updateCartModel?.cartLineItemDtoList?.length ?? 0
+              ? cartstate.updateCartModel?.cartLineItemDtoList?.length ?? 0
               : length;
           return Padding(
             padding: const EdgeInsets.all(0.0),

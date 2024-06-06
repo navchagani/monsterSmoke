@@ -259,13 +259,17 @@ class ProductCategoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 241, 239, 239),
       appBar: AppBar(
         title: Text(heading.toString()),
       ),
-      body: CustomProductContainer(
-        categoryList: categoryList,
-        storeIds: storeIds,
-        isScrollable: true,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5),
+        child: CustomProductContainer(
+          categoryList: categoryList,
+          storeIds: storeIds,
+          isScrollable: true,
+        ),
       ),
       bottomNavigationBar: const CartBottomBar(),
       floatingActionButton: const CartFloatButton(),
