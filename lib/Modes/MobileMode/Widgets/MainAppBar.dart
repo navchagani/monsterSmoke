@@ -52,10 +52,10 @@ class _MainAppBarState extends State<MainAppBar> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
                           ),
-                          child: Container(
+                          child: const SizedBox(
                             height: 600,
                             width: 600,
-                            child: const Card(child: AuthActionPage()),
+                            child: Card(child: AuthActionPage()),
                           ),
                         ),
                       )),
