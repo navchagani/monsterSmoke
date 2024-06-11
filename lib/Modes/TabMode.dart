@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:monstersmoke/DashboardPathBuilder.dart';
 import 'package:monstersmoke/Decorations/Decorations.dart';
 import 'package:monstersmoke/Modes/MobileMode/MobileMode.dart';
+import 'package:monstersmoke/Modes/MobileMode/Widgets/AppBars.dart';
+import 'package:monstersmoke/Modes/MobileMode/Widgets/MainAppBar.dart';
 import 'package:monstersmoke/cartPage.dart';
 import 'package:monstersmoke/core/blocs/CartBloc.dart';
 import 'package:monstersmoke/core/inject.dart';
@@ -66,55 +68,71 @@ class _TabViewModeState extends State<TabViewMode> {
   Widget build(BuildContext context) {
     return BlocBuilder<CustomerBloc, CustomerBlocState>(
         builder: (context, customerState) {
-      final isSignedIn = customerState.customerModel != null;
-
       return LayoutBuilder(builder: (context, constraints) {
         final mobile = constraints.maxWidth > 600 ? false : true;
 
-        return Scaffold(
-          backgroundColor: const Color.fromARGB(255, 241, 239, 239),
-          key: scaffoldState,
-          appBar: appBar(isSignedIn),
-          body: BlocProvider.value(
-            value: getTagsBloc,
-            child: BlocBuilder<ProductBloc, ProductBlocState>(
-              bloc: getTagsBloc,
-              builder: (context, productState) {
-                if (productState is ProductLoadingState) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
+        return NestedScrollView(
+          controller: scrollController,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [
+              const MainAppBar(),
+              SliverAppBar(
+                automaticallyImplyLeading: false,
+                toolbarHeight: mobile ? 140 : 360,
+                flexibleSpace: FlexibleSpaceBar(
+                    background: SliverBar1(
+                  axis: Axis.vertical,
+                  siderId: 86,
+                )),
+              ),
+            ];
+          },
+          body: Scaffold(
+            backgroundColor: const Color.fromARGB(255, 241, 239, 239),
+            // key: scaffoldState,
+            // appBar: appBar(isSignedIn),
+            body: BlocProvider.value(
+              value: getTagsBloc,
+              child: BlocBuilder<ProductBloc, ProductBlocState>(
+                bloc: getTagsBloc,
+                builder: (context, productState) {
+                  if (productState is ProductLoadingState) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
 
-                if (productState is TagsLoadedState) {
-                  return body(products: productState.tagsList);
-                }
+                  if (productState is TagsLoadedState) {
+                    return body(products: productState.tagsList);
+                  }
 
-                return Container();
-              },
+                  return Container();
+                },
+              ),
             ),
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: _isMenuOpened
-              ? Container()
-              : Padding(
-                  padding: EdgeInsets.only(bottom: mobile ? 30 : 50),
-                  child: FloatingActionButton(
-                    onPressed: _toggleMenu,
-                    backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Icon(
-                      Icons.grid_view,
-                      color: Colors.white,
-                      size: mobile ? 30 : 40,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
+            floatingActionButton: _isMenuOpened
+                ? Container()
+                : Padding(
+                    padding: EdgeInsets.only(bottom: mobile ? 30 : 50),
+                    child: FloatingActionButton(
+                      onPressed: _toggleMenu,
+                      backgroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Icon(
+                        Icons.grid_view,
+                        color: Colors.white,
+                        size: mobile ? 30 : 40,
+                      ),
                     ),
                   ),
-                ),
-          bottomNavigationBar:
-              _isMenuOpened ? _buildStaticBottomBar() : const SizedBox.shrink(),
+            bottomNavigationBar: _isMenuOpened
+                ? _buildStaticBottomBar()
+                : const SizedBox.shrink(),
+          ),
         );
       });
     });
@@ -180,10 +198,14 @@ class _TabViewModeState extends State<TabViewMode> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20.0),
                                   ),
-                                  child: Container(
-                                    height: 600, // Adjust the height as needed
-                                    width: 600, // Adjust the width as needed
-                                    child: const Card(child: AuthActionPage()),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(30),
+                                    child: Container(
+                                      height: 630,
+                                      width: 630,
+                                      color: Colors.white,
+                                      child: AuthActionPage(),
+                                    ),
                                   ),
                                 ),
                               );
@@ -221,13 +243,15 @@ class _TabViewModeState extends State<TabViewMode> {
                                           borderRadius:
                                               BorderRadius.circular(20.0),
                                         ),
-                                        child: Container(
-                                          height:
-                                              600, // Adjust the height as needed
-                                          width:
-                                              600, // Adjust the width as needed
-                                          child: const Card(
-                                              child: AuthActionPage()),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          child: Container(
+                                            height: 630,
+                                            width: 630,
+                                            color: Colors.white,
+                                            child: AuthActionPage(),
+                                          ),
                                         ),
                                       ),
                                     )),
@@ -244,21 +268,6 @@ class _TabViewModeState extends State<TabViewMode> {
   Widget body({required List<TagContent> products}) {
     return Column(
       children: [
-        // SizedBox(
-        //   height: 100,
-        //   child: CustomInputField(
-        //     elevation: 10.0,
-        //     enabled: true,
-        //     inputType: TextInputType.none,
-        //     onTap: () {
-        //       Navigator.of(context).push(MaterialPageRoute(
-        //           builder: ((context) => const SearchPage())));
-        //     },
-        //     icon: const Icon(Icons.search),
-        //     labelText: 'Search Products',
-        //     hintText: 'Search Products',
-        //   ),
-        // ),
         Expanded(
           child: ListView.separated(
             itemBuilder: (context, index) {
@@ -325,10 +334,14 @@ class _TabViewModeState extends State<TabViewMode> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
-                              child: Container(
-                                height: 600, // Adjust the height as needed
-                                width: 600, // Adjust the width as needed
-                                child: const Card(child: AuthActionPage()),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(30),
+                                child: Container(
+                                  height: 630,
+                                  width: 630,
+                                  color: Colors.white,
+                                  child: AuthActionPage(),
+                                ),
                               ),
                             ),
                           )),
@@ -336,6 +349,7 @@ class _TabViewModeState extends State<TabViewMode> {
           )
         ],
       );
+
   void onSignUp() {
     showDialog(
       context: context,
@@ -344,32 +358,18 @@ class _TabViewModeState extends State<TabViewMode> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        child: Container(
-          height: 600, // Adjust the height as needed
-          width: 600, // Adjust the width as needed
-          child: const Card(child: AuthActionPage()),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: Container(
+            height: 630,
+            width: 630,
+            color: Colors.white,
+            child: AuthActionPage(),
+          ),
         ),
       ),
     );
   }
-
-  // void _onMoveToAuthPage(BuildContext context) {
-  //   Navigator.of(context).push(
-  //     MaterialPageRoute(
-  //       builder: (context) {
-  //         return BlocBuilder<CustomerBloc, CustomerBlocState>(
-  //           builder: (context, customerState) {
-  //             if (customerState is CustomerCompletedState) {
-  //               return const DashboardPathBuilder();
-  //             } else {
-  //              return onSignUp();
-  //             }
-  //           },
-  //         );
-  //       },
-  //     ),
-  //   );
-  // }
 
   void onCart() {
     // Implement navigation to cart page if needed

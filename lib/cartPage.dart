@@ -257,255 +257,288 @@ class CartTile extends StatelessWidget {
     final qty = availableQuantity ?? 0;
     final isInStock = qty >= 0 ? true : false;
 
-    return BlocBuilder<CustomerBloc, CustomerBlocState>(
-      builder: (context, customerState) {
-        final isSignedIn = customerState.customerModel != null;
+    return LayoutBuilder(builder: (context, constraints) {
+      final isMobile = constraints.maxWidth > 600 ? false : true;
+      return BlocBuilder<CustomerBloc, CustomerBlocState>(
+        builder: (context, customerState) {
+          final isSignedIn = customerState.customerModel != null;
 
-        return Column(
-          children: [
-            if (isCart == true)
-              Align(
-                alignment: Alignment.topRight,
-                child: InkWell(
-                  onTap: isSignedIn
-                      ? onRemove
-                      : () => showAuthRequiredDialog(context),
-                  child: Container(
-                    height: 20,
-                    width: 20,
-                    decoration: const BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
-                    child: const Icon(
-                      Icons.close,
-                      size: 10,
-                      color: Colors.white,
+          return Column(
+            children: [
+              if (isCart == true)
+                Align(
+                  alignment: Alignment.topRight,
+                  child: InkWell(
+                    onTap: isSignedIn
+                        ? onRemove
+                        : () => !isMobile
+                            ? showAuthRequiredDialog(context)
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const AuthActionPage())),
+                    child: Container(
+                      height: 20,
+                      width: 20,
+                      decoration: const BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(50))),
+                      child: const Icon(
+                        Icons.close,
+                        size: 10,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            Material(
-              elevation: 4.0,
-              color: Colors.white,
-              shape: const RoundedRectangleBorder(
-                  side: BorderSide.none,
-                  borderRadius: BorderRadius.all(Radius.circular(40.0))),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 120,
-                      height: 120,
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Image(
-                          image: NetworkImage(image.toString()),
-                          errorBuilder: ((context, error, stackTrace) {
-                            return const Image(
-                                image: NetworkImage(
-                                    'https://monstersmokeoutlet.com/asset/img/place-holder.png'));
-                          }),
+              Material(
+                elevation: 4.0,
+                color: Colors.white,
+                shape: const RoundedRectangleBorder(
+                    side: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(40.0))),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 120,
+                        height: 120,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Image(
+                            image: NetworkImage(image.toString()),
+                            errorBuilder: ((context, error, stackTrace) {
+                              return const Image(
+                                  image: NetworkImage(
+                                      'https://monstersmokeoutlet.com/asset/img/place-holder.png'));
+                            }),
+                          ),
                         ),
                       ),
-                    ),
-                    Decorations.width10,
-                    Expanded(
-                        child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                  child: Text(
-                                name.toString(),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              )),
-                            ],
-                          ),
+                      Decorations.width10,
+                      Expanded(
+                          child: Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                    child: Text(
+                                  name.toString(),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                )),
+                              ],
+                            ),
 
-                          Text("Qty: ${quantity.toString()}"),
+                            Text("Qty: ${quantity.toString()}"),
 
-                          // if (subSku != null)
-                          //   Row(
-                          //     children: [
-                          //       Expanded(
-                          //         child: Text("Qty: ${quantity.toString()}"),
-                          //       ),
-                          //     ],
-                          //   ),
-                          Row(
-                            children: [
-                              Expanded(
-                                  child: Text(
-                                isSignedIn ? '\$$price' : 'Sign In For Price',
-                              )),
-                            ],
-                          ),
-                          if (isView ?? false)
+                            // if (subSku != null)
+                            //   Row(
+                            //     children: [
+                            //       Expanded(
+                            //         child: Text("Qty: ${quantity.toString()}"),
+                            //       ),
+                            //     ],
+                            //   ),
                             Row(
                               children: [
                                 Expanded(
-                                    child: Text(viewCartQuantity.toString())),
-                                Expanded(
-                                    child: Text(viewPriductTotal.toString()))
+                                    child: Text(
+                                  isSignedIn ? '\$$price' : 'Sign In For Price',
+                                )),
                               ],
                             ),
-                          // Decorations.height10,
-                          if (isCart == false)
-                            SizedBox(
-                              height: 40,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                            if (isView ?? false)
+                              Row(
                                 children: [
-                                  isInStock
-                                      ? Text(
-                                          'In Stock: $availableQuantity',
-                                          style: TextStyle(
-                                              color: Colors.green.shade500),
-                                        )
-                                      : const Text(
-                                          'Out of Stock',
-                                          style: TextStyle(
-                                              color: Colors.deepOrange),
-                                        ),
-                                  const Spacer(),
-                                  const Row(
-                                    children: [],
-                                  ),
+                                  Expanded(
+                                      child: Text(viewCartQuantity.toString())),
+                                  Expanded(
+                                      child: Text(viewPriductTotal.toString()))
                                 ],
                               ),
-                            ),
-                        ],
-                      ),
-                    )),
+                            // Decorations.height10,
+                            if (isCart == false)
+                              SizedBox(
+                                height: 40,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    isInStock
+                                        ? Text(
+                                            'In Stock: $availableQuantity',
+                                            style: TextStyle(
+                                                color: Colors.green.shade500),
+                                          )
+                                        : const Text(
+                                            'Out of Stock',
+                                            style: TextStyle(
+                                                color: Colors.deepOrange),
+                                          ),
+                                    const Spacer(),
+                                    const Row(
+                                      children: [],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        ),
+                      )),
 
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        if (isCart == true)
-                          IconButton(
-                            icon: const Icon(
-                              Icons.add,
-                              size: 35,
-                            ),
-                            onPressed: isSignedIn
-                                ? onIncrement
-                                : () => showAuthRequiredDialog(context),
-                          ),
-                        if (isCart == true)
-                          IconButton(
-                            icon: const Icon(
-                              Icons.remove,
-                              size: 40,
-                            ),
-                            onPressed: isSignedIn
-                                ? onDecrement
-                                : () => showAuthRequiredDialog(context),
-                          ),
-
-                        // if (isCart == true) const Spacer(),
-
-                        if (isInStock && isCart == false)
-                          IconButton(
-                              onPressed: isSignedIn
-                                  ? onIncrement
-                                  : () => showAuthRequiredDialog(context),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          if (isCart == true)
+                            IconButton(
                               icon: const Icon(
                                 Icons.add,
                                 size: 35,
-                              )),
-                        if (isInStock && isCart == false)
-                          IconButton(
+                              ),
                               onPressed: isSignedIn
-                                  ? onDecrement
-                                  : () => showAuthRequiredDialog(context),
+                                  ? onIncrement
+                                  : () => !isMobile
+                                      ? showAuthRequiredDialog(context)
+                                      : Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const AuthActionPage())),
+                            ),
+                          if (isCart == true)
+                            IconButton(
                               icon: const Icon(
                                 Icons.remove,
                                 size: 40,
-                              )),
-                      ],
-                    )
+                              ),
+                              onPressed: isSignedIn
+                                  ? onDecrement
+                                  : () => !isMobile
+                                      ? showAuthRequiredDialog(context)
+                                      : Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const AuthActionPage())),
+                            ),
 
-                    // Expanded(
-                    //   child: Container(
-                    //     padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    //     // color: Colors.blue,
-                    //     width: 100,
-                    //     height: 100,
-                    //     child: Column(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       crossAxisAlignment: CrossAxisAlignment.center,
-                    //       children: [
-                    //         const Row(
-                    //           children: [
-                    //             Expanded(
-                    //                 child: Text(
-                    //               'Light Rise | TB 18K Disposables | 18000 Puffs | Nic 5% | Pack of 5 | Banana Cake',
-                    //               maxLines: 2,
-                    //               overflow: TextOverflow.ellipsis,
-                    //             ))
-                    //           ],
-                    //         ),
-                    //         Decorations.height5,
-                    //         const Row(
-                    //           children: [Expanded(child: Text('Stock: 299'))],
-                    //         )
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   // color: Colors.deepOrange,
-                    //   width: 100,
-                    //   height: 100,
-                    //   child: Center(
-                    //       child: Text(
-                    //     '\$3500',
-                    //     style: TextStyle(fontSize: 18),
-                    //   )),
-                    // ),
-                    // Container(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    //   // color: Colors.deepPurple,
-                    //   width: 150,
-                    //   height: 100,
-                    //   child: Row(
-                    //     children: [
-                    //       IconButton(
-                    //           onPressed: onAddQuantity, icon: const Icon(Icons.add)),
-                    //       const Expanded(child: Center(child: Text('100'))),
-                    //       IconButton(
-                    //           onPressed: onRemoveQuantity, icon: const Icon(Icons.remove))
-                    //     ],
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   // color: Colors.green,
-                    //   width: 70,
-                    //   height: 100,
-                    //   child: IconButton(
-                    //       color: Colors.deepOrange,
-                    //       onPressed: onRemoveProduct,
-                    //       icon: const Icon(Icons.delete)),
-                    // ),
-                  ],
+                          // if (isCart == true) const Spacer(),
+
+                          if (isInStock && isCart == false)
+                            IconButton(
+                                onPressed: isSignedIn
+                                    ? onIncrement
+                                    : () => !isMobile
+                                        ? showAuthRequiredDialog(context)
+                                        : Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const AuthActionPage())),
+                                icon: const Icon(
+                                  Icons.add,
+                                  size: 35,
+                                )),
+                          if (isInStock && isCart == false)
+                            IconButton(
+                                onPressed: isSignedIn
+                                    ? onDecrement
+                                    : () => !isMobile
+                                        ? showAuthRequiredDialog(context)
+                                        : Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const AuthActionPage())),
+                                icon: const Icon(
+                                  Icons.remove,
+                                  size: 40,
+                                )),
+                        ],
+                      )
+
+                      // Expanded(
+                      //   child: Container(
+                      //     padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      //     // color: Colors.blue,
+                      //     width: 100,
+                      //     height: 100,
+                      //     child: Column(
+                      //       mainAxisAlignment: MainAxisAlignment.center,
+                      //       crossAxisAlignment: CrossAxisAlignment.center,
+                      //       children: [
+                      //         const Row(
+                      //           children: [
+                      //             Expanded(
+                      //                 child: Text(
+                      //               'Light Rise | TB 18K Disposables | 18000 Puffs | Nic 5% | Pack of 5 | Banana Cake',
+                      //               maxLines: 2,
+                      //               overflow: TextOverflow.ellipsis,
+                      //             ))
+                      //           ],
+                      //         ),
+                      //         Decorations.height5,
+                      //         const Row(
+                      //           children: [Expanded(child: Text('Stock: 299'))],
+                      //         )
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   // color: Colors.deepOrange,
+                      //   width: 100,
+                      //   height: 100,
+                      //   child: Center(
+                      //       child: Text(
+                      //     '\$3500',
+                      //     style: TextStyle(fontSize: 18),
+                      //   )),
+                      // ),
+                      // Container(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      //   // color: Colors.deepPurple,
+                      //   width: 150,
+                      //   height: 100,
+                      //   child: Row(
+                      //     children: [
+                      //       IconButton(
+                      //           onPressed: onAddQuantity, icon: const Icon(Icons.add)),
+                      //       const Expanded(child: Center(child: Text('100'))),
+                      //       IconButton(
+                      //           onPressed: onRemoveQuantity, icon: const Icon(Icons.remove))
+                      //     ],
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   // color: Colors.green,
+                      //   width: 70,
+                      //   height: 100,
+                      //   child: IconButton(
+                      //       color: Colors.deepOrange,
+                      //       onPressed: onRemoveProduct,
+                      //       icon: const Icon(Icons.delete)),
+                      // ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        );
-      },
-    );
+            ],
+          );
+        },
+      );
+    });
   }
 
   showAuthRequiredDialog(BuildContext context) {
@@ -517,8 +550,8 @@ class CartTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.0),
         ),
         child: const SizedBox(
-          height: 600,
-          width: 600,
+          height: 630,
+          width: 630,
           child: Card(child: AuthActionPage()),
         ),
       ),

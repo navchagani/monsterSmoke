@@ -264,14 +264,18 @@ class ProductCategoriesPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(heading.toString()),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5),
-        child: CustomProductContainer(
-          categoryList: categoryList,
-          storeIds: storeIds,
-          isScrollable: true,
-        ),
-      ),
+      body: LayoutBuilder(builder: (context, constraints) {
+        final isMobile = constraints.maxWidth > 600 ? false : true;
+        return Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: isMobile ? 10 : 30, vertical: 5),
+          child: CustomProductContainer(
+            categoryList: categoryList,
+            storeIds: storeIds,
+            isScrollable: true,
+          ),
+        );
+      }),
       bottomNavigationBar: const CartBottomBar(),
       floatingActionButton: const CartFloatButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

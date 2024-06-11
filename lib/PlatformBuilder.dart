@@ -58,7 +58,7 @@ class PlatformBuilder extends StatelessWidget {
   Widget appDrawer({required BuildContext context}) {
     return Padding(
       padding:
-          const EdgeInsets.only(left: 5, bottom: 15.0, top: 35, right: 60.0),
+          const EdgeInsets.only(left: 5, bottom: 20.0, top: 20.0, right: 60.0),
       child: Drawer(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -103,11 +103,6 @@ class PlatformBuilder extends StatelessWidget {
 
   Widget menus(BuildContext context) {
     final list = [
-      ListTile(
-        dense: true,
-        title: const Text('Account'),
-        onTap: () => onMoveToAccount(context),
-      ),
       ListTile(
           dense: true,
           title: const Text('About Us'),

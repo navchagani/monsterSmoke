@@ -52,7 +52,7 @@ class _CustomSliderState extends State<CustomSlider> {
     return BlocBuilder<IsMobile, bool>(
       builder: (context, isMob) {
         return SizedBox(
-          height: !isMob ? 140 : 360,
+          height: !isMob ? 200 : 360,
           width: double.infinity,
           child: Stack(
             alignment: Alignment.bottomCenter,
