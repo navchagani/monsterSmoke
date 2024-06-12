@@ -56,7 +56,7 @@ class CustomerRepoImp extends CustomerRepository {
         final customerData = value['customerDto'];
         final model =
             result.data == null ? null : CustomerModel.fromJson(customerData!);
-        log('getcustomer data : ${model}');
+        log('getcustomer data : $model');
         return SuccessState(data: model);
       } else if (result.response.statusCode == HttpStatus.forbidden ||
           result.response.statusCode == HttpStatus.badRequest ||

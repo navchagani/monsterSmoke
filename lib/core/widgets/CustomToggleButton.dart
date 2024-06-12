@@ -33,9 +33,9 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
           final isSelected = widget.currentIndex == index;
           return RawChip(
               checkmarkColor: isSelected
-                  ? Theme.of(context).colorScheme.background
-                  : Theme.of(context).colorScheme.onBackground,
-              color: MaterialStateProperty.all(isSelected
+                  ? Theme.of(context).colorScheme.surface
+                  : Theme.of(context).colorScheme.onSurface,
+              color: WidgetStateProperty.all(isSelected
                   ? Theme.of(context).colorScheme.primary
                   : Theme.of(context).colorScheme.primary.withOpacity(0.05)),
               selected: isSelected,
@@ -44,8 +44,8 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
                 index.toString(),
                 style: TextStyle(
                     color: isSelected
-                        ? Theme.of(context).colorScheme.background
-                        : Theme.of(context).colorScheme.onBackground),
+                        ? Theme.of(context).colorScheme.surface
+                        : Theme.of(context).colorScheme.onSurface),
               ));
         }),
       ),

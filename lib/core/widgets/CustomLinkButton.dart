@@ -21,7 +21,7 @@ class CustomLinkButton extends StatelessWidget {
           child: Text(
             text.toString(),
             style: TextStyle(
-                color: textColor ?? Theme.of(context).colorScheme.onBackground,
+                color: textColor ?? Theme.of(context).colorScheme.onSurface,
                 decorationStyle: TextDecorationStyle.solid,
                 decoration: TextDecoration.underline),
           )),

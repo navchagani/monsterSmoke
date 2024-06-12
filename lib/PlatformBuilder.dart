@@ -42,13 +42,13 @@ class PlatformBuilder extends StatelessWidget {
           children: [
             Icon(
               Icons.shopping_cart,
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
             ),
             Decorations.width10,
             Text(
               'Your Cart',
               style: TextStyle(
-                  color: Theme.of(context).colorScheme.background,
+                  color: Theme.of(context).colorScheme.surface,
                   fontSize: 20),
             )
           ],

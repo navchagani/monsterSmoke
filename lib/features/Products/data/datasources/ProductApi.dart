@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductDetailsModel.dart';
 import 'package:monstersmoke/features/Products/data/models/ProductModel.dart';
-import 'package:monstersmoke/features/Products/data/models/ProductSearchModel.dart';
 import 'package:monstersmoke/features/Products/data/models/TagProductModel.dart';
 import 'package:retrofit/retrofit.dart';
 

@@ -61,7 +61,7 @@ class _HTMLViewerState extends State<HTMLViewer> {
                           final element = document.body?.children[index];
                           return Material(
                             borderRadius: BorderRadius.circular(10.0),
-                            color: Theme.of(context).colorScheme.background,
+                            color: Theme.of(context).colorScheme.surface,
                             child: Padding(
                               padding: const EdgeInsets.all(25.0),
                               child: Text(
@@ -70,7 +70,7 @@ class _HTMLViewerState extends State<HTMLViewer> {
                                     fontSize: 16.0,
                                     color: Theme.of(context)
                                         .colorScheme
-                                        .onBackground),
+                                        .onSurface),
                               ),
                             ),
                           );

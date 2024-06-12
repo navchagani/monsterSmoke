@@ -32,7 +32,7 @@ class _MainAppBarState extends State<MainAppBar> {
             builder: (context, customerState) {
           return SliverAppBar(
             pinned: false,
-            backgroundColor: Color.fromARGB(255, 241, 239, 239),
+            backgroundColor: const Color.fromARGB(255, 241, 239, 239),
             centerTitle: true,
             toolbarHeight: 80,
             leading:
