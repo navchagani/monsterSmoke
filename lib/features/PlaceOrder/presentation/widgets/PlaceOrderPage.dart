@@ -173,7 +173,7 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
                                                 ((context, index) => Divider(
                                                       color: Theme.of(context)
                                                           .colorScheme
-                                                          .onBackground
+                                                          .onSurface
                                                           .withOpacity(0.5),
                                                     )),
                                             itemCount: list.length),

@@ -39,7 +39,7 @@ class ProductCardWidget extends StatelessWidget {
                 side: BorderSide(
                     color: Theme.of(context)
                         .colorScheme
-                        .onBackground
+                        .onSurface
                         .withOpacity(0.2)),
                 borderRadius: BorderRadius.circular(30.0),
               ),

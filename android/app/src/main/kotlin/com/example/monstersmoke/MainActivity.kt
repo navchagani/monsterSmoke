@@ -1,4 +1,4 @@
-package com.example.monstersmoke
+package com.monstersmoke.co
 
 import io.flutter.embedding.android.FlutterActivity
 

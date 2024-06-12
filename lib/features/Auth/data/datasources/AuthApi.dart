@@ -5,9 +5,6 @@ import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
 import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/features/Auth/data/models/CreateCustomerModel.dart';
-import 'package:monstersmoke/features/Auth/data/models/CustomerModel.dart'
-    as customerModel;
-import 'package:retrofit/http.dart';
 
 import 'package:retrofit/retrofit.dart';
 

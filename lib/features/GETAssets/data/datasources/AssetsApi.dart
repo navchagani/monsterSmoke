@@ -1,11 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:monstersmoke/const/Constants.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/CountryModel.dart';
-import 'package:monstersmoke/features/GETAssets/data/models/PaymentsModel.dart';
-import 'package:monstersmoke/features/GETAssets/data/models/ShippingAddressModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/SliderModel.dart';
 import 'package:monstersmoke/features/GETAssets/data/models/StateModel.dart';
-import 'package:monstersmoke/features/GETAssets/data/models/htmlModel.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'AssetsApi.g.dart';

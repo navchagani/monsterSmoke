@@ -40,10 +40,10 @@ class _ShippingPageState extends State<ShippingPage> {
                 labelStyle:
                     TextStyle(color: selected ? Colors.white : Colors.black45),
                 onPressed: () => onChipTap(data),
-                backgroundColor: Theme.of(context).colorScheme.background,
+                backgroundColor: Theme.of(context).colorScheme.surface,
                 shape: RoundedRectangleBorder(
                     side: BorderSide(
-                        color: Theme.of(context).colorScheme.onBackground),
+                        color: Theme.of(context).colorScheme.onSurface),
                     borderRadius: BorderRadius.circular(10.0)),
                 avatar: Text(
                   '\$${data.amount.toString()}',

@@ -457,7 +457,7 @@ class _CustomStepperState extends State<CustomStepper>
           ? colorScheme.primary
           : colorScheme.onSurface.withOpacity(0.38);
     } else {
-      return isActive ? colorScheme.secondary : colorScheme.background;
+      return isActive ? colorScheme.secondary : colorScheme.surface;
     }
   }
 
@@ -886,7 +886,7 @@ class _CustomStepperState extends State<CustomStepper>
     return Column(
       children: <Widget>[
         Material(
-          color: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.surface,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: SingleChildScrollView(

@@ -10,9 +10,7 @@ part of 'cat&BrandApi.dart';
 
 class _CatBrandApi implements CatBrandApi {
   _CatBrandApi(
-    this._dio, {
-    this.baseUrl,
-  }) {
+    this._dio) {
     baseUrl ??= 'https://erp.monstersmokewholesale.com';
   }
 

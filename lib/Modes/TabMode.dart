@@ -8,7 +8,6 @@ import 'package:monstersmoke/Modes/MobileMode/Widgets/MainAppBar.dart';
 import 'package:monstersmoke/cartPage.dart';
 import 'package:monstersmoke/core/blocs/CartBloc.dart';
 import 'package:monstersmoke/core/inject.dart';
-import 'package:monstersmoke/core/widgets/CustomIniputField.dart';
 import 'package:monstersmoke/core/widgets/CustomProductContainer.dart';
 import 'package:monstersmoke/features/Auth/presentation/pages/AuthActionPage.dart';
 import 'package:monstersmoke/features/Cart/presentation/bloc/cart_bloc.dart';
@@ -79,7 +78,7 @@ class _TabViewModeState extends State<TabViewMode> {
               SliverAppBar(
                 automaticallyImplyLeading: false,
                 toolbarHeight: mobile ? 140 : 360,
-                flexibleSpace: FlexibleSpaceBar(
+                flexibleSpace: const FlexibleSpaceBar(
                     background: SliverBar1(
                   axis: Axis.vertical,
                   siderId: 86,
@@ -204,7 +203,7 @@ class _TabViewModeState extends State<TabViewMode> {
                                       height: 630,
                                       width: 630,
                                       color: Colors.white,
-                                      child: AuthActionPage(),
+                                      child: const AuthActionPage(),
                                     ),
                                   ),
                                 ),
@@ -250,7 +249,7 @@ class _TabViewModeState extends State<TabViewMode> {
                                             height: 630,
                                             width: 630,
                                             color: Colors.white,
-                                            child: AuthActionPage(),
+                                            child: const AuthActionPage(),
                                           ),
                                         ),
                                       ),
@@ -340,7 +339,7 @@ class _TabViewModeState extends State<TabViewMode> {
                                   height: 630,
                                   width: 630,
                                   color: Colors.white,
-                                  child: AuthActionPage(),
+                                  child: const AuthActionPage(),
                                 ),
                               ),
                             ),
@@ -364,7 +363,7 @@ class _TabViewModeState extends State<TabViewMode> {
             height: 630,
             width: 630,
             color: Colors.white,
-            child: AuthActionPage(),
+            child: const AuthActionPage(),
           ),
         ),
       ),

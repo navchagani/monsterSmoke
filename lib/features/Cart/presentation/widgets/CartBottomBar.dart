@@ -26,7 +26,7 @@ class CartBottomBar extends StatelessWidget {
             child: SizedBox(
               height: 50,
               child: ListTile(
-                tileColor: Theme.of(context).colorScheme.background,
+                tileColor: Theme.of(context).colorScheme.surface,
                 shape: Decorations.boxShape,
                 // subtitle: Text(''),
                 title: Row(
@@ -35,13 +35,13 @@ class CartBottomBar extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.shopping_cart,
-                      color: Theme.of(context).colorScheme.onBackground,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                     Decorations.width10,
                     Text(
                       'Your Cart : $newlength',
                       style: TextStyle(
-                          color: Theme.of(context).colorScheme.onBackground,
+                          color: Theme.of(context).colorScheme.onSurface,
                           fontSize: 20),
                     )
                   ],

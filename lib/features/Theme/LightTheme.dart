@@ -10,7 +10,7 @@ class MonsterThemes {
       appBarTheme: AppBarTheme(
           toolbarHeight: 80,
           surfaceTintColor: Colors.transparent,
-          backgroundColor: Color.fromARGB(255, 241, 239, 239),
+          backgroundColor: const Color.fromARGB(255, 241, 239, 239),
           actionsIconTheme: const IconThemeData(color: Colors.black38),
           titleTextStyle: const TextStyle(
             fontSize: 20,
@@ -67,8 +67,6 @@ class MonsterThemes {
           onSecondary: Colors.white,
           error: Colors.deepOrange,
           onError: Colors.white,
-          background: Colors.white,
-          onBackground: Colors.black,
           surface: Colors.white,
           onSurface: Colors.black45),
       splashColor: Colors.purple.withOpacity(0.05),
@@ -122,7 +120,7 @@ class MonsterThemes {
       ),
       textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
-              textStyle: MaterialStateProperty.all(
+              textStyle: WidgetStateProperty.all(
                   const TextStyle(color: Colors.purple)),
               splashFactory: InkSplash.splashFactory)),
       dialogTheme: const DialogTheme(
@@ -185,19 +183,19 @@ class MonsterThemes {
       ),
       segmentedButtonTheme: SegmentedButtonThemeData(
           style: ButtonStyle(
-              surfaceTintColor: const MaterialStatePropertyAll(Colors.purple),
-              backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                (Set<MaterialState> states) {
-                  if (states.contains(MaterialState.selected)) {
+              surfaceTintColor: const WidgetStatePropertyAll(Colors.purple),
+              backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                (Set<WidgetState> states) {
+                  if (states.contains(WidgetState.selected)) {
                     return Colors.purple;
                   }
                   return Colors.transparent;
                 },
               ),
-              padding: const MaterialStatePropertyAll(
+              padding: const WidgetStatePropertyAll(
                   EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0)),
-              side: const MaterialStatePropertyAll(
+              side: const WidgetStatePropertyAll(
                   BorderSide(color: Colors.black45)),
-              shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0))))));
 }
