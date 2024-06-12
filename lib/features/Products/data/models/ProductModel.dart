@@ -366,7 +366,8 @@ class Content {
       dynamic weight,
       dynamic height,
       dynamic length,
-      dynamic width}) {
+      dynamic width,
+      int? quantity}) {
     return Content(
         productId: productId ?? this.productId,
         sku: sku ?? this.sku,
@@ -387,6 +388,7 @@ class Content {
         tags: tags ?? this.tags,
         tagName: tagName ?? this.tagName,
         tagId: tagId ?? this.tagId,
+        quantity: quantity ?? this.quantity,
         tagImageDtoList: tagImageDtoList ?? this.tagImageDtoList,
         minQuantityToSale: minQuantityToSale ?? this.minQuantityToSale,
         maxQuantityToSale: maxQuantityToSale ?? this.maxQuantityToSale,
@@ -436,7 +438,8 @@ class Content {
       'weight': weight,
       'height': height,
       'length': length,
-      'width': width
+      'width': width,
+      'quantity': quantity,
     };
   }
 
@@ -493,7 +496,8 @@ class Content {
         weight: json['weight'] as dynamic,
         height: json['height'] as dynamic,
         length: json['length'] as dynamic,
-        width: json['width'] as dynamic);
+        width: json['width'] as dynamic,
+        quantity: json['quantity'] as int);
   }
 
   @override
@@ -530,7 +534,8 @@ promotionNotes:$promotionNotes,
 weight:$weight,
 height:$height,
 length:$length,
-width:$width
+width:$width,
+quantity:$quantity
     ) ''';
   }
 
@@ -569,31 +574,33 @@ width:$width
         other.weight == weight &&
         other.height == height &&
         other.length == length &&
-        other.width == width;
+        other.width == width &&
+        other.quantity == quantity;
   }
 
   @override
   int get hashCode {
     return Object.hash(
-        runtimeType,
-        productId,
-        sku,
-        upc,
-        productName,
-        alias,
-        availableQuantity,
-        eta,
-        imageUrl,
-        masterProductId,
-        masterProductName,
-        taxClassId,
-        standardPrice,
-        standardPriceWithoutDiscount,
-        sequenceNumber,
-        costPrice,
-        tags,
-        tagName,
-        tagId,
-        tagImageDtoList);
+      runtimeType,
+      productId,
+      sku,
+      upc,
+      productName,
+      alias,
+      availableQuantity,
+      eta,
+      imageUrl,
+      masterProductId,
+      masterProductName,
+      taxClassId,
+      standardPrice,
+      standardPriceWithoutDiscount,
+      sequenceNumber,
+      costPrice,
+      tags,
+      tagName,
+      tagId,
+      tagImageDtoList,
+    );
   }
 }
