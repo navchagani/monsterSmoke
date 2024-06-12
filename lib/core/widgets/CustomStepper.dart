@@ -311,12 +311,12 @@ class CustomStepper extends StatefulWidget {
   /// Customize connected lines colors.
   ///
   /// Resolves in the following states:
-  ///  * [MaterialState.selected].
-  ///  * [MaterialState.disabled].
+  ///  * [WidgetState.selected].
+  ///  * [WidgetState.disabled].
   ///
   /// If not set then the widget will use default colors, primary for selected state
   /// and grey.shade400 for disabled state.
-  final MaterialStateProperty<Color>? connectorColor;
+  final WidgetStateProperty<Color>? connectorColor;
 
   /// The thickness of the connecting lines.
   final double? connectorThickness;
@@ -388,8 +388,8 @@ class _CustomStepperState extends State<CustomStepper>
 
   Color _connectorColor(bool isActive) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final Set<MaterialState> states = <MaterialState>{
-      if (isActive) MaterialState.selected else MaterialState.disabled,
+    final Set<WidgetState> states = <WidgetState>{
+      if (isActive) WidgetState.selected else WidgetState.disabled,
     };
     final Color? resolvedConnectorColor =
         widget.connectorColor?.resolve(states);
@@ -444,8 +444,8 @@ class _CustomStepperState extends State<CustomStepper>
   Color _circleColor(int index) {
     final bool isActive = widget.steps[index].isActive;
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final Set<MaterialState> states = <MaterialState>{
-      if (isActive) MaterialState.selected else MaterialState.disabled,
+    final Set<WidgetState> states = <WidgetState>{
+      if (isActive) WidgetState.selected else WidgetState.disabled,
     };
     final Color? resolvedConnectorColor =
         widget.connectorColor?.resolve(states);
@@ -573,24 +573,24 @@ class _CustomStepperState extends State<CustomStepper>
             TextButton(
               onPressed: widget.onCustomStepContinue,
               style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.resolveWith<Color?>(
-                    (Set<MaterialState> states) {
-                  return states.contains(MaterialState.disabled)
+                foregroundColor: WidgetStateProperty.resolveWith<Color?>(
+                    (Set<WidgetState> states) {
+                  return states.contains(WidgetState.disabled)
                       ? null
                       : (_isDark()
                           ? colorScheme.onSurface
                           : colorScheme.onPrimary);
                 }),
-                backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-                    (Set<MaterialState> states) {
-                  return _isDark() || states.contains(MaterialState.disabled)
+                backgroundColor: WidgetStateProperty.resolveWith<Color?>(
+                    (Set<WidgetState> states) {
+                  return _isDark() || states.contains(WidgetState.disabled)
                       ? null
                       : colorScheme.primary;
                 }),
-                padding: const MaterialStatePropertyAll<EdgeInsetsGeometry>(
+                padding: const WidgetStatePropertyAll<EdgeInsetsGeometry>(
                     buttonPadding),
                 shape:
-                    const MaterialStatePropertyAll<OutlinedBorder>(buttonShape),
+                    const WidgetStatePropertyAll<OutlinedBorder>(buttonShape),
               ),
               child: Text(themeData.useMaterial3
                   ? localizations.continueButtonLabel

@@ -497,7 +497,7 @@ class Content {
         height: json['height'] as dynamic,
         length: json['length'] as dynamic,
         width: json['width'] as dynamic,
-        quantity: json['quantity'] as int);
+        quantity: json['quantity'] as int?);
   }
 
   @override
