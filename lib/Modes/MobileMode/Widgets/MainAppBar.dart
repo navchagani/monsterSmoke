@@ -50,7 +50,7 @@ class _MainAppBarState extends State<MainAppBar> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   const DashboardPathBuilder()))
-                      : () => isMob
+                      : () => !isMob
                           ? showDialog(
                               context: context,
                               barrierDismissible: false,
